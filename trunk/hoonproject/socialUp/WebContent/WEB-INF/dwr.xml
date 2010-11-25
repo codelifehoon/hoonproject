@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC "-//GetAhead Limited//DTD Direct Web Remoting 2.0//EN" "http://getahead.org/dwr/dwr20.dtd">
+<dwr>
+  
+  <allow>
+    <create creator="new" javascript="DwrAction"> 
+     <!-- javascript에서 쓰일 메소드(여기선 CommentManager) 이름 -->
+      <param name="class" value="socialUp.action.dwr.DwrAction"/>
+      
+    </create>
+    
+    <!-- 자바 메소드의 객체를 객체를 생성해주는 설정   -->
+    <convert converter="bean" match="socialUp.service.member.dto.MemTblDTO"/>
+    
+  </allow>
+  
+</dwr>

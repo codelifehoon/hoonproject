@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+    
+<mapper namespace="socialUp.service.member.mapper">
+
+	 <resultMap id="selectMemTblListResult" type="socialUp.service.member.dto.MemTblDTO" >
+	        <result column="mt_no" property="mt_no" />
+	        <result column="mem_id" property="mem_id" />
+	        <result column="mem_nm" property="mem_nm" />
+	        <result column="relation_kind" property="relation_kind" />
+	        <result column="create_dt" property="create_dt" />
+	        <result column="create_no" property="create_no" />
+	 </resultMap>
+	    
+	<select id="selectMemTblList" resultMap="selectMemTblListResult" parameterType="socialUp.service.member.dto.MemTblDTO">
+	     	select mt_no
+					,mem_id
+					,mem_nm
+					,relation_kind
+					,create_dt
+					,create_no
+			from mem_tbl where mem_id = #{mem_id}	 
+	</select>
+    	
+    	
+  
+ 
+</mapper>
+
