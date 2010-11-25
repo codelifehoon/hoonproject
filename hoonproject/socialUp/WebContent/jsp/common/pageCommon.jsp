@@ -1,0 +1,3 @@
+<%
+	final String contectRootUrl = "/socialUp";
+%>

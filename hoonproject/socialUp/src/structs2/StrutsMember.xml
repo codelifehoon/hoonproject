@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+ 
+ <!--
+ 	membeRegForm 		: 회원가입 화면 action
+ 	membeRegDateChkProc	: 회원정보 처리시 validation 처리  action (DWR)
+ 	membeRegrProc		: 회원가입 처리  action
+ 	
+ 	membeUpdateForm		: 회원정보 화면 action
+ 	membeUpdateProc		: 회원정보 처리 action
+ 	
+ 	 
+  -->
+    <package name="member" namespace="/member" extends="struts-default">
+        <action name="member*" method="{1}" class="socialUp.action.MemberAction" >
+            <result name="SUCCESS">/jsp/member/member{1}.jsp</result>
+        </action>
+    </package>
+    
+    
+</struts>
