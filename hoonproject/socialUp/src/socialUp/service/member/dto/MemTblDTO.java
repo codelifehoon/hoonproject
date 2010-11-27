@@ -18,7 +18,7 @@ public class MemTblDTO
 	String passwd;
 	String relation_kind;
 	String create_dt;
-	String create_no;
+	String create_ip;
 	
 	public String getMt_no() {
 		return mt_no;
@@ -56,11 +56,11 @@ public class MemTblDTO
 	public void setCreate_dt(String create_dt) {
 		this.create_dt = create_dt;
 	}
-	public String getCreate_no() {
-		return create_no;
+	public String getCreate_ip() {
+		return create_ip;
 	}
-	public void setCreate_no(String create_no) {
-		this.create_no = create_no;
+	public void setCreate_ip(String create_ip) {
+		this.create_ip = create_ip;
 	}
 	
 }

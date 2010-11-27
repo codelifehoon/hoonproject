@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 
 public class MyBatisManager 
 {
-	public static Logger logger = Logger.getLogger(MyBatisManager.class);
+	public static Logger log = Logger.getLogger(MyBatisManager.class);
 	
 	public static SqlSessionFactory sqlMapper = null;
 	
@@ -26,7 +26,7 @@ public class MyBatisManager
 				
 			}catch(Exception e){
 				
-				logger.debug("SqlSessionFactory.getInstance 오류");
+				log.debug("SqlSessionFactory.getInstance 오류");
 				e.printStackTrace();
 			}
 		}
@@ -46,7 +46,7 @@ public class MyBatisManager
 				
 			}catch(Exception e){
 				
-				logger.debug("SqlSessionFactory.getInstanceSqlSession 오류");
+				log.debug("SqlSessionFactory.getInstanceSqlSession 오류");
 				e.printStackTrace();
 			}
 		}

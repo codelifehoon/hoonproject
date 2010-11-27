@@ -26,7 +26,7 @@ public interface MemTblDAO
 	 * @param param
 	 * @throws Exception
 	 */
-	public int insertMemTbl(MemTblDTO memParam) throws Exception ;
+	public long insertMemTbl(MemTblDTO memParam) throws Exception ;
 	
 	/**
 	 * 회원정보 수정

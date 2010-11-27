@@ -22,10 +22,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					,mem_nm
 					,relation_kind
 					,create_dt
-					,create_no
-			from mem_tbl where mem_id = #{mem_id}	 
+					,create_ip
+			from mem_tbl where mem_id = #{mem_id}
+			and use_yn ='Y' /*탈퇴여부*/	 
 	</select>
     	
+    <insert id="insertMemTbl" parameterType="socialUp.service.member.dto.MemTblDTO">
+    		
+			INSERT INTO mem_tbl( mem_id
+					,mem_nm
+					,passwd
+					,relation_kind
+					,create_dt
+					,create_ip)
+			VALUES(
+					#{mem_id}
+					,#{mem_nm}
+					,PASSWORD(#{passwd})
+					,#{relation_kind}
+					,DATE_FORMAT(#{create_dt},'%Y%m%d%H%i%s')
+					,#{create_ip}
+			)
+    	
+    	<selectKey resultType="String" keyProperty="mt_no"> select last_insert_id() as mt_no </selectKey>
+
+    </insert>
     	
   
  
