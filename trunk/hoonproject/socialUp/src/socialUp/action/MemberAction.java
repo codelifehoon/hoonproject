@@ -1,9 +1,12 @@
 package socialUp.action;
 
 import org.apache.log4j.Logger;
+
+import socialUp.action.main.BaseActionSupport;
+
 import com.opensymphony.xwork2.ActionSupport;
 
-public class MemberAction extends ActionSupport 
+public class MemberAction extends BaseActionSupport 
 {
 
 	/**
@@ -11,7 +14,7 @@ public class MemberAction extends ActionSupport
 	 */
 	private static final long serialVersionUID = 7304583857075513036L;
 
-	public Logger logger = Logger.getLogger(this.getClass());
+	public Logger log = Logger.getLogger(this.getClass());
 	
 	
 	@Override

@@ -1,6 +1,42 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/jsp/common/pageCommon.jsp" %>
+<%@ include file="/jsp/common/pageCommon.jsp"%>
+<%@ page import="socialUp.service.member.dto.MemTblDTO"%>
+<%@ page import="org.apache.log4j.Logger"%>
+<%@ page import="socialUp.common.util.CookieUtil"%>
+<%@ page import="java.util.Map" %>
+<%	
 
+	MemTblDTO  loginMemTblDTO = (MemTblDTO)request.getAttribute("loginMemTblDTO");
+	String  commonVal = (String)request.getAttribute("commonVal");
+
+	Logger logger = Logger.getLogger(this.getClass());
+	CookieUtil cookieUtil = new CookieUtil(request,response);
+	
+	
+	logger.debug("쿠키정보:" + cookieUtil.getCookie(CookieUtil.TP));
+	logger.debug("쿠키정보:" + cookieUtil.getSubCookie(CookieUtil.TP,"mem_id"));
+	logger.debug("쿠키정보2:" + cookieUtil.getSubCookie(CookieUtil.TP,"mem_nm"));
+	logger.debug("commonVal:" + commonVal);
+	
+	
+	Map cookieMap = cookieUtil.toMap();
+
+	logger.debug("맵쿠키정보:" + cookieMap.get("mem_id"));
+	
+	
+	if (loginMemTblDTO == null)
+	{
+		logger.debug("회원로그인 안되었음");
+	}
+	if (loginMemTblDTO != null)
+	{
+		logger.debug("mem_id:" + loginMemTblDTO.getMem_id());
+		logger.debug("mem_nm:" + loginMemTblDTO.getMem_nm());
+	}
+	
+	
+
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -19,25 +55,48 @@
 	function memRegAction()
 	{
 		var errMsg = "";
-		var memTblDTO = {mem_id:"aaaa", mem_nm:"장재훈"};
+		var memTblDTO = "";
 		
-		if (getForm().memNm.value == "" ) errMsg = "<h3>이름을 입력 해주세요.</h3>";
+		if (getForm().memNm.value == "" ) 							errMsg += "<h3>이름을 입력 해주세요.</h3>";
+		if (getForm().memId.value == "" ) 							errMsg += "<h3>ID를 입력 해주세요.</h3>";
+		if (getForm().passwd.value == "" ) 						errMsg += "<h3>비밀번호를 입력 해주세요.</h3>";
+		if (getForm().passwd2.value == "" ) 						errMsg += "<h3>비밀번호 확인값을 입력 해주세요.</h3>";
+		if (getForm().passwd2.value != getForm().passwd.value ) errMsg += "<h3>2개의 비밀번호가 다릅니다.</h3>";
+		
+		if ( errMsg != "" )
+		{
+			document.getElementById("memRegMsg").innerHTML = errMsg;
+			return;
+		}
+			
+		memTblDTO = {mem_id:getForm().memId.value
+				, mem_nm:getForm().memNm.value
+				,passwd:getForm().passwd.value
+				,relation_kind:""
+				};
+			
 	
-		DwrAction.validateRegMemData(memTblDTO,validateRegMemDataCB);
+		document.getElementById("memRegMsg").innerHTML = "회원가입처리중~";
+		DwrAction.RegMemData(memTblDTO,validateRegMemDataCallBack);
 			
 	}
 	
-	function validateRegMemDataCB(resultList)
+	function validateRegMemDataCallBack(resultList)
 	{
 	 
 		
 		var resultStr ="";
-		for (var i=0;i<  resultList.length ;i++)
-			{
-				resultStr += resultList[i].mem_nm + ",";
-			}
+		//for (var i=0;i<  resultList.length ;i++)
+		//	{
+		//		resultStr += resultList[i].mem_nm + ",";
+		//	}
 		
-		document.getElementById("memRegMsg").innerHTML = resultStr;
+		if ( resultList.result_code == "00") 
+		{
+			document.getElementById("memRegMsg").innerHTML = "회원가입성공";
+		}
+		else{document.getElementById("memRegMsg").innerHTML = resultList.result_msg + " 사유에 의한 회원가입실패"; }
+		
 		
 	}
 	</script>
@@ -54,8 +113,8 @@
 						<form name='memRegForm' action="" method="post" >
 							<p class="date">이름:<input type="text"  id="memNm" name="memNm" /></p>
 							<p class="date">이메일:<input type="text"  id="memId" name="memId" /></p>
-							<p class="date">비밀번호:<input type="text"  id="passWord" name="passWord" />  </p>
-							<p class="date">비밀확인:<input type="text"  id="passWord2" name="passWord2" />  </p>
+							<p class="date">비밀번호:<input type="text"  id="passwd" name="passwd" />  </p>
+							<p class="date">비번확인:<input type="text"  id="passwd2" name="passwd2" />  </p>
 							<p class="date"><a href="javascript:memRegAction();">회원가입</a></p>
 							
 						</form>
