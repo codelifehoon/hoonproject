@@ -17,7 +17,9 @@
   -->
     <package name="member" namespace="/member" extends="struts-default">
         <action name="member*" method="{1}" class="socialUp.action.MemberAction" >
-            <result name="SUCCESS">/jsp/member/member{1}.jsp</result>
+            <result name="DEFAULT">/jsp/member/member{1}.jsp</result>			<!--  기본 action 처리 -->
+            <result name="INDEX_LOGIN">/jsp/member/loginResult.jsp</result>	 	<!--  로그인후 이동할 페이지 -->
+            <result name="INDEX_LOGOUT">/jsp/member/logOutResult.jsp</result>	<!--  로그아웃후 이동할 페이지 -->
         </action>
     </package>
     

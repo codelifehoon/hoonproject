@@ -38,17 +38,19 @@
                    value="%p - %m%n"/>
         </layout>
     </appender>
-
+<!-- 
     <logger name="org.apache.ibatis">
         <level value="DEBUG"/>
         <appender-ref ref="CONSOLE"/>
     </logger>
 
+
     <logger name="java.sql.Connection">
         <level value="DEBUG"/>
         <appender-ref ref="CONSOLE"/>
     </logger>
-
+ 
+ 
     <logger name="java.sql.Statement">
         <level value="DEBUG"/>
         <appender-ref ref="CONSOLE"/>
@@ -58,7 +60,7 @@
         <level value="DEBUG"/>
         <appender-ref ref="CONSOLE"/>
     </logger>
-
+-->
     <logger name="socialUp">
         <level value="DEGUG"/>
         <appender-ref ref="CONSOLE"/>

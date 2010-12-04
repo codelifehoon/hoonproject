@@ -9,7 +9,7 @@
 					</form>
 				</div>
 				<div class="leftside">
-				<h1>Free Orange Web 2.0 Design</h1>
-				<h2>Download and play with it!</h2>
+					<h1>세상의 이야기 고리</h1>
+					<h2>당신의 이야기 친구의 이야기를 다른사람과 연결하세요.</h2>
 				</div>
 			</div>

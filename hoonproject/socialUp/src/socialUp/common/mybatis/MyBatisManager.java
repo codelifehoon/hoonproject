@@ -50,6 +50,7 @@ public class MyBatisManager
 				e.printStackTrace();
 			}
 		}
+		
 		return sqlMapper.openSession();
 	}
 	

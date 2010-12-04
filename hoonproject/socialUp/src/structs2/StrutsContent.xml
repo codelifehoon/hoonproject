@@ -5,4 +5,21 @@
 
 <struts>
     
+     <!--
+ 	
+	 	/content/contentAddForm 		: 컨텐츠등록 화면
+	 	/content/contentAddFinish		: 컨텐츠최초등록처리
+	 	/content/contentEditForm		: 컨텐츠수정처리
+	 	/content/contentEditFinish		: 컨텐츠수정처리
+ 	 
+  	-->
+    <package name="content" namespace="/content" extends="struts-default">
+        <action name="content*" method="{1}" class="socialUp.action.GoriContentAction" >
+            <result name="DEFAULT">/jsp/content/content{1}.jsp</result>			<!--  기본 action 처리 -->
+            
+        </action>
+    </package>
+    
+    
+    
 </struts>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+    
+<mapper namespace="socialUp.service.content.mapper">
+
+	 <resultMap id="selectContentTitleListTblListResult" type="socialUp.service.content.dto.ContentTitleListTblDTO">
+	        <result column="tt_no" property="tt_no" />
+			<result column="title_name" property="title_name" />
+			<result column="title_kind" property="title_kind" />
+			<result column="branch_conf_yn" property="branch_conf_yn" />
+			<result column="create_dt" property="create_dt" />
+			<result column="create_no" property="create_no" />
+	 </resultMap>
+	    
+	<!-- 컨텐츠 등록 소스 경로 조회 -->
+	<select id="selectContentTitleListTblList" resultMap="selectContentTitleListTblListResult" parameterType="socialUp.service.content.dto.ContentTitleListTblDTO">
+	     	select tt_no
+					,title_name
+					,title_kind
+					,branch_conf_yn
+					,mt_no
+					,order_mem_open_yn
+					,order_mem_join_yn
+					,order_mem_join_passwd
+					,create_dt
+					,create_no
+			 from content_title_list_tbl	 
+			 where mt_no = #{mt_no}
+			
+			order by source_kind 
+	</select>
+    	
+ 
+ 	<!-- 컨텐츠 등록 소스 경로 등록  -->
+	 <insert id="insertContentTitleListTbl" parameterType="socialUp.service.content.dto.ContentTitleListTblDTO">
+	    		
+				INSERT INTO content_title_list_tbl( 
+							title_name
+							,title_kind
+							,branch_conf_yn
+							,mt_no
+							,order_mem_open_yn
+							,order_mem_join_yn
+							,order_mem_join_passwd
+							,create_dt
+							,create_no
+							,update_dt
+							,update_no)
+				VALUES(
+						#{title_name}
+						,#{title_kind}
+						,#{branch_conf_yn}
+						,#{mt_no}
+						,#{order_mem_open_yn}
+						,#{order_mem_join_yn}
+						,#{order_mem_join_passwd}
+						,#{create_dt}
+						,#{create_no}
+						,#{update_dt}
+						,#{update_no}
+					)
+	    	
+	<selectKey resultType="String" keyProperty="tt_no"> select last_insert_id() as tt_no </selectKey>
+	
+	</insert>
+    
+  
+ 
+</mapper>
+

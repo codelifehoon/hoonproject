@@ -25,6 +25,13 @@ public List<MemTblDTO> validateRegMemData(MemTblDTO memTblDTO) throws Exception;
 public long RegMemData(MemTblDTO memTblDTO) throws Exception;
 
 
+/**
+ * 로그인처리한다
+ * 
+ * @param memtbldto
+ * @throws Exception 
+ */
+public List<MemTblDTO>  MemLogin(MemTblDTO memTblDTO) throws Exception;
 
 		
 }

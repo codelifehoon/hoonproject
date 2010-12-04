@@ -18,6 +18,14 @@ public class BaseActionSupport extends ActionSupport implements ServletRequestAw
 	 */
 	private static final long serialVersionUID = 4469099709419770197L;
 	
+	/*jsp에 전달되어 사용될 값들*/
+	protected String fromAction = "";		
+	
+	
+	
+	public String getFromAction() {
+		return fromAction;
+	}
 	protected HttpServletRequest request;
 	protected HttpServletResponse response;
 	
