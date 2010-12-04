@@ -11,16 +11,27 @@
     <property name="driver" value="com.mysql.jdbc.Driver"/>
     <property name="url" value="jdbc:mysql://localhost:3306/yourvest"/>
     <property name="username" value="root"/>
-    <property name="password" value="1111"/>   
+    <property name="password" value="1111"/>
+    <!--  일정시간  연결이 없을때  db서버에서 연결끊는걸 방지하기위해서 pool ping 설정을한다. -->
+    <property name="poolPingQuery" value="select 1"/>
+    <property name="poolPingEnabled" value="true"/>
+    <property name="poolPingConnectionsNotUsedFor" value="5000"/>
+           
    </dataSource>
   </environment>
  </environments>
  
   
  <mappers>
+
  	<mapper resource="socialUp/service/member/mapper/MemTbl.xml" />
- 	
+ 	<mapper resource="socialUp/service/content/mapper/ContentTitleListTbl.xml" />
+ 	<mapper resource="socialUp/service/content/mapper/ContentSourceTbl.xml" />
+ 	<mapper resource="socialUp/service/common/mapper/common.xml" />
  	
  </mappers>
  
 </configuration>
+
+
+

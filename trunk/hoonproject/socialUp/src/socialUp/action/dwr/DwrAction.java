@@ -41,8 +41,6 @@ public class DwrAction extends BaseDwrAction
 	{
 		log.debug("validateRegMemData 시작");
 		
-		// sql session 생성
-		SqlSession sqlMap = MyBatisManager.getInstanceSqlSession("");
 		HashMap resultMap = new HashMap();
 		String sCurrentDate = DateTime.getFormatString("yyyyMMddHHmmss"); // 현재날짜
 		
@@ -50,7 +48,7 @@ public class DwrAction extends BaseDwrAction
 		resultMap.put("result_msg","성공");
 		
 		
-		memTblDTO.setCreate_ip(getHttpServletRequest().getRemoteAddr());
+		memTblDTO.setCreate_ip(this.request.getRemoteAddr());
 		memTblDTO.setCreate_dt(sCurrentDate);
 		
 		
@@ -84,11 +82,10 @@ public class DwrAction extends BaseDwrAction
 	
 		if (log.isDebugEnabled()) log.debug("회원가입정보:" + DebugUtil.DebugBo(memTblDTO));
 		// 회원가입이 되면 바로 로그인 처리 해준다.
-		CookieUtil cookieUtil = new CookieUtil(getHttpServletRequest(), getHttpServletResponse());
+		CookieUtil cookieUtil = new CookieUtil(this.request, this.response);
 		// 쿠키에 한글이 필요할경우 차후 확인해서 처리함
 		//cookieUtil.add(CookieUtil.TP,"mem_id", URLEncoder.encode(memTblDTO.getMem_id(),"EUC-KR"));
 		cookieUtil.add(CookieUtil.TP,"mt_no", String.valueOf(regSeq));
-		
 		
 		return resultMap;
 	}

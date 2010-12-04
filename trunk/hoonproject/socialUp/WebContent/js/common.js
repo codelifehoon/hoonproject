@@ -28,7 +28,7 @@ function alert( args, height, width)
 */
 
 /**
- * Ç×»ó »õÃ¢À» Center·Î ¶ç¿öÁØ´Ù. opener¸¦ µ¹·ÁÁØ´Ù.
+ * í•­ìƒ ìƒˆì°½ì„ Centerë¡œ ë„ì›Œì¤€ë‹¤. openerë¥¼ ëŒë ¤ì¤€ë‹¤.
  */
 
 function launchCenter(url, name,  width, height)
@@ -74,7 +74,7 @@ function launchCenter(url, name, width,height, scroll)
 }
 
 /**
- * ¼ıÀÚ¸¦ 3ÀÚ¸® ´ÜÀ§·Î Comma¸¦ Âï¾îÁØ´Ù.
+ * ìˆ«ìë¥¼ 3ìë¦¬ ë‹¨ìœ„ë¡œ Commaë¥¼ ì°ì–´ì¤€ë‹¤.
  */
 
 function getCommaSplit(srcNumber)
@@ -109,8 +109,8 @@ function getCommaSplit(srcNumber)
 
 
 /**
- * ¶óµğ¿À ¹öÆ°Áß ¼±ÅÃµÇ¾î ÀÖ´Â °ªÀ» °¡Á®¿Â´Ù.
- * ¸¸¾à ¼±ÅÃµÇÁö ¾Ê¾ÒÀ¸¸é "null" À» µ¹·ÁÁØ´Ù.
+ * ë¼ë””ì˜¤ ë²„íŠ¼ì¤‘ ì„ íƒë˜ì–´ ìˆëŠ” ê°’ì„ ê°€ì ¸ì˜¨ë‹¤.
+ * ë§Œì•½ ì„ íƒë˜ì§€ ì•Šì•˜ìœ¼ë©´ "null" ì„ ëŒë ¤ì¤€ë‹¤.
  */
 
 function radioValue( oRadio )
@@ -131,7 +131,7 @@ function radioValue( oRadio )
 
 
 /**
- * ¹®ÀÚ¿­(sSource)ÀÇ ±æÀÌ¸¦ ±¸ÇØÁØ´Ù.(ÇÑ±ÛÀº 2ÀÚ·Î ÀÎ½ÄÇÑ´Ù)
+ * ë¬¸ìì—´(sSource)ì˜ ê¸¸ì´ë¥¼ êµ¬í•´ì¤€ë‹¤.(í•œê¸€ì€ 2ìë¡œ ì¸ì‹í•œë‹¤)
  */
 function GetStringSize ( sSource )
 {
@@ -153,7 +153,7 @@ function GetStringSize ( sSource )
 
 
 /**
- * ÀÔ·ÂÇÑ ¹®ÀÚ¿­(aSource)°¡ sCompareÀÇ ¹®ÀÚ¿­¿¡ Æ÷ÇÔµÇ¾î ÀÖ´Â ¹®ÀÚ·Î µÇ¾î ÀÖ´ÂÁö¸¦ Ã¼Å©ÇØÁØ´Ù.
+ * ì…ë ¥í•œ ë¬¸ìì—´(aSource)ê°€ sCompareì˜ ë¬¸ìì—´ì— í¬í•¨ë˜ì–´ ìˆëŠ” ë¬¸ìë¡œ ë˜ì–´ ìˆëŠ”ì§€ë¥¼ ì²´í¬í•´ì¤€ë‹¤.
  */
 function IsCheckValidStringType( sSource, sCompare )
 {
@@ -171,7 +171,7 @@ function IsCheckValidStringType( sSource, sCompare )
 
 
 /**
- * IsCheckvalidStringType ¿Í´Â ´Ù¸£°Ô Æ²¸®¸é True, ¸ÂÀ¸¸é False¸¦ µ¹·ÁÁØ´Ù.
+ * IsCheckvalidStringType ì™€ëŠ” ë‹¤ë¥´ê²Œ í‹€ë¦¬ë©´ True, ë§ìœ¼ë©´ Falseë¥¼ ëŒë ¤ì¤€ë‹¤.
  */
 function IsCheckInvalidStringType( sSource, sCompare )
 {
@@ -189,8 +189,8 @@ function IsCheckInvalidStringType( sSource, sCompare )
 
 
 /**
- * sSource ÀÇ ±æÀÌ°¡ nMinº¸´Ù Å©°í nMaxº¸´Ù ÀÛÀ¸¸ç ¸¸¾à¿¡ ¹üÀ§¸¦ ¹ş¾î³¯ °æ¿ì¿¡´Â
- * sName¿¡ ´ëÇÑ ¿À·ù·Î º¸¿©ÁØ´Ù. nIsConsonant ÀÌ True¸é "À»" ¾Æ´Ï¸é "¸¦" ·Î Ç¥½ÃÇØÁØ´Ù.
+ * sSource ì˜ ê¸¸ì´ê°€ nMinë³´ë‹¤ í¬ê³  nMaxë³´ë‹¤ ì‘ìœ¼ë©° ë§Œì•½ì— ë²”ìœ„ë¥¼ ë²—ì–´ë‚  ê²½ìš°ì—ëŠ”
+ * sNameì— ëŒ€í•œ ì˜¤ë¥˜ë¡œ ë³´ì—¬ì¤€ë‹¤. nIsConsonant ì´ Trueë©´ "ì„" ì•„ë‹ˆë©´ "ë¥¼" ë¡œ í‘œì‹œí•´ì¤€ë‹¤.
  */
 function IsCheckStringLengthRange( sSource, sName, nMin, nMax, nIsConsonant )
 {
@@ -204,21 +204,21 @@ function IsCheckStringLengthRange( sSource, sName, nMin, nMax, nIsConsonant )
 
 	if( nIsConsonant )
 	{
-		cPostL = "À»" ;
-		cPostN = "Àº" ;
+		cPostL = "ì„" ;
+		cPostN = "ì€" ;
 	}
 	else
 	{
-		cPostL = "¸¦" ;
-		cPostN = "´Â" ;
+		cPostL = "ë¥¼" ;
+		cPostN = "ëŠ”" ;
 	}
 
 	if( nStrSize < nMin || nStrSize > nMax )
 	{
 		ErrorMessage = sName + cPostN + " " + nMin +
-			"ÀÚ ÀÌ»ó, " + nMax +
-			"ÀÚ ÀÌÇÏ·Î ÀÔ·ÂÇØ ÁÖ½Ê½Ã¿À.\nÇöÀç ÀÔ·ÂµÈ ±æÀÌ : " +
-			nStrSize + "ÀÚ" ;
+			"ì ì´ìƒ, " + nMax +
+			"ì ì´í•˜ë¡œ ì…ë ¥í•´ ì£¼ì‹­ì‹œì˜¤.\ní˜„ì¬ ì…ë ¥ëœ ê¸¸ì´ : " +
+			nStrSize + "ì" ;
 		return false ;
 	}
 
@@ -226,8 +226,8 @@ function IsCheckStringLengthRange( sSource, sName, nMin, nMax, nIsConsonant )
 }
 
 /**
- * sSource ÀÇ ±æÀÌ°¡ nMinº¸´Ù Å©°í nMaxº¸´Ù ÀÛÀ¸¸ç ¸¸¾à¿¡ ¹üÀ§¸¦ ¹ş¾î³¯ °æ¿ì¿¡´Â
- * sName¿¡ ´ëÇÑ ¿À·ù·Î º¸¿©ÁØ´Ù. nIsConsonant ÀÌ True¸é "À»" ¾Æ´Ï¸é "¸¦" ·Î Ç¥½ÃÇØÁØ´Ù.
+ * sSource ì˜ ê¸¸ì´ê°€ nMinë³´ë‹¤ í¬ê³  nMaxë³´ë‹¤ ì‘ìœ¼ë©° ë§Œì•½ì— ë²”ìœ„ë¥¼ ë²—ì–´ë‚  ê²½ìš°ì—ëŠ”
+ * sNameì— ëŒ€í•œ ì˜¤ë¥˜ë¡œ ë³´ì—¬ì¤€ë‹¤. nIsConsonant ì´ Trueë©´ "ì„" ì•„ë‹ˆë©´ "ë¥¼" ë¡œ í‘œì‹œí•´ì¤€ë‹¤.
  */
 function IsCheckEnglishLength( sSource, sName, nMin, nMax, nIsConsonant )
 {
@@ -236,34 +236,34 @@ function IsCheckEnglishLength( sSource, sName, nMin, nMax, nIsConsonant )
 
 	if( nIsConsonant )
 	{
-		cPostL = "À»" ;
-		cPostN = "Àº" ;
+		cPostL = "ì„" ;
+		cPostN = "ì€" ;
 	}
 	else
 	{
-		cPostL = "¸¦" ;
-		cPostN = "´Â" ;
+		cPostL = "ë¥¼" ;
+		cPostN = "ëŠ”" ;
 	}
 
 	if( nStrSize == 0 && nMin > 0 )
 	{
-		ErrorMessage = sName + cPostL + "  ÀÔ·ÂÇØ ÁÖ½Ê½Ã¿À." ;
+		ErrorMessage = sName + cPostL + "  ì…ë ¥í•´ ì£¼ì‹­ì‹œì˜¤." ;
 		return false ;
 	}
 
 	if( nMin == 0 && nStrSize > nMax )
 	{
 		ErrorMessage = sName + cPostN + " " + nMax +
-			"ÀÚ ÀÌÇÏ·Î ÀÔ·ÂÇØ ÁÖ½Ê½Ã¿À.\nÇöÀç ÀÔ·ÂµÈ ±æÀÌ : " +
-			nStrSize + "ÀÚ" ;
+			"ì ì´í•˜ë¡œ ì…ë ¥í•´ ì£¼ì‹­ì‹œì˜¤.\ní˜„ì¬ ì…ë ¥ëœ ê¸¸ì´ : " +
+			nStrSize + "ì" ;
 		return false;
 	}
 	if( nStrSize < nMin || nStrSize > nMax )
 	{
 		ErrorMessage = sName + cPostN + " " + nMin +
-			"ÀÚ ÀÌ»ó, " + nMax +
-			"ÀÚ ÀÌÇÏ·Î ÀÔ·ÂÇØ ÁÖ½Ê½Ã¿À.\nÇöÀç ÀÔ·ÂµÈ ±æÀÌ : " +
-			nStrSize + "ÀÚ" ;
+			"ì ì´ìƒ, " + nMax +
+			"ì ì´í•˜ë¡œ ì…ë ¥í•´ ì£¼ì‹­ì‹œì˜¤.\ní˜„ì¬ ì…ë ¥ëœ ê¸¸ì´ : " +
+			nStrSize + "ì" ;
 		return false ;
 	}
 
@@ -272,8 +272,8 @@ function IsCheckEnglishLength( sSource, sName, nMin, nMax, nIsConsonant )
 
 
 /**
- * ÇÑ±Û sSource ÀÇ ±æÀÌ°¡ nMinº¸´Ù Å©°í nMaxº¸´Ù ÀÛÀ¸¸ç ¸¸¾à¿¡ ¹üÀ§¸¦ ¹ş¾î³¯ °æ¿ì¿¡´Â
- * sName¿¡ ´ëÇÑ ¿À·ù·Î º¸¿©ÁØ´Ù. nIsConsonant ÀÌ True¸é "À»" ¾Æ´Ï¸é "¸¦" ·Î Ç¥½ÃÇØÁØ´Ù.
+ * í•œê¸€ sSource ì˜ ê¸¸ì´ê°€ nMinë³´ë‹¤ í¬ê³  nMaxë³´ë‹¤ ì‘ìœ¼ë©° ë§Œì•½ì— ë²”ìœ„ë¥¼ ë²—ì–´ë‚  ê²½ìš°ì—ëŠ”
+ * sNameì— ëŒ€í•œ ì˜¤ë¥˜ë¡œ ë³´ì—¬ì¤€ë‹¤. nIsConsonant ì´ Trueë©´ "ì„" ì•„ë‹ˆë©´ "ë¥¼" ë¡œ í‘œì‹œí•´ì¤€ë‹¤.
  */
 function IsCheckKoreanLength( sSource, sName, nMin, nMax, nIsConsonant )
 {
@@ -282,34 +282,34 @@ function IsCheckKoreanLength( sSource, sName, nMin, nMax, nIsConsonant )
 
 	if( nIsConsonant )
 	{
-		cPostL = "À»" ;
-		cPostN = "Àº" ;
+		cPostL = "ì„" ;
+		cPostN = "ì€" ;
 	}
 	else
 	{
-		cPostL = "¸¦" ;
-		cPostN = "´Â" ;
+		cPostL = "ë¥¼" ;
+		cPostN = "ëŠ”" ;
 	}
 
 
 	if( nStrSize == 0 && nMin > 0 )
 	{
-		ErrorMessage = sName + cPostL + "  ÀÔ·ÂÇØ ÁÖ½Ê½Ã¿À." ;
+		ErrorMessage = sName + cPostL + "  ì…ë ¥í•´ ì£¼ì‹­ì‹œì˜¤." ;
 		return false ;
 	}
 	if( nMin == 0 && nStrSize > nMax )
 	{
-		ErrorMessage = sName + cPostN + " ÇÑ±Û " + Math.floor(nMax/2) +
-			"ÀÚ ÀÌÇÏ·Î ÀÔ·ÂÇØ ÁÖ½Ê½Ã¿À.\nÇöÀç ÀÔ·ÂµÈ ±æÀÌ : " +
-			nStrSize/2 + "ÀÚ";
+		ErrorMessage = sName + cPostN + " í•œê¸€ " + Math.floor(nMax/2) +
+			"ì ì´í•˜ë¡œ ì…ë ¥í•´ ì£¼ì‹­ì‹œì˜¤.\ní˜„ì¬ ì…ë ¥ëœ ê¸¸ì´ : " +
+			nStrSize/2 + "ì";
 		return false;
 	}
 	if( nStrSize < nMin || nStrSize > nMax )
 	{
-		ErrorMessage = sName + cPostN + " ÇÑ±Û " + Math.ceil(nMin/2) +
-			"ÀÚ ÀÌ»ó, " + Math.floor(nMax/2) +
-			"ÀÚ ÀÌÇÏ·Î ÀÔ·ÂÇØ ÁÖ½Ê½Ã¿À.\nÇöÀç ÀÔ·ÂµÈ ±æÀÌ : " +
-			nStrSize/2 + "ÀÚ";
+		ErrorMessage = sName + cPostN + " í•œê¸€ " + Math.ceil(nMin/2) +
+			"ì ì´ìƒ, " + Math.floor(nMax/2) +
+			"ì ì´í•˜ë¡œ ì…ë ¥í•´ ì£¼ì‹­ì‹œì˜¤.\ní˜„ì¬ ì…ë ¥ëœ ê¸¸ì´ : " +
+			nStrSize/2 + "ì";
 		return false;
 	}
 
@@ -318,38 +318,38 @@ function IsCheckKoreanLength( sSource, sName, nMin, nMax, nIsConsonant )
 
 
 /**
- * È¸¿ø ¾Æ?ŞÀ? FormatÀ» Ã¼Å©ÇÑ´Ù. °ø¹éÀÌ¸é ¾ÈµÇ°í, ¿µ¹® ¼Ò¹®ÀÚ¿Í ¼ıÀÚ¸¸À» ÀÔ·Â¹Ş´Â´Ù.
- * Ã¹±ÛÀÚ´Â ¿µ¹® ¼Ò¹®ÀÚ·Î ÀÛ¼ºÇØ¾ß ÇÑ´Ù., adminÀÌ³ª guest·Î ¾ÆÀÌµğ¸¦ ½ÃÀÛÇÒ¼ö ¾ø´Ù.
- * È¸¿ø ¾ÆÀÌµğ Á¤Ã¥¿¡ µû¶ó º¯°æÇØ¾ßÇÔ
+ * íšŒì› ì•„?äº‹? Formatì„ ì²´í¬í•œë‹¤. ê³µë°±ì´ë©´ ì•ˆë˜ê³ , ì˜ë¬¸ ì†Œë¬¸ìì™€ ìˆ«ìë§Œì„ ì…ë ¥ë°›ëŠ”ë‹¤.
+ * ì²«ê¸€ìëŠ” ì˜ë¬¸ ì†Œë¬¸ìë¡œ ì‘ì„±í•´ì•¼ í•œë‹¤., adminì´ë‚˜ guestë¡œ ì•„ì´ë””ë¥¼ ì‹œì‘í• ìˆ˜ ì—†ë‹¤.
+ * íšŒì› ì•„ì´ë”” ì •ì±…ì— ë”°ë¼ ë³€ê²½í•´ì•¼í•¨
  */
 function IsCheckLoginIDFormat( sLoginID ) {
 	/*var nLoginIDSize = GetStringSize( sLoginID ) ;
 	if( nUserIDSize == 0 )
 	{
-		ErrorMessage = "[È¸¿ø¾ÆÀÌµğ]´Â ²À ÀÛ¼ºÇØ¾ß ÇÕ´Ï´Ù." ;
+		ErrorMessage = "[íšŒì›ì•„ì´ë””]ëŠ” ê¼­ ì‘ì„±í•´ì•¼ í•©ë‹ˆë‹¤." ;
 		return false ;
 	}
 	*/
 	if( !IsCheckValidStringType( sLoginID, SALPHA+NUM ) )
 	{
-		ErrorMessage = "[È¸¿ø¾ÆÀÌµğ]´Â ¿µ¹® ¼Ò¹®ÀÚ¿Í ¼ıÀÚ·Î ±¸¼ºµÇ¾î¾ß ÇÏ¸ç,\nÃ¹ ±ÛÀÚ´Â ²À ¿µ¹® ¼Ò¹®ÀÚ·Î ÀÛ¼ºÇØ¾ß ÇÕ´Ï´Ù." ;
+		ErrorMessage = "[íšŒì›ì•„ì´ë””]ëŠ” ì˜ë¬¸ ì†Œë¬¸ìì™€ ìˆ«ìë¡œ êµ¬ì„±ë˜ì–´ì•¼ í•˜ë©°,\nì²« ê¸€ìëŠ” ê¼­ ì˜ë¬¸ ì†Œë¬¸ìë¡œ ì‘ì„±í•´ì•¼ í•©ë‹ˆë‹¤." ;
 		return false ;
 	}
 
-	if( !IsCheckEnglishLength( sLoginID, "[È¸¿ø¾ÆÀÌµğ]", 6, 12, 0 ) )
+	if( !IsCheckEnglishLength( sLoginID, "[íšŒì›ì•„ì´ë””]", 6, 12, 0 ) )
 	{
 		return false ;
 	}
 
 	if( NUM.indexOf( sLoginID.charAt(0)) >= 0 )
 	{
-		ErrorMessage = "[È¸¿ø¾ÆÀÌµğ]ÀÇ Ã¹ ±ÛÀÚ´Â ²À ¿µ¹® ¼Ò¹®ÀÚ·Î ÀÛ¼ºÇØ¾ß ÇÕ´Ï´Ù." ;
+		ErrorMessage = "[íšŒì›ì•„ì´ë””]ì˜ ì²« ê¸€ìëŠ” ê¼­ ì˜ë¬¸ ì†Œë¬¸ìë¡œ ì‘ì„±í•´ì•¼ í•©ë‹ˆë‹¤." ;
 		return false;
 	}
 
 	if( sLoginID.substring(0,5)=="admin" || sLoginID.substring(0,5)=="guest" )
 	{
-		ErrorMessage = "[È¸¿ø¾ÆÀÌµğ]´Â adminÀÌ³ª guest·Î ½ÃÀÛÇÒ ¼ö ¾ø½À´Ï´Ù." ;
+		ErrorMessage = "[íšŒì›ì•„ì´ë””]ëŠ” adminì´ë‚˜ guestë¡œ ì‹œì‘í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤." ;
 		return false;
 	}
 
@@ -357,18 +357,18 @@ function IsCheckLoginIDFormat( sLoginID ) {
 }
 
 /**
- * sPassword°¡ ÆĞ½º¿öµå Format¿¡ ¸Â´ÂÁö¸¦ °Ë»çÇÑ´Ù.
- * ÆĞ½º¿öµå´Â ¿µ¹®, ¼ıÀÚ, Æ¯¼ö¹®ÀÚ·Î ±¸¼ºÇÏ¸ç 4±ÛÀÚ ÀÌ»ó 16±ÛÀÚ ÀÌÇÏ·Î ÀÛ¼ºÇØ¾ß ÇÑ´Ù.
+ * sPasswordê°€ íŒ¨ìŠ¤ì›Œë“œ Formatì— ë§ëŠ”ì§€ë¥¼ ê²€ì‚¬í•œë‹¤.
+ * íŒ¨ìŠ¤ì›Œë“œëŠ” ì˜ë¬¸, ìˆ«ì, íŠ¹ìˆ˜ë¬¸ìë¡œ êµ¬ì„±í•˜ë©° 4ê¸€ì ì´ìƒ 16ê¸€ì ì´í•˜ë¡œ ì‘ì„±í•´ì•¼ í•œë‹¤.
  */
 function IsCheckPasswordFormat( sPassword )
 {
 	if( !IsCheckValidStringType( sPassword, PASSWORD ) )
 	{
-		ErrorMessage = "[ºñ¹Ğ¹øÈ£]´Â ¿µ¹®, ¼ıÀÚ, Æ¯¼ö¹®ÀÚ(! @ . # , $ % ^ * & _ -)À¸·Î ±¸¼ºµÇ¾î¾ß ÇÏ¸ç\n4±ÛÀÚ ÀÌ»ó 16±ÛÀÚ ÀÌÇÏ·Î ÀÛ¼ºÇØ¾ß ÇÕ´Ï´Ù." ;
+		ErrorMessage = "[ë¹„ë°€ë²ˆí˜¸]ëŠ” ì˜ë¬¸, ìˆ«ì, íŠ¹ìˆ˜ë¬¸ì(! @ . # , $ % ^ * & _ -)ìœ¼ë¡œ êµ¬ì„±ë˜ì–´ì•¼ í•˜ë©°\n4ê¸€ì ì´ìƒ 16ê¸€ì ì´í•˜ë¡œ ì‘ì„±í•´ì•¼ í•©ë‹ˆë‹¤." ;
 		return false ;
 	}
 
-	if( !IsCheckEnglishLength( sPassword, "[ºñ¹Ğ¹øÈ£]", 6, 12, 0 ) )
+	if( !IsCheckEnglishLength( sPassword, "[ë¹„ë°€ë²ˆí˜¸]", 6, 12, 0 ) )
 	{
 		return false ;
 	}
@@ -378,15 +378,15 @@ function IsCheckPasswordFormat( sPassword )
 
 
 /**
- * ÀÌ¸§ FormatÀ» Ã¼Å©ÇÏ´Â ºÎºĞÀÌ´Ù.
- * ÇÑ±Û¸¸ ÀÔ·ÂÀÌ °¡´ÉÇÏ´Ù.
+ * ì´ë¦„ Formatì„ ì²´í¬í•˜ëŠ” ë¶€ë¶„ì´ë‹¤.
+ * í•œê¸€ë§Œ ì…ë ¥ì´ ê°€ëŠ¥í•˜ë‹¤.
  */
 function IsCheckLoginnameFormat( sSource )
 {
 	var i ;
 	var ch ;
 
-	if( !IsCheckKoreanLength( sSource, "[ÀÌ¸§]", 2, 12, 1 ) )
+	if( !IsCheckKoreanLength( sSource, "[ì´ë¦„]", 2, 12, 1 ) )
 	{
 		return false ;
 	}
@@ -396,7 +396,7 @@ function IsCheckLoginnameFormat( sSource )
 		ch = escape( sSource.substring( i, i+1 ) ) ;
 		if( ch.length<6 || ch.substring( 2, 6 )<"AC00" || ch.substring( 2, 6 )>"D7AF" )
 		{
-			ErrorMessage = "[ÀÌ¸§]Àº ÇÑ±Û·Î¸¸ ÀÔ·ÂÀÌ °¡´ÉÇÏ¸ç\n¶ç¾î¾²´Â Çã¿ëµÇÁö ¾Ê½À´Ï´Ù." ;
+			ErrorMessage = "[ì´ë¦„]ì€ í•œê¸€ë¡œë§Œ ì…ë ¥ì´ ê°€ëŠ¥í•˜ë©°\në„ì–´ì“°ëŠ” í—ˆìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤." ;
 			return false ;
 		}
 	}
@@ -406,7 +406,7 @@ function IsCheckLoginnameFormat( sSource )
 
 
 /**
- * ÀÌ¸ŞÀÏÀ» FormatÀ» Ã¼Å©ÇÑ´Ù.
+ * ì´ë©”ì¼ì„ Formatì„ ì²´í¬í•œë‹¤.
  */
 function IsCheckEmailFormat( sEmail )
 {
@@ -414,11 +414,11 @@ function IsCheckEmailFormat( sEmail )
 	var s ;
 	if( !IsCheckValidStringType( sEmail, EMAIL ) )
 	{
-		ErrorMessage = "[¸ŞÀÏÁÖ¼Ò]¿¡ Àß¸øµÈ ¹®ÀÚ°¡ ÀÖ½À´Ï´Ù.";
+		ErrorMessage = "[ë©”ì¼ì£¼ì†Œ]ì— ì˜ëª»ëœ ë¬¸ìê°€ ìˆìŠµë‹ˆë‹¤.";
 		return false;
 	}
 
-	if( !IsCheckEnglishLength( sEmail, "[ÀÌ¸ŞÀÏ]", 7, 50, 0 ) )
+	if( !IsCheckEnglishLength( sEmail, "[ì´ë©”ì¼]", 7, 50, 0 ) )
 	{
 		return false;
 	}
@@ -426,14 +426,14 @@ function IsCheckEmailFormat( sEmail )
 	i = sEmail.indexOf('@');
 	if( i<=0 || i == sEmail.length-1 )
 	{
-		ErrorMessage = "[¸ŞÀÏÁÖ¼Ò]Àº webmaster@kostanet.com µîÀÇ ÇüÅÂ·Î ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù." ;
+		ErrorMessage = "[ë©”ì¼ì£¼ì†Œ]ì€ webmaster@kostanet.com ë“±ì˜ í˜•íƒœë¡œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤." ;
 		return false;
 	}
 
 	i = sEmail.indexOf( '.', i+1 ) ;
 	if( i<=0 || i == sEmail.length-1 )
 	{
-	ErrorMessage = "[¸ŞÀÏÁÖ¼Ò]Àº webmaster@kostanet.com µîÀÇ ÇüÅÂ·Î ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù." ;
+	ErrorMessage = "[ë©”ì¼ì£¼ì†Œ]ì€ webmaster@kostanet.com ë“±ì˜ í˜•íƒœë¡œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤." ;
 		return false;
 	}
 
@@ -441,7 +441,7 @@ function IsCheckEmailFormat( sEmail )
 	s = sEmail.substring( i+1 ) ;
 	if( !IsCheckValidStringType( s, SALPHA ) )
 	{
-		ErrorMessage = "[¸ŞÀÏÁÖ¼Ò]Àº webmaster@kostanet.com µîÀÇ ÇüÅÂ·Î ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù." ;
+		ErrorMessage = "[ë©”ì¼ì£¼ì†Œ]ì€ webmaster@kostanet.com ë“±ì˜ í˜•íƒœë¡œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤." ;
 		return false ;
 	}
 	*/
@@ -450,7 +450,7 @@ function IsCheckEmailFormat( sEmail )
 
 
 /**
- * ÁÖ¹®µî·Ï FormatÀ» Ã¼Å©ÇÑ´Ù.
+ * ì£¼ë¬¸ë“±ë¡ Formatì„ ì²´í¬í•œë‹¤.
  */
 function IsCheckResidentFormat( sRIDFirst, sRIDLast )
 {
@@ -465,39 +465,39 @@ function IsCheckResidentFormat( sRIDFirst, sRIDLast )
 	var nStrSize = GetStringSize( sRIDFirst ) ;
 	if( nStrSize == 0 )
 	{
-		ErrorMessage = "[ÁÖ¹Îµ¿·Ï¹øÈ£ ¾ÕºÎºĞ]Àº ²À ÀÛ¼ºÇØ¾ß ÇÕ´Ï´Ù." ;
+		ErrorMessage = "[ì£¼ë¯¼ë™ë¡ë²ˆí˜¸ ì•ë¶€ë¶„]ì€ ê¼­ ì‘ì„±í•´ì•¼ í•©ë‹ˆë‹¤." ;
 		return -1 ;
 	}
 
 
 	if( !IsCheckValidStringType( sRIDFirst, NUM ) )
 	{
-		ErrorMessage = "[ÁÖ¹Îµî·Ï¹øÈ£ ¾ÕºÎºĞ]¿¡ Àß¸øµÈ ¹®ÀÚ°¡ ÀÖ½À´Ï´Ù." ;
+		ErrorMessage = "[ì£¼ë¯¼ë“±ë¡ë²ˆí˜¸ ì•ë¶€ë¶„]ì— ì˜ëª»ëœ ë¬¸ìê°€ ìˆìŠµë‹ˆë‹¤." ;
 		return -1 ;
 	}
 
 	if( sRIDFirst.length!=6 ||  nMondth<1 || nMondth>12 || nDay<1 || nDay>31)
 	{
-		ErrorMessage = "[ÁÖ¹Îµî·Ï¹øÈ£ ¾ÕºÎºĞ]ÀÌ Àß¸øµÇ¾ú½À´Ï´Ù." ;
+		ErrorMessage = "[ì£¼ë¯¼ë“±ë¡ë²ˆí˜¸ ì•ë¶€ë¶„]ì´ ì˜ëª»ë˜ì—ˆìŠµë‹ˆë‹¤." ;
 		return -1 ;
 	}
 
 	nStrSize = GetStringSize( sRIDLast ) ;
 	if( nStrSize == 0 )
 	{
-		ErrorMessage = "[ÁÖ¹Îµ¿·Ï¹øÈ£ µŞºÎºĞ]Àº ²À ÀÛ¼ºÇØ¾ß ÇÕ´Ï´Ù." ;
+		ErrorMessage = "[ì£¼ë¯¼ë™ë¡ë²ˆí˜¸ ë’·ë¶€ë¶„]ì€ ê¼­ ì‘ì„±í•´ì•¼ í•©ë‹ˆë‹¤." ;
 		return -2 ;
 	}
 
 	if( !IsCheckValidStringType( sRIDLast, NUM ) )
 	{
-		ErrorMessage = "[ÁÖ¹Îµî·Ï¹øÈ£ µŞºÎºĞ]¿¡ Àß¸øµÈ ¹®ÀÚ°¡ ÀÖ½À´Ï´Ù.";
+		ErrorMessage = "[ì£¼ë¯¼ë“±ë¡ë²ˆí˜¸ ë’·ë¶€ë¶„]ì— ì˜ëª»ëœ ë¬¸ìê°€ ìˆìŠµë‹ˆë‹¤.";
 		return -2;
 	}
 
 	if( sRIDLast.length!=7 || ( nSex!=1 && nSex!=2 && nSex!=3 && nSex!=4 ) )
 	{
-		ErrorMessage = "[ÁÖ¹Îµî·Ï¹øÈ£ µŞºÎºĞ]ÀÌ Àß¸øµÇ¾ú½À´Ï´Ù.";
+		ErrorMessage = "[ì£¼ë¯¼ë“±ë¡ë²ˆí˜¸ ë’·ë¶€ë¶„]ì´ ì˜ëª»ë˜ì—ˆìŠµë‹ˆë‹¤.";
 		return -2;
 	}
 
@@ -520,7 +520,7 @@ function IsCheckResidentFormat( sRIDFirst, sRIDLast )
 
 	if( chk != parseInt( sRIDLast.charAt( 6 ) ) )
 	{
-		ErrorMessage = "À¯È¿ÇÏÁö ¾ÊÀº [ÁÖ¹Îµî·Ï¹øÈ£]ÀÔ´Ï´Ù.";
+		ErrorMessage = "ìœ íš¨í•˜ì§€ ì•Šì€ [ì£¼ë¯¼ë“±ë¡ë²ˆí˜¸]ì…ë‹ˆë‹¤.";
 		return -1;
 	}
 
@@ -529,34 +529,34 @@ function IsCheckResidentFormat( sRIDFirst, sRIDLast )
 
 
 /**
- * ÁÖ¼Ò´Â ÇÊ¼ö »çÇ×ÀÌ°í ÀÔ·Â Format¿¡ ¸Â°Ô ÀÛ¼ºµÇ¾î ÀÖ´ÂÁö Ã¼Å©ÇÑ´Ù.
- * ÀÚµ¿ ÁÖ¼ÒºÎºĞ°ú ¼öµ¿ÁÖ¼Ò ºÎºĞÀ¸·Î ³ª´²Á® ÀÖ´Ù.
+ * ì£¼ì†ŒëŠ” í•„ìˆ˜ ì‚¬í•­ì´ê³  ì…ë ¥ Formatì— ë§ê²Œ ì‘ì„±ë˜ì–´ ìˆëŠ”ì§€ ì²´í¬í•œë‹¤.
+ * ìë™ ì£¼ì†Œë¶€ë¶„ê³¼ ìˆ˜ë™ì£¼ì†Œ ë¶€ë¶„ìœ¼ë¡œ ë‚˜ëˆ ì ¸ ìˆë‹¤.
  */
 function IsCheckHomeaddressFormat( sAddr, sAddrDetail )
 {
 	var nStrSize = GetStringSize( sAddr ) ;
-	// ÀÚµ¿ ÁÖ¼ÒÀÔ·Â ºÎºĞ
+	// ìë™ ì£¼ì†Œì…ë ¥ ë¶€ë¶„
 	if( nStrSize == 0 )
 	{
-		ErrorMessage = "[Áı ÁÖ¼Ò]¸¦ ²À ÀÛ¼ºÇØ¾ß ÇÕ´Ï´Ù.\n<¿ìÆí¹øÈ£>¹öÆ°À» ¼±ÅÃÇÏ¿© ÀÔ·ÂÇÑ ÈÄ [»ó¼¼ÁÖ¼Ò]¸¦ ÀÔ·ÂÇØ ÁÖ½Ê½Ã¿À." ;
+		ErrorMessage = "[ì§‘ ì£¼ì†Œ]ë¥¼ ê¼­ ì‘ì„±í•´ì•¼ í•©ë‹ˆë‹¤.\n<ìš°í¸ë²ˆí˜¸>ë²„íŠ¼ì„ ì„ íƒí•˜ì—¬ ì…ë ¥í•œ í›„ [ìƒì„¸ì£¼ì†Œ]ë¥¼ ì…ë ¥í•´ ì£¼ì‹­ì‹œì˜¤." ;
 		return -1 ;
 	}
 
-	// ¼öµ¿ ÁÖ¼ÒÀÔ·Â ºÎºĞ(¹øÁö)
+	// ìˆ˜ë™ ì£¼ì†Œì…ë ¥ ë¶€ë¶„(ë²ˆì§€)
 	nStrSize = GetStringSize( sAddrDetail ) ;
 	if( nStrSize == 0 )
 	{
-		ErrorMessage = "[»ó¼¼ÁÖ¼Ò]¸¦ ²À ÀÛ¼ºÇØ¾ß ÇÕ´Ï´Ù." ;
+		ErrorMessage = "[ìƒì„¸ì£¼ì†Œ]ë¥¼ ê¼­ ì‘ì„±í•´ì•¼ í•©ë‹ˆë‹¤." ;
 		return -1 ;
 	}
 
 	if( IsCheckInvalidStringType( sAddrDetail, "\"<>" ) )
 	{
-		ErrorMessage = "[»ó¼¼ÁÖ¼Ò]¿¡ Àß¸øµÈ ¹®ÀÚ  <  >  È¤Àº  \"  °¡ ÀÖ½À´Ï´Ù." ;
+		ErrorMessage = "[ìƒì„¸ì£¼ì†Œ]ì— ì˜ëª»ëœ ë¬¸ì  <  >  í˜¹ì€  \"  ê°€ ìˆìŠµë‹ˆë‹¤." ;
 		return -2 ;
 	}
 
-	if ( !IsCheckKoreanLength( sAddrDetail, "[»ó¼¼ÁÖ¼Ò]", 1, 100, 0 ) )
+	if ( !IsCheckKoreanLength( sAddrDetail, "[ìƒì„¸ì£¼ì†Œ]", 1, 100, 0 ) )
 	{
 		return -2 ;
 	}
@@ -566,25 +566,25 @@ function IsCheckHomeaddressFormat( sAddr, sAddrDetail )
 
 
 /**
- * ÁÖ¼Ò¸¦ ÀÔ·ÂÇÏ´Âµ¥. ¾î¶²ÁÖ¼ÒÀÎÁö¸¦ sName¿¡ ³Ö¾îÁÖ°í, sNameDetail¿¡´Â ¹«¾ùÀ» ²ÀÀÔ·ÂÇØ¾ß
- * ÇÏ´ÂÁö¸¦ ³Ö¾îÁØ´Ù.
+ * ì£¼ì†Œë¥¼ ì…ë ¥í•˜ëŠ”ë°. ì–´ë–¤ì£¼ì†Œì¸ì§€ë¥¼ sNameì— ë„£ì–´ì£¼ê³ , sNameDetailì—ëŠ” ë¬´ì—‡ì„ ê¼­ì…ë ¥í•´ì•¼
+ * í•˜ëŠ”ì§€ë¥¼ ë„£ì–´ì¤€ë‹¤.
  */
 function IsCheckAddressFormat( sName, sNameDetail, sAddr, sAddrDetail )
 {
 	var nStrSize = GetStringSize( sAddrDetail ) ;
-	// ÀÚµ¿ ÁÖ¼ÒÀÔ·Â ºÎºĞ
+	// ìë™ ì£¼ì†Œì…ë ¥ ë¶€ë¶„
 	if( nStrSize > 0 )
 	{
 		nStrSize = GetStringSize( sAddr ) ;
 		if( nStrSize == 0 )
 		{
-			ErrorMessage = sName + "¸¦ ²À ÀÛ¼ºÇØ¾ß ÇÕ´Ï´Ù.\n<¿ìÆí¹øÈ£>¹öÆ°À» ¼±ÅÃÇÏ¿© ÀÔ·ÂÇÑ ÈÄ " + sNameDetail + "¸¦ ÀÔ·ÂÇØ ÁÖ½Ê½Ã¿À." ;
+			ErrorMessage = sName + "ë¥¼ ê¼­ ì‘ì„±í•´ì•¼ í•©ë‹ˆë‹¤.\n<ìš°í¸ë²ˆí˜¸>ë²„íŠ¼ì„ ì„ íƒí•˜ì—¬ ì…ë ¥í•œ í›„ " + sNameDetail + "ë¥¼ ì…ë ¥í•´ ì£¼ì‹­ì‹œì˜¤." ;
 			return -1 ;
 		}
 
 		if( IsCheckInvalidStringType( sAddrDetail, "\"<>" ) )
 		{
-			ErrorMessage = sNameDetail + "¿¡ Àß¸øµÈ ¹®ÀÚ  <  >  È¤Àº  \"  °¡ ÀÖ½À´Ï´Ù." ;
+			ErrorMessage = sNameDetail + "ì— ì˜ëª»ëœ ë¬¸ì  <  >  í˜¹ì€  \"  ê°€ ìˆìŠµë‹ˆë‹¤." ;
 			return -2 ;
 		}
 
@@ -598,7 +598,7 @@ function IsCheckAddressFormat( sName, sNameDetail, sAddr, sAddrDetail )
 }
 
 /**
- * ÀüÈ­¹øÈ£¸¦ Ã¼Å©ÇÑ´Ù.
+ * ì „í™”ë²ˆí˜¸ë¥¼ ì²´í¬í•œë‹¤.
  *
  */
 function IsCheckHomephoneFormat( nhome_tel1, nhome_tel2, nhome_tel3 )
@@ -606,48 +606,48 @@ function IsCheckHomephoneFormat( nhome_tel1, nhome_tel2, nhome_tel3 )
 	var nStrSize = GetStringSize( nhome_tel1 ) ;
 	if( nStrSize == 0 )
 	{
-		ErrorMessage = "[ÀüÈ­¹øÈ£]¸¦ ²À ÀÛ¼ºÇØ¾ß ÇÕ´Ï´Ù." ;
+		ErrorMessage = "[ì „í™”ë²ˆí˜¸]ë¥¼ ê¼­ ì‘ì„±í•´ì•¼ í•©ë‹ˆë‹¤." ;
 		return -1 ;
 	}
 	if( !IsCheckValidStringType( nhome_tel1, NUM ) )
 	{
-		ErrorMessage = "[ÀüÈ­¹øÈ£]¿¡ Àß¸øµÈ ¹®ÀÚ°¡ ÀÖ½À´Ï´Ù." ;
+		ErrorMessage = "[ì „í™”ë²ˆí˜¸]ì— ì˜ëª»ëœ ë¬¸ìê°€ ìˆìŠµë‹ˆë‹¤." ;
 		return -1 ;
 	}
 
 	nStrSize = GetStringSize( nhome_tel2 ) ;
 	if( nStrSize == 0 )
 	{
-		ErrorMessage = "[ÀüÈ­¹øÈ£]¸¦ ²À ÀÛ¼ºÇØ¾ß ÇÕ´Ï´Ù." ;
+		ErrorMessage = "[ì „í™”ë²ˆí˜¸]ë¥¼ ê¼­ ì‘ì„±í•´ì•¼ í•©ë‹ˆë‹¤." ;
 		return -2 ;
 	}
 	if(!IsCheckValidStringType( nhome_tel2, NUM ) )
 	{
-		ErrorMessage = "[ÀüÈ­¹øÈ£]¿¡ Àß¸øµÈ ¹®ÀÚ°¡ ÀÖ½À´Ï´Ù." ;
+		ErrorMessage = "[ì „í™”ë²ˆí˜¸]ì— ì˜ëª»ëœ ë¬¸ìê°€ ìˆìŠµë‹ˆë‹¤." ;
 		return -2 ;
 	}
 
 	nStrSize = GetStringSize( nhome_tel3 ) ;
 	if( nStrSize == 0 )
 	{
-		ErrorMessage = "[ÀüÈ­¹øÈ£]¸¦ ²À ÀÛ¼ºÇØ¾ß ÇÕ´Ï´Ù." ;
+		ErrorMessage = "[ì „í™”ë²ˆí˜¸]ë¥¼ ê¼­ ì‘ì„±í•´ì•¼ í•©ë‹ˆë‹¤." ;
 		return -3 ;
 	}
 	if( !IsCheckValidStringType( nhome_tel3, NUM ) )
 	{
-		ErrorMessage = "[ÀüÈ­¹øÈ£]¿¡ Àß¸øµÈ ¹®ÀÚ°¡ ÀÖ½À´Ï´Ù." ;
+		ErrorMessage = "[ì „í™”ë²ˆí˜¸]ì— ì˜ëª»ëœ ë¬¸ìê°€ ìˆìŠµë‹ˆë‹¤." ;
 		return -3 ;
 	}
 
-	if ( !IsCheckEnglishLength( nhome_tel1, "[ÀüÈ­¹øÈ£]", 1, 4, 0 ) )
+	if ( !IsCheckEnglishLength( nhome_tel1, "[ì „í™”ë²ˆí˜¸]", 1, 4, 0 ) )
 	{
 		return -1 ;
 	}
-	if ( !IsCheckEnglishLength( nhome_tel2, "[ÀüÈ­¹øÈ£]", 1, 4, 0 ) )
+	if ( !IsCheckEnglishLength( nhome_tel2, "[ì „í™”ë²ˆí˜¸]", 1, 4, 0 ) )
 	{
 		return -2 ;
 	}
-	if ( !IsCheckEnglishLength( nhome_tel3, "[ÀüÈ­¹øÈ£]", 1, 4, 0 ) )
+	if ( !IsCheckEnglishLength( nhome_tel3, "[ì „í™”ë²ˆí˜¸]", 1, 4, 0 ) )
 	{
 		return -3 ;
 	}
@@ -657,7 +657,7 @@ function IsCheckHomephoneFormat( nhome_tel1, nhome_tel2, nhome_tel3 )
 
 
 /*
- * ÀüÈ­¹øÈ£¸¦ Ã¼Å©ÇÑ´Ù. 3°³¸¦ ³ª´²¼­ Ã¼Å©ÇÑ´Ù.
+ * ì „í™”ë²ˆí˜¸ë¥¼ ì²´í¬í•œë‹¤. 3ê°œë¥¼ ë‚˜ëˆ ì„œ ì²´í¬í•œë‹¤.
  */
 function IsCheckPhoneFormat( sName, nTel1, nTel2, nTel3 )
 {
@@ -665,19 +665,19 @@ function IsCheckPhoneFormat( sName, nTel1, nTel2, nTel3 )
 
 	if( !IsCheckValidStringType( nTel1, NUM ) )
 	{
-		ErrorMessage = sName + "¿¡ Àß¸øµÈ ¹®ÀÚ°¡ ÀÖ½À´Ï´Ù." ;
+		ErrorMessage = sName + "ì— ì˜ëª»ëœ ë¬¸ìê°€ ìˆìŠµë‹ˆë‹¤." ;
 		return -1 ;
 	}
 
 	if(!IsCheckValidStringType( nTel2, NUM ) )
 	{
-		ErrorMessage = sName + "¿¡ Àß¸øµÈ ¹®ÀÚ°¡ ÀÖ½À´Ï´Ù." ;
+		ErrorMessage = sName + "ì— ì˜ëª»ëœ ë¬¸ìê°€ ìˆìŠµë‹ˆë‹¤." ;
 		return -2 ;
 	}
 
 	if( !IsCheckValidStringType( nTel3, NUM ) )
 	{
-		ErrorMessage = sName + "¿¡ Àß¸øµÈ ¹®ÀÚ°¡ ÀÖ½À´Ï´Ù." ;
+		ErrorMessage = sName + "ì— ì˜ëª»ëœ ë¬¸ìê°€ ìˆìŠµë‹ˆë‹¤." ;
 		return -3 ;
 	}
 
@@ -710,7 +710,7 @@ function IsCheckPhoneFormat( sName, nTel1, nTel2, nTel3 )
 }
 
 /*
- * TR ¿¡ ¸¶¿ì½º ¿À¹ö ¹× ¾Æ¿ô µÇ¾úÀ»¶§ÀÇ »ö±ò
+ * TR ì— ë§ˆìš°ìŠ¤ ì˜¤ë²„ ë° ì•„ì›ƒ ë˜ì—ˆì„ë•Œì˜ ìƒ‰ê¹”
  */
 function activeArt(tg)
 {
@@ -725,7 +725,7 @@ tg.style.cursor='';
 }
 
 /*
- * Radio ¼±ÅÃ ÇØÁÜ
+ * Radio ì„ íƒ í•´ì¤Œ
  */
 function choiceRadio(obj, value)
 {
@@ -739,7 +739,7 @@ function choiceRadio(obj, value)
 }
 
 /*
- * ¹®ÀÚ¿­ º¯È¯
+ * ë¬¸ìì—´ ë³€í™˜
  */
 function replace(str,s,d){
 	var i=0;
@@ -753,7 +753,7 @@ function replace(str,s,d){
 }
 
 /*
-* AjaxÈ£Ãâ
+* Ajaxí˜¸ì¶œ
 */
 function getXMLHttpRequest(){
 	if(window.ActiveXObject){
@@ -776,4 +776,13 @@ function getXMLHttpRequest(){
 
 function trim(str) {
 	return str.replace(/(^\s*)|(\s*$)/gi, "");
+}
+
+/*
+ * 
+ * document.getElementById ì— ëŒ€í•œ ë‹¨ì¶•ì–´ë¡œ ì‚¬ìš©í•œë‹¤
+ * */
+function getEleById(id)
+{
+	return document.getElementById(id);
 }

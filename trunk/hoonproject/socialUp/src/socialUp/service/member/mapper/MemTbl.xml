@@ -24,7 +24,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					,create_dt
 					,create_ip
 			from mem_tbl where mem_id = #{mem_id}
-			and use_yn ='Y' /*탈퇴여부*/	 
+				and use_yn ='Y' /*탈퇴여부*/	 
+			<if test="passwd != null">
+				and passwd = password(#{passwd})
+			</if>
 	</select>
     	
     <insert id="insertMemTbl" parameterType="socialUp.service.member.dto.MemTblDTO">

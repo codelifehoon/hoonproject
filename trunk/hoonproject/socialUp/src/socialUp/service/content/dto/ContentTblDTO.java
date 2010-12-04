@@ -1,4 +1,4 @@
-package socialUp.service.member.dto;
+package socialUp.service.content.dto;
 
 
 
@@ -20,6 +20,9 @@ public class ContentTblDTO
 	String create_ip;
 	String create_dt;
 	String create_no;
+	String update_dt;
+	String update_no;
+	
 	public String getCt_no() {
 		return ct_no;
 	}
@@ -73,5 +76,17 @@ public class ContentTblDTO
 	}
 	public void setCreate_no(String create_no) {
 		this.create_no = create_no;
+	}
+	public String getUpdate_dt() {
+		return update_dt;
+	}
+	public void setUpdate_dt(String update_dt) {
+		this.update_dt = update_dt;
+	}
+	public String getUpdate_no() {
+		return update_no;
+	}
+	public void setUpdate_no(String update_no) {
+		this.update_no = update_no;
 	}
 }

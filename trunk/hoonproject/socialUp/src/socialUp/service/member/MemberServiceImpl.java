@@ -29,15 +29,32 @@ public class MemberServiceImpl implements MemberService
 	{
 		log.debug("validateRegMemData 시작");
 		
-		// sql session 생성
 		SqlSession sqlMap = MyBatisManager.getInstanceSqlSession("");
+		List<MemTblDTO> resultList = null;
+		
+		// sql session 생성
+		try {
+		
 		
 		// 회원테이블 조회용 객체 생성
 		MemTblDAO memTblDAO = (MemTblDAO)DaoFactory.createDAO(MemTblDAOImpl.class);
 		memTblDAO.setSqlSesstion(sqlMap);			// sql session 설정
 		
 		// 회원정보조회
-		List<MemTblDTO> resultList = memTblDAO.selectMemTbl(memTblDTO);
+		resultList = memTblDAO.selectMemTbl(memTblDTO);
+		
+		sqlMap.commit();
+		}
+		catch (Exception e)
+		{
+			sqlMap.rollback();
+			e.printStackTrace();
+			throw e;
+		}
+		finally { sqlMap.close();}
+		
+	
+		
 		
 		return resultList;
 	}
@@ -70,13 +87,54 @@ public class MemberServiceImpl implements MemberService
 		} catch (Exception e)
 		{
 			sqlMap.rollback();
+			e.printStackTrace();
 			throw e;
 		}
+		finally { sqlMap.close();}
 		
 		return regSeq;
 		
 	}
+
+	/**
+	 * 로그인처리한다
+	 * 
+	 * @param memtbldto
+	 * @throws Exception 
+	 */
+	public List<MemTblDTO>  MemLogin(MemTblDTO memTblDTO) throws Exception
+	{
+		log.debug("MemLogin");
+		long regSeq =0;
+		
+		// sql session 생성
+		SqlSession sqlMap = MyBatisManager.getInstanceSqlSession("");		
+		List<MemTblDTO> resultList = null;
+		
+		try 
+		{
+				
+			// 회원테이블 조회용 객체 생성
+			MemTblDAO memTblDAO = (MemTblDAO)DaoFactory.createDAO(MemTblDAOImpl.class);
+			memTblDAO.setSqlSesstion(sqlMap);			// sql session 설정
 			
+			// 회원정보조회
+			resultList =  memTblDAO.selectMemTbl(memTblDTO);
+	
+			sqlMap.commit();
+			} 
+		catch (Exception e)
+		{
+			sqlMap.rollback();
+			e.printStackTrace();
+			throw e;
+		}
+		finally { sqlMap.close();}
+		
+		return resultList;
+		
+	}
+	
 	
 
 	

@@ -20,6 +20,7 @@ public class MemTblDTO
 	String create_dt;
 	String create_ip;
 	
+	
 	public String getMt_no() {
 		return mt_no;
 	}
