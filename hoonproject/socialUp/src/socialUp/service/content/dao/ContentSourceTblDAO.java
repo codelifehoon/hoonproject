@@ -29,7 +29,7 @@ public interface ContentSourceTblDAO
 	 * @param param
 	 * @throws Exception
 	 */
-	public int updateContentSourceTbl(ContentSourceTblDTO conParam) throws Exception ;
+	public int updateContentSource(ContentSourceTblDTO conParam) throws Exception ;
 	
 	
 	/**

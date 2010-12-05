@@ -16,14 +16,17 @@ import socialUp.common.util.DebugUtil;
 import socialUp.service.content.ContentService;
 import socialUp.service.content.ContentServiceImpl;
 import socialUp.service.content.dto.ContentSourceTblDTO;
-import socialUp.service.content.dto.ContentTitleListTblDTO;
+import socialUp.service.content.dto.ContentDtlTblDTO;
+import socialUp.service.content.dto.ContentTitleTblDTO;
 import socialUp.service.member.MemberService;
 import socialUp.service.member.MemberServiceImpl;
 import socialUp.service.member.dto.MemTblDTO;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.sun.jmx.remote.util.Service;
+import com.sun.xml.internal.ws.util.ServiceFinder;
 
-public class GoriContentAction extends BaseActionSupport 
+public class ContentAction extends BaseActionSupport 
 {
 
 	/**
@@ -37,7 +40,23 @@ public class GoriContentAction extends BaseActionSupport
 	 */
 
 	public Logger log = Logger.getLogger(this.getClass());
+
 	
+	private List<ContentTitleTblDTO> contentTitleList = null;
+	private  List<ContentSourceTblDTO> contentSourceList = null;
+	 
+	
+	public List<ContentSourceTblDTO> getContentSourceList() {
+		return contentSourceList;
+	}
+
+	public void setContentSourceList(List<ContentSourceTblDTO> contentSourceList) {
+		this.contentSourceList = contentSourceList;
+	}
+	
+	
+
+	 			
 	
 
 	/**
@@ -116,7 +135,7 @@ public class GoriContentAction extends BaseActionSupport
 		
 		
 		List<ContentSourceTblDTO> contentSourceParamArr = new ArrayList<ContentSourceTblDTO>();	// 타이틀 테이블에 들어갈정보 배열
-		ContentTitleListTblDTO 	contentTitleListParam = new ContentTitleListTblDTO();		// 타이틀 컨텐츠 정보
+		ContentTitleTblDTO 	contentTitleListParam = new ContentTitleTblDTO();		// 타이틀 컨텐츠 정보
 		
 		
 		contentTitleListParam.setMt_no(authInfo.getMt_no());
@@ -184,7 +203,7 @@ public class GoriContentAction extends BaseActionSupport
 		
 		
 		// 최초 자신의 고리 개설
-		contentService.addMemGoreContent(contentSourceParamArr, contentTitleListParam);
+		contentService.addMemContent(contentSourceParamArr, contentTitleListParam);
 		
 		
 		
@@ -199,8 +218,36 @@ public class GoriContentAction extends BaseActionSupport
 	 * @return
 	 * @throws Exception
 	 */
-	public String EditForm	 () throws Exception {
+	public String EditForm	 () throws Exception 
+	{
 		String returnVal = "DEFAULT";
+
+		
+		log.debug("contentEditForm 시작");
+		
+		AuthInfo authInfo =  AuthService.getAuthInfo(this.request, this.response);
+		if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
+
+		String tt_no = this.request.getParameter("tt_no");
+		
+		// 회원테이블 조회용 객체 생성
+		ContentTitleTblDTO	contentTitleList		= new ContentTitleTblDTO();
+		ContentSourceTblDTO	contentSource			= new ContentSourceTblDTO();
+		ContentService 		contentService 			= (ContentService)ServiceFactory.createService(ContentServiceImpl.class);
+		
+		log.debug("tt_no:" +tt_no);
+		contentTitleList.setTt_no(tt_no);
+		contentTitleList.setMt_no(authInfo.getMt_no());
+		
+		contentSource.setTt_no(tt_no);
+		contentSource.setMt_no(authInfo.getMt_no());
+		
+		
+		// 수정할 타이틀의 내용
+		this.contentTitleList = contentService.selectContentTitleList(contentTitleList);
+		
+		// 수정할 의 내용
+		this.contentSourceList = contentService.selectContentSourceTbl(contentSource);
 		
 		
 		
@@ -214,17 +261,120 @@ public class GoriContentAction extends BaseActionSupport
 	 * @return
 	 * @throws Exception
 	 */
-	public String EditFinish	 () throws Exception {
+	public String EditFinish() throws Exception {
 		String returnVal = "DEFAULT";
 		
+		log.debug("contentEditFinish 시작");
+		
+		AuthInfo authInfo =  AuthService.getAuthInfo(this.request, this.response);
+		if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
+
+		String sCurrentDate = DateTime.getFormatString("yyyyMMddHHmmss"); // 현재날짜
+		String tt_no 					= this.request.getParameter("tt_no");
+		String validatecontentTitle		= this.request.getParameter("validatecontentTitle");
+		String title_name				= this.request.getParameter("title_name");	
+		String order_mem_open_yn		= this.request.getParameter("order_mem_open_yn");
+		String branch_conf_yn			= this.request.getParameter("branch_conf_yn");
+		String order_mem_join_yn		= this.request.getParameter("order_mem_join_yn");
+		String order_mem_join_passwd	= this.request.getParameter("order_mem_join_passwd");
+		String validatecontentTitleChk 	= "";
+
+		String[] cs_no_arr				= this.request.getParameter("cs_no_arr").split(",");
+
+		// 넘어온 타이틀 값들로 인증문장생성
+		validatecontentTitleChk  = title_name 
+									+ order_mem_open_yn
+									+ branch_conf_yn
+									+ order_mem_join_yn
+									+ order_mem_join_passwd;
+		
+		
+		// 업무처리할 객체 생성
+		ContentService 		contentService 			= (ContentService)ServiceFactory.createService(ContentServiceImpl.class);
+		ContentTitleTblDTO contentTitle = null;					// 수정될 컨텐츠 타이틀 정보
+		List<ContentSourceTblDTO> contentSourceList = new ArrayList<ContentSourceTblDTO>(); 	// 수정될 컨텐츠 소스 정보
+		
+		
+		if (log.isDebugEnabled())
+		{
+			log.debug("validatecontentTitle:"+ validatecontentTitle);
+			log.debug("validatecontentTitleChk:" + validatecontentTitleChk);
+			
+			
+		}
+		
+		//  컨텐츠 타이틀에 변동사항이 있다면 
+		if (!validatecontentTitle.equals(validatecontentTitleChk))
+		{
+			log.debug("-- contenttitle 변경내용 반영 --  tt_no:" + tt_no);
+			
+			contentTitle  = new ContentTitleTblDTO();
+			
+			contentTitle.setTt_no(tt_no);
+			contentTitle.setTitle_name(title_name);	
+			contentTitle.setOrder_mem_open_yn(order_mem_open_yn);
+			contentTitle.setBranch_conf_yn(branch_conf_yn);
+			contentTitle.setOrder_mem_join_yn(order_mem_join_yn);
+			contentTitle.setOrder_mem_join_passwd(order_mem_join_passwd);
+			contentTitle.setUpdate_dt(sCurrentDate);
+			contentTitle.setUpdate_no(authInfo.getMt_no());
+		}
+		
+		for (int i=0;i<cs_no_arr.length;i++)
+		{
+			// 공백으로 들어올수있기 때문에 (ex 1,2,3,4,) 
+			if (!"".equals(cs_no_arr[i]))
+			{
+				String cs_no  = cs_no_arr[i];
+				String source_dtl_kind		= this.request.getParameter("source_dtl_kind" + cs_no);
+				String source_login_id		= this.request.getParameter("source_login_id" + cs_no);
+				String rss2_url				= this.request.getParameter("rss2_url" + cs_no);
+				String use_yn				= this.request.getParameter("use_yn" + cs_no);
+				String source_owner_kind	= this.request.getParameter("source_owner_kind" + cs_no);
+				String validateEditDate		= this.request.getParameter("validateEditDate" + cs_no);
+				String validateEditDateChk  = "";
+				
+				validateEditDateChk = source_dtl_kind
+							 			+ source_login_id 
+								 		+ rss2_url
+								 		+ use_yn;
+			 		
+				
+				//  컨텐츠 소스에 변동사항이 있다면
+				if (log.isDebugEnabled()) log.debug("cs_no:" + cs_no);
+				if (!validateEditDate.equals(validateEditDateChk))
+				{
+					log.debug("-- contentSource 변경내용 반영 --  cs_no,use_yn:" + cs_no  + ","  + use_yn);
+					ContentSourceTblDTO contentSource  = new ContentSourceTblDTO();
+					
+					contentSource.setCs_no(cs_no);
+					contentSource.setSource_dtl_kind(source_dtl_kind);
+					contentSource.setSource_login_id(source_login_id);
+					contentSource.setRss2_url(rss2_url);
+					contentSource.setUse_yn(use_yn);
+					contentSource.setUpdate_dt(sCurrentDate);
+					contentSource.setUpdate_no(authInfo.getMt_no());
+					 
+					contentSourceList.add(contentSource);
+				}
+			}
+			
+		}
+		
+		contentService.updtaeMemContent(contentSourceList, contentTitle);
 		
 		
 		return  returnVal;
 	
 	}
-	
-	
 
-	 			
+	public List<ContentTitleTblDTO> getContentTitleList() {
+		return contentTitleList;
+	}
+
+	public void setContentTitleList(List<ContentTitleTblDTO> contentTitleList) {
+		this.contentTitleList = contentTitleList;
+	}
+
 		
 }

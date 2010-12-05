@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ContentTblDTO 
+public class ContentDtlTblDTO 
 {
 	String ct_no;
 	String tt_no;

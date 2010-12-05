@@ -14,7 +14,7 @@
  	 
   	-->
     <package name="content" namespace="/content" extends="struts-default">
-        <action name="content*" method="{1}" class="socialUp.action.GoriContentAction" >
+        <action name="content*" method="{1}" class="socialUp.action.ContentAction" >
             <result name="DEFAULT">/jsp/content/content{1}.jsp</result>			<!--  기본 action 처리 -->
             
         </action>

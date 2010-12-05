@@ -8,7 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
 
 import socialUp.common.util.NumUtil;
-import socialUp.service.content.dto.ContentTitleListTblDTO;
+import socialUp.service.content.dto.ContentTitleTblDTO;
 import socialUp.service.member.dto.MemTblDTO;
 
 public class ContentTitleListTblDAOImpl implements ContentTitleListTblDAO {
@@ -25,7 +25,7 @@ public class ContentTitleListTblDAOImpl implements ContentTitleListTblDAO {
 	}
 
 	@Override
-	public int insertContentTitleListTbl(ContentTitleListTblDTO conTitleParam)
+	public int insertContentTitleListTbl(ContentTitleTblDTO conTitleParam)
 			throws Exception {
 		 
 		this.sqlMap.insert("socialUp.service.content.mapper.insertContentTitleListTbl", conTitleParam);
@@ -36,14 +36,14 @@ public class ContentTitleListTblDAOImpl implements ContentTitleListTblDAO {
 	}
 
 	@Override
-	public int updateContentTitleListTbl(ContentTitleListTblDTO conTitleParam)
+	public int updateContentTitle(ContentTitleTblDTO conTitleParam)
 			throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		return  this.sqlMap.update("socialUp.service.content.mapper.updateContentTitle", conTitleParam);
+		
 	}
 
 	@Override
-	public List<ContentTitleListTblDTO> selectContentTitleListTbl(ContentTitleListTblDTO conTitleParam) throws Exception {
+	public List<ContentTitleTblDTO> selectContentTitleListTbl(ContentTitleTblDTO conTitleParam) throws Exception {
 
 		return  this.sqlMap.selectList("socialUp.service.content.mapper.selectContentTitleListTblList", conTitleParam);
 	}

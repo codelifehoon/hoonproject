@@ -1,8 +1,14 @@
 package socialUp.action.main;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
+import socialUp.common.ServiceFactory;
 import socialUp.common.util.CookieUtil;
+import socialUp.service.content.ContentService;
+import socialUp.service.content.ContentServiceImpl;
+import socialUp.service.content.dto.ContentTitleTblDTO;
 import socialUp.service.member.dto.MemTblDTO;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -19,6 +25,14 @@ public class DefaultAction extends BaseActionSupport
 	
 	String fromAction = "";						
 	private MemTblDTO loginMemTblDTO;
+	
+	/*jsp에 전달되어 사용될 값들*/
+	private List<ContentTitleTblDTO> regContentTitleList = null;
+
+
+	public List<ContentTitleTblDTO> getRegContentTitleList() {
+		return regContentTitleList;
+	}
 	
 	
 	// jsp에 어떠한 action으로 부터왔는지 전달한다.
@@ -53,6 +67,16 @@ public class DefaultAction extends BaseActionSupport
 			this.loginMemTblDTO = new MemTblDTO();
 			this.loginMemTblDTO.setMem_id(mem_id);
 			this.loginMemTblDTO.setMt_no(mt_no);
+			
+			// 등록 타이틀 정보 가져오기
+			ContentService contentService = (ContentService)ServiceFactory.createService(ContentServiceImpl.class);
+			ContentTitleTblDTO contentTitleListParam = new ContentTitleTblDTO();
+			
+			contentTitleListParam.setMt_no(loginMemTblDTO.getMt_no());
+
+			// 자신이 등록한 타이틀 목록
+			 this.regContentTitleList = contentService.selectContentTitleList(contentTitleListParam);
+			 
 		}
 		
 		log.debug("index.jsp 실행");

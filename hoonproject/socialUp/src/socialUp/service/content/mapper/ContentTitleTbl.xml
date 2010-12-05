@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+    
+<mapper namespace="socialUp.service.content.mapper">
+
+	 <resultMap id="selectContentTitleListTblListResult" type="socialUp.service.content.dto.ContentTitleTblDTO">
+	        <result column="tt_no"		 	property="tt_no" />
+			<result column="title_name" 	property="title_name" />
+			<result column="title_kind" 	property="title_kind" />
+			<result column="branch_conf_yn" property="branch_conf_yn" />
+			<result column="create_dt" 		property="create_dt" />
+			<result column="create_no" 		property="create_no" />
+	 </resultMap>
+	    
+	<!-- 컨텐츠 등록 소스 경로 조회 -->
+	<select id="selectContentTitleListTblList" resultMap="selectContentTitleListTblListResult" parameterType="socialUp.service.content.dto.ContentTitleTblDTO">
+	     	select tt_no
+					,title_name
+					,title_kind
+					,branch_conf_yn
+					,mt_no
+					,order_mem_open_yn
+					,order_mem_join_yn
+					,order_mem_join_passwd
+					,create_dt
+					,create_no
+			 from content_title_tbl	 
+			 where  mt_no = #{mt_no}
+			 <if test="tt_no != null and tt_no != '' ">
+			 	and tt_no = #{tt_no}
+			 </if>
+			 
+			
+			order by  tt_no desc
+	</select>
+    	
+ 
+ 	<!-- 컨텐츠 등록 소스 경로 등록  -->
+	 <insert id="insertContentTitleListTbl" parameterType="socialUp.service.content.dto.ContentTitleTblDTO">
+	    		
+				INSERT INTO content_title_tbl( 
+							title_name
+							,title_kind
+							,branch_conf_yn
+							,mt_no
+							,order_mem_open_yn
+							,order_mem_join_yn
+							,order_mem_join_passwd
+							,create_dt
+							,create_no
+							,update_dt
+							,update_no)
+				VALUES(
+						#{title_name}
+						,#{title_kind}
+						,#{branch_conf_yn}
+						,#{mt_no}
+						,#{order_mem_open_yn}
+						,#{order_mem_join_yn}
+						,#{order_mem_join_passwd}
+						,#{create_dt}
+						,#{create_no}
+						,#{update_dt}
+						,#{update_no}
+					)
+	    	
+	<selectKey resultType="String" keyProperty="tt_no"> select last_insert_id() as tt_no </selectKey>
+	
+	</insert>
+	
+	<update id="socialUp.service.content.mapper.updateContentTitle" parameterType="socialUp.service.content.dto.ContentTitleTblDTO">
+		update content_title_tbl set update_dt  = DATE_FORMAT(#{update_dt},'%Y%m%d%H%i%s')
+					,update_no	= #{update_no}
+					<if test="title_name != null and title_name != '' ">
+						,title_name = #{title_name}
+					</if>
+					<if test="title_kind != null and title_kind != '' ">
+						,title_kind = #{title_kind}
+					</if>
+					<if test="branch_conf_yn != null and branch_conf_yn != '' ">
+						,branch_conf_yn = #{branch_conf_yn}
+					</if>
+					<if test="order_mem_open_yn != null and order_mem_open_yn != '' ">
+						,order_mem_open_yn = #{order_mem_open_yn}
+					</if>
+					<if test="order_mem_join_yn != null and order_mem_join_yn != '' ">
+						,order_mem_join_yn = #{order_mem_join_yn}
+					</if>
+					<if test="order_mem_join_passwd != null and order_mem_join_passwd != '' ">
+						,order_mem_join_passwd = #{order_mem_join_passwd}
+					</if>
+		where tt_no = #{tt_no}
+	</update>
+	
+	
+    
+  
+ 
+</mapper>
+

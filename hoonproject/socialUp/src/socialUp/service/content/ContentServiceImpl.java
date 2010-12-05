@@ -16,7 +16,7 @@ import socialUp.service.content.dao.ContentSourceTblDAO;
 import socialUp.service.content.dao.ContentTitleListTblDAO;
 import socialUp.service.content.dao.ContentTitleListTblDAOImpl;
 import socialUp.service.content.dto.ContentSourceTblDTO;
-import socialUp.service.content.dto.ContentTitleListTblDTO;
+import socialUp.service.content.dto.ContentTitleTblDTO;
 import socialUp.service.member.dao.MemTblDAO;
 import socialUp.service.member.dao.MemTblDAOImpl;
 import socialUp.service.member.dto.MemTblDTO;
@@ -72,7 +72,7 @@ public class ContentServiceImpl implements ContentService
 	 * @param param
 	 * @throws Exception
 	 */
-	public String addMemGoreContent(List<ContentSourceTblDTO> contentSourceArr ,ContentTitleListTblDTO contentTitleListParam) throws Exception
+	public String addMemContent(List<ContentSourceTblDTO> contentSourceArr ,ContentTitleTblDTO contentTitleListParam) throws Exception
 	{
 		String resultVal = "";
 		
@@ -118,6 +118,94 @@ public class ContentServiceImpl implements ContentService
 	}
 	
 	
+	/**
+	 * 회원의 등록된 타이틀목록을  가져온다.
+	 * 
+	 * @param param
+	 * @throws Exception
+	 */
+	public List<ContentTitleTblDTO> selectContentTitleList(ContentTitleTblDTO contentTitleListParam) throws Exception
+	{
+
+		log.debug("selectContentSourceTbl 시작");
+		
+		List<ContentTitleTblDTO> resultList = null;
+		// sql session 생성
+		SqlSession sqlMap = MyBatisManager.getInstanceSqlSession("");
+		
+		try{
+		
+		
+		// 회원테이블 조회용 객체 생성
+		ContentTitleListTblDAO contentTitleListTblDAO = (ContentTitleListTblDAO)DaoFactory.createDAO(ContentTitleListTblDAOImpl.class);
+		contentTitleListTblDAO.setSqlSesstion(sqlMap);			// sql session 설정
+		
+		// 회원정보조회
+		resultList = contentTitleListTblDAO.selectContentTitleListTbl(contentTitleListParam);
+		
+		sqlMap.commit();
+		}
+		catch (Exception e)
+		{
+			sqlMap.rollback();
+			e.printStackTrace();
+			throw e;
+		}
+		finally {sqlMap.close();}
+		
+		
+		return resultList;
+	}
+
+	/**
+	 * 회원의 고리정보를 update 한다.
+	 * 
+	 * @param param
+	 * @throws Exception
+	 */
+	public String  updtaeMemContent(List<ContentSourceTblDTO> contentSourceArr ,ContentTitleTblDTO contentTitleListParam) throws Exception
+	{
+		String resultVal ="";
+		log.debug("updtaeMemContent 시작");
+		
+		// sql session 생성
+		SqlSession sqlMap = MyBatisManager.getInstanceSqlSession("");
+		
+		try{
+		
+		
+		// 회원테이블 조회용 객체 생성
+		ContentTitleListTblDAO 	contentTitleListTblDAO 	= (ContentTitleListTblDAO)DaoFactory.createDAO(ContentTitleListTblDAOImpl.class);
+		ContentSourceTblDAO 	contentSourceTblDAO 	= (ContentSourceTblDAO)DaoFactory.createDAO(ContentSourceTblDAOImpl.class);
+		
+		contentTitleListTblDAO.setSqlSesstion(sqlMap);			// sql session 설정
+		contentSourceTblDAO.setSqlSesstion(sqlMap);
+		
+		// 타이틀 정보 업데이트
+		contentTitleListTblDAO.updateContentTitle(contentTitleListParam);
+		
+		// 컨텐츠 소스 정보 업데이트
+		for (int i=0;i<contentSourceArr.size();i++)
+		{
+			contentSourceTblDAO.updateContentSource(contentSourceArr.get(i));
+		}
+		
+		sqlMap.commit();
+		}
+		catch (Exception e)
+		{
+			sqlMap.rollback();
+			e.printStackTrace();
+			throw e;
+		}
+		finally {sqlMap.close();}
+		
+		return resultVal;
+	}
+	
+
+	
+		
 
 	
 	}

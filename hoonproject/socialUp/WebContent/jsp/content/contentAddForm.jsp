@@ -38,7 +38,7 @@
 		//alert("텍스트 에어리어에서포커스 떠났음");
 	}
 	
-	function contentFirstAddProc()
+	function contentAddFinish()
 	{
 		var err_code = 0;
 		
@@ -138,7 +138,7 @@
  						<p class="date">Posted by Jack <img src="<%=rootUrl%>images/more.gif" alt="" /> <a href="#">Read more</a> <img src="<%=rootUrl%>images/comment.gif" alt="" /> <a href="#">Comments(15)</a> <img src="<%=rootUrl%>images/timeicon.gif" alt="" /> 13.01.</p><br />				
 					</div>
 					
-					<p align='center'><a href='javascript:contentFirstAddProc()'>******* 등록 *******</a></p>
+					<p align='center'><a href='javascript:contentAddFinish()'>******* 등록 *******</a></p>
 				</div>
 </form>
 				
