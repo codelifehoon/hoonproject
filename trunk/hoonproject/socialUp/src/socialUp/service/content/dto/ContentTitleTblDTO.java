@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ContentTitleListTblDTO 
+public class ContentTitleTblDTO 
 {
 	String tt_no;
 	String title_name;

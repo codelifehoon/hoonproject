@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 import socialUp.common.util.NumUtil;
 import socialUp.service.member.dto.MemTblDTO;
 
-public class ContentTblDAOImpl implements ContentTblDAO {
+public class ContentTblDAOImpl implements ContentDtlTblDAO {
 	
 
 	public Logger log = Logger.getLogger(this.getClass());

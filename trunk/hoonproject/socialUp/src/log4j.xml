@@ -38,7 +38,7 @@
                    value="%p - %m%n"/>
         </layout>
     </appender>
-<!-- 
+ 
     <logger name="org.apache.ibatis">
         <level value="DEBUG"/>
         <appender-ref ref="CONSOLE"/>
@@ -60,17 +60,61 @@
         <level value="DEBUG"/>
         <appender-ref ref="CONSOLE"/>
     </logger>
--->
+
     <logger name="socialUp">
         <level value="DEGUG"/>
         <appender-ref ref="CONSOLE"/>
     </logger>
+	
+ 
+ <!-- 
+	<logger name="log4jdbc.debug" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="CONSOLE" />
+	</logger>
+  
+ 
+ <logger name="jdbc.audit" additivity="false">
+    <level value="DEBUG"/>
+    <appender-ref ref="CONSOLE"/>
+  </logger>
+  
+  <logger name="com.opensymphony" additivity="false">
+    <level value="DEBUG"/>
+    <appender-ref ref="CONSOLE"/>
+  </logger>
+  
+  <logger name="org.apache.struts2" additivity="false">
+    <level value="DEBUG"/>
+    <appender-ref ref="CONSOLE"/>
+  </logger>
+  
+  
+ -->
 
+  <logger name="jdbc.sqlonly" additivity="false">
+    <level value="DEBUG"/>
+    <appender-ref ref="CONSOLE"/>
+  </logger>
 
+ <logger name="org.apache.struts2" additivity="false">
+    <level value="INFO"/>
+    <appender-ref ref="CONSOLE"/>
+  </logger>
+   
+    <logger name="com.opensymphony" additivity="false">
+    <level value="DEBUG"/>
+    <appender-ref ref="CONSOLE"/>
+  </logger>
+  
+     
+  
+  
     <root>
-        <level value="DEGUG"/>
+        <level value="ERROR"/>
         <appender-ref ref="CONSOLE"/>
     </root>
+
 
 </log4j:configuration>
 

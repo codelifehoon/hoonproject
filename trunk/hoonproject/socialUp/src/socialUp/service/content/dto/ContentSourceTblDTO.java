@@ -24,6 +24,7 @@ public class ContentSourceTblDTO
 	String update_dt;
 	String update_no;
 	String mt_no;
+	String use_yn;
 	
 	public String getCs_no() {
 		return cs_no;
@@ -102,6 +103,12 @@ public class ContentSourceTblDTO
 	}
 	public void setUpdate_no(String update_no) {
 		this.update_no = update_no;
+	}
+	public String getUse_yn() {
+		return use_yn;
+	}
+	public void setUse_yn(String use_yn) {
+		this.use_yn = use_yn;
 	}
 	
 }

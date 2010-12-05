@@ -37,7 +37,7 @@
     </filter-mapping>
 
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>/socialUp/index.action</welcome-file>
     </welcome-file-list>
 
 

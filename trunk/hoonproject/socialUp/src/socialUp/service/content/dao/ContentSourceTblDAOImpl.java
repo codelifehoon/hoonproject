@@ -23,7 +23,7 @@ public class ContentSourceTblDAOImpl implements ContentSourceTblDAO {
 	}
 	
 	/**
-	 * 회원 테이블 정보 입력
+	 * 컨텐츠 소스 입력
 	 * @param param
 	 * @throws Exception
 	 */
@@ -39,20 +39,23 @@ public class ContentSourceTblDAOImpl implements ContentSourceTblDAO {
 	}
 	
 	/**
-	 * 회원정보 수정
+	 * 컨텐츠 소스 수정
 	 * 
 	 * @param param
 	 * @throws Exception
 	 */
-	public int updateContentSourceTbl(ContentSourceTblDTO conParam) throws Exception
+	public int updateContentSource(ContentSourceTblDTO conParam) throws Exception
 	{
 		log.debug("updateContentSourceTbl 시작");
+		
+		this.sqlMap.update("socialUp.service.content.mapper.insertupdateContentSource", conParam);
+		
 		return 0;
 	}
 	
 	
 	/**
-	 * 회원정보 조회
+	 * 컨텐츠 소스 조회
 	 * 
 	 * @param param
 	 * @throws Exception

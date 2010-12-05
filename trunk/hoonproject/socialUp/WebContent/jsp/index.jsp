@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="socialUp.service.content.dto.ContentTitleTblDTO" %>
+<%@ page import="java.util.List" %>
 <%@ include file="/jsp/common/pageCommon.jsp"%>
 <%	
 
@@ -23,6 +25,8 @@
 		logger.debug("mem_nm:" + loginMemTblDTO.getMem_nm());
 	}
 */
+	List<ContentTitleTblDTO>  regContentTitleList = (List<ContentTitleTblDTO>)request.getAttribute("regContentTitleList");
+	
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -113,12 +117,25 @@
 						<div id='memRegMsg'></div>
 					<%}else { %>
 						<p><a href='<%=rootUrl %>/content/contentAddForm.action'>신규 고리 만들기 </a></p>
-						<p>친구등록현황 </p>
+						<p>나의 글고리 등록현황 </p>
+						<%
+							if (regContentTitleList != null)
+							{
+								for (int i=0;i<regContentTitleList.size();i++)
+								{
+									%>
+											<p><a href='<%=rootUrl %>/content/contentEditForm.action?tt_no=<%=regContentTitleList.get(i).getTt_no() %>'>
+											<%=regContentTitleList.get(i).getTitle_name() %></a></p>
+									<%
+								}
+							}
+						%>
 						
 						
 					<%} %>
 					</div>
 				</div>
+			
 			
 				<div class="sd_left">
 					<div class="text_padding">	

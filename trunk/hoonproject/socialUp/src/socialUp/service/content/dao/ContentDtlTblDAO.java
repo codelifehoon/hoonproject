@@ -14,7 +14,7 @@ import org.apache.ibatis.session.SqlSession;
 import socialUp.service.member.dto.MemTblDTO;
 
 
-public interface ContentTblDAO 
+public interface ContentDtlTblDAO 
 {
 	
 

@@ -12,6 +12,8 @@ import socialUp.common.ServiceFactory;
 import socialUp.common.util.CookieUtil;
 import socialUp.common.util.DateTime;
 import socialUp.common.util.DebugUtil;
+import socialUp.service.content.ContentService;
+import socialUp.service.content.dto.ContentTitleTblDTO;
 import socialUp.service.member.MemberService;
 import socialUp.service.member.MemberServiceImpl;
 import socialUp.service.member.dto.MemTblDTO;
@@ -36,7 +38,6 @@ public class MemberAction extends BaseActionSupport
 	public MemTblDTO getLoginMemTblDTO() {
 		return loginMemTblDTO;
 	}
-
 
 	@Override
 	public String execute() throws Exception {
@@ -149,7 +150,7 @@ public class MemberAction extends BaseActionSupport
 			// 로그인  정보를 login결과 페이지로 넘긴다.
 			authInfo.setMem_id(this.loginMemTblDTO.getMem_id());
 			authInfo.setMem_nm(this.loginMemTblDTO.getMem_nm());
-			authInfo.setMt_no(String.valueOf(this.loginMemTblDTO.getMt_no()));
+			authInfo.setMt_no(this.loginMemTblDTO.getMt_no());
 			
 			// 로그인  쿠키 처리
 			AuthService.setAuthInfo(authInfo, this.request, this.response);
@@ -180,6 +181,9 @@ public class MemberAction extends BaseActionSupport
 		return  returnVal;
 	
 	}
+
+
+	
  	
 
 }

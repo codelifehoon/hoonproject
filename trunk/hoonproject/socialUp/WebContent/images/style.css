@@ -215,6 +215,17 @@ input.submit { width: 28px; height: 20px; font-weight: bold; border: none; backg
 	padding: 0.4em 0 0 0; 
 	border-top: 1px solid #FFDEAB;
 }
+
+.dateleft { 
+	color: #46574D; 
+	background: #FFFFFF;
+	text-align: left; 
+	margin: 10px 0 5px 0; 
+	padding: 0.4em 0 0 0; 
+	border-bottom: 1px solid #FFDEAB;
+}
+
+
 .date img {
 	vertical-align: middle;
 }
