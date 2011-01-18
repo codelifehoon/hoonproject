@@ -786,3 +786,9 @@ function getEleById(id)
 {
 	return document.getElementById(id);
 }
+function getF()
+{
+	return document.defForm;
+}
+	
+	

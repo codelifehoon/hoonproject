@@ -19,11 +19,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<result column="create_dt" 			property="create_dt" />
 			<result column="create_no" 			property="create_no" />
 			<result column="mt_no" 				property="mt_no" />
+			<result column="last_proc_dt" 		property="last_proc_dt" />
+			<result column="next_prod_dt" 		property="next_prod_dt" />
+			<result column="read_fail_count" 	property="read_fail_count" />
+			
+			
 	 </resultMap>
 	    
 	<!-- 컨텐츠 등록 소스 경로 조회 -->
 	<select id="selectContentSourceTblList" resultMap="selectContentSourceTblListResult" parameterType="socialUp.service.content.dto.ContentSourceTblDTO">
-	     	select cs_no
+	     	select /*selectContentSourceTblList 2010.12.01*/cs_no
 				,tt_no
 				,rss2_url
 				,source_kind
@@ -34,6 +39,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				,create_dt
 				,create_no
 				,mt_no
+				,last_proc_dt
+				,next_prod_dt
+				,read_fail_count
+
 			 from content_source_tbl	 
 			 where use_yn = 'Y' 
 			 and mt_no = #{mt_no}
@@ -50,7 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	<!-- 컨텐츠 등록 소스 경로 등록  -->
 	 <insert id="insertContentSourceTbl" parameterType="socialUp.service.content.dto.ContentSourceTblDTO">
 	    		
-				INSERT INTO content_source_tbl( 
+				INSERT INTO /*insertContentSourceTbl 2010.12.01*/ content_source_tbl( 
 							tt_no
 							,mt_no
 							,rss2_url
@@ -63,7 +72,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 							,create_dt
 							,create_no
 							,update_dt
-							,update_no)
+							,update_no
+							,last_proc_dt
+							,next_prod_dt
+							,read_fail_count)
 				VALUES(
 						#{tt_no}
 						,#{mt_no}
@@ -76,8 +88,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 						,'Y'
 						,#{create_dt}
 						,#{create_no}
-						,#{update_dt}
-						,#{update_no}
+						,#{create_dt}
+						,#{create_no}
+						,#{last_proc_dt}
+						,#{next_prod_dt}
+						,#{read_fail_count}
 				)
 	    	
 	<selectKey resultType="String" keyProperty="cs_no"> select last_insert_id() as cs_no </selectKey>
@@ -85,10 +100,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
     
   
-  	<update id="socialUp.service.content.mapper.insertupdateContentSource" parameterType="socialUp.service.content.dto.ContentSourceTblDTO">
-  		update content_source_tbl set
-  							update_dt	= DATE_FORMAT(#{update_dt},'%Y%m%d%H%i%s')
-							,update_no	= #{update_no}
+  	<update id="updateContentSource" parameterType="socialUp.service.content.dto.ContentSourceTblDTO">
+  		update /*updateContentSource 2010.12.01*/ content_source_tbl set
+  							update_dt	= DATE_FORMAT(#{create_dt},'%Y%m%d%H%i%s')
+							,update_no	= #{create_no}
 							
 							<if test="rss2_url != null and rss2_url != ''">
 								,rss2_url = #{rss2_url}
@@ -111,6 +126,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 							<if test="use_yn != null and use_yn != ''">
 								,use_yn = #{use_yn}
 							</if>
+							
+							<if test="last_proc_dt != null and last_proc_dt != ''">
+								,last_proc_dt = #{last_proc_dt}
+							</if>
+							<if test="next_prod_dt != null and next_prod_dt != ''">
+								,next_prod_dt = #{next_prod_dt}
+							</if>
+							<if test="read_fail_count != null and read_fail_count != '' and read_fail_count != 'ai' "  >
+								,read_fail_count = #{read_fail_count}
+							</if>
+							<!--  자동증가를 요청 했을때 -->
+							<if test="read_fail_count == 'ai'">
+								,read_fail_count = read_fail_count +1
+							</if>
+							
+							
 							
   		where  cs_no = #{cs_no}
   	</update>

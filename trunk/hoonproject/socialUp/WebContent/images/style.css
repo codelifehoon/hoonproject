@@ -55,13 +55,22 @@ input.submit { width: 28px; height: 20px; font-weight: bold; border: none; backg
 	
 }
 
+.header .loginf {
+	float: right;
+	margin-right: 15px;
+	clear: both;
+	margin-top: 25px;
+	
+}
+
 .header .searchf {
 	float: right;
 	margin-right: 15px;
 	clear: both;
-	margin-top: 35px;
+	margin-top: 0px;
 	
 }
+
 
 .searchpad { padding-top: 15px; }
 
@@ -213,7 +222,7 @@ input.submit { width: 28px; height: 20px; font-weight: bold; border: none; backg
 	text-align: right; 
 	margin: 10px 0 5px 0; 
 	padding: 0.4em 0 0 0; 
-	border-top: 1px solid #FFDEAB;
+	border-top: 1px solid #FF9C00;
 }
 
 .dateleft { 
@@ -222,7 +231,16 @@ input.submit { width: 28px; height: 20px; font-weight: bold; border: none; backg
 	text-align: left; 
 	margin: 10px 0 5px 0; 
 	padding: 0.4em 0 0 0; 
-	border-bottom: 1px solid #FFDEAB;
+	border-bottom: 1px solid #FF9C00;
+}
+
+.datecenter { 
+	color: #46574D; 
+	background: #FFFFFF;
+	text-align: center; 
+	margin: 10px 0 5px 0; 
+	padding: 0.4em 0 0 0; 
+	border-bottom: 1px solid #FF9C00;
 }
 
 

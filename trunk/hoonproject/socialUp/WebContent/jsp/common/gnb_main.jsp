@@ -8,7 +8,7 @@
 	<div class="content">
 			
 			<div class="header">
-				<div class="searchf">
+				<div class="loginf">
 					<form method="post" action="<%=rootUrl %>/member/memberMemLogIn.action">
 						<p>
 						<%if (!authInfo.isAuth()){ %>
@@ -21,6 +21,13 @@
 						</p>
 					</form>
 				</div>
+				
+				<div class="searchf">
+				<form method="post" action="<%=rootUrl %>/search/searchResultList.action">
+				<input type="text" name="searchStr" class="search" style="width:307px;"/> <input type='submit' name='submit' value="검   색">
+				</form>  
+				</div>
+				
 				<div class="leftside">
 				<h1>RSS 공유모임</h1>
 				<h2>자신의 블로그를 다른사람과 공유하세요.</h2>

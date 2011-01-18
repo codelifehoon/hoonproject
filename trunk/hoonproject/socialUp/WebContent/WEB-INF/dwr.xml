@@ -3,14 +3,21 @@
 <dwr>
   
   <allow>
-    <create creator="new" javascript="DwrAction"> 
+    <create creator="new" javascript="DwrMemAction"> 
      <!-- javascript에서 쓰일 메소드(여기선 CommentManager) 이름 -->
-      <param name="class" value="socialUp.action.dwr.DwrAction"/>
+      <param name="class" value="socialUp.action.dwr.DwrMemAction"/>
+    </create>
+    
+    <create creator="new" javascript="DwrContentAction"> 
+     <!-- javascript에서 쓰일 메소드(여기선 CommentManager) 이름 -->
+      <param name="class" value="socialUp.action.dwr.DwrContentAction"/>
       
     </create>
     
+    
     <!-- 자바 메소드의 객체를 객체를 생성해주는 설정   -->
     <convert converter="bean" match="socialUp.service.member.dto.MemTblDTO"/>
+    <convert converter="bean" match="socialUp.service.content.dto.ContentDtlCommentDTO"/>
     
   </allow>
   

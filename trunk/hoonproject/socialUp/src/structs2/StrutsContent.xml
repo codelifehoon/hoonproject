@@ -11,11 +11,28 @@
 	 	/content/contentAddFinish		: 컨텐츠최초등록처리
 	 	/content/contentEditForm		: 컨텐츠수정처리
 	 	/content/contentEditFinish		: 컨텐츠수정처리
- 	 
+	 	/content/contentDtlList			: 컨텐츠리스트보기
+	 	
+	 	/content/contentDtlView			: 컨텐츠를 읽는다.
+	 	/content/contentDtlEditForm		: 신규 컨텐츠상세(새글) 등록폼
+	 	/content/contentDtlEditFinish	: 신규 컨텐츠상세(새글) 등록하기
+	 	
+	 	/content/contentBranchTitleForm		: 컨텐츠 타이틀의 브랜치를 따기 위한 화면
+	 	/content/contentBranchTitleFinish	: 컨텐츠 타이틀의 브랜치 결과화면
+	 	
+		/content/contentJoinMemForm		: 컨텐츠 타이틀에 참여하기 위한 화면
+		/content/contentJoinMemFinish	: 컨텐츠 타이틀에 참여하기 결과화면
+		
+		/content/contentJoinContFrom	: 나의 컨텐츠 타이틀을  내가 스스로 참여하기 위한 폼
+		/content/contentJoinContFinish	: 나의 컨텐츠 타이틀을  내가 스스로 참여결과화면
+		 	
   	-->
+  	
     <package name="content" namespace="/content" extends="struts-default">
-        <action name="content*" method="{1}" class="socialUp.action.ContentAction" >
+        <action name="content*" method="{1}" 	class="socialUp.action.ContentAction">
             <result name="DEFAULT">/jsp/content/content{1}.jsp</result>			<!--  기본 action 처리 -->
+            <result name="CONTENT_READ_AUTH">/jsp/content/contentReadAuth.jsp</result>
+            
             
         </action>
     </package>

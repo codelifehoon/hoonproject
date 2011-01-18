@@ -12,8 +12,6 @@
  	
  	membeUpdateForm		: 회원정보 화면 action
  	membeUpdateProc		: 회원정보 처리 action
- 	
- 	 
   -->
     <package name="member" namespace="/member" extends="struts-default">
         <action name="member*" method="{1}" class="socialUp.action.MemberAction" >

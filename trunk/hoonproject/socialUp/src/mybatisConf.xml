@@ -10,13 +10,14 @@
    <dataSource type="POOLED">
    <!-- com.mysql.jdbc.Driver 로그를 보기 위해서  변경(net.sf.log4jdbc.DriverSpy)-->
     <property name="driver" value="net.sf.log4jdbc.DriverSpy"/>
-    <property name="url" value="jdbc:log4jdbc:mysql://localhost:3306/yourvest"/>
+    <property name="url" value="jdbc:log4jdbc:mysql://localhost:3306/goreee?characterEncoding=UTF8"/>
     <property name="username" value="root"/>
-    <property name="password" value="1111"/>
+    <property name="password" value="1234"/>
     <!--  일정시간  연결이 없을때  db서버에서 연결끊는걸 방지하기위해서 pool ping 설정을한다. -->
     <property name="poolPingQuery" value="select 1"/>
     <property name="poolPingEnabled" value="true"/>
-    <property name="poolPingConnectionsNotUsedFor" value="5000"/>
+    <property name="poolPingConnectionsNotUsedFor" value="1000"/>
+           
            
    </dataSource>
   </environment>
@@ -25,11 +26,15 @@
   
  <mappers>
 
+	<mapper resource="socialUp/service/common/mapper/common.xml" />
  	<mapper resource="socialUp/service/member/mapper/MemTbl.xml" />
  	<mapper resource="socialUp/service/content/mapper/ContentTitleTbl.xml" />
  	<mapper resource="socialUp/service/content/mapper/ContentSourceTbl.xml" />
- 	<mapper resource="socialUp/service/common/mapper/common.xml" />
- 	
+ 	<mapper resource="socialUp/service/content/mapper/contentCollect.xml"/>
+	<mapper resource="socialUp/service/content/mapper/ContentBranch.xml"/>
+	<mapper resource="socialUp/service/content/mapper/ContentDtlTbl.xml"/>
+	<mapper resource="socialUp/service/content/mapper/ContentDtlComment.xml"/>
+
  </mappers>
  
 </configuration>

@@ -4,6 +4,8 @@ package socialUp.service.content.dao;
 
 import java.util.List;
 import org.apache.ibatis.session.SqlSession;
+
+import socialUp.service.content.dto.ContentJoinMemDTO;
 import socialUp.service.content.dto.ContentTitleTblDTO;
 
 public interface ContentTitleListTblDAO 
@@ -18,6 +20,15 @@ public interface ContentTitleListTblDAO
 	 * @throws Exception
 	 */
 	public int insertContentTitleListTbl(ContentTitleTblDTO conTitleParam) throws Exception ;
+	
+	
+	/**
+	 * 컨텐츠 컨텐츠타이틀 참여회원등록 
+	 * @param param
+	 * @throws Exception
+	 */
+	public int insertContentTitleListTbl(ContentJoinMemDTO contentJoinMemDTO)	throws Exception;
+	
 	
 	/**
 	 * 컨텐츠 수정
@@ -37,7 +48,35 @@ public interface ContentTitleListTblDAO
 	public List<ContentTitleTblDTO> selectContentTitleListTbl(ContentTitleTblDTO conTitleParam) throws Exception ;
 	
 
+	/**
+	 * 컨텐츠타이틀 참여회원등록 
+	 * 
+	 * @param contentJoinMem
+	 * @return
+	 * @throws Exception
+	 */
+	public int insertContentJoinMem(ContentJoinMemDTO contentJoinMem) throws Exception ;
+	
+	
+	
+	/**
+	 * 컨텐츠타이틀 참여회원수정
+	 * 
+	 * @param contentJoinMem
+	 * @return
+	 * @throws Exception
+	 */
+	public int updateContentJoinMem(ContentJoinMemDTO contentJoinMem) throws Exception ;
 
+	
+	/**
+	 * 컨텐츠타이틀 참여회원조회
+	 * 
+	 * @param contentJoinMem
+	 * @return
+	 * @throws Exception
+	 */
+	public List<ContentJoinMemDTO> selectContentJoinMemList(ContentJoinMemDTO contentJoinMem) throws Exception ;
 	
 	
 }

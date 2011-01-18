@@ -8,23 +8,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import socialUp.service.common.dto.BaseDTO;
 
-public class ContentSourceTblDTO 
+
+public class ContentSourceTblDTO  extends BaseDTO 
 {
-	String cs_no;
-	String tt_no;
-	String rss2_url;
-	String source_kind;
-	String source_dtl_kind;
-	String source_owner_kind;
-	String source_login_id;
-	String reg_stat;
-	String create_dt;
-	String create_no;
-	String update_dt;
-	String update_no;
-	String mt_no;
-	String use_yn;
+	private String cs_no;
+	private String tt_no;
+	private String rss2_url;
+	private String source_kind;
+	private String source_dtl_kind;
+	private String source_owner_kind;
+	private String source_login_id;
+	private String reg_stat;
+	private String create_dt;
+	private String create_no;
+	private String update_dt;
+	private String update_no;
+	private String mt_no;
+	private String use_yn;
+	private String last_proc_dt;
+	private String next_prod_dt;
+	private String read_fail_count;
+	private ContentCollectDTO contentCollect;		// 컨텐츠 소스 수집상태
+	private List<ContentDtlTblDTO> contentDtlList;	// 컨텐츠 등록목록 
 	
 	public String getCs_no() {
 		return cs_no;
@@ -109,6 +116,36 @@ public class ContentSourceTblDTO
 	}
 	public void setUse_yn(String use_yn) {
 		this.use_yn = use_yn;
+	}
+	public String getRead_fail_count() {
+		return read_fail_count;
+	}
+	public void setRead_fail_count(String read_fail_count) {
+		this.read_fail_count = read_fail_count;
+	}
+	public ContentCollectDTO getContentCollect() {
+		return contentCollect;
+	}
+	public void setContentCollect(ContentCollectDTO contentCollect) {
+		this.contentCollect = contentCollect;
+	}
+	public String getLast_proc_dt() {
+		return last_proc_dt;
+	}
+	public void setLast_proc_dt(String last_proc_dt) {
+		this.last_proc_dt = last_proc_dt;
+	}
+	public String getNext_prod_dt() {
+		return next_prod_dt;
+	}
+	public void setNext_prod_dt(String next_prod_dt) {
+		this.next_prod_dt = next_prod_dt;
+	}
+	public List<ContentDtlTblDTO> getContentDtlList() {
+		return contentDtlList;
+	}
+	public void setContentDtlList(List<ContentDtlTblDTO> contentDtlList) {
+		this.contentDtlList = contentDtlList;
 	}
 	
 }
