@@ -3,20 +3,29 @@ package socialUp.action.dwr;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 
+import socialUp.common.AuthInfo;
+import socialUp.common.AuthService;
 import socialUp.common.DaoFactory;
 import socialUp.common.ServiceFactory;
 import socialUp.common.mybatis.MyBatisManager;
 import socialUp.common.util.CookieUtil;
 import socialUp.common.util.DateTime;
 import socialUp.common.util.DebugUtil;
+import socialUp.service.content.ContentService;
+import socialUp.service.content.ContentServiceImpl;
+import socialUp.service.content.dto.ContentDtlCommentDTO;
 import socialUp.service.member.MemberService;
 import socialUp.service.member.MemberServiceImpl;
 import socialUp.service.member.dao.MemTblDAO;
@@ -25,7 +34,7 @@ import socialUp.service.member.dto.MemTblDTO;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-public class DwrAction extends BaseDwrAction 
+public class DwrMemAction extends BaseDwrAction 
 {
 
 
@@ -48,7 +57,7 @@ public class DwrAction extends BaseDwrAction
 		resultMap.put("result_msg","성공");
 		
 		
-		memTblDTO.setCreate_ip(this.request.getRemoteAddr());
+		memTblDTO.setCreate_ip(this.getRequest().getRemoteAddr());
 		memTblDTO.setCreate_dt(sCurrentDate);
 		
 		
@@ -82,7 +91,7 @@ public class DwrAction extends BaseDwrAction
 	
 		if (log.isDebugEnabled()) log.debug("회원가입정보:" + DebugUtil.DebugBo(memTblDTO));
 		// 회원가입이 되면 바로 로그인 처리 해준다.
-		CookieUtil cookieUtil = new CookieUtil(this.request, this.response);
+		CookieUtil cookieUtil = new CookieUtil(this.getRequest(), this.getResponse());
 		// 쿠키에 한글이 필요할경우 차후 확인해서 처리함
 		//cookieUtil.add(CookieUtil.TP,"mem_id", URLEncoder.encode(memTblDTO.getMem_id(),"EUC-KR"));
 		cookieUtil.add(CookieUtil.TP,"mt_no", String.valueOf(regSeq));

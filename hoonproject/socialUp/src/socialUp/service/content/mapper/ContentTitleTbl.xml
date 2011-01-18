@@ -12,37 +12,54 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<result column="title_name" 	property="title_name" />
 			<result column="title_kind" 	property="title_kind" />
 			<result column="branch_conf_yn" property="branch_conf_yn" />
+			<result column="mt_no" 			property="mt_no" />
+			<result column="order_mem_open_yn" 		property="order_mem_open_yn" />
+			<result column="order_mem_join_yn" 		property="order_mem_join_yn" />
+			<result column="order_mem_join_metd" 	property="order_mem_join_metd" />
+			<result column="order_mem_join_passwd" 	property="order_mem_join_passwd" />
 			<result column="create_dt" 		property="create_dt" />
 			<result column="create_no" 		property="create_no" />
 	 </resultMap>
-	    
+
+
 	<!-- 컨텐츠 등록 소스 경로 조회 -->
 	<select id="selectContentTitleListTblList" resultMap="selectContentTitleListTblListResult" parameterType="socialUp.service.content.dto.ContentTitleTblDTO">
-	     	select tt_no
+	     	select /*selectContentTitleListTblList 2010.12.12*/ tt_no
 					,title_name
 					,title_kind
 					,branch_conf_yn
 					,mt_no
 					,order_mem_open_yn
 					,order_mem_join_yn
+					,order_mem_join_metd
 					,order_mem_join_passwd
 					,create_dt
 					,create_no
 			 from content_title_tbl	 
-			 where  mt_no = #{mt_no}
+			 where  1=1
+			 and use_yn = 'Y'
+			 <if test="mt_no != null and mt_no != '' ">
+			 	and mt_no = #{mt_no}
+			 </if>
 			 <if test="tt_no != null and tt_no != '' ">
 			 	and tt_no = #{tt_no}
 			 </if>
 			 
-			
+			 <!-- 필수 검색조건이 안들어올경우 검색이 안되게 처리 -->
+			 <if test=" (mt_no == null or mt_no == '') and  (tt_no == null or tt_no == '') ">
+			 	and 1=2
+			 </if> 
+				
 			order by  tt_no desc
+			 <!--  별도의 필수 제약조건이없어서 최대 100건만 조회되도록 limit 처리한다. -->
+			limit 0,100
 	</select>
     	
  
- 	<!-- 컨텐츠 등록 소스 경로 등록  -->
+ 	<!-- 컨텐츠타이틀 등록  -->
 	 <insert id="insertContentTitleListTbl" parameterType="socialUp.service.content.dto.ContentTitleTblDTO">
 	    		
-				INSERT INTO content_title_tbl( 
+				INSERT INTO /*insertContentTitleListTbl 2010.12.12*/ content_title_tbl( 
 							title_name
 							,title_kind
 							,branch_conf_yn
@@ -62,19 +79,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 						,#{order_mem_open_yn}
 						,#{order_mem_join_yn}
 						,#{order_mem_join_passwd}
-						,#{create_dt}
+						,DATE_FORMAT(#{create_dt},'%Y%m%d%H%i%s')
 						,#{create_no}
-						,#{update_dt}
-						,#{update_no}
+						,DATE_FORMAT(#{update_dt},'%Y%m%d%H%i%s')
+						,#{create_no}
 					)
 	    	
 	<selectKey resultType="String" keyProperty="tt_no"> select last_insert_id() as tt_no </selectKey>
 	
 	</insert>
 	
-	<update id="socialUp.service.content.mapper.updateContentTitle" parameterType="socialUp.service.content.dto.ContentTitleTblDTO">
-		update content_title_tbl set update_dt  = DATE_FORMAT(#{update_dt},'%Y%m%d%H%i%s')
-					,update_no	= #{update_no}
+	
+	<update id="updateContentTitle" parameterType="socialUp.service.content.dto.ContentTitleTblDTO">
+		update /*updateContentTitle 2010.12.12*/  content_title_tbl set update_dt  = DATE_FORMAT(#{create_dt},'%Y%m%d%H%i%s')
+					,update_no	= #{create_no}
 					<if test="title_name != null and title_name != '' ">
 						,title_name = #{title_name}
 					</if>
@@ -96,8 +114,77 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where tt_no = #{tt_no}
 	</update>
 	
+	<!-- 컨텐츠타이틀 참여회원등록 -->
+	 <insert id="insertContentJoinMem" parameterType="socialUp.service.content.dto.ContentJoinMemDTO">
+				INSERT INTO /*insertContentJoinMem 2010.12.12*/ content_join_mem(
+									tt_no
+								,	mt_no
+								,	stat
+								, 	mt_grade
+								,	create_dt
+								,	create_no
+								,	update_dt
+								,	update_no
+								 )
+				VALUES(				#{tt_no}
+								,	#{mt_no}
+								,	#{stat}
+								, 	#{mt_grade}
+								,	DATE_FORMAT(#{create_dt},'%Y%m%d%H%i%s')
+								,	#{create_no}
+								,	#{update_dt}
+								,	DATE_FORMAT(#{update_no},'%Y%m%d%H%i%s')
+					)
+	
+	</insert>
+	
+	<!-- 컨텐츠타이틀 참여회원수정-->
+	<update id="updateContentJoinMem" parameterType="socialUp.service.content.dto.ContentJoinMemDTO">
+		update /*updateContentJoinMem 2010.12.12*/  content_join_mem set update_dt  = DATE_FORMAT(#{create_dt},'%Y%m%d%H%i%s')
+					,update_no	= #{create_no}
+					<if test="stat != null and stat != '' ">
+						,stat = #{stat}
+					</if>
+					<if test="mt_grade != null and mt_grade != '' ">
+						,mt_grade = #{mt_grade}
+					</if>
+		where tt_no = #{tt_no}
+		and mt_no = #{mt_no}
+	</update>
 	
     
+    <resultMap id="selectContentJoinMemListResult" type="socialUp.service.content.dto.ContentJoinMemDTO">
+	        <result column="tt_no"		 	property="tt_no" />
+			<result column="mt_no"		 	property="mt_no" />
+			<result column="stat"		 	property="stat" />
+			<result column="mt_grade"		property="mt_grade" />
+			<result column="create_dt" 		property="create_dt" />
+			<result column="create_no" 		property="create_no" />
+			<result column="update_dt"		property="update_dt" />
+			<result column="update_no"		property="update_no" />
+	</resultMap>
+    
+    <!-- 컨텐츠타이틀 참여회원조회-->
+	<select id="selectContentJoinMemList" resultMap="selectContentJoinMemListResult" parameterType="socialUp.service.content.dto.ContentJoinMemDTO">
+		/*selectContentJoinMemList 2011.01.09 */
+		select 	cjm.tt_no
+			,	cjm.mt_no
+			,	cjm.stat
+			,	cjm.mt_grade
+			,	cjm.create_dt
+			,	cjm.create_no
+			,	cjm.update_dt
+			,	cjm.update_no
+		from content_join_mem cjm 
+		where cjm.tt_no = #{tt_no}
+		<if test="mt_no != null and mt_no != ''">
+			and	cjm.mt_no = #{mt_no} 
+		</if>
+	</select>
+	
+	
+	
+	
   
  
 </mapper>

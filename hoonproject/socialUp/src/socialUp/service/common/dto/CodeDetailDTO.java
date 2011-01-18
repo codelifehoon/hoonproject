@@ -4,10 +4,10 @@ package socialUp.service.common.dto;
 
 public class CodeDetailDTO 
 {
-	String grp_cd;
-	String grp_nm;
-	String detail_cd;
-	String detail_nm;
+	private String grp_cd;
+	private String grp_nm;
+	private String detail_cd;
+	private String detail_nm;
 	
 	public String getGrp_cd() {
 		return grp_cd;

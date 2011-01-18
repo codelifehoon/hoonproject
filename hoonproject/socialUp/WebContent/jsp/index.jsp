@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="socialUp.service.content.dto.ContentTitleTblDTO" %>
 <%@ page import="java.util.List" %>
 <%@ include file="/jsp/common/pageCommon.jsp"%>
@@ -36,7 +36,7 @@
 	<META http-equiv="page-enter" content="revealtrans (duration=3, transition=23)"> 
 	<META http-equiv="page-exit" content="revealtrans (duration=3, transition=23)">
 	<link rel="stylesheet" href="<%=rootUrl%>/images/style.css" type="text/css" />
-	<script language="javascript" 	src="<%=rootUrl%>/dwr/interface/DwrAction.js"></script> 
+	<script language="javascript" 	src="<%=rootUrl%>/dwr/interface/DwrMemAction.js"></script> 
 	<script language="javascript" 	src="<%=rootUrl%>/dwr/engine.js"></script> 
 	<script language="javascript" 	src="<%=rootUrl%>/dwr/util.js"></script>
 	<script language="javascript" 	src="<%=rootUrl%>/js/common.js"></script> 
@@ -54,9 +54,9 @@
 		
 		if (getForm().memNm.value == "" ) 							errMsg += "<h3>이름을 입력 해주세요.</h3>";
 		if (getForm().memId.value == "" ) 							errMsg += "<h3>ID를 입력 해주세요.</h3>";
-		if (getForm().passwd.value == "" ) 						errMsg += "<h3>비밀번호를 입력 해주세요.</h3>";
+		if (getForm().passwd.value == "" ) 							errMsg += "<h3>비밀번호를 입력 해주세요.</h3>";
 		if (getForm().passwd2.value == "" ) 						errMsg += "<h3>비밀번호 확인값을 입력 해주세요.</h3>";
-		if (getForm().passwd2.value != getForm().passwd.value ) errMsg += "<h3>2개의 비밀번호가 다릅니다.</h3>";
+		if (getForm().passwd2.value != getForm().passwd.value ) 	errMsg += "<h3>2개의 비밀번호가 다릅니다.</h3>";
 		
 		if ( errMsg != "" )
 		{
@@ -72,7 +72,7 @@
 			
 	
 		document.getElementById("memRegMsg").innerHTML = "회원가입처리중~";
-		DwrAction.RegMemData(memTblDTO,validateRegMemDataCallBack);
+		DwrMemAction.RegMemData(memTblDTO,validateRegMemDataCallBack);
 			
 	}
 	
@@ -124,8 +124,12 @@
 								for (int i=0;i<regContentTitleList.size();i++)
 								{
 									%>
-											<p><a href='<%=rootUrl %>/content/contentEditForm.action?tt_no=<%=regContentTitleList.get(i).getTt_no() %>'>
-											<%=regContentTitleList.get(i).getTitle_name() %></a></p>
+											<p>
+											<a href='<%=rootUrl %>/content/contentDtlList.action?tt_no=<%=regContentTitleList.get(i).getTt_no() %>'><%=regContentTitleList.get(i).getTitle_name() %></a>
+											<a href='<%=rootUrl %>/content/contentEditForm.action?tt_no=<%=regContentTitleList.get(i).getTt_no() %>'>[수정]</a>
+											
+											
+											</p>
 									<%
 								}
 							}

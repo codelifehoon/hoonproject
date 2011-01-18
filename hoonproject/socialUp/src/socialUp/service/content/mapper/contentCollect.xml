@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+    
+<mapper namespace="socialUp.service.content.mapper">
+
+	
+	 <resultMap id="selectContentCollectListResult" type="socialUp.service.content.dto.ContentCollectDTO" >
+	        <result column="coll_no" property="coll_no" />
+	        <result column="cs_no" property="cs_no" />
+	        <result column="proc_stop" property="proc_stop" />
+	        <result column="row_data" property="row_data" />
+	        <result column="create_dt" property="create_dt" />
+	 </resultMap>
+	    
+	<select id="selectContentCollectList" resultMap="selectContentCollectListResult" parameterType="socialUp.service.content.dto.ContentCollectDTO">
+	
+	     	select /*selectContentCollectList 2012.12.13*/ 
+	     			coll_no
+					cs_no
+					proc_stop
+					row_data
+					create_dt
+			from content_collect where cs_no = #{cs_no}
+	</select>
+    	
+    <insert id="insertContentCollect" parameterType="socialUp.service.content.dto.ContentCollectDTO">
+    		
+			INSERT INTO
+					 /*insertContentCollect 2012.12.13*/ 
+					 content_collect(
+					,cs_no
+					,proc_step
+					,row_data
+					,proc_error_msg
+					,create_dt
+					)
+			VALUES(
+					#{cs_no}
+					,#{proc_step}
+					,#{row_data}
+					,#{proc_error_msg}
+					,DATE_FORMAT(#{create_dt},'%Y%m%d%H%i%s')
+			)
+    	<selectKey resultType="String" keyProperty="coll_no"> select last_insert_id() as coll_no </selectKey>
+
+    </insert>
+    	
+    	
+	<update id="updateContentCollect" parameterType="socialUp.service.content.dto.ContentCollectDTO">
+  		update   /*updateContentCollect 2012.12.13*/  content_collect set
+							update_dt  = DATE_FORMAT(#{create_dt},'%Y%m%d%H%i%s')
+							
+							<if test="row_data != null and row_data != ''">
+  							,row_data = #{row_data}
+  							</if>
+  							<if test="proc_step != null and proc_step != ''">
+  							,proc_step = #{proc_step}
+  							</if>
+  							<if test="proc_error_msg != null and proc_error_msg != ''">
+  							,proc_error_msg = #{proc_error_msg}
+  							</if>
+							
+  		where  coll_no = #{coll_no}
+  	</update>
+  	
+  	
+	<resultMap id="selectContentCollectWaitListResult" type="socialUp.service.content.dto.ContentSourceTblDTO" >
+	        <result column="tt_no" property="tt_no" />
+	        <result column="cs_no" property="cs_no" />
+	        <result column="mt_no" property="mt_no" />
+	        <result column="source_kind" property="source_kind" />
+	        <result column="rss2_url" property="rss2_url" />
+	        <result column="coll_no" property="contentCollect.coll_no" />
+	        
+	 </resultMap>
+  	<!--  수집해야될 대상이 되는 리스트 -->
+  	<select id="selectContentCollectWaitList" resultMap="selectContentCollectWaitListResult">
+	     	SELECT 
+	     	
+				cst.tt_no
+				,cst.cs_no
+				,cst.mt_no
+				,cst.source_kind
+				,cst.rss2_url
+				,cc.coll_no
+				
+			FROM content_collect cc , content_source_tbl cst 
+			WHERE cc.proc_step = '00'
+			AND cc.cs_no = cst.cs_no
+			order by cc.coll_no
+	</select>
+	
+    
+  
+
+ 
+</mapper>
+

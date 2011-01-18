@@ -1,6 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@page import="socialUp.service.content.dto.ContentTitleTblDTO"%>
+<%@page import="socialUp.service.content.dto.ContentBranchDTO"%>
+<%@page import="socialUp.service.content.dao.ContentBranchDAO"%>
+<%@page import="java.util.List"%>
 <%@ page import="socialUp.service.common.dao.CodeDetailDAOImpl" %>
 <%@ include file="/jsp/common/pageCommon.jsp" %>
+<%
+// 컨텐츠 타이틀을 새롭게 만들면서 기존 다른사람의 컨텐츠 타이틀을 브랜치를 가져올떄 값이 존재한다.
+	ContentTitleTblDTO	branchContentTitle = (ContentTitleTblDTO)request.getAttribute("contentTitle");  
+	String ref_tt_no = "";	
+	
+	if (branchContentTitle != null)
+	{
+		ref_tt_no = branchContentTitle.getTt_no();
+	}
+		
+		
+%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -70,7 +86,9 @@
 			<div class="main_content">
 
 <form name="defForm" method="post" action="<%=rootUrl%>/content/contentAddFinish.action">
-<input type="hidden" name="source_kind" value="01">		<!-- 소스출처 (01:RSS로 일단 기본설정) -->			
+<input type="hidden" name="source_kind" value="01"/>		<!-- 소스출처 (01:RSS로 일단 기본설정) -->			
+<input type="hidden" name="branchTtno" value="<%=ref_tt_no %>"/>
+
 				<div class="sd_main">
 					<div class="text_padding">	
 						<h2>친구들과 공유연결될  블로그, 관심 RSS를  등록하세요.</h2>
@@ -128,11 +146,21 @@
 						<p>관심 블로그 또는 RSS를 등록하세요.</p>
 						<TEXTAREA NAME="favoriteContent" COLS="110" ROWS="6" onblur="javascript:onfavoriteGoreBlur()"></TEXTAREA>	
 					
-							
-
-						
 						<br></br>
 						
+						<h2></h2>
+						
+						<%if (branchContentTitle != null) {%>
+						<h2>기본포함 되는 컨텐츠 목록</h2>
+						<h3>컨텐츠제목:<%=branchContentTitle.getTitle_name() %></h3>
+						<h3>
+							<p class="date">
+							<% for (ContentBranchDTO  ie : branchContentTitle.getContentBranchList()) {%>
+								<%=ie.getContentTitle().getTitle_name() %>,
+							<%} %>
+							</p>
+						</h3>
+						<%} %>
 						<h2>친구들과 공유할 Twitter를  등록하세요.</h2>	
  					     <p> 친구들과  같이 나눌 트위터 등록 등록 등록방법은 <a>여기를</a>참조하시오.</p>
  						<p class="date">Posted by Jack <img src="<%=rootUrl%>images/more.gif" alt="" /> <a href="#">Read more</a> <img src="<%=rootUrl%>images/comment.gif" alt="" /> <a href="#">Comments(15)</a> <img src="<%=rootUrl%>images/timeicon.gif" alt="" /> 13.01.</p><br />				

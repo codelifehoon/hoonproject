@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
 
 import socialUp.common.util.NumUtil;
+import socialUp.service.content.dto.ContentJoinMemDTO;
 import socialUp.service.content.dto.ContentTitleTblDTO;
 import socialUp.service.member.dto.MemTblDTO;
 
@@ -34,7 +35,17 @@ public class ContentTitleListTblDAOImpl implements ContentTitleListTblDAO {
 		return NumUtil.toInt(conTitleParam.getTt_no());
 
 	}
-
+	
+	@Override
+	public int insertContentTitleListTbl(ContentJoinMemDTO contentJoinMemDTO)
+			throws Exception {
+		 
+		return this.sqlMap.insert("socialUp.service.content.mapper.insertContentJoinMem", contentJoinMemDTO);
+		
+	}
+	
+	
+	
 	@Override
 	public int updateContentTitle(ContentTitleTblDTO conTitleParam)
 			throws Exception {
@@ -48,6 +59,47 @@ public class ContentTitleListTblDAOImpl implements ContentTitleListTblDAO {
 		return  this.sqlMap.selectList("socialUp.service.content.mapper.selectContentTitleListTblList", conTitleParam);
 	}
 
+	
+	/**
+	 * 컨텐츠타이틀 참여회원등록 
+	 * 
+	 * @param contentJoinMem
+	 * @return
+	 * @throws Exception
+	 */
+	public int insertContentJoinMem(ContentJoinMemDTO contentJoinMem) throws Exception {
+		 
+		return this.sqlMap.insert("socialUp.service.content.mapper.insertContentJoinMem", contentJoinMem);
+		
+	}
+	
+	
+	
+	/**
+	 * 컨텐츠타이틀 참여회원수정
+	 * 
+	 * @param contentJoinMem
+	 * @return
+	 * @throws Exception
+	 */
+	public int updateContentJoinMem(ContentJoinMemDTO contentJoinMem) throws Exception {
+		return  this.sqlMap.update("socialUp.service.content.mapper.updateContentJoinMem", contentJoinMem);
+		
+	}
+
+	
+	/**
+	 * 컨텐츠타이틀 참여회원조회
+	 * 
+	 * @param contentJoinMem
+	 * @return
+	 * @throws Exception
+	 */
+	public List<ContentJoinMemDTO> selectContentJoinMemList(ContentJoinMemDTO contentJoinMem) throws Exception {
+
+		return  this.sqlMap.selectList("socialUp.service.content.mapper.selectContentJoinMemList", contentJoinMem);
+	}
+	
 	
 	
 }

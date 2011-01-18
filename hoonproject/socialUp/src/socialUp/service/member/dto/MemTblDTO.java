@@ -8,8 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import socialUp.service.common.dto.BaseDTO;
 
-public class MemTblDTO 
+
+public class MemTblDTO extends BaseDTO
 {
 
 	String mt_no;

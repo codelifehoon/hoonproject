@@ -7,8 +7,8 @@
 
 <%
 	
-	final String rootUrl = "/socialUp";
-	Logger logger = Logger.getLogger(this.getClass());
+	final String rootUrl = "";
+	Logger log = Logger.getLogger(this.getClass());
 	AuthInfo authInfo = AuthService.getAuthInfo(request,response);
 	 
 %>

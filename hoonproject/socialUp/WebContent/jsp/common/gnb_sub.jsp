@@ -3,13 +3,29 @@
 	<div class="content">
 			
 			<div class="header">
-				<div class="searchf">
-					<form method="post" action="#"><p>
-						Search: <input type="text" name="search" class="search" /> </p>
+				<div class="loginf">
+					<form method="post" action="<%=rootUrl %>/member/memberMemLogIn.action">
+						<p>
+						<%if (!authInfo.isAuth()){ %>
+						이메일: <input type="text" name="mem_id" class="search" />
+						비밀번호: <input type="password" name="passwd" class="search" />
+						<input type='submit' name='submit' value="로그인">
+						<%} else { %>
+							<%=authInfo.getMem_nm() %>님 로그인. <a href="<%=rootUrl %>/member/memberMemLogOut.action" >로그아웃</a>
+						<%} %> 
+						</p>
 					</form>
 				</div>
+				
+				<div class="searchf">
+				<form method="post" action="<%=rootUrl %>/search/searchResultList.action">
+					<input type="text" name="searchStr" class="search" style="width:307px;"/> <input type='submit' name='submit' value="검   색">
+				</form>  
+				
+				</div>
+				
 				<div class="leftside">
-					<h1>세상의 이야기 고리</h1>
-					<h2>당신의 이야기 친구의 이야기를 다른사람과 연결하세요.</h2>
+				<h1>RSS 공유모임</h1>
+				<h2>자신의 블로그를 다른사람과 공유하세요.</h2>
 				</div>
 			</div>

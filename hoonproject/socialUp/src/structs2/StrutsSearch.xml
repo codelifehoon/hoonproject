@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+ 
+ <!--
+ 	SearchResultList 		: 검색결과화면
+
+  -->
+    <package name="search" namespace="/search" extends="struts-default">
+        <action name="search*" method="{1}" class="socialUp.action.SearchAction" >
+            <result name="DEFAULT">/jsp/search/search{1}.jsp</result>			<!--  기본 action 처리 -->
+            
+        </action>
+    </package>
+    
+    
+</struts>

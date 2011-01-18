@@ -64,10 +64,8 @@
 
 <include file="structs2/StrutsMember.xml"/>
 <include file="structs2/StrutsContent.xml"/>
-  
+<include file="structs2/StrutsSearch.xml"/>
   
     
-
-  
   
 </struts>

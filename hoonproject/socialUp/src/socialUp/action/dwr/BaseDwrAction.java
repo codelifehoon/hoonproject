@@ -25,7 +25,7 @@ import socialUp.service.member.dto.MemTblDTO;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-public class BaseDwrAction  implements ServletRequestAware, ServletResponseAware
+public class BaseDwrAction  /*implements ServletRequestAware, ServletResponseAware*/
 {
 
 
@@ -37,7 +37,7 @@ public class BaseDwrAction  implements ServletRequestAware, ServletResponseAware
 	 * DWR 호출시 생성되는 HttpServletRequest를 리턴한다.
 	 * 
 	 * @return
-	 *//*
+	 */
 	public HttpServletRequest getRequest()
 	{
 		WebContext wctx = WebContextFactory.get();
@@ -45,19 +45,19 @@ public class BaseDwrAction  implements ServletRequestAware, ServletResponseAware
 	}
 	
 
-	*//**
+	/**
 	 * DWR 호출시 생성되는 HttpServletResponse 리턴한다.
 	 * 
 	 * @return
-	 *//*
+	 */
 	public HttpServletResponse getResponse()
 	{
 		WebContext wctx = WebContextFactory.get();
 		return wctx.getHttpServletResponse();
 	}
-*/
+
 	
-	protected HttpServletRequest request;
+	/*protected HttpServletRequest request;
 	protected HttpServletResponse response;
 	
 	@Override
@@ -68,7 +68,7 @@ public class BaseDwrAction  implements ServletRequestAware, ServletResponseAware
 	@Override
 	public void setServletResponse(HttpServletResponse response){
 	this.response=response;
-	}
+	}*/
 	
 	
 

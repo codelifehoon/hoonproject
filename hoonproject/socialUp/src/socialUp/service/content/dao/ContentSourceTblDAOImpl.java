@@ -47,8 +47,9 @@ public class ContentSourceTblDAOImpl implements ContentSourceTblDAO {
 	public int updateContentSource(ContentSourceTblDTO conParam) throws Exception
 	{
 		log.debug("updateContentSourceTbl 시작");
+		log.debug("create_dt:" + conParam.getCreate_dt());
 		
-		this.sqlMap.update("socialUp.service.content.mapper.insertupdateContentSource", conParam);
+		this.sqlMap.update("socialUp.service.content.mapper.updateContentSource", conParam);
 		
 		return 0;
 	}
