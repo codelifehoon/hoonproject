@@ -1221,10 +1221,11 @@ public class ContentServiceImpl implements ContentService
 		{
 
 			// 브랜치 정보를 삭제한다.
-			contentBranchDAO.deleteContentBranchSelfJoins(delContentBranchParam);
+			if (delContentBranchParam.getOrgBranchTtNos().length > 0) contentBranchDAO.deleteContentBranchSelfJoins(delContentBranchParam);
+			
 			
 			//  브랜치 정보를 추가한다.			
-			contentBranchDAO.insertContentNewBranchs(addContentBranchParam);
+			if (addContentBranchParam.getOrgBranchTtNos().length > 0) contentBranchDAO.insertContentNewBranchs(addContentBranchParam);
 			
 			sqlMap.commit();
 		}

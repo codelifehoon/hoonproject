@@ -802,7 +802,7 @@ public class ContentAction extends BaseActionSupport
 	 * @return
 	 * @throws Exception
 	 */
-	public String JoinContFrom() throws Exception {
+	public String JoinContForm() throws Exception {
 		String returnVal = "DEFAULT";
 		
 		log.debug("contentJoinContFrom 시작");
@@ -846,7 +846,7 @@ public class ContentAction extends BaseActionSupport
 		
 	}
 
-	/**
+	/**	
 	 * 선택한 컨텐츠 타이틀에 나의 컨텐츠 리소스를 스스로 소속 시키기 위한 화면 참여 & 처리결과
 	 * 
 	 * @return
@@ -862,13 +862,18 @@ public class ContentAction extends BaseActionSupport
 		
 		
 		String   joinWantTtNo	= this.getParam("joinWantTtNo");	// 참여를 원한는 컨텐츠 번호
-		String[] myContList 	= this.getParams("MyContList");		// 내가 가진 컨텐츠 목록
-		String[] branchList 	= this.getParams("BranchList");		// 참여를 원하는 나의  컨텐츠 목록
+		String   myContStr 		= this.getParam("MyContStr");		// 내가 가진 컨텐츠 목록
+		String   branchStr 		= this.getParam("BranchStr");		// 참여를 원하는 나의  컨텐츠 목록
+		
+		String[] myContList = myContStr.split(",");
+		String[] branchList = branchStr.split(","); 
 		
 		String sCurrentDate 	= DateTime.getFormatString("yyyyMMddHHmmss"); // 현재날짜
+
+		log.debug("joinWantTtNo:" + joinWantTtNo);
+		log.debug("branchList.length:" + branchList.length);
 		
 		// 참여를 원하는 컨텐츠(joinWantTtNo)에 선택한 나의 컨텐츠목록(branchList)을 참여시킨다. 
-		
 		ContentService 		contentService 	= (ContentService)ServiceFactory.createService(ContentServiceImpl.class);
 		List<ContentBranchDTO> joinWantbranchList = null; 
 		ContentBranchDTO 	addContentBranchParam 	= new ContentBranchDTO(); 
@@ -881,8 +886,7 @@ public class ContentAction extends BaseActionSupport
 		String joinWantMtNo		= "";		// 조인을 원하는 tt의 소유자의 mt_no
 		
 		
-		// 기존에 등록된 브랜치 목록조회
-		// 내가 참여를 원하는 컨텐츠타이틀의 브랜치목록을 가져온다.
+		// 내가 참여를 원하는 컨텐츠타이틀의 브랜치 정보에  소속된어 있는 나의 컨텐츠 타이틀 정보를 가져온다.
 		contentBranchParam.setTt_no(joinWantTtNo);
 		contentBranchParam.setMt_no(authInfo.getMt_no());
 		joinWantbranchList = contentService.selectContentBranchSelfJoinList(contentBranchParam);
@@ -926,18 +930,17 @@ public class ContentAction extends BaseActionSupport
 			if (isExists) delTtNos.add(ttNo);
 		}
 		
-		
 		// 참여원하는 컨텐츠 타이틀 정보
 		addContentBranchParam.setTt_no(joinWantTtNo);
 		addContentBranchParam.setMt_no(joinWantMtNo);
-		addContentBranchParam.setOrgBranchTtNos((String[])addTtNos.toArray());
+		addContentBranchParam.setOrgBranchTtNos((String[])addTtNos.toArray(new String[addTtNos.size()]));
 		addContentBranchParam.setCreate_no(authInfo.getMt_no());
 		addContentBranchParam.setCreate_dt(sCurrentDate);
 		
 		// 삭제워하는 컨텐츠 타이틀 정보
 		delContentBranchParam.setTt_no(joinWantTtNo);
 		delContentBranchParam.setMt_no(joinWantMtNo);
-		delContentBranchParam.setOrgBranchTtNos((String[])delTtNos.toArray());
+		delContentBranchParam.setOrgBranchTtNos((String[])delTtNos.toArray(new String[delTtNos.size()]));
 		delContentBranchParam.setCreate_no(authInfo.getMt_no());
 		delContentBranchParam.setCreate_dt(sCurrentDate);
 		
@@ -948,7 +951,7 @@ public class ContentAction extends BaseActionSupport
 			
 		}
 		
-		//contentService.insertContentBranchSelfJoin(addContentBranchParam,delContentBranchParam);
+		contentService.insertContentBranchSelfJoin(addContentBranchParam,delContentBranchParam);
 		
 		
 		

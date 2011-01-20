@@ -177,7 +177,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 								,DATE_FORMAT(#{create_dt},'%Y%m%d%H%i%s') create_dt
 								,#{create_no}
 			
-			FROM content_branch cb  WHERE cb.tt_no = #{orgBranchTtNos}
+			FROM content_branch cb  WHERE cb.tt_no  in 
+			<foreach item="item" index="index" collection="orgBranchTtNoList" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+
 			and cb.use_yn = 'Y'
 			
 			<!-- 
@@ -203,8 +207,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				,cb.update_no = #{create_no}
 				,cb.update_dt = DATE_FORMAT(#{create_dt},'%Y%m%d%H%i%s')
 				
-			WHERE cb.tt_no = 	#{tt_no}
-			AND cb.org_branch_no IN ( SELECT branch_no FROM content_branch cb2 WHERE cb2.tt_no = #{orgBranchTtNos} )
+			WHERE cb.tt_no = #{tt_no}
+			AND cb.org_branch_no IN (select a.branch_no from
+														( SELECT cb2.branch_no FROM content_branch cb2 WHERE cb2.tt_no in		
+														<foreach item="item" index="index" collection="orgBranchTtNoList" open="(" separator="," close=")">
+															#{item}
+														</foreach>
+														<!--  tt번호는 자신의 회원번호에 종속되지만 혹시 악의적으로 찍고 들어올 경우에대한 방버코드를 현 처리자의 mt_no를 추가로 조건을건다. -->
+														and cb2.mt_no = #{create_no}
+														) a
+									 )
 			AND cb.use_yn = 'Y'
 
     </insert>

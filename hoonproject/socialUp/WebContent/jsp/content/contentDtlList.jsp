@@ -44,7 +44,7 @@
 						<h3 align='right'>
 							<!-- 로그인 회원과 같지 않다면 (로그인이 안된상태도 표시된다) -->
 							<%if ( !authInfo.getMt_no().equals(contentTitle.getMt_no())) {%>
-								<a href='<%=rootUrl%>/content/contentJoinContFrom.action?tt_no=<%=ttNo %>'>[여기에 나의 컨텐츠타이틀 참여&제외]</a>
+								<a href='<%=rootUrl%>/content/contentJoinContForm.action?tt_no=<%=ttNo %>'>[여기에 나의 컨텐츠타이틀 참여&제외]</a>
 							<%} %>
 								<a href='<%=rootUrl%>/content/contentDtlEditForm.action?tt_no=<%=ttNo %>'>[새글쓰기]</a> 
 						</h3>
