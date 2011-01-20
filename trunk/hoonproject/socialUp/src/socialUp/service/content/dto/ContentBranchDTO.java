@@ -3,6 +3,7 @@ package socialUp.service.content.dto;
 
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
@@ -117,4 +118,18 @@ public class ContentBranchDTO extends BaseDTO
 		this.orgBranchTtNos = orgBranchTtNos;
 	}
 
+	// sqlmap 에서 foreach에 사용할 OrgBranchTtNos값을  리스트로 생성  
+	 public List<String>  getOrgBranchTtNoList () 
+	  {
+		 List<String> retVal  = new ArrayList<String>();
+		  
+		 if (this.orgBranchTtNos != null)
+		 {
+			 for (String s : this.orgBranchTtNos)
+			 retVal.add(s);
+		 }
+		  
+		  return retVal;
+	        
+	   }
 }

@@ -93,7 +93,7 @@
         var checkCnt = 0; 		 // selected options to right select box (to) 
         for (var i=0;i<getF().BranchList.options.length;i++) 
         { 
-                if (getF().BranchList.options[i].selected==true && getF().BranchList.options[i].value != "dontMove") 
+                if (getF().BranchList.options[i].selected==true && getF().BranchList.options[i].value.substr(0,8) != "dontMove") 
                 { 
                         var addtext		=	getF().BranchList.options[i].text; 
                         var addvalue	=	getF().BranchList.options[i].value;
@@ -129,9 +129,30 @@
         } 
         
 	}
-	
+	 
 	function updateJoinBtn()
 	{
+		var MyContStr ="";
+		var BranchStr ="";
+		
+		// 참여목록을 , 구분자로 문자열로 생성
+		for (var i=0;i<getF().BranchList.options.length;i++) 
+        { 
+            
+			if (i==0 ) 	{BranchStr += getF().BranchList.options[i].value;}
+			else 		{BranchStr += "," + getF().BranchList.options[i].value; }
+        }
+		
+		// 미참여목록을 , 구분자로 문자열로 생성
+		for (var i=0;i<getF().MyContList.options.length;i++) 
+        { 
+            
+			if (i==0 ) 	{MyContStr += getF().MyContList.options[i].value;}
+			else 		{MyContStr += "," + getF().MyContList.options[i].value; }
+        }
+		
+		getF().BranchStr.value = BranchStr;
+		getF().MyContStr.value = MyContStr;
 		getF().submit();
 	}
 	
@@ -141,8 +162,6 @@
 
 <%@ include file="/jsp/common/gnb_sub.jsp" %>
 
-** 파라미터값 안넘어가는 오류 잡은후 추가/삭제 목록이 제대로 생성되는지 로그 확인작업
-
 			<div class="main_content">
 			
 			<div class="sd_main">
@@ -150,12 +169,15 @@
 			<%if (contentJoinMem != null && "01".equals(contentJoinMem.getStat()))
 			{ %>
 
-				<form name='defForm' method="post" action="<%=rootUrl %>/content/contentJoinContFinish.action" >
-				<inupt type="hidden" name="joinWantTtNo" value="<%=contentTitle.getTt_no() %>"/>
+				<form name='defForm' method="get" action="<%=rootUrl %>/content/contentJoinContFinish.action" >
+				<input type="hidden" name="joinWantTtNo" value="<%=contentTitle.getTt_no() %>"/>
+				<input type="hidden" name="MyContStr" value=""/>
+				<input type="hidden" name="BranchStr" value=""/>
+				
 				<table>
 					<tr>
 						<td>
-							<select multiple="multiple"  name="MyContList" id="MyContList" style="width:300px;height:200px;">
+							<select multiple="multiple"  name="MyContList"   style="width:300px;height:200px;">
 								<%for (ContentTitleTblDTO ct : contentTitleList ) 
 								{
 								
@@ -186,7 +208,7 @@
 							<a href="javascript:moveDel();">삭제</a> 
 						</td>
 						<td>
-							<select multiple="multiple" name="BranchList" id="BranchList" style="width:300px;height:200px;">
+							<select multiple="multiple" name="BranchList" style="width:300px;height:200px;">
 							
 							
 							<%
