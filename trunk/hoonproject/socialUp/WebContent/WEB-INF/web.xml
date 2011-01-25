@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app id="WebApp_9" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
-<!-- dwr 설정 -->
+
+
+<!-- struct2 설정 -->
+    <display-name>Struts Blank</display-name>
+    <filter>
+        <filter-name>struts2</filter-name>
+        <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>struts2</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <welcome-file-list>
+        <welcome-file>/index.action</welcome-file>
+    </welcome-file-list>
+
+
+
+<!-- dwr 설정시작 -->
   <servlet>
     <servlet-name>dwr-invoker</servlet-name>
     <servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>
@@ -21,25 +41,22 @@
     <servlet-name>dwr-invoker</servlet-name>
     <url-pattern>/dwr/*</url-pattern>
   </servlet-mapping>
+<!-- dwr 설정끝 -->
 
 
+<!--  파일 upload 전용 서블릿 시작 -->
+<servlet>
+    <description>Servlet for file uploads</description>
+    <display-name>File Upload Servlet</display-name>
+    <servlet-name>FileUploadServlet</servlet-name>     
+    <servlet-class>socialUp.common.util.FileUploadServlet</servlet-class>
+</servlet>
 
-<!-- struct2 설정 -->
-    <display-name>Struts Blank</display-name>
-    <filter>
-        <filter-name>struts2</filter-name>
-        <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>struts2</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
-    <welcome-file-list>
-        <welcome-file>/index.action</welcome-file>
-    </welcome-file-list>
-
+<servlet-mapping>
+    <servlet-name>FileUploadServlet</servlet-name>
+    <url-pattern>/servlet/FileUploadServlet</url-pattern>
+</servlet-mapping>
+<!--  파일 upload 전용 서블릿 끝 -->
 
 
   
