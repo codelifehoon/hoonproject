@@ -122,10 +122,9 @@ function contentDtlEditProc()
 			<p align='center'><a href='javascript:contentDtlEditProc()'>******* 수정 *******</a></p>
 <%} %>
 
-
-<input type='button' name='btn' value='내용추가' onClick='javascript:clickBtn()'>
-					
 			</form>
+			<IFRAME WIDTH="1000" HEIGHT="300" FRAMEBORDER="yes" SCROLLING="auto" SRC="<%=rootUrl%>/content/contentDtlEditFinish.action" NAME="imgFrame" >
+			</IFRAME> 
 			</div>
 				
 				
