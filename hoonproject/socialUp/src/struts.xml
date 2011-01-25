@@ -57,8 +57,6 @@
         <action name=""  class="socialUp.action.main.DefaultAction" >
              <result name="SUCCESS">/jsp/index.jsp</result>
         </action>
-        
-        
   </package>
 
 

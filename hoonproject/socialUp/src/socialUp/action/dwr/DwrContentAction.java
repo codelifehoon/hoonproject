@@ -1,11 +1,13 @@
 package socialUp.action.dwr;
 
+import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -23,6 +25,7 @@ import socialUp.common.mybatis.MyBatisManager;
 import socialUp.common.util.CookieUtil;
 import socialUp.common.util.DateTime;
 import socialUp.common.util.DebugUtil;
+import socialUp.common.util.FileUploadListener;
 import socialUp.service.content.ContentService;
 import socialUp.service.content.ContentServiceImpl;
 import socialUp.service.content.dto.ContentDtlCommentDTO;
@@ -216,6 +219,95 @@ public class DwrContentAction extends BaseDwrAction
 	}
 	
 	
+	
+	/**
+	 * 파일업로드 상태를 실시간으로 확인한다.
+	 * 
+	 * @param memtbldto
+	 * contentDtlCommentParam.cd_no
+	 * contentDtlCommentParam.comment
+	 * 
+	 * @throws Exception 
+	 */
+	public HashMap fileUplaodStst(HashMap mapParam) throws Exception
+	{
+		log.debug("fileUplaodStst 시작");
+		
+		HashMap resultMap = new HashMap();
+		long	bytesRead = 0,
+				contentLength = 0,
+				percentComplete = 0;
+		String  finished = "no";
+		
+		try 
+		{
+			
+			String sCurrentDate = DateTime.getFormatString("yyyyMMddHHmmss"); // 현재날짜
+			AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
+			
+			if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
+			
+			resultMap.put("result_code","00");
+			resultMap.put("result_msg","성공");
+		
+			
+			
+			String fileName =  (String)mapParam.get("fileName");
+			
+
+			// 파일 업로드 상태 확인 시작
+	    	HttpSession session = this.getRequest().getSession();
+	    	FileUploadListener listener = null; 
+		    StringBuffer buffy = new StringBuffer();
+		    
+	    	
+	    	// Make sure the session has started
+	    	if (session == null)
+	    	{
+	    		// 파일 업로드가 없음
+				bytesRead 		= -1;
+				contentLength 	= -1;
+	    	}
+	    	else if (session != null)
+	    	{
+	    		// Check to see if we've created the listener object yet
+	    		listener = (FileUploadListener)session.getAttribute("LISTENER");
+	    		
+	    		if (listener == null)
+	    		{
+	    			// 파일 업로드가 없음
+	    			bytesRead 		= -1;
+	    			contentLength 	= -1;
+	    		}
+	    		else
+	    		{
+	    	    	bytesRead = listener.getBytesRead();
+	    			contentLength = listener.getContentLength();
+	    			percentComplete = ((100 * bytesRead) / contentLength);
+	    			
+	    			if (bytesRead == contentLength) finished = "yes";
+	    				 
+	    		}
+	    	}
+	    	
+	
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			resultMap.put("result_code","-1");
+			resultMap.put("result_msg",e.getMessage());
+		}
+		
+		resultMap.put("bytesRead",bytesRead);
+		resultMap.put("contentLength",contentLength);
+		resultMap.put("percentComplete",percentComplete);
+		resultMap.put("finished",finished);
+		
+		
+		
+		return resultMap;
+	}
 	
 	
 

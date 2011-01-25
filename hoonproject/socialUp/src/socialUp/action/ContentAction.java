@@ -1,10 +1,19 @@
 package socialUp.action;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 
 import socialUp.action.main.BaseActionSupport;
@@ -15,6 +24,7 @@ import socialUp.common.util.CmnUtil;
 import socialUp.common.util.CookieUtil;
 import socialUp.common.util.DateTime;
 import socialUp.common.util.DebugUtil;
+import socialUp.common.util.FileUploadListener;
 import socialUp.common.util.NumUtil;
 import socialUp.service.content.ContentService;
 import socialUp.service.content.ContentServiceImpl;
@@ -960,8 +970,95 @@ public class ContentAction extends BaseActionSupport
 		
 	}
 
-	
 
 	
+
+
+	/**	
+	 * 선택한 컨텐츠 타이틀에 나의 컨텐츠 리소스를 스스로 소속 시키기 위한 화면 참여 & 처리결과
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+//	public String FileUpload() throws Exception 
+//	{
+//		String returnVal = "DEFAULT";
+//		
+//		log.debug("FileUpload 시작");
+//		
+//		AuthInfo authInfo =  AuthService.getAuthInfo(this.request, this.response);
+//		if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
+//		
+//		
+//
+//		// create file upload factory and upload servlet
+//		FileItemFactory 	factory = new DiskFileItemFactory();
+//		ServletFileUpload  	upload = new ServletFileUpload(factory);
+//
+//		// set file upload progress listener
+//		FileUploadListener listener = new FileUploadListener();
+//		
+//		HttpSession  session = this.request.getSession();
+//		
+//		session.setAttribute("LISTENER", listener);
+//		
+//		// upload servlet allows to set upload listener
+//		upload.setProgressListener(listener);
+//
+//		List 		uploadedItems = null;
+//		FileItem 	fileItem = null;
+//		String  	filePath = "D:\\javadevtool\\workSpace\\socialUp\\WebContent\\files";	// Path to store file on local system
+//
+// 		try 
+//		{
+//			// iterate over all uploaded files
+//			uploadedItems = upload.parseRequest(this.request);
+//			
+//			Iterator i = uploadedItems.iterator();
+//			
+//			log.debug("파일업로드 시작전");
+//			
+//			while (i.hasNext()) 
+//			{
+//				log.debug("파일업로드 시작");
+//				fileItem = (FileItem) i.next();
+//				
+//				if (fileItem.isFormField() == false) 
+//				{
+//					if (fileItem.getSize() > 0) 
+//					{
+//						File 
+//							uploadedFile = null; 
+//						String
+//							myFullFileName = fileItem.getName(),
+//							myFileName = "",
+//							slashType = (myFullFileName.lastIndexOf("\\") > 0) ? "\\" : "/"; // Windows or UNIX
+//						int
+//							startIndex = myFullFileName.lastIndexOf(slashType);
+//
+//						log.debug("myFullFileName:" + myFullFileName);
+//						// Ignore the path and get the filename
+//						myFileName = myFullFileName.substring(startIndex + 1, myFullFileName.length());
+//
+//						// Create new File object
+//						uploadedFile = new File(filePath, myFileName);
+//						
+//						// Write the uploaded file to the system
+//						fileItem.write(uploadedFile);
+//					}
+//				}
+//			}
+//		} 
+//		catch (FileUploadException e) 
+//		{
+//			e.printStackTrace();
+//		} 
+//		catch (Exception e) 
+//		{
+//			e.printStackTrace();
+//		} 
+//	
+//		return returnVal;
+//	}
 		
 }

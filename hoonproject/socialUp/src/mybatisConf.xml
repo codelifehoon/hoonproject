@@ -9,8 +9,13 @@
    <transactionManager type="JDBC"/>
    <dataSource type="POOLED">
    <!-- com.mysql.jdbc.Driver 로그를 보기 위해서  변경(net.sf.log4jdbc.DriverSpy)-->
+   
     <property name="driver" value="net.sf.log4jdbc.DriverSpy"/>
-    <property name="url" value="jdbc:log4jdbc:mysql://localhost:3306/goreee?characterEncoding=UTF8"/>
+    <property name="url" value="jdbc:log4jdbc:mysql://db.goreee.com:3306/goreee?characterEncoding=UTF8"/>
+<!--  
+ 	<property name="driver" value="com.mysql.jdbc.Driver"/>
+    <property name="url" value="jdbc:mysql://192.168.0.2:3306/goreee?characterEncoding=UTF8"/>
+ -->   
     <property name="username" value="root"/>
     <property name="password" value="1234"/>
     <!--  일정시간  연결이 없을때  db서버에서 연결끊는걸 방지하기위해서 pool ping 설정을한다. -->
