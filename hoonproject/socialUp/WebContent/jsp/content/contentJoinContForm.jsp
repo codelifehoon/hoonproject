@@ -8,7 +8,8 @@
 <%@page import="socialUp.service.content.dto.ContentTitleTblDTO"%>
 <%@ page import="java.util.List" %>
 <%@ include file="/jsp/common/pageCommon.jsp" %>
-<%
+<% 
+	
 	
 	
 // 내가 여기 컨텐츠에 소속될 권한이 있는지 check(참여는 참여를 원하는 컨텐츠에 join mem 여야만 가능함.
