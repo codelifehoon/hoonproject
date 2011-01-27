@@ -80,7 +80,7 @@
 														+ contentTitle.getBranch_conf_yn()
 														+ contentTitle.getOrder_mem_join_yn()
 														+ contentTitle.getOrder_mem_join_passwd()
-														%>"/>
+														 %>"/>
 					      					 		
 
 				<div class="sd_main">
