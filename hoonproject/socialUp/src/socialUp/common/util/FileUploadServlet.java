@@ -130,18 +130,23 @@ public class FileUploadServlet
 		
  		try 
 		{
+ 			
+ 			//upload.setFileSizeMax(1024*10);	파일 사이즈 check
 			// iterate over all uploaded files
 			uploadedItems = upload.parseRequest(request);
 			
 			Iterator i = uploadedItems.iterator();
 			
+			int ii=0;
 			while (i.hasNext()) 
 			{
 
-				
+				ii++;
 				fileItem = (FileItem) i.next();
 				
 				log.debug("fileItem.getSize():" + fileItem.getSize());
+				log.debug("ii:" + ii);
+				
 				
 				
 				if (fileItem.isFormField() == false) 

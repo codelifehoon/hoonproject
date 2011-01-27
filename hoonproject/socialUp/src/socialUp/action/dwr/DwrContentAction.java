@@ -231,7 +231,7 @@ public class DwrContentAction extends BaseDwrAction
 	 */
 	public HashMap fileUplaodStst(HashMap mapParam) throws Exception
 	{
-		log.debug("fileUplaodStst 시작");
+		//log.debug("fileUplaodStst 시작");
 		
 		HashMap resultMap = new HashMap();
 		long	bytesRead = 0,
@@ -253,7 +253,8 @@ public class DwrContentAction extends BaseDwrAction
 			
 			
 			String fileName =  (String)mapParam.get("fileName");
-			
+
+			//log.debug("fileName:" + fileName);
 
 			// 파일 업로드 상태 확인 시작
 	    	HttpSession session = this.getRequest().getSession();
