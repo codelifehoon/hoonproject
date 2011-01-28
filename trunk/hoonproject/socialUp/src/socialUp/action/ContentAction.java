@@ -1,6 +1,7 @@
 package socialUp.action;
 
 import java.io.File;
+
 import java.util.ArrayList;
 
 import java.util.HashMap;
@@ -24,7 +25,6 @@ import socialUp.common.util.CmnUtil;
 import socialUp.common.util.CookieUtil;
 import socialUp.common.util.DateTime;
 import socialUp.common.util.DebugUtil;
-import socialUp.common.util.FileUploadListener;
 import socialUp.common.util.NumUtil;
 import socialUp.service.content.ContentService;
 import socialUp.service.content.ContentServiceImpl;

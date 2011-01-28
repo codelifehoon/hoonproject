@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 </resultMap>
 	    
 	<select id="selectContentDtlCommentList" resultMap="selectContentDtlCommentListResult" parameterType="socialUp.service.content.dto.ContentDtlCommentDTO">
-	     	select /*selectContentDtlComment 2010.12.16*/
+	     	select /* ContentDtlComment.xml selectContentDtlComment 2010.12.16*/
 	     			cdc.cdc_no
 				,	cdc.cd_no
 				,	cdc.comment
@@ -52,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
     	
     <insert id="insertContentDtlComment" parameterType="socialUp.service.content.dto.ContentDtlCommentDTO">
-			INSERT INTO /*insertContentDtlComment 2010.12.16*/ content_dtl_comment(
+			INSERT INTO /* ContentDtlComment.xml insertContentDtlComment 2010.12.16*/ content_dtl_comment(
 					cd_no
 				,	comment
 				,	use_yn
@@ -73,7 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<update id="updateContentDtlComment" parameterType="socialUp.service.content.dto.ContentDtlCommentDTO">
-  		update  /*updateContentDtlComment 2010.12.16*/  content_dtl_comment set
+  		update  /* ContentDtlComment.xml updateContentDtlComment 2010.12.16*/  content_dtl_comment set
 					update_dt  = DATE_FORMAT(#{create_dt},'%Y%m%d%H%i%s')
 					,update_no	= #{create_no}
 					
@@ -90,6 +90,77 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   			and mt_no = #{mt_no}
   		</if>
   	</update>
+
+
+<!--  upload files 테이블에 대한 기본정의 -->
+ <resultMap id="selectUploadFilesListResult" type="socialUp.service.content.dto.UploadFilesDTO" >
+	        <result column="cdc_no" property="cdc_no" />
+	        <result column="cd_no" property="cd_no" />
+	        <result column="comment" property="comment" />
+	        <result column="use_yn" property="use_yn" />
+	        <result column="mt_no" property="mt_no" />
+	        <result column="create_dt" property="create_dt" />
+	        <result column="create_no" property="create_no" />
+	        <result column="update_dt" property="update_dt" />
+	        <result column="update_no" property="update_no" />
+	        <result column="mem_nm" 	property="memTblDTO.mem_nm" />
+	        
+	 </resultMap>
+	    
+	<select id="selectUploadFilesList" resultMap="selectUploadFilesListResult" parameterType="socialUp.service.content.dto.UploadFilesDTO">
+	
+	     	select /* ContentDtlComment.xml selectUploadFilesList 2010.12.16*/
+	     			SQL_CALC_FOUND_ROWS
+	     			uf_id
+				,	cd_no
+				,	file_name
+				,	file_path
+				,	file_kind
+				,	file_size
+				,	use_yn
+				,	create_dt
+				,	create_no
+			from upload_files uf where
+			uf.create_no = #{create_no}
+			and uf.use_yn = 'Y'
+			order by  uf.uf_id DESC
+			limit  #{startRowNum} , #{pageRowCount}
+				
+	</select>
+    	
+    <insert id="insertUploadFiles" parameterType="socialUp.service.content.dto.UploadFilesDTO">
+			INSERT INTO /*ContentDtlComment.xml insertContentDtlComment 2010.12.16*/ upload_files(
+					cd_no
+				,	file_name
+				,	file_path
+				,	file_kind
+				,	file_size
+				,	use_yn
+				,	create_dt
+				,	create_no
+					)
+			VALUES(
+					#{cd_no}
+				,	#{file_name}
+				,	#{file_path}
+				,	#{file_kind}
+				,	#{file_size}
+				,	#{use_yn}
+				,	DATE_FORMAT(#{create_dt},'%Y%m%d%H%i%s')
+				,	#{create_no}
+					)
+    	<selectKey resultType="String" keyProperty="uf_id"> select last_insert_id() as uf_id </selectKey>
+    </insert>
+	
+	
+	<update id="updateUploadFiles" parameterType="socialUp.service.content.dto.UploadFilesDTO">
+  		update  /*ContentDtlComment.xml updateUploadFiles 2010.12.16*/  upload_files set
+						use_yn = #{use_yn}	
+  		where  uf_id = #{uf_id}
+  		
+  	</update>
+
+
   	
 </mapper>
 

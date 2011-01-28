@@ -27,7 +27,10 @@
 	<meta http-equiv="content-type" content="text/html;charset=iso-8859-2" />
 	<link rel="stylesheet" href="<%=rootUrl%>/images/style.css" type="text/css" />
 	<script language="javascript" 	src="<%=rootUrl%>/js/common.js"></script>
-	<script type="text/javascript" src="<%=rootUrl%>/js/se/js/HuskyEZCreator.js" charset="utf-8"></script>
+	<script type="text/javascript"  src="<%=rootUrl%>/js/se/js/HuskyEZCreator.js" charset="utf-8"></script>
+	<script language="javascript" 	src="<%=rootUrl%>/dwr/interface/DwrContentAction.js"></script> 
+	<script language="javascript" 	src="<%=rootUrl%>/dwr/engine.js"></script> 
+	<script language="javascript" 	src="<%=rootUrl%>/dwr/util.js"></script>
 
 <script language='javascript'>
 	
@@ -77,16 +80,72 @@ function contentDtlEditProc()
 	}catch(e){ alert(e.message); }
 
 }
-	function clickBtn()
+	function insertImg(imgUrl)
 	{
 		
 		try
 		{
-			sHTML = "<span style='color:#FF0000'>이미지 등도 이렇게 삽입하면 됩니다.</span>";
-			oEditors.getById["ir1"].exec("PASTE_HTML", [sHTML]);
+			imgUrl = "<img src='" + imgUrl + "'>";
+			oEditors.getById["ir1"].exec("PASTE_HTML", [imgUrl]);
 			
 		} catch(e){ alert(e.message); }
 		
+	}
+	function imageListRealod(startNum)
+	{
+
+		try
+		{
+
+		// 이미지 페이징 처리시 시작 번호
+		mapParam = {startRowNum:startNum};
+		
+		DwrContentAction.selectImgList(mapParam,imageListRealodCallBack);
+
+		}
+		catch(e){ alert(e.message); }
+		
+	}
+
+	// 이미지 리스트 조회결과 출력
+	function imageListRealodCallBack(resultList)
+	{
+
+		var resultStr ="";
+		var domain = "http://goreee.com/";
+
+		try
+		{
+			if ( resultList.result_code == "00") 
+			{
+				resultStr += "[이전]";
+				
+				if ( parseInt(resultList.allRowNum) > 0 )
+				{
+					for (var i=0;i< resultList.retValList.uploadFilesList.length ;i++)
+					{
+						var uploadFiles = resultList.retValList.uploadFilesList[i];
+						
+						resultStr += "<a href=\"javascript:insertImg('" + domain + uploadFiles.file_path +"/" + uploadFiles.file_name + "')\">";
+						resultStr += "<img src='" + uploadFiles.file_path +"/" + uploadFiles.file_name + "' height='50px' width='50px'>&nbsp;";
+						resultStr += "</a>";
+		
+					}
+				}
+				
+				resultStr += "[이후]";
+				
+				getEleById("imgListArea").innerHTML = resultStr;
+				
+			}
+			else{
+					alert("이미지 목록 조회시 오류발생."); 
+				}
+		} catch (e)
+		{
+			alert(e.message);
+		}
+	
 	}
 </script>
 
@@ -106,10 +165,10 @@ function contentDtlEditProc()
 {%>
 			<p>제목:<input type='text' name='content_title' size='115' /></p>
 			<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<textarea name="ir1" id="ir1" style="width:725px; height:300px">에디터에 기본으로 삽입할 글(수정 모드)이 없다면 이 값을 지정하지 않으시면 됩니다.</textarea></p>
+			<textarea name="ir1" id="ir1" style="width:725px; height:300px"></textarea></p>
 			<p>TAG :<input type='text' name='categories' size='80' /></p>
 			<p>TAG값이 여러개 있을경우 , 로 분리 해주세요(예: 꽃,장비)</p>
-			<p align='center'><a href='javascript:contentDtlEditProc()'>******* 등록 *******</a></p>
+			
 	
 <%} else if ("U".equals(newFlag)) {%>
 			<input type="hidden" name="cd_no" value="<%=contentDtl.getCd_no()%>"/>
@@ -119,14 +178,26 @@ function contentDtlEditProc()
 			TAG :<input type='text' name='categories' value='<%=contentDtl.getCategories() %>'/></br>
 			<p>TAG값이 여러개 있을경우 , 로 분리 해주세요(예: 꽃,장비)</p>
 	
-			<p align='center'><a href='javascript:contentDtlEditProc()'>******* 수정 *******</a></p>
+			
+<%} %>
+</form>
+		
+		<div id="imgListArea">
+			가나다라마바사
+		</div>
+		<iframe name="fileUploadFrame" height="100px" width="1000px" frameborder="0" scrolling="yes" src="<%=rootUrl%>/jsp/content/fileUploadForm.jsp"></iframe>
+
+<%if ("N".equals(newFlag)) {%>
+<p align='center'><a href='javascript:contentDtlEditProc()'>******* 등록 *******</a></p>
+<%} else if ("U".equals(newFlag)) {%>
+<p align='center'><a href='javascript:contentDtlEditProc()'>******* 수정 *******</a></p>
 <%} %>
 
-			</form>
-			<IFRAME WIDTH="1000" HEIGHT="300" FRAMEBORDER="yes" SCROLLING="auto" SRC="<%=rootUrl%>/content/contentDtlEditFinish.action" NAME="imgFrame" >
-			</IFRAME> 
+
+			
+			 
 			</div>
-				
+
 				
 <%@ include file="/jsp/common/footer.jsp" %>
 
@@ -137,8 +208,10 @@ nhn.husky.EZCreator.createInIFrame({
 	elPlaceHolder: "ir1",
 	sSkinURI: "<%=rootUrl%>/js/se/SEditorSkin.html",
 	fCreator: "createSEditorInIFrame"
-	 
+		,		bUseBlocker : "false" 
 });
-			
+
+// 이미지 리스트 초기화
+imageListRealod("0");
 //,		bUseBlocker : "false"		
 </script>

@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import socialUp.common.util.NumUtil;
 import socialUp.service.content.dto.ContentDtlCommentDTO;
+import socialUp.service.content.dto.UploadFilesDTO;
 
 public class ContentDtlCommentDAOImpl implements ContentDtlCommentDAO {
 	
@@ -45,4 +46,42 @@ public class ContentDtlCommentDAOImpl implements ContentDtlCommentDAO {
 		return  this.sqlMap.selectList("socialUp.service.content.mapper.selectContentDtlCommentList", ContentDtlCommentParam);
 	}
 
+	
+	// 업로드 파일 테이블 관련
+	
+	@Override
+	public long insertUploadFiles(UploadFilesDTO uploadFilesParam) throws Exception 
+	{
+		 
+		this.sqlMap.insert("socialUp.service.content.mapper.insertUploadFiles", uploadFilesParam);
+		
+		// 등록후 시퀀스를 넘겨준다.
+		return NumUtil.toInt(uploadFilesParam.getUf_id());
+	}
+
+	@Override
+	public int updateUploadFiles(UploadFilesDTO uploadFilesParam) throws Exception 
+	{
+		return  this.sqlMap.update("socialUp.service.content.mapper.updateUploadFiles", uploadFilesParam);
+		
+	}
+
+	@Override
+	public List<UploadFilesDTO> selectUploadFiles(UploadFilesDTO uploadFilesParam) throws Exception  
+	{
+		 List<UploadFilesDTO> uploadFilesList = null;
+
+		 uploadFilesList =   this.sqlMap.selectList("socialUp.service.content.mapper.selectUploadFilesList", uploadFilesParam);
+		 Long tt  		=   (Long)this.sqlMap.selectOne("socialUp.service.common.mapper.selectFoundRows");
+		 
+		 for(int i=0;i<uploadFilesList.size();i++) uploadFilesList.get(i).setAllRowNum(tt.intValue());
+			
+		 
+		 return uploadFilesList;
+		
+		
+		
+	}
+
+	
 }

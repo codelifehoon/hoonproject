@@ -49,7 +49,7 @@
     <description>Servlet for file uploads</description>
     <display-name>File Upload Servlet</display-name>
     <servlet-name>FileUploadServlet</servlet-name>     
-    <servlet-class>socialUp.common.util.FileUploadServlet</servlet-class>
+    <servlet-class>socialUp.common.servlet.FileUploadServlet</servlet-class>
 </servlet>
 
 <servlet-mapping>
