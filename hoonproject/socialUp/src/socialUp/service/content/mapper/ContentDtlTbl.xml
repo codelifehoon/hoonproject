@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 </resultMap>
 	    
 	<select id="selectContentDtlList" resultMap="selectContentDtlResult" parameterType="socialUp.service.content.dto.ContentDtlTblDTO">
-	     	select /*selectContentDtlList 2010.12.13 */	cd_no
+	     	select /* ContentDtlTbl.xml selectContentDtlList 2010.12.13 */	cd_no
 					,	tt_no
 					,	cs_no
 					,	mt_no
@@ -68,7 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	
     <insert id="insertContentDtl" parameterType="socialUp.service.content.dto.ContentDtlTblDTO">
     		
-			INSERT INTO /*insertContentDtl 2010.12.13 */ content_dtl_tbl(
+			INSERT INTO /* ContentDtlTbl.xml insertContentDtl 2010.12.13 */ content_dtl_tbl(
 						tt_no
 					,	cs_no
 					,	mt_no
@@ -109,7 +109,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 
 	 
 	<update id="updateContentDtl" parameterType="socialUp.service.content.dto.ContentDtlTblDTO">
-  		update /*updateContentDtl 2010.12.13 */  content_dtl_tbl set
+  		update /*ContentDtlTbl.xml updateContentDtl 2010.12.13 */  content_dtl_tbl set
 					update_dt  = DATE_FORMAT(#{create_dt},'%Y%m%d%H%i%s')
 					,update_no	= #{create_no}
 					
@@ -163,7 +163,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <!--  같은값이 존재하지않아야 insert 신행됨 -->
    <insert id="compareInsertContentDtl" parameterType="socialUp.service.content.dto.ContentDtlTblDTO">
     		
-			INSERT INTO /*compareInsertContentDtl 2010.12.13 */  content_dtl_tbl(
+			INSERT INTO /* ContentDtlTbl.xml compareInsertContentDtl 2010.12.13 */  content_dtl_tbl(
 						tt_no
 					,	cs_no
 					,	mt_no
@@ -233,7 +233,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 
 	<select id="selectContentDtlPageList" resultMap="selectContentDtlPageListResult" parameterType="socialUp.service.content.dto.ContentDtlTblDTO">
 	
-     	SELECT  /*selectContentDtlPageList 2010.12.13 */ 
+     	SELECT  /* ContentDtlTbl.xml selectContentDtlPageList 2010.12.13 */ 
      	 			SQL_CALC_FOUND_ROWS
 						@ROW := @ROW +1 AS rownum
 					, 	cd_no
@@ -267,7 +267,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="isContentDtlView" resultType="java.util.HashMap" parameterType="socialUp.service.content.dto.ContentDtlTblDTO">
 
 		<!--  타 사용자에게 해당 컨텐츠에 대해서 읽을수 있도록 했다면 -->
-			SELECT /*isContentDtlView 2010.12.25 */ 2 AS flag FROM content_title_tbl ctt  WHERE ctt.tt_no = #{tt_no}  
+			SELECT /* ContentDtlTbl.xml isContentDtlView 2010.12.25 */ 2 AS flag FROM content_title_tbl ctt  WHERE ctt.tt_no = #{tt_no}  
 			AND ctt.order_mem_open_yn = 'Y'
 			LIMIT 1
 
@@ -302,7 +302,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="searchContentDtl" resultMap="selectContentDtlPageListResult" parameterType="socialUp.service.content.dto.SearchDTO">
-		SELECT  /*searchContentDtl 2011.01.05 */ 
+		SELECT  /* ContentDtlTbl.xml "searchContentDtl" 2011.01.05 */ 
      	 			SQL_CALC_FOUND_ROWS
 						@ROW := @ROW +1 AS rownum
 					, 	cd_no

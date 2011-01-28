@@ -1,4 +1,4 @@
-package socialUp.common.util;
+package socialUp.common.servlet;
 
 import org.apache.commons.fileupload.ProgressListener;
 

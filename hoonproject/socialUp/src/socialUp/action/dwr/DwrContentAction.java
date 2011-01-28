@@ -1,6 +1,7 @@
 package socialUp.action.dwr;
 
 import java.io.PrintWriter;
+
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
@@ -22,13 +23,16 @@ import socialUp.common.AuthService;
 import socialUp.common.DaoFactory;
 import socialUp.common.ServiceFactory;
 import socialUp.common.mybatis.MyBatisManager;
+import socialUp.common.servlet.FileUploadListener;
 import socialUp.common.util.CookieUtil;
 import socialUp.common.util.DateTime;
 import socialUp.common.util.DebugUtil;
-import socialUp.common.util.FileUploadListener;
 import socialUp.service.content.ContentService;
 import socialUp.service.content.ContentServiceImpl;
+import socialUp.service.content.ResourceMngService;
+import socialUp.service.content.ResourceMngServiceImpl;
 import socialUp.service.content.dto.ContentDtlCommentDTO;
+import socialUp.service.content.dto.UploadFilesDTO;
 import socialUp.service.member.MemberService;
 import socialUp.service.member.MemberServiceImpl;
 import socialUp.service.member.dao.MemTblDAO;
@@ -282,11 +286,22 @@ public class DwrContentAction extends BaseDwrAction
 	    		}
 	    		else
 	    		{
-	    	    	bytesRead = listener.getBytesRead();
-	    			contentLength = listener.getContentLength();
-	    			percentComplete = ((100 * bytesRead) / contentLength);
-	    			
-	    			if (bytesRead == contentLength) finished = "yes";
+	    			//  업로드에 에러가 있을떄 발생
+	    			if (contentLength != 0)
+	    			{
+		    	    	bytesRead = listener.getBytesRead();
+		    			contentLength = listener.getContentLength();
+		    			percentComplete = ((100 * bytesRead) / contentLength);
+		    			
+		    			if (bytesRead == contentLength) finished = "yes";
+	    			}
+	    			else
+	    			{
+	    				bytesRead = 0;
+	    				contentLength = 0;
+	    				finished = "yes";
+	    			}
+	    				
 	    				 
 	    		}
 	    	}
@@ -309,6 +324,72 @@ public class DwrContentAction extends BaseDwrAction
 		
 		return resultMap;
 	}
+	
+	/**
+	 * 파일업로드 상태를 실시간으로 확인한다.
+	 * 
+	 * @param memtbldto
+	 * contentDtlCommentParam.cd_no
+	 * contentDtlCommentParam.comment
+	 * 
+	 * @throws Exception 
+	 */
+	public HashMap selectImgList(HashMap mapParam) throws Exception
+	{
+		log.debug("selectImgList 시작");
+		
+		HashMap resultMap = new HashMap();
+		try 
+		{
+			
+			String sCurrentDate = DateTime.getFormatString("yyyyMMddHHmmss"); // 현재날짜
+			AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
+			
+			if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
+			
+			resultMap.put("result_code","00");
+			resultMap.put("result_msg","성공");
+			
+			String startRowNum =  (String)mapParam.get("startRowNum");
+
+
+			ResourceMngService 	resourceMngService 	= (ResourceMngService)ServiceFactory.createService(ResourceMngServiceImpl.class);
+			UploadFilesDTO		uploadFileParam		=	new UploadFilesDTO();
+			List<UploadFilesDTO>uploadFilesList 	= null; 
+			
+			
+			uploadFileParam.setCreate_no(authInfo.getMt_no());
+			uploadFileParam.setRownum(startRowNum);
+			
+			uploadFilesList = resourceMngService.selectUploadFiles(uploadFileParam);
+			
+			 Map<String, Object> map = new HashMap<String, Object>();
+			 JSONArray jsonArray = JSONArray.fromObject(uploadFilesList);
+			 map.put("uploadFilesList", jsonArray);		// uploadFilesList 라는 배열의 묶음으로처리
+			  
+			 JSONObject jsonObject = JSONObject.fromObject(map);
+			 resultMap.put("retValList", jsonObject); 	// uploadFilesList 묶음을 넘긴다.
+			 
+			 if (uploadFilesList.size() > 0)
+			 {
+				 resultMap.put("allRowNum",uploadFilesList.get(0).getAllRowNum());
+			 }
+			 else
+			 {
+				 resultMap.put("allRowNum",0);
+			 }
+			 
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			resultMap.put("result_code","-1");
+			resultMap.put("result_msg",e.getMessage());
+		}
+		
+		return resultMap;
+	}
+	
 	
 	
 
