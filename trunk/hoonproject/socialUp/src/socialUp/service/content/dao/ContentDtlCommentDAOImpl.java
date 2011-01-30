@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import socialUp.common.util.DebugUtil;
 import socialUp.common.util.NumUtil;
 import socialUp.service.content.dto.ContentDtlCommentDTO;
+import socialUp.service.content.dto.ContentDtlImgDTO;
 import socialUp.service.content.dto.UploadFilesDTO;
 
 public class ContentDtlCommentDAOImpl implements ContentDtlCommentDAO {
@@ -84,5 +85,48 @@ public class ContentDtlCommentDAOImpl implements ContentDtlCommentDAO {
 		
 	}
 
+	/**
+	 * 글상세 이미지 목록 테이블 정보 입력
+	 * @param param
+	 * @throws Exception
+	 */
+	public long updateContentDtlImg(ContentDtlImgDTO contentDtlImgParam) throws Exception 
+	{
+
+		return  this.sqlMap.update("socialUp.service.content.mapper.updateContentDtlImg", contentDtlImgParam);
+
+	}
+	
+	/**
+	 * 글상세 이미지 목록 정보 수정
+	 * 
+	 * @param param
+	 * @throws Exception
+	 */
+	public int insertContentDtlImg(ContentDtlImgDTO contentDtlImgParam) throws Exception 
+	{
+		 
+		this.sqlMap.insert("socialUp.service.content.mapper.insertContentDtlImg", contentDtlImgParam);
+		
+		// 등록후 시퀀스를 넘겨준다.
+		return NumUtil.toInt(contentDtlImgParam.getCdi_no());
+	}
+	
+	/**
+	 * 글상세 이미지 목록 정보 조회
+	 * 
+	 * @param param
+	 * @throws Exception
+	 */
+	public List<ContentDtlImgDTO> selectContentDtlImgList(ContentDtlImgDTO contentDtlImgParam) throws Exception
+	{
+		 List<ContentDtlImgDTO> contentDtlImgList = null;
+		 
+		 contentDtlImgList =   this.sqlMap.selectList("socialUp.service.content.mapper.selectContentDtlImgList", contentDtlImgParam);
+		
+		 
+		 return contentDtlImgList;
+	}
+	
 	
 }
