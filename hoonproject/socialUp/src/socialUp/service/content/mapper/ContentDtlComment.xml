@@ -177,53 +177,53 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        
 	 </resultMap>
 	    
-	<select id="selectContentDtlImgList" resultMap="selectUploadFilesListResult" parameterType="socialUp.service.content.dto.UploadFilesDTO">
+	<select id="selectContentDtlImgList" resultMap="selectContentDtlImgListResult" parameterType="socialUp.service.content.dto.ContentDtlImgDTO">
 	
 	     	select /* ContentDtlComment.xml selectContentDtlImgList 2010.12.16*/
 				cdi_no
 			,	cd_no
 			,	img_kind
 			,	img_url
+			,	thumbnail_url
+			, 	use_yn
 			,	create_dt
 			,	create_no
-			,	update_dt
-			,	update_no
-			,	thumbnail_url
+
 			from content_dtl_img cdi where
 			cdi.cd_no = #{cd_no}
 			and cdi.use_yn = 'Y'
 				
 	</select>
     	
-    <insert id="insertUploadFiles" parameterType="socialUp.service.content.dto.UploadFilesDTO">
-			INSERT INTO /*ContentDtlComment.xml insertContentDtlComment 2010.12.16*/ upload_files(
+    <insert id="insertContentDtlImg" parameterType="socialUp.service.content.dto.ContentDtlImgDTO">
+			INSERT INTO /*ContentDtlComment.xml insertContentDtlImg 2010.12.16*/ content_dtl_img(
+					
 					cd_no
-				,	file_name
-				,	file_path
-				,	file_kind
-				,	file_size
-				,	use_yn
+				,	img_kind
+				,	img_url
+				,	thumbnail_url
+				, 	use_yn
 				,	create_dt
 				,	create_no
+				
 					)
 			VALUES(
 					#{cd_no}
-				,	#{file_name}
-				,	#{file_path}
-				,	#{file_kind}
-				,	#{file_size}
+				,	#{img_kind}
+				,	#{img_url}
+				,	#{thumbnail_url}
 				,	#{use_yn}
 				,	DATE_FORMAT(#{create_dt},'%Y%m%d%H%i%s')
 				,	#{create_no}
 					)
-    	<selectKey resultType="String" keyProperty="uf_id"> select last_insert_id() as uf_id </selectKey>
+    	<selectKey resultType="String" keyProperty="cdi_no"> select last_insert_id() as cdi_no </selectKey>
     </insert>
 	
 	
-	<update id="updateUploadFiles" parameterType="socialUp.service.content.dto.UploadFilesDTO">
-  		update  /*ContentDtlComment.xml updateUploadFiles 2010.12.16*/  upload_files set
+	<update id="updateContentDtlImg" parameterType="socialUp.service.content.dto.ContentDtlImgDTO">
+  		update  /*ContentDtlComment.xml updateContentDtlImg 2010.12.16*/ content_dtl_img set
 						use_yn = #{use_yn}	
-  		where  uf_id = #{uf_id}
+  		where  cd_no = #{cd_no}
   		
   	</update>
   	
