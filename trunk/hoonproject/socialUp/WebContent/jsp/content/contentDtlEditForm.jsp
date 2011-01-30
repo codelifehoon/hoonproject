@@ -113,27 +113,52 @@ function contentDtlEditProc()
 
 		var resultStr ="";
 		var domain = "http://goreee.com/";
-
+		
+	
+		
 		try
 		{
 			if ( resultList.result_code == "00") 
 			{
-				resultStr += "[이전]";
+				
 				
 				if ( parseInt(resultList.allRowNum) > 0 )
 				{
+					var startRowNum = parseInt(resultList.startRowNum);
+					var allRowNum 	= parseInt(resultList.allRowNum);
+					
+					// 사진 조회 시작번호가 0보다 크면 이전 사진이 존재한다는것임
+					if (startRowNum > 0 )
+					{
+						var rownum = 0;
+						if (startRowNum - 10 < 0 ) 	rownum = 0;
+						else						rownum = startRowNum - 10;
+						
+						resultStr += "<input type='button' onClick='javascript:imageListRealod( " + rownum + " )' value='최근10개'>";
+					}
+					
 					for (var i=0;i< resultList.retValList.uploadFilesList.length ;i++)
 					{
 						var uploadFiles = resultList.retValList.uploadFilesList[i];
 						
 						resultStr += "<a href=\"javascript:insertImg('" + domain + uploadFiles.file_path +"/" + uploadFiles.file_name + "')\">";
-						resultStr += "<img src='" + uploadFiles.file_path +"/" + uploadFiles.file_name + "' height='50px' width='50px'>&nbsp;";
+						resultStr += "<img src='" + uploadFiles.file_path +"/thumb/" + uploadFiles.file_name + "' >&nbsp;";
 						resultStr += "</a>";
 		
 					}
+					
+					// 사진 조회 시작번호 + 10보다 전체 사진 수량이 크다면 이전껄
+					if (startRowNum + 10 <  allRowNum )
+					{
+						var rownum = 0;
+						rownum = startRowNum + 10 ;
+						
+						resultStr += "<input type='button' onClick='javascript:imageListRealod( " + rownum + " )' value='이전10개'>";
+					}
+					
+					
 				}
 				
-				resultStr += "[이후]";
 				
 				getEleById("imgListArea").innerHTML = resultStr;
 				

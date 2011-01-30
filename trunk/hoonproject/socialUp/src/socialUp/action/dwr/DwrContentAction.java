@@ -1,5 +1,6 @@
 package socialUp.action.dwr;
 
+import java.awt.image.renderable.ParameterBlock;
 import java.io.PrintWriter;
 
 import java.net.URLEncoder;
@@ -27,6 +28,7 @@ import socialUp.common.servlet.FileUploadListener;
 import socialUp.common.util.CookieUtil;
 import socialUp.common.util.DateTime;
 import socialUp.common.util.DebugUtil;
+import socialUp.common.util.NumUtil;
 import socialUp.service.content.ContentService;
 import socialUp.service.content.ContentServiceImpl;
 import socialUp.service.content.ResourceMngService;
@@ -342,6 +344,7 @@ public class DwrContentAction extends BaseDwrAction
 		try 
 		{
 			
+			
 			String sCurrentDate = DateTime.getFormatString("yyyyMMddHHmmss"); // 현재날짜
 			AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
 			
@@ -359,7 +362,7 @@ public class DwrContentAction extends BaseDwrAction
 			
 			
 			uploadFileParam.setCreate_no(authInfo.getMt_no());
-			uploadFileParam.setRownum(startRowNum);
+			uploadFileParam.setStartRowNum(NumUtil.toInt(startRowNum));
 			
 			uploadFilesList = resourceMngService.selectUploadFiles(uploadFileParam);
 			
@@ -378,6 +381,9 @@ public class DwrContentAction extends BaseDwrAction
 			 {
 				 resultMap.put("allRowNum",0);
 			 }
+			 
+			 
+			 resultMap.put("startRowNum",startRowNum);
 			 
 		}
 		catch(Exception e)
