@@ -278,7 +278,7 @@
 	 						<br />
  					
 
-						<table width=100% >
+						<table width='100%' >
 							<tr >
 								<td width=10%>댓글</td>
 								<td><textarea name="comment" id="comment" style="width:600px; height:30px"></textarea></td>

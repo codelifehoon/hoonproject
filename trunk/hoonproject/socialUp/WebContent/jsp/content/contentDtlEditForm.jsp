@@ -112,7 +112,7 @@ function contentDtlEditProc()
 	{
 
 		var resultStr ="";
-		var domain = "http://goreee.com/";
+		var domain = "http://goreee.com";
 		
 	
 		
@@ -141,7 +141,7 @@ function contentDtlEditProc()
 					{
 						var uploadFiles = resultList.retValList.uploadFilesList[i];
 						
-						resultStr += "<a href=\"javascript:insertImg('" + domain + uploadFiles.file_path +"/" + uploadFiles.file_name + "')\">";
+						resultStr += "<a href=\"javascript:insertImg('" + domain +  uploadFiles.file_path +"/" + uploadFiles.file_name + "')\">";
 						resultStr += "<img src='" + uploadFiles.file_path +"/thumb/" + uploadFiles.file_name + "' >&nbsp;";
 						resultStr += "</a>";
 		
@@ -190,7 +190,7 @@ function contentDtlEditProc()
 {%>
 			<p>제목:<input type='text' name='content_title' size='115' /></p>
 			<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<textarea name="ir1" id="ir1" style="width:725px; height:300px"></textarea></p>
+			<textarea name="ir1" id="ir1" style="width:1000px; height:300px"></textarea></p>
 			<p>TAG :<input type='text' name='categories' size='80' /></p>
 			<p>TAG값이 여러개 있을경우 , 로 분리 해주세요(예: 꽃,장비)</p>
 			
@@ -199,16 +199,15 @@ function contentDtlEditProc()
 			<input type="hidden" name="cd_no" value="<%=contentDtl.getCd_no()%>"/>
 			
 			제목:<input type='text' name='content_title' value='<%=contentDtl.getContent_title() %>'  size='115' /><br></br>
-			<textarea name="ir1" id="ir1" style="width:725px; height:300px"><%=contentDtl.getContent_desc() %></textarea>
+			<textarea name="ir1" id="ir1" style="width:1000px; height:300px"><%=contentDtl.getContent_desc() %></textarea>
 			TAG :<input type='text' name='categories' value='<%=contentDtl.getCategories() %>'/></br>
 			<p>TAG값이 여러개 있을경우 , 로 분리 해주세요(예: 꽃,장비)</p>
 	
 			
 <%} %>
 </form>
-		
+		 
 		<div id="imgListArea">
-			가나다라마바사
 		</div>
 		<iframe name="fileUploadFrame" height="100px" width="1000px" frameborder="0" scrolling="yes" src="<%=rootUrl%>/jsp/content/fileUploadForm.jsp"></iframe>
 
