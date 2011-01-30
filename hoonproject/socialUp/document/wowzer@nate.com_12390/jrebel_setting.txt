@@ -1,4 +1,0 @@
--noverify -javaagent:C:\TDPlatform\Servers\apache-tomcat-5.5.23\common\lib\jrebel.jar
-
-
--noverify -javaagent:D:\javadevtool\apache-tomcat-7.0.4\lib\jrebel.jar

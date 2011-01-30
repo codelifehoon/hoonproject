@@ -1,9 +1,18 @@
 package socialUp.common.servlet;
 
+import javax.imageio.ImageIO;
+import javax.media.jai.Interpolation;
+import javax.media.jai.JAI;
+import javax.media.jai.RenderedOp;
 import javax.servlet.RequestDispatcher;
+
 import javax.servlet.Servlet;
 import javax.servlet.http.HttpServlet;
 
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.awt.image.renderable.ParameterBlock;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,7 +28,6 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
-
 import socialUp.common.AuthInfo;
 import socialUp.common.AuthService;
 import socialUp.common.ServiceFactory;
@@ -149,14 +157,25 @@ public class FileUploadServlet extends HttpServlet implements Servlet {
 
 			filePath += "\\" + sCurrentDate.substring(0, 8);
 			fileUrl  += "//" + sCurrentDate.substring(0, 8);
-			
-			File fileIO = new File(filePath);
-            if (!fileIO.exists()) 
-			  {
-            	// 폴더생성
-            	if (!fileIO.mkdirs()) { throw new Exception("폴더 생성 오류 발생."); } 
-			  }
 
+			
+			// image 저장경로 확인및 설정
+			{
+				File fileIO = new File(filePath);
+				File thumbFileIO = new File(filePath + "\\thumb");
+
+	            if (!fileIO.exists()) 
+				  {
+	            	// 폴더생성
+	            	if (!fileIO.mkdirs()) { throw new Exception("폴더 생성 오류 발생."); } 
+				  }
+	            
+	            if (!thumbFileIO.exists()) 
+				  {
+		          	// 폴더생성
+		          	if (!thumbFileIO.mkdirs()) { throw new Exception("thumb 폴더 생성 오류 발생."); } 
+				  }
+			}
             
 			upload.setSizeMax(1024 * 1024 * 2); // 전체 upload 되는 파일 사이즈 check
 												// (1024*1024 1m)
@@ -174,8 +193,10 @@ public class FileUploadServlet extends HttpServlet implements Servlet {
 				log.debug("fileItem.getSize():" + fileItem.getSize());
 				log.debug("ii:" + ii);
 
-				if (fileItem.isFormField() == false) {
-					if (fileItem.getSize() > 0) {
+				if (fileItem.isFormField() == false) 
+				{
+					if (fileItem.getSize() > 0) 
+					{
 						File uploadedFile = null;
 						String myFullFileName = fileItem.getName(), myFileName = "", slashType = (myFullFileName
 								.lastIndexOf("\\") > 0) ? "\\" : "/"; // Windows
@@ -207,6 +228,70 @@ public class FileUploadServlet extends HttpServlet implements Servlet {
 						uploadFilesParam.setCreate_no(authInfo.getMt_no());
 						uploadFilesParam.setCreate_dt(sCurrentDate);
 						resourceMngService.insertUploadFiles(uploadFilesParam);
+						
+						
+
+						{
+							 int imgWidth 	= 0;
+							 int imgHeight	= 0;
+							 int imgWidthNew 	= 0;
+							 int imgHeightNew	= 0;
+							 float thumbSize 	= 80;
+							 
+							 // 이미지 리사이즈
+							 ParameterBlock pb = new ParameterBlock();
+							 
+							 pb.add(filePath + "\\" + myFileName);
+							 RenderedOp  rOp = JAI.create("fileload", pb);
+
+							 
+							 
+							 imgWidth  = rOp.getWidth();
+							 imgHeight =  rOp.getHeight();
+							 
+							 
+							 
+							 // 가로가 큰 이미지 일때 가로를 기준으로 이미지 비율산정(축소비율:80.0/imgWidth)
+							 if (imgWidth > imgHeight)
+							 {
+								 imgWidthNew  	= (int)((thumbSize/imgWidth) * imgWidth);
+								 imgHeightNew  	= (int)((thumbSize/imgWidth) * imgHeight);
+							 }
+							 else
+							 {
+								 imgWidthNew  	= (int)((thumbSize/imgHeight) * imgWidth);
+								 imgHeightNew  	= (int)((thumbSize/imgHeight) * imgHeight);
+							 }
+							 
+							 if (log.isDebugEnabled())
+							 {
+								 log.debug("원본파일경로 :" + filePath + "\\" + myFileName);
+								 log.debug("thumb파일경로:" + filePath + "\\thumb\\" + myFileName);
+								 log.debug("imgWidth:" + imgWidth);
+								 log.debug("imgHeight:" + imgHeight);
+								 log.debug("imgWidthNew:" + imgWidthNew);
+								 log.debug("imgHeightNew:" + imgHeightNew);
+								 log.debug("thumbSize/imgHeight:" + thumbSize/imgHeight);
+							 }
+	
+							 // JAI.create()의 두번째 인자로 각각을 넣어줄 수도 있지만 JAI 1.1 이후 deprecated되었으므로 ParameterBlock를 생성하여 넘기는 방법을 쓰자,
+							 // 생성한 ParameterBlock객체에 .add로 파일명을 넣어주면 된다.
+							 BufferedImage im = rOp.getAsBufferedImage();
+	
+							 // 입력 파일에 대해 BufferedImage형식으로 받아오고,
+							 BufferedImage thumb = new BufferedImage(imgWidthNew, imgHeightNew, BufferedImage.TYPE_INT_RGB);
+	
+							//썸네일(리사이즈)이미지를 위한 공간을 만든다. 50,50은 width, height되겠다.
+							  Graphics2D g2 = thumb.createGraphics();
+							
+							  //썸네일 버퍼공간에 대해 Graphics2D객체를 얻어와서 입력이미지에 있는 내용을 그린다.(0,0위치에 50,50크기로 복사)
+							  g2.drawImage(im, 0, 0, imgWidthNew, imgHeightNew, null);
+	
+	
+							  //출력파일에 대한 객체를 만들고 ImageIO.write로 출력.
+							  File outfile = new File(filePath + "\\thumb\\" + myFileName );
+							  ImageIO.write(thumb, "jpg", outfile);
+						}
 					}
 				}
 			}
