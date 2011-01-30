@@ -8,7 +8,7 @@
 <%
 // 컨텐츠 타이틀을 새롭게 만들면서 기존 다른사람의 컨텐츠 타이틀을 브랜치를 가져올떄 값이 존재한다.
 	ContentTitleTblDTO	branchContentTitle = (ContentTitleTblDTO)request.getAttribute("contentTitle");  
-	String ref_tt_no = "";	
+	String ref_tt_no = "";
 	
 	if (branchContentTitle != null)
 	{
