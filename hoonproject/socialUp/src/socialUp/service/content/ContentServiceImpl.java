@@ -2,6 +2,7 @@ package socialUp.service.content;
 
 import java.util.HashMap;
 
+
 import java.util.List;
 
 
@@ -38,6 +39,7 @@ import socialUp.service.content.dto.SearchDTO;
 import socialUp.service.member.dao.MemTblDAO;
 import socialUp.service.member.dao.MemTblDAOImpl;
 import socialUp.service.member.dto.MemTblDTO;
+import org.apache.log4j.Logger;
 
 public class ContentServiceImpl implements ContentService 
 {
