@@ -100,7 +100,7 @@ public class ContentDtlTblDAOImpl implements ContentDtlTblDAO {
 			updateContentDtl(contentDtl2);
 		}
 		
-		// 회원가입후 가입일련번호를 넘겨준다.
+		// 글등록후 일련번호를 넘겨준다.
 		return NumUtil.toInt(contentDtl.getCd_no());
 		
 	}
@@ -183,6 +183,18 @@ public class ContentDtlTblDAOImpl implements ContentDtlTblDAO {
 	
 	
 
+	/**
+	 * html 본문에서  이미지를 태그를  뽑아내어 thumbnail을 생성한다.
+	 * 본문에 있는 간략한 이미지를 뽑아내기 위해서 사용한다.
+	 * @param body
+	 * @return
+	 */
+	public boolean extractContentDtlThumbNail(String htmlBody)
+	{
+		
+		return true;
+	}
+	
 	
 	
 	

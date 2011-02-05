@@ -4,6 +4,8 @@ package socialUp.common.util;
 import java.io.BufferedReader;
 
 
+
+import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -14,6 +16,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
@@ -8609,5 +8612,49 @@ public class CmnUtil {
     }
 
 
+    /**
+     * http url의 파일을 다운로드 한다.
+     * @param address
+     * @param localFileName
+     */
+    public static void httpFileDownload(String address, String localFileName) { 
+        OutputStream out = null; 
+        URLConnection conn = null; 
+        InputStream  in = null; 
+        try 
+        { 
+            URL url = new URL(address); 
+            out = new BufferedOutputStream( new FileOutputStream(localFileName)); 
+            conn = url.openConnection(); 
+            in = conn.getInputStream();
+            
+            byte[] buffer = new byte[1024*10]; 
+            int numRead; 
+            long numWritten = 0; 
+            while ((numRead = in.read(buffer)) != -1) 
+            { 
+                out.write(buffer, 0, numRead); 
+                numWritten += numRead; 
+            }
+            
+        } catch (Exception e) 
+        { 
+            e.printStackTrace(); 
+        } finally 
+        { 
+            try { 
+                if (in != null) { 
+                    in.close(); 
+                } 
+                if (out != null) { 
+                    out.close(); 
+                } 
+            } catch (IOException e)
+            { 
+            	e.printStackTrace(); 
+            } 
+        } 
+    } 
+    
 
 } // end of class
