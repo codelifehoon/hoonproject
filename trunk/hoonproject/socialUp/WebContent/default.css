@@ -1,0 +1,227 @@
+
+/* 기본레이아웃 */
+
+
+
+* { padding: 0; margin: 0; }
+
+
+
+body 
+{
+ font-family: Verdana, Arial, Helvetica, sans-serif;
+ font-size: 13px;
+}
+
+
+
+p { padding: 10px; }
+
+
+
+#wrapper { 
+ margin: 0 auto;
+ width: 100%;
+}
+
+
+
+#content { 
+ float: left;
+ color: #333;
+ background: #FFFFFF;
+ height: 550px;
+ width: 100%;
+ display: inline;
+}
+
+
+
+#header {
+ color: #333;
+ width: 100%;
+ height: 75px;
+ background: #0099FF;
+}
+
+
+
+#footer { 
+ width: 100%;
+ height: 25px;
+ clear: both;
+ color: #333;
+ background: #0099FF;
+}
+
+
+.headerTable {
+ color: #333;
+ width: 100%;
+ height: 75px;
+ background: #0099FF;
+}
+
+.footerTable { 
+ width: 100%;
+ height: 25px;
+ clear: both;
+ color: #333;
+ background: #0099FF;
+}
+
+/* 버튼 레이아웃*/
+.button,
+.button a,
+.button button,
+.button input { position:relative; margin:0; display:-moz-inline-stack; display:inline-block; text-decoration:none !important; border:0; font-size:15px; font-family:arial, Sans-serif; white-space:nowrap; background:url(../img/buttonWhite.gif) no-repeat; overflow:visible; color:#333;}
+.button { height:23px; padding:0; vertical-align:middle; margin-right:2px; background-position:left top;}
+.button a,
+.button button,
+.button input{ left:2px; vertical-align:top; cursor:pointer;}
+
+/* Button Size */
+.button.large { height:29px; background-position:left -30px; }
+.button.xLarge { height:35px; background-position:left -65px; }
+.button.small { height:18px; background-position:left -107px; }
+.button a,
+.button button,
+.button input { height:23px; padding:0 10px 0 8px; font-size:15px; line-height:23px; background-position:right top;}
+.button.large a,
+.button.large button,
+.button.large input { height:30px; padding:0 10px 0 8px; font-size:16px; line-height:29px; background-position:right -30px;}
+.button.xLarge a,
+.button.xLarge button,
+.button.xLarge input { height:35px; padding:0 10px 0 8px; font-size:20px; line-height:35px; background-position:right -65px;}
+.button.small a,
+.button.small button,
+.button.small input { height:18px; padding:0 6px 0 4px; font-size:11px; line-height:18px; background-position:right -107px;}
+
+/* Button Text Color */
+.button *:hover,
+.button *:active,
+.button *:focus{ color:#690;}
+
+.button.blue,
+.button.blue a,
+.button.blue button,
+.button.blue input { background-image:url(buttonBlue.gif); color:#fff;}
+.button.blue *:hover,
+.button.blue *:active,
+.button.blue *:focus{ color:#ff0;}
+
+
+/*기본 링크*/
+A:link, a:visited { text-decoration: none; color: #2276BB; } 
+A[href] { font: 12px arial, Helvetica,돋움,Arial, Sans-Serif}
+A:hover { font: 12px ; color:#2276BB;text-decoration: underline} 
+
+.ALink1:link, .ALink1:visited { text-decoration: none; color: #FFFFFF; } 
+.ALink1[href] { font: 12px arial, Helvetica,돋움,Arial, Sans-Serif}
+.ALink1:hover { font: 12px ; color:#ff0;text-decoration: underline}
+
+
+/*공통 제목글자*/
+h0 {
+	font: 30px arial, Helvetica,돋움,Arial, Sans-Serif;
+	font-weight: bold;
+	text-align: left;
+    }
+    
+h1 {
+	font: 20px arial, Helvetica,돋움,Arial, Sans-Serif;
+	text-align: left;
+    }
+
+h2 {
+	font: 18px arial, Helvetica,돋움,Arial, Sans-Serif;
+	text-align: left;
+    }
+
+h3 {
+	font: 16px arial, Helvetica,돋움,Arial, Sans-Serif;
+	text-align: left;
+    }
+h4 {
+	font: 14px arial, Helvetica,돋움,Arial, Sans-Serif;
+	text-align: left;
+    }
+h5 {
+	font: 12px arial, Helvetica,돋움,Arial, Sans-Serif;
+	text-align: left;
+    }
+h6 {
+	font: 10px arial, Helvetica,돋움,Arial, Sans-Serif;
+	text-align: left;
+    }
+
+h4_under { 
+	color: #46574D; 
+	background: #FFFFFF;
+	text-align: left; 
+	margin: 14px 0 5px 0; 
+	padding: 0.4em 0 0 0; 
+	border-bottom: 1px solid #FF9C00;
+}
+
+h6_under { 
+	color: #46574D; 
+	background: #FFFFFF;
+	text-align: left; 
+	margin: 10px 0 5px 0; 
+	padding: 0.4em 0 0 0; 
+	border-bottom: 1px solid #FF9C00;
+}
+
+
+/* 제목 배경있는글 */
+.TL1 {
+	font: 30px arial, Helvetica,돋움,Arial, Sans-Serif;
+	font-weight: bold;
+	text-align: left;
+	color:#2276BB;
+	width: 300px;
+	border-bottom: 2px solid #FF9C00;
+}
+
+.TL2 {
+	font: 20px arial, Helvetica,돋움,Arial, Sans-Serif;
+	font-weight: bold;
+	text-align: left;
+	color:#2276BB;
+	background-color : #0033CC;
+	border: 1px solid #008000;
+	width: 300px;
+}
+/*입력상자 스타일*/
+
+.input150 
+	{
+	background:#FFFFFF   no-repeat 4px 4px;
+	padding:4px 4px 4px 22px;
+	border:1px solid #CCCCCC;
+	width:100px;
+	height:14px;
+	}
+.input250 
+	{
+	background:#FFFFFF   no-repeat 4px 4px;
+	border:0px solid #CCCCCC;
+	width:250px;
+	height:20px;
+	border-bottom: 2px solid #000000;
+	}
+	
+.input400 
+	{
+	background:#FFFFFF   no-repeat 4px 4px;
+	border:0px solid #CCCCCC;
+	width:400px;
+	height:20px;
+	border-bottom: 2px solid #000000;
+	}
+	
+
+	
+    
+
