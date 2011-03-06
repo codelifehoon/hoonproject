@@ -6,8 +6,6 @@
 %>
 <<script type="text/javascript">
 <!--
-
-	alert("로그아웃성공.")
 	window.location.href = "/socialUp/index.action";
 
 //-->

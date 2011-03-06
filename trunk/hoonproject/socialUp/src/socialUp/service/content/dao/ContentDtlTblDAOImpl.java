@@ -8,6 +8,8 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
+
+import socialUp.common.DaoFactory;
 import socialUp.common.util.NumUtil;
 import socialUp.service.content.dto.ContentDtlTblDTO;
 import socialUp.service.content.dto.ContentSourceTblDTO;
@@ -87,21 +89,41 @@ public class ContentDtlTblDAOImpl implements ContentDtlTblDAO {
 	public long compareInsertContentDtl(ContentDtlTblDTO contentDtl) throws Exception
 	{
 		
-		this.sqlMap.insert("socialUp.service.content.mapper.compareInsertContentDtl", contentDtl);
-		
-		// 최근순 글을 보기 위해서 index desc 값을 만들기 위해서 update 1회실행
+		List<ContentDtlTblDTO> resultList  = selectContentDtl(contentDtl);
+
+		//  기존에 같은 글이 존재하지않으면 신규글로 등록한다.
+		if (resultList.size() == 0)
 		{
-			ContentDtlTblDTO contentDtl2 = new ContentDtlTblDTO();
+			this.sqlMap.insert("socialUp.service.content.mapper.compareInsertContentDtl", contentDtl);
 			
-			contentDtl2.setCd_no(contentDtl.getCd_no());
-			contentDtl2.setCreate_no(contentDtl.getCreate_no());
-			contentDtl2.setCreate_dt(contentDtl.getCreate_dt());
-			contentDtl2.setRevers_index("set");
-			updateContentDtl(contentDtl2);
+			if (!"".equals(contentDtl.getCd_no()))
+			{
+				ContentDtlCommentDAO contentDtlCommentDAO = (ContentDtlCommentDAO)DaoFactory.createDAO(ContentDtlCommentDAOImpl.class);
+				ContentDtlTblDTO contentDtl2 = new ContentDtlTblDTO();
+				
+				contentDtlCommentDAO.setSqlSesstion(this.sqlMap);
+				
+				contentDtl2.setCd_no(contentDtl.getCd_no());
+				contentDtl2.setCreate_no(contentDtl.getCreate_no());
+				contentDtl2.setCreate_dt(contentDtl.getCreate_dt());
+				contentDtl2.setRevers_index("set");
+				updateContentDtl(contentDtl2);
+				
+				// 본문 썸네일 대상 이미지 등록
+				int retCount = contentDtlCommentDAO.extractRegContentDtlThumbNail(contentDtl);
+				
+				log.debug("썸네일카운트:" + retCount);
+			}
+			else throw new Exception("컨텐츠 수집배치에서 신규글 등록시 오류발생(글일련번호알수없음)");
+			
+			// 글등록후 일련번호를 넘겨준다.
+			return NumUtil.toInt(contentDtl.getCd_no());
+			
 		}
-		
-		// 글등록후 일련번호를 넘겨준다.
-		return NumUtil.toInt(contentDtl.getCd_no());
+		else
+		{
+			return 0;
+		}
 		
 	}
 	
@@ -183,18 +205,6 @@ public class ContentDtlTblDAOImpl implements ContentDtlTblDAO {
 	
 	
 
-	/**
-	 * html 본문에서  이미지를 태그를  뽑아내어 thumbnail을 생성한다.
-	 * 본문에 있는 간략한 이미지를 뽑아내기 위해서 사용한다.
-	 * @param body
-	 * @return
-	 */
-	public boolean extractContentDtlThumbNail(String htmlBody)
-	{
-		
-		return true;
-	}
-	
 	
 	
 	

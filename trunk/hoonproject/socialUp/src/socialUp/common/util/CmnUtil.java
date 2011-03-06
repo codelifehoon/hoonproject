@@ -39,6 +39,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import net.htmlparser.jericho.Element;
+import net.htmlparser.jericho.HTMLElementName;
+import net.htmlparser.jericho.Source;
+
 
 public class CmnUtil {
 
@@ -1211,7 +1215,6 @@ public class CmnUtil {
 	}
 
 	/**
-
 	 확장자 반환
 	 */
 
@@ -7756,9 +7759,9 @@ public class CmnUtil {
 	 *
 	 * 필드값으로 넘어온 fullpath에서 실제 파일명만 얻기위한 method
 	 */
-	public String getFileName(String fullFileName) {
+	public String getFileName(String fullFileName,String split) {
 		String fileName = null;
-		String[] splitStr = fullFileName.split("\\\\");
+		String[] splitStr = fullFileName.split(split);
 		fileName = splitStr[splitStr.length - 1];
 		return fileName;
 	}
@@ -8617,15 +8620,19 @@ public class CmnUtil {
      * @param address
      * @param localFileName
      */
-    public static void httpFileDownload(String address, String localFileName) { 
+    public static boolean httpFileDownload(String address, String localFileName) { 
         OutputStream out = null; 
         URLConnection conn = null; 
-        InputStream  in = null; 
+        InputStream  in = null;
+        boolean retVal = false;
         try 
         { 
-            URL url = new URL(address); 
+            URL url = new URL(address);
+            
             out = new BufferedOutputStream( new FileOutputStream(localFileName)); 
-            conn = url.openConnection(); 
+            conn = url.openConnection();
+            conn.setConnectTimeout(3000);	// connect timeout 3초 설정
+            
             in = conn.getInputStream();
             
             byte[] buffer = new byte[1024*10]; 
@@ -8636,6 +8643,8 @@ public class CmnUtil {
                 out.write(buffer, 0, numRead); 
                 numWritten += numRead; 
             }
+            
+            retVal = true;
             
         } catch (Exception e) 
         { 
@@ -8654,7 +8663,40 @@ public class CmnUtil {
             	e.printStackTrace(); 
             } 
         } 
+        
+        return retVal;
     } 
+    
+    
+    /**
+     * 넘오는 스트링에서 특정한 테스를 뽑아낸다.
+     * @param responseBodyStream
+     * @param tagNames
+     * @return
+     */
+    public static HashMap getHttpElementsMapFromStream(String responseBodyStream, Vector<String> tagNames)
+	{
+		HashMap elementMap = new HashMap();
+		try {
+			Source s = new Source(responseBodyStream);
+			s.fullSequentialParse();
+			List<Element> elementList = null;	
+			for(String tag : tagNames) 
+			{
+				elementList = s.getAllElements(tag);
+				if( elementList != null ) {
+					elementMap.put(tag, elementList);
+				}
+			}
+		} catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		return elementMap;
+	}
+
+    
+    
     
 
 } // end of class

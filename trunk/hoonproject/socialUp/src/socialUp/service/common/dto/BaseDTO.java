@@ -18,6 +18,7 @@ public class BaseDTO
 	
 	private String retCode    ="0";		// 처리결과 코드	0:성공    -1 :실패
 	private String retDetCode ="0";  // -1000 order_mem_join_passwd값이 틀려서 content_join_mem 등록불가
+	private String retMsg =""; 		 // 리턴메세지
 	
 	
 	public String getIdx() {
@@ -108,6 +109,12 @@ public class BaseDTO
 	}
 	public void setRetDetCode(String retDetCode) {
 		this.retDetCode = retDetCode;
+	}
+	public String getRetMsg() {
+		return retMsg;
+	}
+	public void setRetMsg(String retMsg) {
+		this.retMsg = retMsg;
 	}
 	
 	

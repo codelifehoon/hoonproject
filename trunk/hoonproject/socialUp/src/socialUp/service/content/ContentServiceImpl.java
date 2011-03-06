@@ -1,5 +1,6 @@
 package socialUp.service.content;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -11,11 +12,14 @@ import org.apache.log4j.Logger;
 
 import socialUp.common.DaoFactory;
 import socialUp.common.mybatis.MyBatisManager;
+import socialUp.common.util.CmnUtil;
 import socialUp.common.util.CookieUtil;
 import socialUp.common.util.DateTime;
+import socialUp.common.util.ImgProcUtil;
 import socialUp.common.util.NumUtil;
 import socialUp.service.common.dao.ReadContentDAO;
 import socialUp.service.common.dao.ReadRssContentDAOImpl;
+import socialUp.service.common.dto.BaseDTO;
 import socialUp.service.content.dao.ContentBranchDAO;
 import socialUp.service.content.dao.ContentBranchDAOImpl;
 import socialUp.service.content.dao.ContentCollectDAO;
@@ -31,15 +35,26 @@ import socialUp.service.content.dao.ContentTitleListTblDAOImpl;
 import socialUp.service.content.dto.ContentBranchDTO;
 import socialUp.service.content.dto.ContentCollectDTO;
 import socialUp.service.content.dto.ContentDtlCommentDTO;
+import socialUp.service.content.dto.ContentDtlImgDTO;
 import socialUp.service.content.dto.ContentDtlTblDTO;
 import socialUp.service.content.dto.ContentJoinMemDTO;
 import socialUp.service.content.dto.ContentSourceTblDTO;
 import socialUp.service.content.dto.ContentTitleTblDTO;
 import socialUp.service.content.dto.SearchDTO;
+import socialUp.service.content.dto.UploadFilesDTO;
 import socialUp.service.member.dao.MemTblDAO;
 import socialUp.service.member.dao.MemTblDAOImpl;
 import socialUp.service.member.dto.MemTblDTO;
 import org.apache.log4j.Logger;
+
+import com.sun.syndication.feed.synd.SyndCategory;
+import com.sun.syndication.feed.synd.SyndCategoryImpl;
+import com.sun.syndication.feed.synd.SyndContent;
+import com.sun.syndication.feed.synd.SyndContentImpl;
+import com.sun.syndication.feed.synd.SyndEntry;
+import com.sun.syndication.feed.synd.SyndEntryImpl;
+import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.feed.synd.SyndFeedImpl;
 
 public class ContentServiceImpl implements ContentService 
 {
@@ -441,11 +456,11 @@ public class ContentServiceImpl implements ContentService
 	 */
 	public String  insertContentDtl(ContentDtlTblDTO contentDtlParam) throws Exception
 	{
-		log.debug("addContentCollect 시작");
+		log.debug("insertContentDtl 시작");
 		
 		String resultVal ="";
 		
-		// sql session 생성
+		// sql session 생성 
 		SqlSession sqlMap = MyBatisManager.getInstanceSqlSession("");
 		
 		try
@@ -453,12 +468,19 @@ public class ContentServiceImpl implements ContentService
 			// DAO 생성
 			List <ContentDtlTblDTO> contentDtlList  = null;		// 수집된 결과 리스트.
 			ReadContentDAO readContentDAO = null;						// 컨텐츠 수집객체
-			ContentDtlTblDAO	contentDtlTblDAO	=(ContentDtlTblDAO)DaoFactory.createDAO(ContentDtlTblDAOImpl.class);
+			ContentDtlTblDAO		contentDtlTblDAO		=(ContentDtlTblDAO)DaoFactory.createDAO(ContentDtlTblDAOImpl.class);
+			ContentDtlCommentDAO	contentDtlCommentDAO	=(ContentDtlCommentDAO)DaoFactory.createDAO(ContentDtlCommentDAOImpl.class);
 			
 			// DB 설정
 			contentDtlTblDAO.setSqlSesstion(sqlMap);
+			contentDtlCommentDAO.setSqlSesstion(sqlMap);
 			
 			contentDtlTblDAO.insertContentDtl(contentDtlParam);
+			
+			// 등록된글에 이미지가 존재한다면 썸네일 생성
+			int imgRegCount = contentDtlCommentDAO.extractRegContentDtlThumbNail(contentDtlParam);
+			
+			log.debug("썸네일이미지수:" + imgRegCount);
 					
 		
 		sqlMap.commit();
@@ -505,12 +527,19 @@ public class ContentServiceImpl implements ContentService
 			// DAO 생성
 			List <ContentDtlTblDTO> contentDtlList  = null;		// 수집된 결과 리스트.
 			ReadContentDAO readContentDAO = null;						// 컨텐츠 수집객체
-			ContentDtlTblDAO	contentDtlTblDAO	=(ContentDtlTblDAO)DaoFactory.createDAO(ContentDtlTblDAOImpl.class);
+			ContentDtlTblDAO		contentDtlTblDAO	=(ContentDtlTblDAO)DaoFactory.createDAO(ContentDtlTblDAOImpl.class);
+			ContentDtlCommentDAO	contentDtlCommentDAO	=(ContentDtlCommentDAO)DaoFactory.createDAO(ContentDtlCommentDAOImpl.class);
 			
 			// DB 설정
 			contentDtlTblDAO.setSqlSesstion(sqlMap);
+			contentDtlCommentDAO.setSqlSesstion(sqlMap);
 			
 			contentDtlTblDAO.updateContentDtl(contentDtlParam);
+			
+			// 등록된글에 이미지가 존재한다면 썸네일 생성
+			int imgRegCount =  contentDtlCommentDAO.extractRegContentDtlThumbNail(contentDtlParam);
+			log.debug("썸네일이미지수:" + imgRegCount);
+			
 					
 		
 		sqlMap.commit();
@@ -1241,6 +1270,87 @@ public class ContentServiceImpl implements ContentService
 			}
 		finally {sqlMap.close();}
 	
+	}
+	
+
+	/**
+	 * 게시물 조회목록
+	 * 
+	 * @param contentSource 컨텐츠 소스정보
+	 * @return
+	 * @throws Exception
+	 */
+	public SyndFeed  makeFeedRss(ContentDtlTblDTO contentDtlParam) throws Exception
+	{
+		log.debug("makeFeedRss 시작");
+		
+		// 리턴될 feed값
+		SyndFeed syndFeed = new SyndFeedImpl();
+		
+		// sql session 생성
+		SqlSession sqlMap = MyBatisManager.getInstanceSqlSession("");
+		
+		try
+		{
+			// 해당 게시물에 대해서 RSS를 생성하기 위해서 글을 읽는다.
+			ContentTitleTblDTO  contentTitle =  selectContentDtlPageList(contentDtlParam);
+			
+			List<SyndEntry> entries = new ArrayList<SyndEntry>();
+			
+			// rss 목록 묶음의 정보
+			syndFeed.setFeedType("rss_2.0");
+			syndFeed.setTitle(contentTitle.getTitle_name());				// 묶음의 타이틀
+			syndFeed.setDescription(contentTitle.getTitle_name());		// 묶음의 설명
+			syndFeed.setLink("http://goreee.com/content/contentDtlList.action?tt_no=" + contentTitle.getTt_no());				// 묶음의 목록링크
+			
+			for (int i =0;i<contentTitle.getContentDtlList().size();i++) 
+			{
+				ContentDtlTblDTO contentDtl  =  contentTitle.getContentDtlList().get(i);
+				 
+				SyndEntry 	syndEntry 	= new SyndEntryImpl();		// row단위 묶음생성
+				SyndContent description = new SyndContentImpl();	// 글 내용
+				List<SyndCategory> categories =new ArrayList<SyndCategory>();	// 카테고리목록
+				String[] categoryArray = CmnUtil.nvl(contentDtl.getCategories()).split("·");
+				
+				description.setType("text/html");
+				description.setValue(contentDtl.getContent_desc());
+				
+				// 카테고리 목록생성
+				for(String ctg : categoryArray) 
+				{
+				  SyndCategory syndCategory = new SyndCategoryImpl();
+				  syndCategory.setName(ctg);
+				  categories.add(syndCategory);
+				  
+				}
+					
+				syndEntry.setTitle(contentDtl.getContent_title());					// 글타이틀
+				syndEntry.setLink(contentDtl.getContent_title_link());					// 글타이틀링크
+				syndEntry.setDescription(description);	// 글내용
+				syndEntry.setAuthor(contentDtl.getAuthor_nm());				// 글작성자
+				//DateTime.format(entry.getPublishedDate(),"yyyyMMddHHmmss")
+				//DateTime.StringToDate();
+			
+				syndEntry.setPublishedDate(DateTime.StringToDate(contentDtl.getOrg_create_dt(),"yyyy-MM-dd HH:mm:ss"));			// 작성일
+				syndEntry.setCategories(categories);				// 카테고리목록
+			
+				entries.add(syndEntry);
+			}
+			
+			syndFeed.setEntries(entries);
+			
+		}
+		catch (Exception e)
+		{
+			sqlMap.rollback();
+			e.printStackTrace();
+			throw e;
+		}
+		finally {sqlMap.close();}
+		
+		return syndFeed;
+	
+		
 	}
 	
 }

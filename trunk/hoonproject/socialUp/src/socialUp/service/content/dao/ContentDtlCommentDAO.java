@@ -4,6 +4,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import socialUp.service.content.dto.ContentDtlCommentDTO;
 import socialUp.service.content.dto.ContentDtlImgDTO;
+import socialUp.service.content.dto.ContentDtlTblDTO;
 import socialUp.service.content.dto.UploadFilesDTO;
 
 
@@ -88,6 +89,22 @@ public interface ContentDtlCommentDAO
 	 */
 	public long updateContentDtlImg(ContentDtlImgDTO contentDtlImgParam) throws Exception ;
 	
-	
+
+	/**
+	 * html 본문에서  이미지를 태그를  뽑아내어 thumbnail을 생성한다.
+	 * 본문에 있는 간략한 이미지를 뽑아내기 위해서 사용한다.
+	 * @param 	contentDtlParam.getCd_no()				등록일련번호
+	 * 			contentDtlParam.getContent_desc()		내용
+	 * @return
+	 */
+	public int extractRegContentDtlThumbNail(ContentDtlTblDTO contentDtlParam) throws Exception;
+
+	/**
+	 * 썸네일 대상 이미지 목록
+	 * 
+	 * @param param
+	 * @throws Exception
+	 */
+	public List<ContentDtlImgDTO> selectContentDtlImgWaitList(ContentDtlImgDTO contentDtlImgParam) throws Exception;
 	
 }

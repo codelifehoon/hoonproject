@@ -35,7 +35,7 @@ public class CodeDetailDAOImpl
 			codeDetailDTO.setGrp_cd(grp_cd);
 			
 			// 회원테이블 조회용 객체 생성
-			resultList =  (List<CodeDetailDTO>)sqlMap.selectList("socialUp.service.common.mapper.selectCodeGroup", codeDetailDTO);
+			resultList =  (List<CodeDetailDTO>)sqlMap.selectList("socialUp.service.common.mapper.cache.selectCodeGroup", codeDetailDTO);
 			
 			
 			sqlMap.commit();

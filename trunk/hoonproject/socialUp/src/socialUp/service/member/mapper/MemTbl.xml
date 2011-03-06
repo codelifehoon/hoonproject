@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 </resultMap>
 	    
 	<select id="selectMemTblList" resultMap="selectMemTblListResult" parameterType="socialUp.service.member.dto.MemTblDTO">
-	     	select mt_no
+	     	select /* MemTbl.xml selectMemTblList */ mt_no
 					,mem_id
 					,mem_nm
 					,relation_kind
@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					,create_ip
 			from mem_tbl where mem_id = #{mem_id}
 				and use_yn ='Y' /*탈퇴여부*/	 
-			<if test="passwd != null">
+			<if test="passwd != null and loginYn != null" >
 				and passwd = password(#{passwd})
 			</if>
 	</select>

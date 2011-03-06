@@ -39,6 +39,7 @@ import socialUp.service.member.dto.MemTblDTO;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.sun.jmx.remote.util.Service;
+import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.xml.internal.ws.util.ServiceFinder;
 
 public class ContentAction extends BaseActionSupport 
@@ -64,7 +65,8 @@ public class ContentAction extends BaseActionSupport
 	private List<ContentSourceTblDTO> 	contentSourceList 	= null;
 	private List<ContentDtlTblDTO> 		contentDtlList 		= null;
 	private List<ContentBranchDTO>		contentBranchList   = null;
-	private List<ContentJoinMemDTO>		contentJoinMemList 	= null; 
+	private List<ContentJoinMemDTO>		contentJoinMemList 	= null;
+	private SyndFeed 					syndFeed			= null;
 	
 	 
 	
@@ -124,6 +126,10 @@ public class ContentAction extends BaseActionSupport
 		this.contentTitleList2 = contentTitleList2;
 	}
 
+	public SyndFeed getSyndFeed() {
+		return syndFeed;
+	}
+	
 	
 
 
@@ -971,94 +977,86 @@ public class ContentAction extends BaseActionSupport
 	}
 
 
-	
-
-
 	/**	
 	 * 선택한 컨텐츠 타이틀에 나의 컨텐츠 리소스를 스스로 소속 시키기 위한 화면 참여 & 처리결과
 	 * 
 	 * @return
 	 * @throws Exception
 	 */
-//	public String FileUpload() throws Exception 
-//	{
-//		String returnVal = "DEFAULT";
-//		
-//		log.debug("FileUpload 시작");
-//		
-//		AuthInfo authInfo =  AuthService.getAuthInfo(this.request, this.response);
-//		if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
-//		
-//		
-//
-//		// create file upload factory and upload servlet
-//		FileItemFactory 	factory = new DiskFileItemFactory();
-//		ServletFileUpload  	upload = new ServletFileUpload(factory);
-//
-//		// set file upload progress listener
-//		FileUploadListener listener = new FileUploadListener();
-//		
-//		HttpSession  session = this.request.getSession();
-//		
-//		session.setAttribute("LISTENER", listener);
-//		
-//		// upload servlet allows to set upload listener
-//		upload.setProgressListener(listener);
-//
-//		List 		uploadedItems = null;
-//		FileItem 	fileItem = null;
-//		String  	filePath = "D:\\javadevtool\\workSpace\\socialUp\\WebContent\\files";	// Path to store file on local system
-//
-// 		try 
-//		{
-//			// iterate over all uploaded files
-//			uploadedItems = upload.parseRequest(this.request);
-//			
-//			Iterator i = uploadedItems.iterator();
-//			
-//			log.debug("파일업로드 시작전");
-//			
-//			while (i.hasNext()) 
-//			{
-//				log.debug("파일업로드 시작");
-//				fileItem = (FileItem) i.next();
-//				
-//				if (fileItem.isFormField() == false) 
-//				{
-//					if (fileItem.getSize() > 0) 
-//					{
-//						File 
-//							uploadedFile = null; 
-//						String
-//							myFullFileName = fileItem.getName(),
-//							myFileName = "",
-//							slashType = (myFullFileName.lastIndexOf("\\") > 0) ? "\\" : "/"; // Windows or UNIX
-//						int
-//							startIndex = myFullFileName.lastIndexOf(slashType);
-//
-//						log.debug("myFullFileName:" + myFullFileName);
-//						// Ignore the path and get the filename
-//						myFileName = myFullFileName.substring(startIndex + 1, myFullFileName.length());
-//
-//						// Create new File object
-//						uploadedFile = new File(filePath, myFileName);
-//						
-//						// Write the uploaded file to the system
-//						fileItem.write(uploadedFile);
-//					}
-//				}
-//			}
-//		} 
-//		catch (FileUploadException e) 
-//		{
-//			e.printStackTrace();
-//		} 
-//		catch (Exception e) 
-//		{
-//			e.printStackTrace();
-//		} 
-//	
-//		return returnVal;
-//	}
+	public String FeedRss() throws Exception 
+	{
+		String returnVal = "DEFAULT";
+		
+		log.debug("ContentFeedRss 시작");
+		
+		AuthInfo authInfo =  AuthService.getAuthInfo(this.request, this.response);
+		//if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
+
+		String sCurrentDate = DateTime.getFormatString("yyyyMMddHHmmss"); // 현재날짜
+		String tt_no 			= this.getParam("tt_no");
+		String choicePageNum	= CmnUtil.nvl(this.getParam("choicePageNum"),"");
+		
+		// 페이지 설정이 없으면 1페이지함
+		if ("".equals(choicePageNum)) choicePageNum = "1";
+				
+ 
+		// 업무처리할 객체 생성
+		ContentService 		contentService 	= (ContentService)ServiceFactory.createService(ContentServiceImpl.class);
+		ContentDtlTblDTO 	contentDtl 		= new ContentDtlTblDTO();
+		
+		contentDtl.setTt_no(tt_no);
+		contentDtl.setPageRowCount(50);		// rss는 50개의 row로 출력한다.
+		contentDtl.setChoicePageNum(NumUtil.toInt(choicePageNum));
+		
+		// 해당 목록의 rss feed 생성
+		this.syndFeed = contentService.makeFeedRss(contentDtl);
+		
+		return  returnVal;
+		
+	}
+	
+	/**	
+	 * 선택한 컨텐츠 타이틀에 나의 컨텐츠 리소스를 스스로 소속 시키기 위한 화면 참여 & 처리결과
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String feedTwitter() throws Exception 
+	{
+		String returnVal = "DEFAULT";
+		
+		log.debug("ContentDtlList 시작");
+		
+		AuthInfo authInfo =  AuthService.getAuthInfo(this.request, this.response);
+		//if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
+
+		String sCurrentDate = DateTime.getFormatString("yyyyMMddHHmmss"); // 현재날짜
+		String tt_no 			= this.getParam("tt_no");
+		String choicePageNum	= CmnUtil.nvl(this.getParam("choicePageNum"),"");
+		
+		// 페이지 설정이 없으면 1페이지함
+		if ("".equals(choicePageNum)) choicePageNum = "1";
+				
+ 
+		// 업무처리할 객체 생성
+		ContentService 		contentService 	= (ContentService)ServiceFactory.createService(ContentServiceImpl.class);
+		ContentDtlTblDTO 	contentDtl 		= new ContentDtlTblDTO();
+		
+		contentDtl.setTt_no(tt_no);
+		contentDtl.setChoicePageNum(NumUtil.toInt(choicePageNum));
+		
+		// 해당 컨텐츠 타이틀정보 및 글상세정보
+		this.contentTitle =  contentService.selectContentDtlPageList(contentDtl);
+		
+		
+		return  returnVal;
+		
+	}
+
+	
+	
+	
+
+
 		
 }

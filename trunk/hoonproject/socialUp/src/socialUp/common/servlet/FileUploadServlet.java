@@ -1,6 +1,7 @@
 package socialUp.common.servlet;
 
 import javax.imageio.ImageIO;
+
 import javax.media.jai.Interpolation;
 import javax.media.jai.JAI;
 import javax.media.jai.RenderedOp;
@@ -31,6 +32,7 @@ import org.apache.log4j.Logger;
 import socialUp.common.AuthInfo;
 import socialUp.common.AuthService;
 import socialUp.common.ServiceFactory;
+import socialUp.common.properties.PropertiesManager;
 import socialUp.common.util.CmnUtil;
 import socialUp.common.util.DateTime;
 import socialUp.common.util.ImgProcUtil;
@@ -154,7 +156,7 @@ public class FileUploadServlet extends HttpServlet implements Servlet {
 			List uploadedItems = null;
 			FileItem fileItem = null;
 			String fileUrl = "/files";
-			String filePath = "D:/javadevtool/workSpace/socialUp/WebContent/files"; // Path
+			String filePath = PropertiesManager.getProperty("file.defpath");; // Path
 
 			filePath += "/" + sCurrentDate.substring(0, 8);
 			fileUrl  += "/" + sCurrentDate.substring(0, 8);

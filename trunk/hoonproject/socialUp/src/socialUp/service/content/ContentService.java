@@ -3,8 +3,11 @@ package socialUp.service.content;
 import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
+import com.sun.syndication.feed.synd.SyndFeed;
+
 import socialUp.service.content.dto.ContentBranchDTO;
 import socialUp.service.content.dto.ContentDtlCommentDTO;
+import socialUp.service.content.dto.ContentDtlImgDTO;
 import socialUp.service.content.dto.ContentDtlTblDTO;
 import socialUp.service.content.dto.ContentJoinMemDTO;
 import socialUp.service.content.dto.ContentSourceTblDTO;
@@ -230,5 +233,15 @@ public interface ContentService {
 	 * @throws Exception
 	 */
 	public void insertContentBranchSelfJoin(ContentBranchDTO addContentBranchParam,ContentBranchDTO delContentBranchParam) throws Exception;
+	
+
+	/**
+	 * 게시물 조회목록
+	 * 
+	 * @param contentSource 컨텐츠 소스정보
+	 * @return
+	 * @throws Exception
+	 */
+	public SyndFeed  makeFeedRss(ContentDtlTblDTO contentDtlParam) throws Exception;
 	
 }

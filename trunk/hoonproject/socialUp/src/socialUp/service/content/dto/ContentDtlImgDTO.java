@@ -17,6 +17,8 @@ public class ContentDtlImgDTO extends BaseDTO
 	private String cd_no;
 	private String img_kind;
 	private String img_url;
+	private String use_yn;
+	private String proc_stat;
 	private String create_dt;
 	private String create_no;
 	private String update_dt;
@@ -76,6 +78,18 @@ public class ContentDtlImgDTO extends BaseDTO
 	}
 	public void setThumbnail_url(String thumbnail_url) {
 		this.thumbnail_url = thumbnail_url;
+	}
+	public String getUse_yn() {
+		return use_yn;
+	}
+	public void setUse_yn(String use_yn) {
+		this.use_yn = use_yn;
+	}
+	public String getProc_stat() {
+		return proc_stat;
+	}
+	public void setProc_stat(String proc_stat) {
+		this.proc_stat = proc_stat;
 	}
 
 }

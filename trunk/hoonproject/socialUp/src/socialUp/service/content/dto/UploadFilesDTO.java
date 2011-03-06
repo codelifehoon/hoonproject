@@ -22,6 +22,8 @@ public class UploadFilesDTO extends BaseDTO
 	private String	use_yn;
 	private String	create_dt;
 	private String	create_no;
+	private String	fileFullName;		// 경로 파일명 포함된 파일명
+	
 	public String getUf_id() {
 		return uf_id;
 	}
@@ -75,6 +77,12 @@ public class UploadFilesDTO extends BaseDTO
 	}
 	public void setCreate_no(String create_no) {
 		this.create_no = create_no;
+	}
+	public String getFileFullName() {
+		return fileFullName;
+	}
+	public void setFileFullName(String fileFullName) {
+		this.fileFullName = fileFullName;
 	}
 	
 }

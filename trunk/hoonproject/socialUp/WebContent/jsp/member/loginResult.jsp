@@ -8,7 +8,7 @@
 
 %>
 
-<<script type="text/javascript">
+<script type="text/javascript">
 <!--
 
 <%if ( loginMemTblDTO == null) 
@@ -16,7 +16,6 @@
 	alert("id/pw를 다시 확인 해주세요.")
 	window.location.href = "/socialUp/index.action";
 <%} else { %>
-	alert("로그인성공.")
 	window.location.href = "/socialUp/index.action";
 <%}%>
  

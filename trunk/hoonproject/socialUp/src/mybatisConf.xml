@@ -31,6 +31,7 @@
   
  <mappers>
 
+	<mapper resource="socialUp/service/common/mapper/cache/commoncache.xml" />
 	<mapper resource="socialUp/service/common/mapper/common.xml" />
  	<mapper resource="socialUp/service/member/mapper/MemTbl.xml" />
  	<mapper resource="socialUp/service/content/mapper/ContentTitleTbl.xml" />

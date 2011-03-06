@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <body class="subbody">
 	<div class="content">
-			
+		
 			<div class="header">
 				<div class="loginf">
 					<form method="post" action="<%=rootUrl %>/member/memberMemLogIn.action">
