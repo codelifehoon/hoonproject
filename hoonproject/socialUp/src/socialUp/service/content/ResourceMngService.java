@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import socialUp.service.content.dto.ContentBranchDTO;
 import socialUp.service.content.dto.ContentDtlCommentDTO;
+import socialUp.service.content.dto.ContentDtlImgDTO;
 import socialUp.service.content.dto.ContentDtlTblDTO;
 import socialUp.service.content.dto.ContentJoinMemDTO;
 import socialUp.service.content.dto.ContentSourceTblDTO;
@@ -33,5 +34,22 @@ public interface ResourceMngService
 	 * @throws Exception
 	 */
 	public List<UploadFilesDTO> selectUploadFiles(UploadFilesDTO uploadFilesParam) throws Exception ;
+
+	/**
+	 * 썸네일 대상 목록 가져오기
+	 * 
+	 * @param param
+	 * @throws Exception
+	 */
+	public List<ContentDtlImgDTO> selectContentDtlImgWaitList(ContentDtlImgDTO contentDtlImgParam) throws Exception;
+
+	
+	/**
+	 * content_dtl_img 테이블에 있는 다운로드 대기 목록에서 있는 이미지를 가져와서
+	 * 썸네일 이미지를 생성한다.
+	 * 
+	 * @param contentDtlImgparam
+	 */
+	public void contentDtlImgMakeThumbnail(ContentDtlImgDTO  contentDtlImgparam) throws Exception;
 	
 }

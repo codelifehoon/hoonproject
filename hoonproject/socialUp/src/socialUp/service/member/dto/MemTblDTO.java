@@ -21,6 +21,7 @@ public class MemTblDTO extends BaseDTO
 	String relation_kind;
 	String create_dt;
 	String create_ip;
+	String loginYn;
 	
 	
 	public String getMt_no() {
@@ -65,5 +66,12 @@ public class MemTblDTO extends BaseDTO
 	public void setCreate_ip(String create_ip) {
 		this.create_ip = create_ip;
 	}
+	public String getLoginYn() {
+		return loginYn;
+	}
+	public void setLoginYn(String loginYn) {
+		this.loginYn = loginYn;
+	}
+
 	
 }

@@ -131,28 +131,34 @@ h0 {
 h1 {
 	font: 20px arial, Helvetica,돋움,Arial, Sans-Serif;
 	text-align: left;
+	margin: 10px 10px 10px 10px;
     }
 
 h2 {
 	font: 18px arial, Helvetica,돋움,Arial, Sans-Serif;
 	text-align: left;
+	margin: 10px 10px 10px 10px;
     }
 
 h3 {
 	font: 16px arial, Helvetica,돋움,Arial, Sans-Serif;
 	text-align: left;
+	margin: 10px 10px 10px 10px;
     }
 h4 {
 	font: 14px arial, Helvetica,돋움,Arial, Sans-Serif;
 	text-align: left;
+	margin: 10px 10px 10px 10px;
     }
 h5 {
 	font: 12px arial, Helvetica,돋움,Arial, Sans-Serif;
 	text-align: left;
+	margin: 10px 10px 10px 10px;
     }
 h6 {
 	font: 10px arial, Helvetica,돋움,Arial, Sans-Serif;
 	text-align: left;
+	margin: 10px 10px 10px 10px;
     }
 
 h4_under { 
@@ -175,13 +181,21 @@ h6_under {
 
 
 /* 제목 배경있는글 */
-.TL1 {
+.TL1{
 	font: 30px arial, Helvetica,돋움,Arial, Sans-Serif;
 	font-weight: bold;
 	text-align: left;
 	color:#2276BB;
 	width: 300px;
 	border-bottom: 2px solid #FF9C00;
+/*
+	border-bottom: 2px solid #FF9C00;
+	border-top: 2px solid #FF9C00;
+	border-right: 2px solid #FF9C00;
+	border-left: 2px solid #FF9C00;
+	border-radius: 1em;
+	*/
+	
 }
 
 .TL2 {
@@ -189,16 +203,15 @@ h6_under {
 	font-weight: bold;
 	text-align: left;
 	color:#2276BB;
-	background-color : #0033CC;
-	border: 1px solid #008000;
 	width: 300px;
+	border-bottom: 2px solid #FF9C00;
 }
 /*입력상자 스타일*/
 
 .input150 
 	{
 	background:#FFFFFF   no-repeat 4px 4px;
-	padding:4px 4px 4px 22px;
+	padding:4px 4px 4px ;
 	border:1px solid #CCCCCC;
 	width:100px;
 	height:14px;
@@ -220,8 +233,25 @@ h6_under {
 	height:20px;
 	border-bottom: 2px solid #000000;
 	}
-	
 
+.input500 
+	{
+	background:#FFFFFF   no-repeat 4px 4px;
+	border:0px solid #CCCCCC;
+	width:500px;
+	height:20px;
+	border-bottom: 2px solid #000000;
+	}
+	
+/*댓글 리스트 에서 사용하는 css*/
+.list_line {float:left;width:100%;border-bottom:1px solid #e7e7e7;zoom:1;overflow:visible;}
+.list_line span{float:left;padding:14px 0 7px 0;}
+.list_line span.list_line_column1	  {width:100px;text-align:left;}
+.list_line span.list_line_column2	  {width:100px;text-align:right}
+
+
+
+ 
 	
     
 

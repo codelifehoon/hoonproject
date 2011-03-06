@@ -151,7 +151,7 @@ public class ContentDtlTblDTO  extends BaseDTO
 		String str = "";
 		for (int i=0;i<categorieList.length;i++ )
 		{
-			if (i > 0) str +=  "·" + categorieList[i] ;
+			if (i > 0) str +=  "," + categorieList[i] ;
 			else  str = categorieList[i] ;
 		}
 		setCategories(str);

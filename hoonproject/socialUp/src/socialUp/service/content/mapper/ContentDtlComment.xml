@@ -164,17 +164,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!--  content_dtl_img 테이블에 대한 기본정의 -->
  <resultMap id="selectContentDtlImgListResult" type="socialUp.service.content.dto.ContentDtlImgDTO" >
-	        <result column="cdc_no" property="cdc_no" />
-	        <result column="cd_no" property="cd_no" />
-	        <result column="comment" property="comment" />
-	        <result column="use_yn" property="use_yn" />
-	        <result column="mt_no" property="mt_no" />
-	        <result column="create_dt" property="create_dt" />
-	        <result column="create_no" property="create_no" />
-	        <result column="update_dt" property="update_dt" />
-	        <result column="update_no" property="update_no" />
-	        <result column="mem_nm" 	property="memTblDTO.mem_nm" />
-	        
+	        <result column="cdi_no" 	property="cdi_no" />
+	        <result column="cd_no" 		property="cd_no" />
+	        <result column="img_kind" 	property="img_kind" />
+	        <result column="img_url" 	property="img_url" />
+	        <result column="thumbnail_url" property="thumbnail_url" />
+	        <result column="proc_stat" 	property="proc_stat" />
+	        <result column="use_yn" 	property="use_yn" />
+	        <result column="create_dt" 	property="create_dt" />
+	        <result column="create_no" 	property="create_no" />
 	 </resultMap>
 	    
 	<select id="selectContentDtlImgList" resultMap="selectContentDtlImgListResult" parameterType="socialUp.service.content.dto.ContentDtlImgDTO">
@@ -185,6 +183,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			,	img_kind
 			,	img_url
 			,	thumbnail_url
+			,	proc_stat
 			, 	use_yn
 			,	create_dt
 			,	create_no
@@ -192,8 +191,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			from content_dtl_img cdi where
 			cdi.cd_no = #{cd_no}
 			and cdi.use_yn = 'Y'
-				
 	</select>
+
+
+	<select id="selectContentDtlImgWaitList" resultMap="selectContentDtlImgListResult" parameterType="socialUp.service.content.dto.ContentDtlImgDTO">
+	
+	     	select /* ContentDtlComment.xml selectContentDtlImgWaitList 2010.12.16*/
+				cdi_no
+			,	cd_no
+			,	img_kind
+			,	img_url
+			,	thumbnail_url
+			,	proc_stat
+			, 	use_yn
+			,	create_dt
+			,	create_no
+
+			from content_dtl_img cdi where proc_stat  = #{proc_stat}
+			and cdi.use_yn = 'Y'
+	</select>
+		
+	
     	
     <insert id="insertContentDtlImg" parameterType="socialUp.service.content.dto.ContentDtlImgDTO">
 			INSERT INTO /*ContentDtlComment.xml insertContentDtlImg 2010.12.16*/ content_dtl_img(
@@ -202,6 +220,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				,	img_kind
 				,	img_url
 				,	thumbnail_url
+				, 	proc_stat
 				, 	use_yn
 				,	create_dt
 				,	create_no
@@ -212,6 +231,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				,	#{img_kind}
 				,	#{img_url}
 				,	#{thumbnail_url}
+				,	#{proc_stat}
 				,	#{use_yn}
 				,	DATE_FORMAT(#{create_dt},'%Y%m%d%H%i%s')
 				,	#{create_no}
@@ -222,8 +242,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<update id="updateContentDtlImg" parameterType="socialUp.service.content.dto.ContentDtlImgDTO">
   		update  /*ContentDtlComment.xml updateContentDtlImg 2010.12.16*/ content_dtl_img set
-						use_yn = #{use_yn}	
-  		where  cd_no = #{cd_no}
+  						update_dt = #{create_dt}
+  						,update_no = #{create_no} 
+  						<if test="use_yn != null and use_yn != ''">
+						 	,use_yn = #{use_yn}
+						 </if>
+						 <if test="proc_stat != null and proc_stat != ''">
+							,proc_stat = #{proc_stat}
+						</if>	
+  		where  1=1
+  		<if test="cd_no != null and cd_no != ''"> 
+  		and cd_no = #{cd_no}
+  		</if>
+  		<if test="cdi_no != null and cdi_no != ''"> 
+  		and 	cdi_no = #{cdi_no}
+  		</if>
+  		
   		
   	</update>
   	

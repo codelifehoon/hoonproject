@@ -2,6 +2,7 @@
 <web-app id="WebApp_9" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
 
+   
 
 <!-- struct2 설정 -->
     <display-name>Struts Blank</display-name>
@@ -15,9 +16,7 @@
         <url-pattern>*.action</url-pattern>
     </filter-mapping>
 
-    <welcome-file-list>
-        <welcome-file>/index.action</welcome-file>
-    </welcome-file-list>
+
 
 
 
@@ -59,5 +58,20 @@
 <!--  파일 upload 전용 서블릿 끝 -->
 
 
+<!-- 각종 초기화 데이터 로드 시작 -->
+	<servlet>
+		<servlet-name>INIT_LOADER</servlet-name>
+		<servlet-class>socialUp.common.servlet.InitServletContextListener </servlet-class>
+		<init-param>
+			<param-name>PropertiesFileName</param-name>
+			<param-value>/WEB-INF/properties/[$server_type]_goreee.properties</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+<!-- 각종 초기화 데이터 로드 끝 -->	
+
+<welcome-file-list>
+     <welcome-file>/jsp/welcome.htm</welcome-file>
+</welcome-file-list>	
   
 </web-app>

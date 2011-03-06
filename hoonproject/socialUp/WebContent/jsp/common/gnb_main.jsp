@@ -1,45 +1,104 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ include file="/jsp/common/pageCommon.jsp"%>
 <%
 	
 %>	
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 
-<body class="mainbody">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-	<div class="content">
-			
-			<div class="header">
-				<div class="loginf">
-					<form method="post" action="<%=rootUrl %>/member/memberMemLogIn.action">
-						<p>
-						<%if (!authInfo.isAuth()){ %>
-						이메일: <input type="text" name="mem_id" class="search" />
-						비밀번호: <input type="password" name="passwd" class="search" />
-						<input type='submit' name='submit' value="로그인">
-						<%} else { %>
-							<%=authInfo.getMem_nm() %>님 로그인. <a href="<%=rootUrl %>/member/memberMemLogOut.action" >로그아웃</a>
-						<%} %> 
-						</p>
-					</form>
-				</div>
-				
-				<div class="searchf">
-				<form method="post" action="<%=rootUrl %>/search/searchResultList.action">
-				<input type="text" name="searchStr" class="search" style="width:307px;"/> <input type='submit' name='submit' value="검   색">
-				</form>  
-				</div>
-				
-				<div class="leftside">
-				<h1>RSS 공유모임</h1>
-				<h2>자신의 블로그를 다른사람과 공유하세요.</h2>
-				</div>
-			</div>
-			<div id="lnews">
-				<h2>What is sNews?</h2>
-				<a href="http://www.solucija.com/home/snews/">
-				sNews</a> is a completly free <a href="http://www.php.net/">PHP</a> and <a href="http://www.mysql.com/">MySQL</a> driven tool for publishing and maintaining news articles on a website. Integrating sNews into your existing design is simple, but you could also use sNews on it's own, as a simple Content Management System. Consisting of only one file, <a href="http://www.solucija.com/home/snews/">sNews</a> 
-				is extremely lightweight, very easy to install, and easy to use via a simple web interface.
-			</div>
-				
-			<div id="nav">
-			  	<ul></ul>
-			</div>
+	<link rel="stylesheet" type="text/css" href="<%=rootUrl %>/js/default.css" />
+	<script language="javascript" 	src="<%=rootUrl%>/dwr/interface/DwrMemAction.js"></script> 
+	<script language="javascript" 	src="<%=rootUrl%>/dwr/engine.js"></script> 
+	<script language="javascript" 	src="<%=rootUrl%>/dwr/util.js"></script>
+	<script language="javascript" 	src="<%=rootUrl%>/js/common.js"></script>
+	<script language="javascript" 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+	
+	
+
+</head>
+<body>
+<!--  상단 시작 -->
+<table class="headerTable" style="width:100%; margin:0 auto;" cellpadding="0" cellspacing="0">
+	<tr><td>
+
+<form method="post" action="<%=rootUrl %>/member/memberMemLogIn.action">
+<table class="headerTable" style="width:1000px; margin:0 auto;" cellpadding="0" cellspacing="0">
+	<tr>
+		<td width='50%' valgin="bottom">
+			<div style="font:30px Tahoma;font-weight:bold;color:#ffffff;margin:0;">Goreee</div>
+			<div style="font:12px Tahoma;font-weight:bold;color:#ffffff;margin:0;">관심 있는 트위터,블로그,RSS를 하나로 모아서 보세요</div>
+		</td>
+		<td width='50%'>
+		<!--  로그인전 -->
+		<%if (!authInfo.isAuth()){ %>
+			<table style="width:400px; margin:0 auto;" cellpadding="0" cellspacing="0" >
+				<tr>
+					<td>
+						<div style="font:12px Tahoma;font-weight:bold;color:#ffffff;margin:0;">로그인ID</div>
+					</td>
+					<td>
+						<div style="font:12px Tahoma;font-weight:bold;color:#ffffff;margin:0;">비밀번호</div>
+					</td>
+					<td rowspan=3>
+						<span class="button blue"><button type="submit">로그인</button></span><br>
+						<span class="button blue"><button type="button"  onClick="javascript:window.location.href='<%=rootUrl %>/member/memberRegForm.action'">회원가입</button></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type='text' name="mem_id" class="input150"/>
+					</td>
+					<td>
+						<input type='password' name="passwd" class="input150"/>
+					</td>
+					
+				</tr>
+				<tr>
+					<td>
+						<input type="checkbox" name="keeplogin"/><a class="ALink1" href=''>로그인상태유지</a>
+					</td>
+					<td>
+						 <a class="ALink1" href="">잊어버리셨나요</a>
+					</td>
+					
+				</tr>
+			</table>
+		<!--  로그인후 -->	
+		<%} else {%>
+			<table style="width:400px; margin:0 auto;" cellpadding="0" cellspacing="0" >
+					<tr>
+						<td>
+							<div style="font:12px Tahoma;font-weight:bold;color:#ffffff;margin:0;">
+							<%=authInfo.getMem_nm() %>님 로그인 되었습니다. 
+							<span class="button blue"><button type="button" onClick="javascript:window.location.href='<%=rootUrl %>/member/memberMemLogOut.action'">
+							로그아웃</button></span>
+							</div>
+						</td>
+						
+					</tr>
+					<tr>
+						<td>
+							
+						</td>
+						
+						
+					</tr>
+					<tr>
+						<td>
+							<a class="ALink1" href="">개인정보수정</a>
+							,<a class="ALink1" href="">내고리현황</a>               
+						</td>
+					</tr>
+				</table>
+		<%} %>		
+		</td>
+	</tr>
+</table>
+</td></tr>
+</table>
+</form>
+ <!--  상단 종료-->
+ 

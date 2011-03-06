@@ -46,7 +46,11 @@
 							<%if ( !authInfo.getMt_no().equals(contentTitle.getMt_no())) {%>
 								<a href='<%=rootUrl%>/content/contentJoinContForm.action?tt_no=<%=ttNo %>'>[여기에 나의 컨텐츠타이틀 참여&제외]</a>
 							<%} %>
-								<a href='<%=rootUrl%>/content/contentDtlEditForm.action?tt_no=<%=ttNo %>'>[새글쓰기]</a> 
+								<a href='<%=rootUrl%>/content/contentDtlEditForm.action?tt_no=<%=ttNo %>'>[새글쓰기]</a>
+								
+								<a href='<%=rootUrl%>/content/contentFeedRss.action?tt_no=<%=ttNo %>'>[RSS]</a>
+								<a href='<%=rootUrl%>/content/contentDtlEditForm.action?tt_no=<%=ttNo %>'>[TWITTER]</a>
+								 
 						</h3>
 						<%for (int i=0;i<contentDtlList.size();i++) 
 							{

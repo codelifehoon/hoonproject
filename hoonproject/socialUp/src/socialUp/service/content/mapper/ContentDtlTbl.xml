@@ -54,6 +54,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="cd_no != null and cd_no != ''">
 				and cd_no = #{cd_no} 
 			</if>
+			<if test="content_title != null and content_title != ''">
+				and	content_title = #{content_title}
+			</if>
+			<if test="org_create_dt != null and org_create_dt != ''">
+				and	org_create_dt = DATE_FORMAT(#{org_create_dt},'%Y%m%d%H%i%s')
+			</if>
+			
+			
+			
 			
 			<!--  필수값이 모두 안들어 오는거 막기위해서  -->
 			<if test=" (cd_no == null or cd_no == '') and (mt_no == null or mt_no == '') ">

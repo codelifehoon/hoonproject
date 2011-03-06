@@ -54,4 +54,20 @@ public class BaseActionSupport extends ActionSupport implements ServletRequestAw
 		return this.request.getParameterValues(param);
 	}
 	
+	protected void flushString(String flushString)
+	{
+		try
+		{
+		this.response.setCharacterEncoding("UTF-8");
+		this.response.setHeader("Cache-Control", "no-cache");
+		this.response.getWriter().write(flushString);
+		this.response.flushBuffer();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+     
+	}
+	
 }

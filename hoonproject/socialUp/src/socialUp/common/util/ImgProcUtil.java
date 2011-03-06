@@ -81,7 +81,10 @@ public class ImgProcUtil
 		 // 이미지 리사이즈
 		 ParameterBlock pb = new ParameterBlock();
 		 
-		 pb.add(soParam.getFile_path() + "/" + soParam.getFile_name());
+		 // full file name이 있으면 그걸 사용하고없으면 분리된걸 사용한다.
+		 if (!"".equals(CmnUtil.nvl(soParam.getFileFullName()))) pb.add(soParam.getFileFullName());
+		 else pb.add(soParam.getFile_path() + "/" + soParam.getFile_name());
+		 
 		 RenderedOp  rOp = JAI.create("fileload", pb);
 		 
 		 
@@ -106,6 +109,8 @@ public class ImgProcUtil
 		 {
 			 log.debug("원본파일경로 :" + soParam.getFile_path() + "/" + soParam.getFile_name());
 			 log.debug("thumb파일경로:" + taParam.getFile_path() + "/" + taParam.getFile_name());
+			 log.debug("원본파일경로 :" + soParam.getFileFullName());
+			 log.debug("thumb파일경로:" + taParam.getFileFullName());
 			 log.debug("imgWidth:" + imgWidth);
 			 log.debug("imgHeight:" + imgHeight);
 			 log.debug("imgWidthNew:" + imgWidthNew);
@@ -121,14 +126,20 @@ public class ImgProcUtil
 		 BufferedImage thumb = new BufferedImage(imgWidthNew, imgHeightNew, BufferedImage.TYPE_INT_RGB);
 
 		//썸네일(리사이즈)이미지를 위한 공간을 만든다. 50,50은 width, height되겠다.
-		  Graphics2D g2 = thumb.createGraphics();
+		 Graphics2D g2 = thumb.createGraphics();
 		
-		  //썸네일 버퍼공간에 대해 Graphics2D객체를 얻어와서 입력이미지에 있는 내용을 그린다.(0,0위치에 50,50크기로 복사)
-		  g2.drawImage(im, 0, 0, imgWidthNew, imgHeightNew, null);
+		 //썸네일 버퍼공간에 대해 Graphics2D객체를 얻어와서 입력이미지에 있는 내용을 그린다.(0,0위치에 50,50크기로 복사)
+		 g2.drawImage(im, 0, 0, imgWidthNew, imgHeightNew, null);
 
 
 		  //출력파일에 대한 객체를 만들고 ImageIO.write로 출력.
-		  File outfile = new File(taParam.getFile_path()  + "/" + taParam.getFile_name() );
+		  File outfile = null;
+		  
+		  // full file name이 있으면 그걸 사용하고없으면 분리된걸 사용한다.
+		  if (!"".equals(CmnUtil.nvl(taParam.getFileFullName()))) outfile = new File(taParam.getFileFullName());
+		  else outfile =  new File(taParam.getFile_path()  + "/" + taParam.getFile_name() );
+			 
+		  
 		  ImageIO.write(thumb, "jpg", outfile);
 		 }catch(Exception e)
 		 {
