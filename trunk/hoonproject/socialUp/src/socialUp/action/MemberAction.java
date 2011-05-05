@@ -12,6 +12,7 @@ import socialUp.action.main.BaseActionSupport;
 import socialUp.common.AuthInfo;
 import socialUp.common.AuthService;
 import socialUp.common.ServiceFactory;
+import socialUp.common.util.CmnUtil;
 import socialUp.common.util.CookieUtil;
 import socialUp.common.util.DateTime;
 import socialUp.common.util.DebugUtil;
@@ -64,7 +65,7 @@ public class MemberAction extends BaseActionSupport
 	}
 	
  	/**
- 	 * 회원가입 화면 action
+ 	 * 회원가입//수정  화면 action
  	 * 
  	 * @return
  	 * @throws Exception
@@ -73,6 +74,8 @@ public class MemberAction extends BaseActionSupport
  	{
 		String returnVal = "DEFAULT";
 		log.debug("RegForm 시작");
+
+				
 		
 		return  returnVal;
 	
@@ -80,7 +83,7 @@ public class MemberAction extends BaseActionSupport
 
  	
  	/**
- 	 * 회원가입 처리  action
+ 	 * 회원가입/수정 처리  action
  	 * 
  	 * @return
  	 * @throws Exception
@@ -108,7 +111,7 @@ public class MemberAction extends BaseActionSupport
 		memTblDTO.setMem_nm(mem_nm);
 		memTblDTO.setPasswd(passwd);
 		memTblDTO.setRelation_kind("");
-		memTblDTO.setCreate_ip(this.request.getRemoteAddr());
+		memTblDTO.setCreate_ip(this.getRequest().getRemoteAddr());
 		memTblDTO.setCreate_dt(sCurrentDate);
 		
 		
@@ -118,35 +121,35 @@ public class MemberAction extends BaseActionSupport
 		
 		
 		// 회원가입에 대한 데이터 확인
-		retBO = valiateMemData(memTblDTO);
+		retBO = valiateRegMemData(memTblDTO);
 		
-		// 회원가입이 가능한 상태
-		if ( "0".equals(retBO.getRetCode()))
+		// 회원가입이 불가능한 상태
+		if ( !"0".equals(retBO.getRetCode())) throw new Exception(retBO.getRetMsg());
+		
+			
+		long regSeq = memberService.RegMemData(memTblDTO);
+		
+		if (regSeq <= 0 )
 		{
-			
-			long regSeq = memberService.RegMemData(memTblDTO);
-			
-			if (regSeq <= 0 )
-			{
-				retBO.setRetCode("-1");
-				retBO.setRetMsg("회원가입실패");
-	 		}
+			retBO.setRetCode("-1");
+			retBO.setRetMsg("회원가입실패");
+ 		}
+	
+		if (log.isDebugEnabled()) log.debug("회원가입정보:" + DebugUtil.DebugBo(memTblDTO));
+		// 회원가입이 되면 바로 로그인 처리 해준다.
+		AuthInfo authInfo = new AuthInfo();
 		
-			if (log.isDebugEnabled()) log.debug("회원가입정보:" + DebugUtil.DebugBo(memTblDTO));
-			// 회원가입이 되면 바로 로그인 처리 해준다.
-			AuthInfo authInfo = new AuthInfo();
-			
-			memTblDTO.setMt_no(String.valueOf(regSeq));
-			// 로그인  정보를 login결과 페이지로 넘긴다.
-			authInfo.setMem_id(memTblDTO.getMem_id());
-			authInfo.setMem_nm(memTblDTO.getMem_nm());
-			authInfo.setMt_no(memTblDTO.getMt_no());
-			
-			// 로그인  쿠키 처리
-			AuthService.setAuthInfo(authInfo, this.request, this.response);
+		memTblDTO.setMt_no(String.valueOf(regSeq));
+		// 로그인  정보를 login결과 페이지로 넘긴다.
+		authInfo.setMem_id(memTblDTO.getMem_id());
+		authInfo.setMem_nm(memTblDTO.getMem_nm());
+		authInfo.setMt_no(memTblDTO.getMt_no());
+		
+		// 로그인  쿠키 처리
+		AuthService.setAuthInfo(authInfo, this.getRequest(), this.getResponse());
 			
 			
-		}
+		
 		
 		// 처리결과를 jsp에 전달
 		this.resultDTO = retBO;
@@ -163,10 +166,27 @@ public class MemberAction extends BaseActionSupport
  	 * @throws Exception
  	 */
  	public String UpdateForm() throws Exception {
-		String returnVal = "";
+		String returnVal = "DEFAULT";
+		log.debug("UpdateForm 시작");
+
+		// 회원테이블 조회용 객체 생성
+		MemTblDTO memTblDTO = new MemTblDTO(); 
+		MemberService memberService = (MemberService)ServiceFactory.createService(MemberServiceImpl.class);
+		AuthInfo authInfo  = AuthService.getAuthInfo( this.getRequest(), this.getResponse());
 		
 		
-		return  returnVal = "";
+		memTblDTO.setMt_no(authInfo.getMt_no());
+		memTblDTO.setMem_id(authInfo.getMem_id());
+		
+		List<MemTblDTO> resultList = memberService.validateRegMemData(memTblDTO);
+		
+		if (resultList.size() == 1) this.loginMemTblDTO = resultList.get(0);
+		else throw new Exception("로그인후 개인정보 수정 해주세요."); 
+		
+		
+		
+		return  returnVal;
+	
 	
 	}
  	/**
@@ -176,10 +196,25 @@ public class MemberAction extends BaseActionSupport
  	 * @throws Exception
  	 */
  	public String UpdateProc() throws Exception {
-		String returnVal = "";
+		String returnVal = "DEFAULT";
 		
+		String passwd = this.getParam("passwd");
+		String sCurrentDate = DateTime.getFormatString("yyyyMMddHHmmss"); // 현재날짜
 		
-		return  returnVal = "";
+		BaseDTO retBO		= null; 
+		MemTblDTO memTblDTO = new MemTblDTO(); 
+		MemberService memberService = (MemberService)ServiceFactory.createService(MemberServiceImpl.class);
+		
+		memTblDTO.setPasswd(passwd);
+		memTblDTO.setUpdate_dt(sCurrentDate);
+		memTblDTO.setUpdate_ip(this.getRequest().getRemoteAddr());
+		
+		retBO = valiateUpdateMemData(memTblDTO);
+		if ( !"0".equals(retBO.getRetCode())) throw new Exception(retBO.getRetMsg());
+			
+		memberService.UpdateMemData(memTblDTO);
+		
+		return  returnVal;
 	
 	}
  	
@@ -200,8 +235,8 @@ public class MemberAction extends BaseActionSupport
 		
 		
 		
-		memTblDTO.setMem_id((String)this.request.getParameter("mem_id"));
-		memTblDTO.setPasswd((String)this.request.getParameter("passwd"));
+		memTblDTO.setMem_id((String)this.getRequest().getParameter("mem_id"));
+		memTblDTO.setPasswd((String)this.getRequest().getParameter("passwd"));
 		memTblDTO.setLoginYn("Y");
 		
 		log.debug("memTblDTO:" + DebugUtil.DebugBo(memTblDTO));
@@ -222,7 +257,7 @@ public class MemberAction extends BaseActionSupport
 			authInfo.setMt_no(this.loginMemTblDTO.getMt_no());
 			
 			// 로그인  쿠키 처리
-			AuthService.setAuthInfo(authInfo, this.request, this.response);
+			AuthService.setAuthInfo(authInfo, this.getRequest(), this.getResponse());
 		}
 		
 		this.fromAction  = "LOGIN_ACTION";
@@ -244,7 +279,7 @@ public class MemberAction extends BaseActionSupport
 		AuthInfo authInfo = new AuthInfo();
 		
 		// 로그아웃처리
-		AuthService.setLogOut(this.request, this.response);
+		AuthService.setLogOut(this.getRequest(), this.getResponse());
 		
 			
 		return  returnVal;
@@ -268,16 +303,27 @@ public class MemberAction extends BaseActionSupport
 		String mem_id  = this.getParam("mem_id");
 		String mem_nm  = this.getParam("mem_nm");
 		String passwd  = this.getParam("passwd");
+		String jobKind  = this.getParam("jobKind");
 		
 		
 		try
 		{
-			MemTblDTO memTblDTO = new MemTblDTO();
-			memTblDTO.setMem_id(mem_id);
-			memTblDTO.setMem_nm(mem_nm);
-			memTblDTO.setPasswd(passwd);
-			
-			retVal = valiateMemData(memTblDTO);
+			if ("I".equals(jobKind))
+			{
+				MemTblDTO memTblDTO = new MemTblDTO();
+				memTblDTO.setMem_id(mem_id);
+				memTblDTO.setMem_nm(mem_nm);
+				memTblDTO.setPasswd(passwd);
+				
+				retVal = valiateRegMemData(memTblDTO);
+			}
+			else if ("U".equals(jobKind))
+			{
+				MemTblDTO memTblDTO = new MemTblDTO();
+				memTblDTO.setPasswd(passwd);
+				
+				retVal = valiateUpdateMemData(memTblDTO);
+			}
 			
 		}
 		catch (Exception e)
@@ -295,7 +341,15 @@ public class MemberAction extends BaseActionSupport
 		return  returnVal;
 	}
  	
- 	private BaseDTO valiateMemData(MemTblDTO memTblDTO) throws Exception
+ 	
+ 	/**
+ 	 * 회원가입시 데이터 validation
+ 	 * 
+ 	 * @param memTblDTO
+ 	 * @return
+ 	 * @throws Exception
+ 	 */
+ 	private BaseDTO valiateRegMemData(MemTblDTO memTblDTO) throws Exception
  	{
 
 		// 회원테이블 조회용 객체 생성
@@ -334,6 +388,32 @@ public class MemberAction extends BaseActionSupport
  	}
 
 
+ 	/**
+ 	 * 회원수정시 데이터 validation
+ 	 * 
+ 	 * @param memTblDTO
+ 	 * @return
+ 	 * @throws Exception
+ 	 */
+ 	private BaseDTO valiateUpdateMemData(MemTblDTO memTblDTO) throws Exception
+ 	{
+
+		// 회원테이블 조회용 객체 생성
+		MemberService memberService = (MemberService)ServiceFactory.createService(MemberServiceImpl.class);
+		
+		
+		// 회원정보조회
+		List<MemTblDTO> resultList = memberService.validateRegMemData(memTblDTO);
+		BaseDTO retVal = null;
+		
+		
+		retVal = ValidationUtil.lenghV(memTblDTO.getPasswd(), 4, 20);
+		if (!"0".equals(retVal.getRetCode())) { retVal.setRetDetCode("-1002"); return retVal;}
+		
+		return retVal;
+ 		
+ 	}
+ 	
 
 
 

@@ -128,6 +128,7 @@ public class ContentServiceImpl implements ContentService
 
 		// content_title_list_tbl 생성
 		tt_No = contentTitleListTblDAO.insertContentTitleListTbl(contentTitleListParam);
+		contentTitleListParam.setTt_no(String.valueOf(tt_No));
 		
 		// content_source_tbl 생성
 		for (int i=0;i<contentSourceArr.size();i++)

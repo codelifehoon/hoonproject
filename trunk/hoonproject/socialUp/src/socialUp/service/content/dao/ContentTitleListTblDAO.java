@@ -79,4 +79,6 @@ public interface ContentTitleListTblDAO
 	public List<ContentJoinMemDTO> selectContentJoinMemList(ContentJoinMemDTO contentJoinMem) throws Exception ;
 	
 	
+	public void initSql();
+	
 }

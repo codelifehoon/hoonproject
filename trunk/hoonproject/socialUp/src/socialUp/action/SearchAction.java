@@ -76,8 +76,8 @@ public class SearchAction extends BaseActionSupport
 		ContentService contentService = (ContentService)ServiceFactory.createService(ContentServiceImpl.class);
 		SearchDTO	  searchParam = new SearchDTO();
 		
-		AuthInfo authInfo =  AuthService.getAuthInfo(this.request, this.response);
-		String searchStr 	= CmnUtil.nvl(request.getParameter("searchStr"));
+		AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
+		String searchStr 	= CmnUtil.nvl(this.getRequest().getParameter("searchStr"));
 		
 		if (searchStr.trim().length() < 2) throw new Exception("검색어는 2자 이상이어야 합니다.");
 		searchParam.setSearchStr(searchStr);

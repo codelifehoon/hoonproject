@@ -33,5 +33,16 @@ public long RegMemData(MemTblDTO memTblDTO) throws Exception;
  */
 public List<MemTblDTO>  MemLogin(MemTblDTO memTblDTO) throws Exception;
 
-		
+
+
+
+/**
+ * 회원정보를 수정 처리한다.
+ * 
+ * @param memtbldto
+ * @throws Exception 
+ */
+public void UpdateMemData(MemTblDTO memTblDTO) throws Exception;
+
+
 }

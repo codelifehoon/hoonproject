@@ -52,6 +52,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
     	
   
+  	<select id="updateMemTbl"  parameterType="socialUp.service.member.dto.MemTblDTO">
+	     	update /*MemTbl.xml updateMemTbl*/
+	     	set 
+			     	update_dt 	= DATE_FORMAT(#{create_dt},'%Y%m%d%H%i%s')
+					,update_ip 	= #{update_ip}
+					,passwd 	= password(#{passwd})
+					<if test="var != null and var != ''">
+					,mem_nm		= #mem_nm{}
+					</if>
+					
+					<if test="relation_kind != null and relation_kind != ''">
+					,relation_kind	= #{relation_kind}
+					</if>
+					
+					<if test="remot_login_id != null and remot_login_id != ''">
+					,remot_login_id	= #{remot_login_id}
+					</if>
+					
+					<if test="remot_login_pw != null and remot_login_pw != ''">
+					,remot_login_pw	= #{remot_login_pw}
+					</if>
+					
+					<if test="cert_key != null and cert_key != ''">
+					,cert_key		= #{cert_key}
+					</if>
+					
+					<if test="feed_back_url != null and feed_back_url != ''">
+					,feed_back_url	= #{feed_back_url}
+					</if>
+					
+					<if test="use_yn != null and use_yn != ''">
+					,use_yn			= #{use_yn}
+					</if>
+	     	
+			from mem_tbl where mt_no = #{mt_no}
+
+	</select>
+	
  
 </mapper>
 

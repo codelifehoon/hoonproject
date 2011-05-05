@@ -29,7 +29,7 @@
 		 	
   	-->
   	
-    <package name="content" namespace="/content" extends="struts-default">
+    <package name="content" namespace="/content" extends="commonInterceptor">
         <action name="content*" method="{1}" 	class="socialUp.action.ContentAction">
             <result name="DEFAULT">/jsp/content/content{1}.jsp</result>			<!--  기본 action 처리 -->
             <result name="CONTENT_READ_AUTH">/jsp/content/contentReadAuth.jsp</result>
@@ -38,6 +38,12 @@
         </action>
     </package>
     
-    
+<!--  단축URL 매핑용 action -->
+  <package name="go" namespace="/go" extends="commonInterceptor">
+        <action name="*" method="aliasMapping" 	class="socialUp.action.UrlMappingAction">
+            <result name="DEFAULT">/jsp/content/listRedirect.jsp</result>			<!--  기본 action 처리 -->
+        </action>
+    </package>
+        
     
 </struts>

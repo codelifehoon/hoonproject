@@ -47,7 +47,8 @@ public class MemTblDAOImpl implements MemTblDAO {
 	public int updateMemTbl(MemTblDTO memParam) throws Exception
 	{
 		log.debug("updateMemTbl 시작");
-		return 0;
+		return  this.sqlMap.update("socialUp.service.member.mapper.updateMemTbl", memParam);
+		
 	}
 	
 	

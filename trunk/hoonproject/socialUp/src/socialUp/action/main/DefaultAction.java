@@ -53,7 +53,7 @@ public class DefaultAction extends BaseActionSupport
 	{
 
 		
-		CookieUtil cookieUtil = new CookieUtil(this.request, this.response);
+		CookieUtil cookieUtil = new CookieUtil(this.getRequest(), this.getResponse());
 		
 		String mem_id 	= cookieUtil.getSubCookie(CookieUtil.TP,"mem_id");
 		String mt_no 	= cookieUtil.getSubCookie(CookieUtil.TP,"mt_no");

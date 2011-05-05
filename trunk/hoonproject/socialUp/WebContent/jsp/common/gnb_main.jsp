@@ -88,8 +88,9 @@
 					</tr>
 					<tr>
 						<td>
-							<a class="ALink1" href="">개인정보수정</a>
-							,<a class="ALink1" href="">내고리현황</a>               
+							<a class="ALink1" href="<%=rootUrl %>/member/memberUpdateForm.action">개인정보수정</a>
+							|<a class="ALink1" href="">내고리현황</a>               
+							|<a class="ALink1" href="<%=rootUrl %>/content/contentRegSetp1.action">고리만들기</a>
 						</td>
 					</tr>
 				</table>
