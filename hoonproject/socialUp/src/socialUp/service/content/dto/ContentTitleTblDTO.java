@@ -27,6 +27,9 @@ public class ContentTitleTblDTO  extends BaseDTO
 	private String update_dt;
 	private String update_no;
 	private String use_yn;
+	private String title_desc;
+	private String title_short_name;
+	
 	
 
 	
@@ -128,6 +131,18 @@ public class ContentTitleTblDTO  extends BaseDTO
 	}
 	public void setContentBranchList(List<ContentBranchDTO> contentBranchList) {
 		this.contentBranchList = contentBranchList;
+	}
+	public String getTitle_desc() {
+		return title_desc;
+	}
+	public void setTitle_desc(String title_desc) {
+		this.title_desc = title_desc;
+	}
+	public String getTitle_short_name() {
+		return title_short_name;
+	}
+	public void setTitle_short_name(String title_short_name) {
+		this.title_short_name = title_short_name;
 	}
 	
 	}

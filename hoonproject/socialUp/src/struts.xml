@@ -47,7 +47,52 @@
     </package>
  -->
  
-  
+<!-- 로그인 check를 위한 인터셉터 설정 -->
+<package name="commonInterceptor" extends="struts-default" namespace="">	
+		<interceptors>
+			<interceptor name="loginCheck" class="socialUp.common.LoginSessionCheckInterceptor"/>
+			<interceptor name="debugging" class="org.apache.struts2.interceptor.debugging.DebuggingInterceptor" />
+			<interceptor name="logger" class="com.opensymphony.xwork2.interceptor.LoggingInterceptor"/>
+			
+			<interceptor-stack name="commonStack">
+							<interceptor-ref name="loginCheck">
+			                	<param name="excludeActions">
+			                		/index.action
+			                		,/member/memberRegForm.action		<!-- 회원가입 -->
+			                		,/member/memberMemLogIn.action		<!-- 심플로그인 -->
+			                	</param>
+			                	<param name="redirectWebPage">/jsp/member/loginMain.jsp</param>
+			                </interceptor-ref>
+			                
+			                <interceptor-ref name="debugging"/>
+			                <interceptor-ref name="logger"/>
+
+<!-- 
+			                <interceptor-ref name="exception"/>
+			                <interceptor-ref name="alias"/>
+			                <interceptor-ref name="servletConfig"/>
+			                <interceptor-ref name="prepare"/>
+			                <interceptor-ref name="i18n"/>
+			                <interceptor-ref name="chain"/>
+			                <interceptor-ref name="debugging"/>
+			                <interceptor-ref name="fileUpload"/>
+			                <interceptor-ref name="checkbox"/>
+			                <interceptor-ref name="staticParams"/>
+			                <interceptor-ref name="params">
+			                  <param name="excludeParams">dojo\..*</param>
+			                </interceptor-ref>
+			                <interceptor-ref name="conversionError"/>
+			                <interceptor-ref name="validation">
+			                    <param name="excludeMethods">input,back,cancel,browse</param>
+			                </interceptor-ref>
+ -->
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="commonStack"/>
+	
+</package>
+
+
   
  <package namespace="/" name="default"  extends="struts-default">
         <action name="index"  class="socialUp.action.main.DefaultAction" >

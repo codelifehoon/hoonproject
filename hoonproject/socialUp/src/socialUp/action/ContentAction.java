@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 import socialUp.action.main.BaseActionSupport;
 import socialUp.common.AuthInfo;
 import socialUp.common.AuthService;
+import socialUp.common.DaoFactory;
 import socialUp.common.ServiceFactory;
 import socialUp.common.util.CmnUtil;
 import socialUp.common.util.CookieUtil;
@@ -28,6 +29,8 @@ import socialUp.common.util.DebugUtil;
 import socialUp.common.util.NumUtil;
 import socialUp.service.content.ContentService;
 import socialUp.service.content.ContentServiceImpl;
+import socialUp.service.content.dao.ContentTitleListTblDAO;
+import socialUp.service.content.dao.ContentTitleListTblDAOImpl;
 import socialUp.service.content.dto.ContentBranchDTO;
 import socialUp.service.content.dto.ContentJoinMemDTO;
 import socialUp.service.content.dto.ContentSourceTblDTO;
@@ -150,8 +153,8 @@ public class ContentAction extends BaseActionSupport
 		//회원테이블 조회용 객체 생성
 		ContentService contentService = (ContentService)ServiceFactory.createService(ContentServiceImpl.class);
 		
-		AuthInfo authInfo =  AuthService.getAuthInfo(this.request, this.response);
-		String refTtNo 	= CmnUtil.nvl(request.getParameter("refTtNo"));
+		AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
+		String refTtNo 	= CmnUtil.nvl(this.getRequest().getParameter("refTtNo"));
 		
 		
 		
@@ -194,77 +197,64 @@ public class ContentAction extends BaseActionSupport
 		
 		
 		
-		AuthInfo authInfo =  AuthService.getAuthInfo(this.request, this.response);
+		AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
 		String sCurrentDate = DateTime.getFormatString("yyyyMMddHHmmss"); // 현재날짜
-		
-		
-		if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
+
 		
 		// 회원테이블 조회용 객체 생성
 		ContentService contentService = (ContentService)ServiceFactory.createService(ContentServiceImpl.class);
 		 
 		
-		String source_dtl_kind 		= this.getParam("source_dtl_kind");			// 소속사이트
-		String source_login_id 		= this.getParam("source_login_id");
-		String rss2_url 			= this.getParam("rss2_url");				// 자기 컨텐츠 주소(블로그등등)
-		String source_kind 			= this.getParam("source_kind");				// 소스종료
-		String favoriteContent 		= this.getParam("favoriteContent");			// 자기가 자주가는 블로그,트위터등등
-		String order_mem_open_yn 	= this.getParam("order_mem_open_yn");		// 자기가 등록한 고리에 대한 공개여부
-		String branch_conf_yn	 	= this.getParam("branch_conf_yn");			// 가지치기 가능여부
-		String order_mem_join_yn	= this.getParam("order_mem_join_yn");
+		String title_name 			= this.getParam("title_name");				
+		String title_desc 			= this.getParam("title_desc");
+		String title_short_name 	= this.getParam("title_short_name");
+		String order_mem_open_yn 	= this.getParam("order_mem_open_yn");
+		String branch_conf_yn 		= this.getParam("branch_conf_yn");
+		String order_mem_join_yn 	= this.getParam("order_mem_join_yn");
+		String order_mem_join_metd	= this.getParam("order_mem_join_metd");
 		String order_mem_join_passwd= this.getParam("order_mem_join_passwd");
+		String rss_source			= this.getParam("rss_source");
+		String tw_source			= this.getParam("tw_source");
 		String branchTtno			= this.getParam("branchTtno");				// 최초 생성시 다른 컨텐츠 타이틀을포함하고 생성할떄
 		
-		String[] favoriteContentArr  	= null; 												// 즐겨찾는 고리에 대해 배열로 분리
+
+		String[] rssSourceArr  	= null;	// rss 글타래 목록
+		String[] twSourceArr  	= null; // 트위터 글타래 목록												
 		
-		// 즐겨찾는 고리 배열생성
-		favoriteContent = favoriteContent.replaceAll("\r\n", ",");
-		favoriteContentArr = favoriteContent.split(",");
+		//Rss 수집목록 생성
+		rss_source = rss_source.replaceAll("\r\n", ",");
+		rssSourceArr = rss_source.split(",");
+		
+		//트위터 수집목록 생성
+		tw_source = tw_source.replaceAll("\r\n", ",");
+		twSourceArr = tw_source.split(",");
 		
 		
 		List<ContentSourceTblDTO> contentSourceParamArr = new ArrayList<ContentSourceTblDTO>();	// 타이틀 테이블에 들어갈정보 배열
 		ContentTitleTblDTO 	contentTitleParam = new ContentTitleTblDTO();		// 타이틀 컨텐츠 정보
 		
-		
+
 		contentTitleParam.setMt_no(authInfo.getMt_no());
-		contentTitleParam.setTitle_name("나의 기본 글모음");
+		contentTitleParam.setTitle_name(title_name);
+		contentTitleParam.setTitle_desc(title_desc);
+		contentTitleParam.setTitle_short_name(title_short_name);
 		contentTitleParam.setTitle_kind("00");
-		contentTitleParam.setBranch_conf_yn(branch_conf_yn);
 		contentTitleParam.setOrder_mem_open_yn(order_mem_open_yn);
+		contentTitleParam.setBranch_conf_yn(branch_conf_yn);
 		contentTitleParam.setOrder_mem_join_yn(order_mem_join_yn);
+		contentTitleParam.setOrder_mem_join_metd(order_mem_join_metd);
 		contentTitleParam.setOrder_mem_join_passwd(order_mem_join_passwd);
 		contentTitleParam.setCreate_no(authInfo.getMt_no());
 		contentTitleParam.setCreate_dt(sCurrentDate);
 		contentTitleParam.setUpdate_no(authInfo.getMt_no());
 		contentTitleParam.setUpdate_dt(sCurrentDate);
 		
-		
-		// 자신의 컨텐츠 정보 생성
-		ContentSourceTblDTO contentSourceTblDTO = new ContentSourceTblDTO(); 
-		
-		
-		contentSourceTblDTO.setMt_no(authInfo.getMt_no());
-		contentSourceTblDTO.setRss2_url(rss2_url);
-		contentSourceTblDTO.setSource_kind(source_kind);
-		contentSourceTblDTO.setSource_dtl_kind(source_dtl_kind);
-		contentSourceTblDTO.setSource_owner_kind("01");				// 본인이 직접등록
-		contentSourceTblDTO.setSource_login_id(source_login_id);
-		contentSourceTblDTO.setReg_stat("02");
-		contentSourceTblDTO.setCreate_dt(sCurrentDate);
-		contentSourceTblDTO.setCreate_no(authInfo.getMt_no());
-		contentSourceTblDTO.setUpdate_dt(sCurrentDate);
-		contentSourceTblDTO.setUpdate_no(authInfo.getMt_no());
-		
-		
-		
-		contentSourceParamArr.add(contentSourceTblDTO);
-		
-		// 자신의 관심 컨텐츠 등록
-		for (int i=0;i<favoriteContentArr.length;i++)
+		// RSS 글타래 등록
+		for (int i=0;i<rssSourceArr.length;i++)
 		{
 			// 관심컨텐츠가 공백이 아니라면 등록한다.
-			if (favoriteContentArr[i] != null
-					&& !"".equals(favoriteContentArr[i].trim())
+			if (rssSourceArr[i] != null
+					&& !"".equals(rssSourceArr[i].trim())
 				)
 			{
 				// 자신의 컨텐츠 정보 생성
@@ -272,8 +262,8 @@ public class ContentAction extends BaseActionSupport
 				
 				
 				favoritContentSource.setMt_no(authInfo.getMt_no());
-				favoritContentSource.setRss2_url(favoriteContentArr[i]);
-				favoritContentSource.setSource_kind(source_kind);
+				favoritContentSource.setRss2_url(rssSourceArr[i]);
+				favoritContentSource.setSource_kind("01");				// 01:rss,02:트위터
 				favoritContentSource.setSource_dtl_kind("");
 				favoritContentSource.setSource_owner_kind("03");				// 본인이 직접등록
 				favoritContentSource.setSource_login_id("");
@@ -282,8 +272,33 @@ public class ContentAction extends BaseActionSupport
 				favoritContentSource.setCreate_no(authInfo.getMt_no());
 				favoritContentSource.setUpdate_dt(sCurrentDate);
 				favoritContentSource.setUpdate_no(authInfo.getMt_no());
+				contentSourceParamArr.add(favoritContentSource);
 				
+			}
+		}
+		
+		// 트위터 글타래 등록
+		for (int i=0;i<twSourceArr.length;i++)
+		{
+			// 관심컨텐츠가 공백이 아니라면 등록한다.
+			if (twSourceArr[i] != null
+					&& !"".equals(twSourceArr[i].trim())
+				)
+			{
+				// 자신의 컨텐츠 정보 생성
+				ContentSourceTblDTO favoritContentSource = new ContentSourceTblDTO(); 
 				
+				favoritContentSource.setMt_no(authInfo.getMt_no());
+				favoritContentSource.setRss2_url(twSourceArr[i]);
+				favoritContentSource.setSource_kind("02");				// 01:rss,02:트위터
+				favoritContentSource.setSource_dtl_kind("");
+				favoritContentSource.setSource_owner_kind("03");				// 본인이 직접등록
+				favoritContentSource.setSource_login_id("");
+				favoritContentSource.setReg_stat("02");
+				favoritContentSource.setCreate_dt(sCurrentDate);
+				favoritContentSource.setCreate_no(authInfo.getMt_no());
+				favoritContentSource.setUpdate_dt(sCurrentDate);
+				favoritContentSource.setUpdate_no(authInfo.getMt_no());
 				contentSourceParamArr.add(favoritContentSource);
 				
 			}
@@ -293,8 +308,7 @@ public class ContentAction extends BaseActionSupport
 		// 최초 자신의 고리 개설
 		contentService.addMemContent(contentSourceParamArr, contentTitleParam , branchTtno);
 		
-		
-		
+		this.contentTitle = contentTitleParam;
 		
 		return  returnVal;
 	
@@ -313,7 +327,7 @@ public class ContentAction extends BaseActionSupport
 		
 		log.debug("contentEditForm 시작");
 		
-		AuthInfo authInfo =  AuthService.getAuthInfo(this.request, this.response);
+		AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
 		if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
 
 		String tt_no = this.getParam("tt_no");
@@ -354,7 +368,7 @@ public class ContentAction extends BaseActionSupport
 		
 		log.debug("contentEditFinish 시작");
 		
-		AuthInfo authInfo =  AuthService.getAuthInfo(this.request, this.response);
+		AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
 		if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
 
 		String sCurrentDate = DateTime.getFormatString("yyyyMMddHHmmss"); // 현재날짜
@@ -469,7 +483,7 @@ public class ContentAction extends BaseActionSupport
 		
 		log.debug("ContentDtlList 시작");
 		
-		AuthInfo authInfo =  AuthService.getAuthInfo(this.request, this.response);
+		AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
 		//if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
 
 		String sCurrentDate = DateTime.getFormatString("yyyyMMddHHmmss"); // 현재날짜
@@ -511,7 +525,7 @@ public class ContentAction extends BaseActionSupport
 		
 		log.debug("ContentDtlDtlView 시작");
 		
-		AuthInfo authInfo =  AuthService.getAuthInfo(this.request, this.response);
+		AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
 
 		String sCurrentDate = DateTime.getFormatString("yyyyMMddHHmmss"); // 현재날짜
 		String cd_no 			= this.getParam("cd_no");
@@ -564,7 +578,7 @@ public class ContentAction extends BaseActionSupport
 		
 		log.debug("ContentDtlEditForm 시작");
 		
-		AuthInfo authInfo =  AuthService.getAuthInfo(this.request, this.response);
+		AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
 		if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
 		
 		
@@ -600,7 +614,7 @@ public class ContentAction extends BaseActionSupport
 		
 		log.debug("contentDtlEditFinish 시작");
 		
-		AuthInfo authInfo =  AuthService.getAuthInfo(this.request, this.response);
+		AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
 		if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
 		
 		String tt_no 			= this.getParam("tt_no");
@@ -679,7 +693,7 @@ public class ContentAction extends BaseActionSupport
 		
 		log.debug("BranchTitleForm 시작");
 		
-		AuthInfo authInfo =  AuthService.getAuthInfo(this.request, this.response);
+		AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
 		if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
 		
 		String tt_no 			= this.getParam("tt_no");
@@ -717,7 +731,7 @@ public class ContentAction extends BaseActionSupport
 		
 		log.debug("BranchTitleFinish 시작");
 		
-		AuthInfo authInfo =  AuthService.getAuthInfo(this.request, this.response);
+		AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
 		if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
 		
 		String tt_no 			= this.getParam("tt_no");
@@ -755,7 +769,7 @@ public class ContentAction extends BaseActionSupport
 		
 		log.debug("JoinMemForm 시작");
 		
-		AuthInfo authInfo =  AuthService.getAuthInfo(this.request, this.response);
+		AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
 		if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
 		
 		String tt_no 			= this.getParam("tt_no");
@@ -788,7 +802,7 @@ public class ContentAction extends BaseActionSupport
 		
 		log.debug("JoinMemFinish 시작");
 		
-		AuthInfo authInfo =  AuthService.getAuthInfo(this.request, this.response);
+		AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
 		if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
 		
 		String tt_no 							= this.getParam("tt_no");
@@ -823,7 +837,7 @@ public class ContentAction extends BaseActionSupport
 		
 		log.debug("contentJoinContFrom 시작");
 		
-		AuthInfo authInfo =  AuthService.getAuthInfo(this.request, this.response);
+		AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
 		if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
 		
 		String tt_no 			= this.getParam("tt_no");
@@ -873,7 +887,7 @@ public class ContentAction extends BaseActionSupport
 		
 		log.debug("contentJoinContFinish 시작");
 		
-		AuthInfo authInfo =  AuthService.getAuthInfo(this.request, this.response);
+		AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
 		if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
 		
 		
@@ -989,7 +1003,7 @@ public class ContentAction extends BaseActionSupport
 		
 		log.debug("ContentFeedRss 시작");
 		
-		AuthInfo authInfo =  AuthService.getAuthInfo(this.request, this.response);
+		AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
 		//if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
 
 		String sCurrentDate = DateTime.getFormatString("yyyyMMddHHmmss"); // 현재날짜
@@ -1027,7 +1041,7 @@ public class ContentAction extends BaseActionSupport
 		
 		log.debug("ContentDtlList 시작");
 		
-		AuthInfo authInfo =  AuthService.getAuthInfo(this.request, this.response);
+		AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
 		//if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
 
 		String sCurrentDate = DateTime.getFormatString("yyyyMMddHHmmss"); // 현재날짜
@@ -1054,9 +1068,38 @@ public class ContentAction extends BaseActionSupport
 	}
 
 	
+
+	/**
+	 * 컨텐츠를 등록할  화면 step1
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String RegSetp1() throws Exception 
+	{
+		String returnVal = "DEFAULT";
+
+		log.debug("contentRegSetp1 시작");
+		
+		return  returnVal;
 	
+	}
 	
 
+	/**
+	 * 컨텐츠를 등록할  화면 step1
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String RegSetp2() throws Exception 
+	{
+		String returnVal = "DEFAULT";
 
+		log.debug("contentRegSetp2 시작");
+		
+		return  returnVal;
+	
+	}
 		
 }

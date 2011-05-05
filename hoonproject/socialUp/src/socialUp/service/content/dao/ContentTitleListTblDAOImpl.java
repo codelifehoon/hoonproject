@@ -7,6 +7,8 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
 
+import socialUp.common.mybatis.MyBatisManager;
+import socialUp.common.util.CmnUtil;
 import socialUp.common.util.NumUtil;
 import socialUp.service.content.dto.ContentJoinMemDTO;
 import socialUp.service.content.dto.ContentTitleTblDTO;
@@ -24,6 +26,13 @@ public class ContentTitleListTblDAOImpl implements ContentTitleListTblDAO {
 		
 		this.sqlMap = session;
 	}
+	
+	public void initSql()
+	{
+		if ( sqlMap == null) this.sqlMap = MyBatisManager.getInstanceSqlSession("");
+	}
+	
+	
 
 	@Override
 	public int insertContentTitleListTbl(ContentTitleTblDTO conTitleParam)
@@ -56,6 +65,12 @@ public class ContentTitleListTblDAOImpl implements ContentTitleListTblDAO {
 	@Override
 	public List<ContentTitleTblDTO> selectContentTitleListTbl(ContentTitleTblDTO conTitleParam) throws Exception {
 
+		
+		if ( "".equals(CmnUtil.nvl(conTitleParam.getMt_no()))
+					&&  "".equals(CmnUtil.nvl(conTitleParam.getTt_no()))
+					&&  "".equals(CmnUtil.nvl(conTitleParam.getTitle_short_name()))
+			) throw new Exception("selectContentTitleListTbl 조회 필수 값이 없습니다. 조회필수 값은 1개 이상이어야 합니다.");
+		
 		return  this.sqlMap.selectList("socialUp.service.content.mapper.selectContentTitleListTblList", conTitleParam);
 	}
 

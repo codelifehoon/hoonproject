@@ -44,11 +44,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			 <if test="tt_no != null and tt_no != '' ">
 			 	and tt_no = #{tt_no}
 			 </if>
-			 
-			 <!-- 필수 검색조건이 안들어올경우 검색이 안되게 처리 -->
-			 <if test=" (mt_no == null or mt_no == '') and  (tt_no == null or tt_no == '') ">
-			 	and 1=2
-			 </if> 
+			 <if test="title_short_name != null and title_short_name != '' ">
+			 	and title_short_name = #{title_short_name}
+			 </if>
 				
 			order by  tt_no desc
 			 <!--  별도의 필수 제약조건이없어서 최대 100건만 조회되도록 limit 처리한다. -->
@@ -61,6 +59,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    		
 				INSERT INTO /*insertContentTitleListTbl 2010.12.12*/ content_title_tbl( 
 							title_name
+							,title_desc
+							,title_short_name
 							,title_kind
 							,branch_conf_yn
 							,mt_no
@@ -73,6 +73,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 							,update_no)
 				VALUES(
 						#{title_name}
+						,#{title_desc}
+						,#{title_short_name}
 						,#{title_kind}
 						,#{branch_conf_yn}
 						,#{mt_no}
@@ -111,6 +113,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					<if test="order_mem_join_passwd != null and order_mem_join_passwd != '' ">
 						,order_mem_join_passwd = #{order_mem_join_passwd}
 					</if>
+					<if test="title_desc != null and title_desc != '' ">
+						,title_desc = #{title_desc}
+					</if>
+					
 		where tt_no = #{tt_no}
 	</update>
 	

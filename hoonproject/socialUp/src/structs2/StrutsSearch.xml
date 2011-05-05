@@ -9,7 +9,7 @@
  	SearchResultList 		: 검색결과화면
 
   -->
-    <package name="search" namespace="/search" extends="struts-default">
+    <package name="search" namespace="/search" extends="commonInterceptor">
         <action name="search*" method="{1}" class="socialUp.action.SearchAction" >
             <result name="DEFAULT">/jsp/search/search{1}.jsp</result>			<!--  기본 action 처리 -->
             

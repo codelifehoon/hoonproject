@@ -137,5 +137,40 @@ public class MemberServiceImpl implements MemberService
 	
 	
 
+	/**
+	 * 회원정보를 수정 처리한다.
+	 * 
+	 * @param memtbldto
+	 * @throws Exception 
+	 */
+	public void UpdateMemData(MemTblDTO memTblDTO) throws Exception
+	{
+		log.debug("UpdateMemData 시작");
+		long regSeq =0;
+		SqlSession sqlMap = MyBatisManager.getInstanceSqlSession("");
+		
+		try 
+		{
+		// sql session 생성
+
+		// 회원테이블 조회용 객체 생성
+		MemTblDAO memTblDAO = (MemTblDAO)DaoFactory.createDAO(MemTblDAOImpl.class);
+		memTblDAO.setSqlSesstion(sqlMap);			// sql session 설정
+		
+		// 회원정보조회
+		regSeq =  memTblDAO.updateMemTbl(memTblDTO);
+
+		sqlMap.commit();
+		} catch (Exception e)
+		{
+			sqlMap.rollback();
+			e.printStackTrace();
+			throw e;
+		}
+		finally { sqlMap.close();}
+
+		
+	}
+	
 	
 }

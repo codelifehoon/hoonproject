@@ -22,6 +22,9 @@ public class MemTblDTO extends BaseDTO
 	String create_dt;
 	String create_ip;
 	String loginYn;
+	String update_dt;
+	String update_ip;
+	
 	
 	
 	public String getMt_no() {
@@ -71,6 +74,18 @@ public class MemTblDTO extends BaseDTO
 	}
 	public void setLoginYn(String loginYn) {
 		this.loginYn = loginYn;
+	}
+	public String getUpdate_dt() {
+		return update_dt;
+	}
+	public void setUpdate_dt(String update_dt) {
+		this.update_dt = update_dt;
+	}
+	public String getUpdate_ip() {
+		return update_ip;
+	}
+	public void setUpdate_ip(String update_ip) {
+		this.update_ip = update_ip;
 	}
 
 	
