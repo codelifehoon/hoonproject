@@ -44,6 +44,22 @@ import net.htmlparser.jericho.HTMLElementName;
 import net.htmlparser.jericho.Source;
 
 
+/**
+ * @author 장재훈
+ *
+ */
+/**
+ * @author 장재훈
+ *
+ */
+/**
+ * @author 장재훈
+ *
+ */
+/**
+ * @author 장재훈
+ *
+ */
 public class CmnUtil {
 
 	/**
@@ -5879,7 +5895,7 @@ public class CmnUtil {
 
 	/**원하는 크기로 자르기
 	 */
-	public String subString(String str, int i)
+	public static String subString(String str, int i)
 
 	{
 		if (str == null)
@@ -5910,7 +5926,7 @@ public class CmnUtil {
 	 <p>
 	 subString("abcde",2 ,4)  =>  cd
 	 */
-	public String subString(String str, int start, int end)
+	public static  String subString(String str, int start, int end)
 
 	{
 
@@ -8695,6 +8711,23 @@ public class CmnUtil {
 		return elementMap;
 	}
 
+
+    /*
+     * html 테그를 모두 없앤다.
+     * */
+    public static String  removeHtmlTag(String buffer)
+    {
+    	return  buffer.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
+    }
+    
+    /*
+     * html 테그를 모두 없앤다.(태그 아닌 꺽쇠 포함)
+     * */
+    public static String  removeFullHtmlTag(String buffer)
+    {
+    	return  buffer.replaceAll("\\<.*?\\>", "");
+    }
+    
     
     
     

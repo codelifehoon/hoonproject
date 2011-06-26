@@ -22,9 +22,20 @@ public class AuthService
 		CookieUtil cookieUtil = new CookieUtil(request,response);
 
 		// 쿠키에 한글이 필요할경우 차후 확인해서 처리함
-		authInfo.setMem_id(CmnUtil.nvl(cookieUtil.getSubCookie(CookieUtil.TP,"mem_id")));
-		authInfo.setMem_nm(URLDecoder.decode(CmnUtil.nvl(cookieUtil.getSubCookie(CookieUtil.TP,"mem_nm")),"utf-8"));
-		authInfo.setMt_no(CmnUtil.nvl(cookieUtil.getSubCookie(CookieUtil.TP,"mt_no")));
+		if ( !"".equals(CmnUtil.nvl(cookieUtil.getSubCookie(CookieUtil.TP,"mt_no"))))
+		{
+			authInfo.setMem_id(CmnUtil.nvl(cookieUtil.getSubCookie(CookieUtil.TP,"mem_id")));
+			authInfo.setMem_nm(URLDecoder.decode(CmnUtil.nvl(cookieUtil.getSubCookie(CookieUtil.TP,"mem_nm")),"utf-8"));
+			authInfo.setMt_no(CmnUtil.nvl(cookieUtil.getSubCookie(CookieUtil.TP,"mt_no")));
+		}
+		else
+		{
+			authInfo.setMem_id("anonymous");
+			authInfo.setMem_nm("비회원");
+			authInfo.setMt_no("-1");
+		}
+		
+		
 		
 		return authInfo;
 		

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import socialUp.common.util.ConvertHashMap;
 import socialUp.service.common.dto.BaseDTO;
 
 
@@ -39,6 +40,12 @@ public class ContentDtlTblDTO  extends BaseDTO
 	
 	private String cdc_flag;						// set 할때 값이 +a 면   카운트를 +a 해주고  -a 면 -a 해준다. (게시물을 한번 읽을때 발생)
 	private String hit_flag;						// set 할때 값이 +a 면   카운트를 +a 해주고  -a 면 -a 해준다. (comment를 생성/삭제할떄 발생)
+	
+	private List<ContentDtlImgDTO> 		contentDtlImgList;
+	private	List<ContentDtlCommentDTO> 	contentDtlCommentList;
+	private	List<ConvertHashMap>		mapList;
+	
+	private String[]  cd_no_arr;
 	
 	
 	
@@ -197,5 +204,30 @@ public class ContentDtlTblDTO  extends BaseDTO
 	}
 	public void setHit_flag(String hit_flag) {
 		this.hit_flag = hit_flag;
+	}
+	public List<ContentDtlImgDTO> getContentDtlImgList() {
+		return contentDtlImgList;
+	}
+	public void setContentDtlImgList(List<ContentDtlImgDTO> contentDtlImgList) {
+		this.contentDtlImgList = contentDtlImgList;
+	}
+	public List<ContentDtlCommentDTO> getContentDtlCommentList() {
+		return contentDtlCommentList;
+	}
+	public void setContentDtlCommentList(
+			List<ContentDtlCommentDTO> contentDtlCommentList) {
+		this.contentDtlCommentList = contentDtlCommentList;
+	}
+	public String[] getCd_no_arr() {
+		return cd_no_arr;
+	}
+	public void setCd_no_arr(String[] cd_no_arr) {
+		this.cd_no_arr = cd_no_arr;
+	}
+	public List<ConvertHashMap> getMapList() {
+		return mapList;
+	}
+	public void setMapList(List<ConvertHashMap> mapList) {
+		this.mapList = mapList;
 	}
 }

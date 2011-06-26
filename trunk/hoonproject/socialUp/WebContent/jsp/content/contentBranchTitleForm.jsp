@@ -33,7 +33,7 @@
 		getForm().submit();
 	}
 	</script>
-</head>
+</head> 
 <%@ include file="/jsp/common/gnb_sub.jsp" %>
 			<div class="main_content"> 
 

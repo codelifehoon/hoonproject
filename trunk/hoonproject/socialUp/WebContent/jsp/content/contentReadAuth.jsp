@@ -17,7 +17,6 @@
 	<link rel="stylesheet" href="<%=rootUrl%>/images/style.css" type="text/css" />
 	<script language="javascript" 	src="<%=rootUrl%>/js/common.js"></script>
 	<script language="javascript">
-	
 	</script>
 </head>
 

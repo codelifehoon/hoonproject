@@ -167,9 +167,10 @@ public interface ContentService {
 	 * 컨텐츠 상세의 댓글을 수정한다.
 	 * 
 	 * @param param
+	 * @return TODO
 	 * @throws Exception
 	 */
-	public void updateContentDtlComment(ContentDtlCommentDTO contentDtlCommentParam) throws Exception;
+	public int updateContentDtlComment(ContentDtlCommentDTO contentDtlCommentParam) throws Exception;
 	
 
 	/**

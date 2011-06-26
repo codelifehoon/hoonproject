@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import socialUp.common.util.ConvertHashMap;
 import socialUp.service.content.dto.ContentDtlTblDTO;
 import socialUp.service.content.dto.ContentSourceTblDTO;
 import socialUp.service.content.dto.SearchDTO;
@@ -82,5 +83,5 @@ public interface ContentDtlTblDAO
 	 * @throws Exception
 	 */
 	public List<ContentDtlTblDTO> SearchContentDtl(SearchDTO searchParam) throws Exception;
-	
+
 }

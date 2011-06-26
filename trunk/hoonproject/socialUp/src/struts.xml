@@ -4,49 +4,7 @@
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 
 <struts>
-<!-- 
-    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
-    <constant name="struts.devMode" value="false" />
-
-    <include file="example.xml"/>
-
-
-
-    <package name="default" namespace="/" extends="struts-default">
-        <default-action-ref name="index" />
-        <action name="index">
-            <result type="redirectAction">
-                <param name="actionName">HelloWorld</param>
-                <param name="namespace">/example</param>
-            </result>
-        </action>
-    </package>
- -->
-    <!-- Add packages here -->
-
-<!-- 
-    <package name="default" namespace="/" extends="struts-default">
-        <action name="index">
-            <result >
-               /jsp/hello.jsp
-            </result>
-        </action>
-    </package>
- -->
- 
- <!-- 
-    <package name="default" namespace="/" extends="struts-default">
-        <action name="testAction*" method="{1}" class="socialUp.action.test.actionTest" >
-            <result name="SUCCESS">/jsp/hello{1}.jsp</result>
-        </action>
-        
-        <action name="testAction2"  class="socialUp.action.test.actionTest" >
-            <result >/jsp/hello.jsp</result>
-        </action>
-        
-    </package>
- -->
- 
+  
 <!-- 로그인 check를 위한 인터셉터 설정 -->
 <package name="commonInterceptor" extends="struts-default" namespace="">	
 		<interceptors>
@@ -60,6 +18,10 @@
 			                		/index.action
 			                		,/member/memberRegForm.action		<!-- 회원가입 -->
 			                		,/member/memberMemLogIn.action		<!-- 심플로그인 -->
+			                		,/content/contentDtlList.action 	<!--  고리리스트 보는 화면 (기본 로그인 불필요-추가 검증 필요시 page 에서 구현)-->
+			                		,/content/contentDtlCommentListAjax.action 	<!--  고리리스트 보는 화면에서 클릭시 댓글 뿌려주는 ajax페이지 (기본 로그인 불필요-추가 검증 필요시 page 에서 구현)-->
+			                		,/content/contentInsertComment.action		<!--  comment 추가 -->
+									,/content/contentEditComment.action			<!--  comment 수정 -->
 			                	</param>
 			                	<param name="redirectWebPage">/jsp/member/loginMain.jsp</param>
 			                </interceptor-ref>

@@ -22,6 +22,10 @@ public class ContentDtlCommentDTO extends BaseDTO
 	private String create_no;
 	private String update_dt;
 	private String update_no;
+	private String create_ip;
+	private String update_ip;
+	private String passwd;
+	
 	
 	private String cdc_no_gt;	// cdc_no_gt보다 큰값을 가져올경우
 	private String newFlag;
@@ -101,4 +105,22 @@ public class ContentDtlCommentDTO extends BaseDTO
 		this.newFlag = newFlag;
 	}
 
+	public String getCreate_ip() {
+		return create_ip;
+	}
+	public void setCreate_ip(String create_ip) {
+		this.create_ip = create_ip;
+	}
+	public String getUpdate_ip() {
+		return update_ip;
+	}
+	public void setUpdate_ip(String update_ip) {
+		this.update_ip = update_ip;
+	}
+	public String getPasswd() {
+		return passwd;
+	}
+	public void setPasswd(String passwd) {
+		this.passwd = passwd;
+	}
 }

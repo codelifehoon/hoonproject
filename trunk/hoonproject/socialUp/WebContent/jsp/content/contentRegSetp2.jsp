@@ -12,7 +12,6 @@
 	String goreeType = (String)request.getParameter("goreeType");
 %>
 <jsp:include page="/jsp/common/gnb_main.jsp"></jsp:include>
-
 <!--  내용 시작 -->
  <br>
  <form name="defForm" method="post" action="<%=rootUrl%>/content/contentAddFinish.action">

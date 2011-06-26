@@ -253,7 +253,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					,	content_title_link
 					,	source_kind
 					,	content_desc
-					,	org_create_dt
+					,	DATE_FORMAT(org_create_dt,'%Y/%m/%d %H:%i') as org_create_dt
 					,	author_nm
 					,	categories
 					,	create_ip
@@ -347,6 +347,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				order by  cdt.cd_no DESC
 				limit  #{startRowNum} , #{pageRowCount}
 	</select>
+
 </mapper>
 
 

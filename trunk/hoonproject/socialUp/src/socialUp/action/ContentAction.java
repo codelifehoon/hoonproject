@@ -7,8 +7,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
@@ -29,9 +33,12 @@ import socialUp.common.util.DebugUtil;
 import socialUp.common.util.NumUtil;
 import socialUp.service.content.ContentService;
 import socialUp.service.content.ContentServiceImpl;
+import socialUp.service.content.dao.ContentSourceTblDAO;
+import socialUp.service.content.dao.ContentSourceTblDAOImpl;
 import socialUp.service.content.dao.ContentTitleListTblDAO;
 import socialUp.service.content.dao.ContentTitleListTblDAOImpl;
 import socialUp.service.content.dto.ContentBranchDTO;
+import socialUp.service.content.dto.ContentDtlCommentDTO;
 import socialUp.service.content.dto.ContentJoinMemDTO;
 import socialUp.service.content.dto.ContentSourceTblDTO;
 import socialUp.service.content.dto.ContentDtlTblDTO;
@@ -69,9 +76,19 @@ public class ContentAction extends BaseActionSupport
 	private List<ContentDtlTblDTO> 		contentDtlList 		= null;
 	private List<ContentBranchDTO>		contentBranchList   = null;
 	private List<ContentJoinMemDTO>		contentJoinMemList 	= null;
+	private List<ContentDtlCommentDTO>	contentDtlCommentList = null;
 	private SyndFeed 					syndFeed			= null;
 	
 	 
+	public List<ContentDtlCommentDTO> getContentDtlCommentList() {
+		return contentDtlCommentList;
+	}
+
+	public void setContentDtlCommentList(
+			List<ContentDtlCommentDTO> contentDtlCommentList) {
+		this.contentDtlCommentList = contentDtlCommentList;
+	}
+
 	
 	public List<ContentSourceTblDTO> getContentSourceList() {
 		return contentSourceList;
@@ -326,7 +343,7 @@ public class ContentAction extends BaseActionSupport
 
 		
 		log.debug("contentEditForm 시작");
-		
+		/*
 		AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
 		if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
 
@@ -350,7 +367,7 @@ public class ContentAction extends BaseActionSupport
 		
 		// 수정할 의 내용
 		this.contentSourceList = contentService.selectContentSourceTbl(contentSource);
-		
+		*/
 		
 		
 		return  returnVal;
@@ -366,8 +383,9 @@ public class ContentAction extends BaseActionSupport
 	public String EditFinish() throws Exception {
 		String returnVal = "DEFAULT";
 		
-		log.debug("contentEditFinish 시작");
 		
+		log.debug("contentEditFinish 시작");
+		/*
 		AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
 		if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
 
@@ -464,7 +482,7 @@ public class ContentAction extends BaseActionSupport
 		}
 		
 		contentService.updtaeMemContent(contentSourceList, contentTitle);
-		
+		*/
 		
 		return  returnVal;
 	
@@ -1101,5 +1119,398 @@ public class ContentAction extends BaseActionSupport
 		return  returnVal;
 	
 	}
+
+
+	/**
+	 * 고리 기본정보 관리
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String TitleMngForm() throws Exception 
+	{
+		String returnVal = "DEFAULT";
+
+		log.debug("TitleMngForm 시작");
 		
+		String tt_no 			= this.getParam("tt_no");
+		AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
+		
+		ContentTitleListTblDAO 	contentTitleDAO 	= (ContentTitleListTblDAO)ServiceFactory.createService(ContentTitleListTblDAOImpl.class);
+		ContentSourceTblDAO 	contentSourceTblDAO = (ContentSourceTblDAO)ServiceFactory.createService(ContentSourceTblDAOImpl.class);
+		
+		contentTitleDAO.initSql();
+		contentSourceTblDAO.initSql();
+		
+		ContentTitleTblDTO 		contentTitle		= new ContentTitleTblDTO();
+		ContentSourceTblDTO		contentSource		= new ContentSourceTblDTO();
+		
+		contentTitle.setTt_no(tt_no);
+		contentTitle.setMt_no(authInfo.getMt_no());
+		
+		contentSource.setTt_no(tt_no);
+		contentSource.setMt_no(authInfo.getMt_no());
+		
+		// 고리 기본정보
+		this.contentTitleList = contentTitleDAO.selectContentTitleListTbl(contentTitle);
+		log.debug("TitleMngForm 1");
+		
+		// 기존에  등록된 글타래 정보
+		this.contentSourceList =  contentSourceTblDAO.selectContentSourceTbl(contentSource);
+		log.debug("TitleMngForm 2");
+		
+		// 참여고리 정보(고리 등록/수정),고리참여자 정보 ,고리 홍보현황,고리전파현황
+		//log.debug("contentTitle:" + socialUp.common.util.DebugUtil.DebugBo(contentTitle));
+		this.getRequest().setAttribute("ETC_CNT", contentTitleDAO.selectGoreeeEtcCnt(contentTitle));
+		log.debug("TitleMngForm 3");
+		
+		return  returnVal;
+	
+	}
+	
+
+
+	/**
+	 * 고리 기본정보 관리 수정처리
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String UpdateFinish() throws Exception {
+		String returnVal = "DEFAULT";
+		
+		
+		log.debug("UpdateFinish 시작");
+		
+		AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
+		if (!authInfo.isAuth()) throw new Exception("로그인한 사용자가 아닙니다.");
+
+		String sCurrentDate = DateTime.getFormatString("yyyyMMddHHmmss"); // 현재날짜
+		String tt_no 					= this.getParam("tt_no");
+		String title_desc 				= this.getParam("title_desc");
+		String order_mem_open_yn		= this.getParam("order_mem_open_yn");
+		String branch_conf_yn			= this.getParam("branch_conf_yn");
+		String order_mem_join_yn		= this.getParam("order_mem_join_yn");
+		String order_mem_join_metd		= this.getParam("order_mem_join_metd");
+		String order_mem_join_passwd	= this.getParam("order_mem_join_passwd");
+		String[] cs_no_arr				= this.getParams("cs_no");
+		String[] cs_reg_stat_arr		= this.getParams("cs_reg_stat");
+		String rss_source				= this.getParam("rss_source");
+		String tw_source				= this.getParam("tw_source");
+		String[] rssSourceArr  	= null;	// rss 글타래 목록
+		String[] twSourceArr  	= null; // 트위터 글타래 목록			
+		
+		//Rss 수집목록 생성
+		rss_source = rss_source.replaceAll("\r\n", ",");
+		rssSourceArr = rss_source.split(",");
+		
+		//트위터 수집목록 생성
+		tw_source = tw_source.replaceAll("\r\n", ",");
+		twSourceArr = tw_source.split(",");
+		
+		
+		
+		// 업무처리할 객체 생성
+		ContentService 		contentService 			= (ContentService)ServiceFactory.createService(ContentServiceImpl.class);
+		ContentTitleTblDTO contentTitle = null;					// 수정될 컨텐츠 타이틀 정보
+		List<ContentSourceTblDTO> contentSourceList = new ArrayList<ContentSourceTblDTO>(); 	// 수정될 컨텐츠 소스 정보
+		
+		
+		if (log.isDebugEnabled())
+		{
+			log.debug("order_mem_join_metd:" + order_mem_join_metd);
+		}
+		
+		//  컨텐츠 타이틀에 변동사항이 있다면 
+		{
+			log.debug("-- contenttitle 변경내용 반영 --  tt_no:" + tt_no);
+			
+			contentTitle  = new ContentTitleTblDTO();
+			
+			contentTitle.setTt_no(tt_no);
+			contentTitle.setTitle_desc(title_desc);
+			contentTitle.setOrder_mem_open_yn(order_mem_open_yn);
+			contentTitle.setBranch_conf_yn(branch_conf_yn);
+			contentTitle.setOrder_mem_join_yn(order_mem_join_yn);
+			contentTitle.setOrder_mem_join_metd(order_mem_join_metd);
+			contentTitle.setOrder_mem_join_passwd(order_mem_join_passwd);
+			contentTitle.setCreate_dt(sCurrentDate);
+			contentTitle.setCreate_no(authInfo.getMt_no());
+		}
+		
+		// 기존에 등록된 컨텐츠 소스는 삭제일때만 상태 업데이트 처리
+		for (int i=0;i<cs_no_arr.length;i++)
+		{
+			// 공백으로 들어올수있기 때문에 (ex 1,2,3,4,) 
+			if (!"".equals(cs_no_arr[i]) && "04".equals(cs_reg_stat_arr[i]))
+			{
+				//  컨텐츠 소스에 변동사항이 있다면
+				if (log.isDebugEnabled()) log.debug("cs_no:" + cs_no_arr[i]);
+				{
+					ContentSourceTblDTO contentSource  = new ContentSourceTblDTO();
+					
+					contentSource.setCs_no(cs_no_arr[i]);
+					contentSource.setUse_yn("N");
+					contentSource.setReg_stat("04");
+					contentSource.setCreate_dt(sCurrentDate);
+					contentSource.setCreate_no(authInfo.getMt_no());
+					contentSource.setProcKind("U");
+					 
+					contentSourceList.add(contentSource);
+				}
+			}
+		}
+
+		// RSS 글타래 등록
+		for (int i=0;i<rssSourceArr.length;i++)
+		{
+			// 관심컨텐츠가 공백이 아니라면 등록한다.
+			if (rssSourceArr[i] != null
+					&& !"".equals(rssSourceArr[i].trim())
+				)
+			{
+				// 자신의 컨텐츠 정보 생성
+				ContentSourceTblDTO favoritContentSource = new ContentSourceTblDTO(); 
+				
+				favoritContentSource.setTt_no(tt_no);
+				favoritContentSource.setMt_no(authInfo.getMt_no());
+				favoritContentSource.setRss2_url( rssSourceArr[i].trim());
+				favoritContentSource.setSource_kind("01");				// 01:rss,02:트위터
+				favoritContentSource.setSource_dtl_kind("");
+				favoritContentSource.setSource_owner_kind("03");				// 본인이 직접등록
+				favoritContentSource.setSource_login_id("");
+				favoritContentSource.setReg_stat("02");
+				favoritContentSource.setRead_fail_count("0");
+				favoritContentSource.setCreate_dt(sCurrentDate);
+				favoritContentSource.setCreate_no(authInfo.getMt_no());
+				favoritContentSource.setUpdate_dt(sCurrentDate);
+				favoritContentSource.setUpdate_no(authInfo.getMt_no());
+				favoritContentSource.setProcKind("I");
+				contentSourceList.add(favoritContentSource);
+				
+			}
+		}
+		
+		// 트위터 글타래 등록
+		for (int i=0;i<twSourceArr.length;i++)
+		{
+			// 관심컨텐츠가 공백이 아니라면 등록한다.
+			if (twSourceArr[i] != null
+					&& !"".equals(twSourceArr[i].trim())
+				)
+			{
+				// 자신의 컨텐츠 정보 생성
+				ContentSourceTblDTO favoritContentSource = new ContentSourceTblDTO(); 
+				
+				favoritContentSource.setTt_no(tt_no);
+				favoritContentSource.setMt_no(authInfo.getMt_no());
+				favoritContentSource.setRss2_url(twSourceArr[i].trim());
+				favoritContentSource.setSource_kind("02");				// 01:rss,02:트위터
+				favoritContentSource.setSource_dtl_kind("");
+				favoritContentSource.setSource_owner_kind("03");				// 본인이 직접등록
+				favoritContentSource.setSource_login_id("");
+				favoritContentSource.setReg_stat("02");
+				favoritContentSource.setRead_fail_count("0");
+				favoritContentSource.setCreate_dt(sCurrentDate);
+				favoritContentSource.setCreate_no(authInfo.getMt_no());
+				favoritContentSource.setUpdate_dt(sCurrentDate);
+				favoritContentSource.setUpdate_no(authInfo.getMt_no());
+				favoritContentSource.setProcKind("I");
+				contentSourceList.add(favoritContentSource);
+				
+			}
+		}
+		
+		
+
+		contentService.updtaeMemContent(contentSourceList, contentTitle);
+
+		
+		return  returnVal;
+	
+	}
+	
+	/**
+	 * 댓글 목록을 가져온다.
+	 * 
+	 * @param memtbldto
+	 * @throws Exception 
+	 */
+	public String DtlCommentListAjax() throws Exception
+	{
+		log.debug("DtlCommentListAjax 시작");
+		String returnVal = "DEFAULT";
+		ContentDtlCommentDTO contentDtlCommentParam = new ContentDtlCommentDTO();
+		
+		String cd_no = this.getParam("cd_no");
+		String sCurrentDate = DateTime.getFormatString("yyyyMMddHHmmss"); // 현재날짜
+		JSONObject 	retJson = new JSONObject();	
+		
+		retJson.put("result_code","00");
+		retJson.put("result_msg","성공");
+		contentDtlCommentParam.setCd_no(cd_no);
+
+		try
+		{
+		// 컨텐츠 서비스 객체 생성
+		ContentService contentService = (ContentService)ServiceFactory.createService(ContentServiceImpl.class);
+				
+		
+		this.contentDtlCommentList = contentService.selectContentDtlCommentList(contentDtlCommentParam);
+		 
+/*
+		 
+		 Map<String, Object> map = new HashMap<String, Object>();
+		 JSONArray jsonArray = JSONArray.fromObject(contentDtlCommentList);
+		 //map.put("commentList", jsonArray);			// beanList 라는 배열의 묶음으로처리
+		  
+		 JSONObject jsonObject = JSONObject.fromObject(map);
+		 retJson.put("retValList", jsonArray); 	// beanList 묶음을 넘긴다.
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+			retJson.put("result_code","-1");
+			retJson.put("result_msg",e.getMessage());
+		}
+		
+		flushString(retJson.toString());
+*/
+		
+	
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return returnVal; 
+		
+	}
+
+	/**
+	 * 댓글을 등록한다.
+	 * 
+	 * @param memtbldto
+	 * contentDtlCommentParam.cd_no
+	 * contentDtlCommentParam.comment
+	 * 
+	 * @throws Exception 
+	 */
+	public String InsertComment() throws Exception
+	{
+		log.debug("InsertComment 시작");
+		
+		JSONObject 	retJson = new JSONObject();
+		try 
+		{
+	
+			String sCurrentDate = DateTime.getFormatString("yyyyMMddHHmmss"); // 현재날짜
+			AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
+			String cd_no 	= this.getParam("cd_no");
+			String comment 	= this.getParam("comment");
+			String passwd 	= this.getParam("passwd");
+			String remoteIp = this.getRequest().getRemoteAddr(); 
+			
+			
+			retJson.put("result_code","00");
+			retJson.put("result_msg","성공");
+			
+			
+			// 컨텐츠 서비스 객체 생성
+			ContentService contentService = (ContentService)ServiceFactory.createService(ContentServiceImpl.class);
+			ContentDtlCommentDTO contentDtlComment = new ContentDtlCommentDTO(); 
+			
+			contentDtlComment.setMt_no(authInfo.getMt_no());
+			contentDtlComment.setCd_no(cd_no);
+			contentDtlComment.setCreate_dt(sCurrentDate);
+			contentDtlComment.setCreate_no(authInfo.getMt_no());
+			contentDtlComment.setUse_yn("Y");
+			contentDtlComment.setComment(comment);
+			contentDtlComment.setCreate_ip(remoteIp);
+			contentDtlComment.setPasswd(passwd);
+
+	   	    contentService.insertContentDtlCommentList(contentDtlComment);
+
+
+		}
+		catch(Exception e)
+		{
+
+			e.printStackTrace();
+			retJson.put("result_code","-1");
+			retJson.put("result_msg",e.getMessage());
+		}
+		
+		flushString(retJson.toString());
+		
+		
+		return null;
+	}
+	
+	/**
+	 * 댓글을 수정한다.
+	 * 
+	 * @param memtbldto
+	 * contentDtlCommentParam.cd_no
+	 * contentDtlCommentParam.comment
+	 * 
+	 * @throws Exception 
+	 */
+	public String EditComment() throws Exception
+	{
+		log.debug("EditComment 시작");
+		
+		JSONObject 	retJson = new JSONObject();
+		try 
+		{
+	
+			String sCurrentDate = DateTime.getFormatString("yyyyMMddHHmmss"); // 현재날짜
+			AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
+			String cdc_no 	= this.getParam("cdc_no");
+			String comment 	= this.getParam("comment");
+			String passwd 	= this.getParam("passwd");
+			String editType = this.getParam("editType");
+			String cd_no = this.getParam("cd_no");
+			String remoteIp = this.getRequest().getRemoteAddr(); 
+			
+			
+			retJson.put("result_code","00");
+			retJson.put("result_msg","성공");
+			
+			
+			// 컨텐츠 서비스 객체 생성
+			ContentService contentService = (ContentService)ServiceFactory.createService(ContentServiceImpl.class);
+			ContentDtlCommentDTO contentDtlComment = new ContentDtlCommentDTO(); 
+			
+			contentDtlComment.setMt_no(authInfo.getMt_no());
+			contentDtlComment.setCdc_no(cdc_no);
+			contentDtlComment.setCreate_dt(sCurrentDate);
+			contentDtlComment.setCreate_no(authInfo.getMt_no());
+			contentDtlComment.setComment(comment);
+			contentDtlComment.setCreate_ip(remoteIp);
+			contentDtlComment.setPasswd(passwd);
+			contentDtlComment.setCd_no(cd_no);
+			
+			
+			if ("D".equals(editType)) contentDtlComment.setUse_yn("N");
+	   	    
+			// 수정된 내용이 적용되었다면 update_cnt 는 1이 된다.
+			retJson.put("update_cnt",contentService.updateContentDtlComment(contentDtlComment));
+
+
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			retJson.put("result_code","-1");
+			retJson.put("result_msg",e.getMessage());
+		}
+		
+		flushString(retJson.toString());
+		
+		
+		return null;
+	}
+	
+	
+	
 }

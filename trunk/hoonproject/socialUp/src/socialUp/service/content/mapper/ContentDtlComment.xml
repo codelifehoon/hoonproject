@@ -18,7 +18,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        <result column="update_dt" property="update_dt" />
 	        <result column="update_no" property="update_no" />
 	        <result column="mem_nm" 	property="memTblDTO.mem_nm" />
-	        
+	        <result column="create_ip" 	property="create_ip" />
+	        <result column="update_ip" 	property="update_ip" />
+	        <result column="passwd" 	property="passwd" />
 	 </resultMap>
 	    
 	<select id="selectContentDtlCommentList" resultMap="selectContentDtlCommentListResult" parameterType="socialUp.service.content.dto.ContentDtlCommentDTO">
@@ -33,6 +35,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				,	cdc.update_dt
 				,	cdc.update_no
 				,   mt.mem_nm
+				,	cdc.create_ip
+				,	cdc.update_ip
+				,	cdc.passwd
 			from content_dtl_comment cdc , mem_tbl mt where cdc.cd_no = #{cd_no}
 			and cdc.use_yn = 'Y'
 			and cdc.mt_no = mt.mt_no
@@ -59,6 +64,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				,	mt_no
 				,	create_dt
 				,	create_no
+				,	create_ip
+				,	update_ip
+				,	passwd
 					)
 			VALUES(
 					#{cd_no}
@@ -67,6 +75,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				,	#{mt_no}
 				,	DATE_FORMAT(#{create_dt},'%Y%m%d%H%i%s')
 				,	#{create_no}
+				,	#{create_ip}
+				,	#{create_ip}
+				,	#{passwd}
 					)
     	<selectKey resultType="String" keyProperty="cdc_no"> select last_insert_id() as cdc_no </selectKey>
     </insert>
@@ -76,6 +87,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   		update  /* ContentDtlComment.xml updateContentDtlComment 2010.12.16*/  content_dtl_comment set
 					update_dt  = DATE_FORMAT(#{create_dt},'%Y%m%d%H%i%s')
 					,update_no	= #{create_no}
+					,update_ip	= #{create_ip}
 					
 					<if test="comment != null and comment != '' ">
 						,comment = #{comment}
@@ -84,11 +96,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					<if test="use_yn != null and use_yn != '' ">
 						,use_yn = #{use_yn}
 					</if>
-					
+
   		where  cdc_no = #{cdc_no}
-  		<if test="mt_no != null and mt_no != ''">
+  		<if test="mt_no != null and mt_no != '' and mt_no != '-1'">
   			and mt_no = #{mt_no}
   		</if>
+  		
+  		<!-- 비회원일때는 비밀번호가 같아야 댓글을 수정할수 있다. -->
+  		<if test="mt_no == '-1'">
+  			and passwd = #{passwd}
+  		</if>
+  		
+  		
   	</update>
 
 

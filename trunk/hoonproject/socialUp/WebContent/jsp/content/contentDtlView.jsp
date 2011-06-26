@@ -182,7 +182,7 @@
 					
 					if (parseInt(cdc_no) < parseInt(dtlComment.cdc_no) ) cdc_no = dtlComment.cdc_no; 
 				}
-			
+
 			// 조회건중 가장 큰 댓글번호를 별도로 기억한다.(새로운 큰값이 있다면 cdc_no값이 0이 아니다. )
 			if (cdc_no !=  "0") getForm().cdc_no_gt.value = cdc_no;
 
