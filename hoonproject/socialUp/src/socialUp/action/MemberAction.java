@@ -19,6 +19,9 @@ import socialUp.common.util.DebugUtil;
 import socialUp.common.util.ValidationUtil;
 import socialUp.service.common.dto.BaseDTO;
 import socialUp.service.content.ContentService;
+import socialUp.service.content.dao.ContentTitleListTblDAO;
+import socialUp.service.content.dao.ContentTitleListTblDAOImpl;
+import socialUp.service.content.dto.ContentJoinMemDTO;
 import socialUp.service.content.dto.ContentTitleTblDTO;
 import socialUp.service.member.MemberService;
 import socialUp.service.member.MemberServiceImpl;
@@ -341,6 +344,50 @@ public class MemberAction extends BaseActionSupport
 		return  returnVal;
 	}
  	
+	
+ 	/**
+ 	 * 내고리현황 
+ 	 * 
+ 	 * @param memTblDTO
+ 	 * @return
+ 	 * @throws Exception
+ 	 */
+ 	public String MyGoreStateForm() throws Exception
+ 	{
+
+ 		String returnVal = "DEFAULT";
+		
+		
+ 		AuthInfo authInfo =  AuthService.getAuthInfo(this.getRequest(), this.getResponse());
+		String sCurrentDate = DateTime.getFormatString("yyyyMMddHHmmss"); // 현재날짜
+		
+		
+		ContentTitleTblDTO contentTitleDTO = new ContentTitleTblDTO();
+		ContentJoinMemDTO  contentJoinMemDTO = new ContentJoinMemDTO();
+		ContentTitleListTblDAO	contentTitleListTblDAO  = (ContentTitleListTblDAO)ServiceFactory.createService(ContentTitleListTblDAOImpl.class);
+		
+		
+		contentTitleDTO.setMt_no(authInfo.getMt_no());
+		contentJoinMemDTO.setMt_no(authInfo.getMt_no());
+		
+		
+		contentTitleListTblDAO.initSql();
+		
+		this.getRequest().setAttribute("MYGOREE", contentTitleListTblDAO.selectMyGoreeList(contentTitleDTO));
+		this.getRequest().setAttribute("MYIN",contentTitleListTblDAO.selectMyInList(contentJoinMemDTO));
+		
+		
+		return  returnVal;
+	
+ 		
+ 	}
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+/////////////////// action 이 아닌 코드들 ////////////////////// 	
  	
  	/**
  	 * 회원가입시 데이터 validation
@@ -414,10 +461,14 @@ public class MemberAction extends BaseActionSupport
  		
  	}
  	
+ 
+ 	
 
 
 
-	
+
+ 	
+ 	
 
  	
  	

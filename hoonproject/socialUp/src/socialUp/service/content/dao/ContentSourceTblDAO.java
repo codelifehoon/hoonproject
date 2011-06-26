@@ -16,6 +16,8 @@ public interface ContentSourceTblDAO
 	
 	public void setSqlSesstion(SqlSession session)  throws Exception ;
 	
+	public void initSql();
+	
 	/**
 	 * 회원 테이블 정보 입력
 	 * @param param

@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
 
+import socialUp.common.mybatis.MyBatisManager;
 import socialUp.common.util.NumUtil;
 import socialUp.service.content.dto.ContentSourceTblDTO;
 
@@ -20,6 +21,11 @@ public class ContentSourceTblDAOImpl implements ContentSourceTblDAO {
 	{
 		
 		this.sqlMap = session;
+	}
+	
+	public void initSql()
+	{
+		if ( sqlMap == null) this.sqlMap = MyBatisManager.getInstanceSqlSession("");
 	}
 	
 	/**

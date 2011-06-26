@@ -2,9 +2,11 @@ package socialUp.service.content.dao;
 
 
 
+import java.util.HashMap;
 import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
+import socialUp.common.util.ConvertHashMap;
 import socialUp.service.content.dto.ContentJoinMemDTO;
 import socialUp.service.content.dto.ContentTitleTblDTO;
 
@@ -81,4 +83,34 @@ public interface ContentTitleListTblDAO
 	
 	public void initSql();
 	
+	
+	/**
+	 * 컨텐츠타이틀 참여회원조회
+	 * 
+	 * @param contentJoinMem
+	 * @return
+	 * @throws Exception
+	 */
+	public List<ConvertHashMap> selectMyGoreeList(ContentTitleTblDTO conTitleParam) throws Exception ;
+
+	
+	
+	/**
+	 * 컨텐츠타이틀 참여회원조회
+	 * 
+	 * @param contentJoinMem
+	 * @return
+	 * @throws Exception
+	 */
+	public List<ConvertHashMap> selectMyInList(ContentJoinMemDTO contentJoinMem) throws Exception;
+	
+
+	/**
+	 * 고리 기보정보 관리>> 고리현황(참여고리 정보(고리 등록/수정),고리참여자 정보 ,고리 홍보현황,고리전파현황)
+	 * 
+	 * @param contentJoinMem
+	 * @return
+	 * @throws Exception
+	 */
+	public List<ConvertHashMap> selectGoreeeEtcCnt(ContentTitleTblDTO conTitleParam) throws Exception ;
 }

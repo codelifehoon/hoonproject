@@ -244,10 +244,10 @@ h6_under {
 	}
 	
 /*댓글 리스트 에서 사용하는 css*/
-.list_line {float:left;width:100%;border-bottom:1px solid #e7e7e7;zoom:1;overflow:visible;}
-.list_line span{float:left;padding:14px 0 7px 0;}
-.list_line span.list_line_column1	  {width:100px;text-align:left;}
-.list_line span.list_line_column2	  {width:100px;text-align:right}
+.list_line {float:left;width:100%;border-bottom:0px solid #e7e7e7;zoom:1;overflow:visible;}
+.list_line span{float:left;padding:0px 0 0px 0;}
+.list_line span.list_line_column1	  {width:700px;text-align:left;}
+.list_line span.list_line_column2	  {width:300px;text-align:left}
 
 
 

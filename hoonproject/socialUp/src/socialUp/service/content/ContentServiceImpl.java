@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import socialUp.common.DaoFactory;
 import socialUp.common.mybatis.MyBatisManager;
 import socialUp.common.util.CmnUtil;
+import socialUp.common.util.ConvertHashMap;
 import socialUp.common.util.CookieUtil;
 import socialUp.common.util.DateTime;
 import socialUp.common.util.ImgProcUtil;
@@ -269,7 +270,13 @@ public class ContentServiceImpl implements ContentService
 		// 컨텐츠 소스 정보 업데이트
 		for (int i=0;i<contentSourceArr.size();i++)
 		{
-			contentSourceTblDAO.updateContentSource(contentSourceArr.get(i));
+			if ( "U".equals(contentSourceArr.get(i).getProcKind()))
+			{
+				contentSourceTblDAO.updateContentSource(contentSourceArr.get(i));
+			} else if ( "I".equals(contentSourceArr.get(i).getProcKind()))
+			{
+				contentSourceTblDAO.insertContentSourceTbl(contentSourceArr.get(i));
+			}
 		}
 		
 		sqlMap.commit();
@@ -615,13 +622,15 @@ public class ContentServiceImpl implements ContentService
 		try
 		{
 			// DAO 생성
-			ContentDtlTblDAO 		contentDtlTblDAO 	= (ContentDtlTblDAO)DaoFactory.createDAO(ContentDtlTblDAOImpl.class);
-			ContentTitleListTblDAO 	contentTitleListTblDAO = (ContentTitleListTblDAO)DaoFactory.createDAO(ContentTitleListTblDAOImpl.class);
+			ContentDtlTblDAO 		contentDtlTblDAO 		= (ContentDtlTblDAO)DaoFactory.createDAO(ContentDtlTblDAOImpl.class);
+			ContentTitleListTblDAO 	contentTitleListTblDAO 	= (ContentTitleListTblDAO)DaoFactory.createDAO(ContentTitleListTblDAOImpl.class);
 			ContentTitleTblDTO 		contentTitleTblDTO 	= new ContentTitleTblDTO();
+			ContentDtlCommentDAO	contentDtlCommentDAO 	= (ContentDtlCommentDAO)DaoFactory.createDAO(ContentDtlCommentDAOImpl.class);
 			
 			// DB 설정
 			contentDtlTblDAO.setSqlSesstion(sqlMap);
 			contentTitleListTblDAO.setSqlSesstion(sqlMap);
+			contentDtlCommentDAO.setSqlSesstion(sqlMap);
 			
 			// 조회목록의  title 정보를 가져온다.
 			{
@@ -629,10 +638,29 @@ public class ContentServiceImpl implements ContentService
 				 List<ContentTitleTblDTO>  contentTitleList = contentTitleListTblDAO.selectContentTitleListTbl(contentTitleTblDTO);
 				 if (contentTitleList.size() == 0) throw new Exception("컨텐츠 타이틀이 존재하지 않습니다.");
 				 contentTitle = contentTitleList.get(0);
-					
 			}
 			
-			contentTitle.setContentDtlList(contentDtlTblDAO.selectContentDtlPageList(contentDtlParam)) ;
+			
+			List<ContentDtlTblDTO> contentDtlTblList =  contentDtlTblDAO.selectContentDtlPageList(contentDtlParam);
+			
+			// 조회된 글의 comment및 이미지를 가져오기 위해서 추가 쿼리 실행
+			{
+
+				String[] cd_no_arr = new String[1];
+				ContentDtlImgDTO contentDtlImg = new ContentDtlImgDTO();
+				
+				for (int i=0; i < contentDtlTblList.size();i++)
+				{
+
+
+					contentDtlImg.setCd_no(contentDtlTblList.get(i).getCd_no());
+					contentDtlTblList.get(i).setContentDtlImgList(contentDtlCommentDAO.selectContentDtlImgList(contentDtlImg));
+				}
+			}
+			
+			
+			contentTitle.setContentDtlList(contentDtlTblList) ;
+			
 		
 		sqlMap.commit();
 		}
@@ -848,7 +876,7 @@ public class ContentServiceImpl implements ContentService
 	 * @param param
 	 * @throws Exception
 	 */
-	public void updateContentDtlComment(ContentDtlCommentDTO contentDtlCommentParam) throws Exception
+	public int updateContentDtlComment(ContentDtlCommentDTO contentDtlCommentParam) throws Exception
 	{
 
 		log.debug("insertContentDtlCommentList 시작");
@@ -856,6 +884,7 @@ public class ContentServiceImpl implements ContentService
 		List<ContentDtlCommentDTO> resultList = null;
 		// sql session 생성
 		SqlSession sqlMap = MyBatisManager.getInstanceSqlSession("");
+		int updateCnt=0;
 		
 		try
 		{
@@ -869,18 +898,21 @@ public class ContentServiceImpl implements ContentService
 		contentDtlTblDAO.setSqlSesstion(sqlMap);
 		
 		// 컨텐츠 상세댓글등록
-		contentDtlCommentDAO.updateContentDtlComment(contentDtlCommentParam);
+		updateCnt =  contentDtlCommentDAO.updateContentDtlComment(contentDtlCommentParam);
 		
 		// 댓글을 삭제할때는 카운트 -1
 		if ("N".equals(contentDtlCommentParam.getUse_yn()))
 		{
 			contentDtlParam.setCd_no(contentDtlCommentParam.getCd_no());
+			contentDtlParam.setCreate_no(contentDtlCommentParam.getCreate_no());
 			contentDtlParam.setCdc_flag("-1");
 			contentDtlTblDAO.updateContentDtl(contentDtlParam);
+			
 		}
 		
-		
 		sqlMap.commit();
+		
+		return updateCnt;
 		}
 		catch (Exception e)
 		{

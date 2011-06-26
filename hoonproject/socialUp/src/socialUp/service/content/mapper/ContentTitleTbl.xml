@@ -19,8 +19,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<result column="order_mem_join_passwd" 	property="order_mem_join_passwd" />
 			<result column="create_dt" 		property="create_dt" />
 			<result column="create_no" 		property="create_no" />
+			<result column="tt_no" 					property="tt_no" />
+			<result column="title_desc" 			property="title_desc" />
+			<result column="title_short_name" 		property="title_short_name" />
 	 </resultMap>
-
 
 	<!-- 컨텐츠 등록 소스 경로 조회 -->
 	<select id="selectContentTitleListTblList" resultMap="selectContentTitleListTblListResult" parameterType="socialUp.service.content.dto.ContentTitleTblDTO">
@@ -35,6 +37,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					,order_mem_join_passwd
 					,create_dt
 					,create_no
+					,tt_no
+					,title_desc
+					,title_short_name
 			 from content_title_tbl	 
 			 where  1=1
 			 and use_yn = 'Y'
@@ -98,6 +103,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					<if test="title_name != null and title_name != '' ">
 						,title_name = #{title_name}
 					</if>
+					<if test="title_desc != null and title_desc != '' ">
+						,title_desc = #{title_desc}
+					</if>
 					<if test="title_kind != null and title_kind != '' ">
 						,title_kind = #{title_kind}
 					</if>
@@ -116,6 +124,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					<if test="title_desc != null and title_desc != '' ">
 						,title_desc = #{title_desc}
 					</if>
+					<if test="order_mem_join_metd != null and order_mem_join_metd != '' ">
+						,order_mem_join_metd = #{order_mem_join_metd}
+					</if>
+					
 					
 		where tt_no = #{tt_no}
 	</update>
@@ -188,10 +200,104 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 	</select>
 	
+
+
+    <!-- 내고리현황 >  내가 만든 고리  -->
+	<select id="selectMyGoreeList"  resultType="socialUp.common.util.ConvertHashMap" parameterType="socialUp.service.content.dto.ContentTitleTblDTO">
+		
+			SELECT /*selectMyGoreeList 2011.05.08*/ ctt.title_name ,  
+			0 AS all_cnt,
+			
+			<!-- 나의 고리를 다른 고리들이 가지치기해간 건수 -->
+			(
+				SELECT COUNT(*) FROM content_branch cb WHERE cb.use_yn = 'Y'
+				AND cb.belong_tt_no = ctt.tt_no		<!-- 	다른 브랜치에 소속된 자신의 tt_no -->
+				AND cb.belong_tt_no != cb.tt_no		<!--	값이 같으면 자기 자신의 브랜치 정보이기 때문에 자신의 브랜치 정보는 제외  -->	
+			) AS out_goree_cnt,
+			
+			<!-- 나의 고리에 다른 사람의 고리를 가지치기해온 건수 -->
+			(
+				SELECT COUNT(*) FROM content_branch cb WHERE cb.use_yn = 'Y'
+				AND cb.tt_no = ctt.tt_no			<!--	나의 고리에 소속된 다른사람의 고리건 조회 -->
+				AND cb.belong_tt_no != cb.tt_no		<!--	값이 같으면 자기 자신의 브랜치 정보이기 때문에 자신의 브랜치 정보는 제외  -->	
+			) AS in_goree_cnt,
+			0 AS invite_cnt,
+			ctt.tt_no
+	
+			FROM content_title_tbl ctt WHERE ctt.use_yn = 'Y'
+			AND ctt.mt_no =  #{mt_no} 
+
+	</select>
+	
+	<!-- 내고리현황>> 내가 참여한 고리 정보  -->
+	<select id="selectMyInList"  resultType="socialUp.common.util.ConvertHashMap" parameterType="socialUp.service.content.dto.ContentJoinMemDTO">
+		
+		SELECT /*selectMyInList 2011.05.08*/ ctt.title_name 
+		, ctt.title_desc 
+		, cjm.stat
+		, mt.mem_id
+		, mt.mem_nm
+		, ctt.tt_no
+		FROM content_join_mem cjm , content_title_tbl  ctt , mem_tbl mt
+		WHERE cjm.mt_no = #{mt_no}
+		AND	cjm.stat NOT IN ('99')
+		AND	cjm.mt_grade = '01'
+		AND	cjm.tt_no = ctt.tt_no
+		AND	ctt.mt_no =  mt.mt_no
+	</select>
+	
+
+	
+<!-- 고리 기보정보 관리 > 고리현황(참여고리 정보(고리 등록,수정),고리참여자 정보 ,고리 홍보현황,고리전파현황)  -->
+	<select id="selectGoreeeEtcCnt"  resultType="socialUp.common.util.ConvertHashMap" parameterType="socialUp.service.content.dto.ContentTitleTblDTO">
+
+		SELECT  /*selectGoreeeEtcCnt 2011.05.09*/
+		<!--  현재 고리에 내가 가져온 다른 사람의 고리건수 -->
+			(
+				SELECT COUNT(*) FROM content_branch cb WHERE cb.use_yn = 'Y'
+						AND cb.tt_no = ctt.tt_no			
+						AND cb.belong_tt_no != cb.tt_no
+						AND cb.mt_no   =  cb.create_no
+			) AS in_type1_cnt,
+		<!-- 현재 고리에 다른 사용자가 가져온  고리건수  -->
+			(
+				SELECT COUNT(*) FROM content_branch cb WHERE cb.use_yn = 'Y'
+						AND cb.tt_no = ctt.tt_no			
+						AND cb.belong_tt_no != cb.tt_no
+						AND cb.mt_no   !=  cb.create_no
+			) AS in_type2_cnt,
+		
+		<!-- 현재 고리를 내가 다른 사람의 고리에 참여한 카운트 -->
+			(
+				SELECT COUNT(*) FROM content_branch cb WHERE cb.use_yn = 'Y'
+						AND cb.belong_tt_no = ctt.tt_no		
+						AND cb.belong_tt_no != cb.tt_no	
+						AND cb.create_no = ctt.mt_no
+			) AS out_type1_cnt,
+		
+		<!-- 현재 고리를 다른사람이  다른 사람의 고리에 참여한 카운트 -->
+			(
+				SELECT COUNT(*) FROM content_branch cb WHERE cb.use_yn = 'Y'
+						AND cb.belong_tt_no = ctt.tt_no		
+						AND cb.belong_tt_no != cb.tt_no	
+						AND cb.create_no != ctt.mt_no
+			) AS out_type2_cnt,
+		<!-- 고리참여자 카운트 -->
+			(
+				SELECT COUNT(*) FROM content_join_mem cjm WHERE cjm.tt_no = ctt.tt_no AND cjm.stat IN ('01') AND cjm.mt_grade = '01'
+			) AS mem_join_cnt,
+		<!-- 고리참여신청자 카운트 -->
+			(
+				SELECT COUNT(*) FROM content_join_mem cjm WHERE cjm.tt_no = ctt.tt_no AND cjm.stat IN ('00') AND cjm.mt_grade = '01'
+			) AS mem_reqjoin_cnt
+			
+		FROM content_title_tbl ctt 
+					WHERE ctt.use_yn = 'Y'
+					AND ctt.mt_no =  #{mt_no} 
+					AND ctt.tt_no =  #{tt_no} 
+	</select>
 	
 	
-	
-  
  
 </mapper>
 

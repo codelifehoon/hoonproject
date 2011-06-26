@@ -23,7 +23,7 @@ public class AuthInfo
 	 */
 	public boolean isAuth()
 	{
-		if ( CmnUtil.nvl(mt_no).length() > 0)	return true;
+		if ( CmnUtil.nvl(mt_no).length() > 0 && !"-1".equals(mt_no))	return true;
 		return false;
 			
 	}

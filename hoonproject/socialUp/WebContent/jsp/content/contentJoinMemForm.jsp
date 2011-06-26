@@ -14,7 +14,7 @@
 	// 기존에 가입되어 있어 있고 정상적인 회원으로 있다면 그냥 정상가입되었다는 메세지 출력
 	if (contentJoinMemList.size() == 1) contentJoinMem =  contentJoinMemList.get(0);
 	
-	
+
  
 %>
 

@@ -9,14 +9,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-	<link rel="stylesheet" type="text/css" href="<%=rootUrl %>/js/default.css" />
-	<script language="javascript" 	src="<%=rootUrl%>/dwr/interface/DwrMemAction.js"></script> 
-	<script language="javascript" 	src="<%=rootUrl%>/dwr/engine.js"></script> 
-	<script language="javascript" 	src="<%=rootUrl%>/dwr/util.js"></script>
-	<script language="javascript" 	src="<%=rootUrl%>/js/common.js"></script>
-	<script language="javascript" 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-	
-	
+<%@ include file="/jsp/common/scriptCommon.jsp"%>
 
 </head>
 <body>
@@ -28,7 +21,7 @@
 <table class="headerTable" style="width:1000px; margin:0 auto;" cellpadding="0" cellspacing="0">
 	<tr>
 		<td width='50%' valgin="bottom">
-			<div style="font:30px Tahoma;font-weight:bold;color:#ffffff;margin:0;">Goreee</div>
+			<a href="http://goreee.com"><div style="font:30px Tahoma;font-weight:bold;color:#ffffff;margin:0;">Goreee</div></a>
 			<div style="font:12px Tahoma;font-weight:bold;color:#ffffff;margin:0;">관심 있는 트위터,블로그,RSS를 하나로 모아서 보세요</div>
 		</td>
 		<td width='50%'>
@@ -89,7 +82,7 @@
 					<tr>
 						<td>
 							<a class="ALink1" href="<%=rootUrl %>/member/memberUpdateForm.action">개인정보수정</a>
-							|<a class="ALink1" href="">내고리현황</a>               
+							|<a class="ALink1" href="<%=rootUrl %>/member/memberMyGoreStateForm.action">내고리현황</a>               
 							|<a class="ALink1" href="<%=rootUrl %>/content/contentRegSetp1.action">고리만들기</a>
 						</td>
 					</tr>

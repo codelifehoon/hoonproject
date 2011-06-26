@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
 
 import socialUp.common.DaoFactory;
+import socialUp.common.util.ConvertHashMap;
 import socialUp.common.util.NumUtil;
 import socialUp.service.content.dto.ContentDtlTblDTO;
 import socialUp.service.content.dto.ContentSourceTblDTO;
@@ -202,10 +203,6 @@ public class ContentDtlTblDAOImpl implements ContentDtlTblDAO {
 		
 		return resultList;
 	}
-	
-	
-
-	
 	
 	
 	

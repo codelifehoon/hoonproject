@@ -30,6 +30,8 @@ public class ContentSourceTblDTO  extends BaseDTO
 	private String last_proc_dt;
 	private String next_prod_dt;
 	private String read_fail_count;
+	private String procKind;		//  I : 신규 추가일때 U: 수정건일때
+	
 	private ContentCollectDTO contentCollect;		// 컨텐츠 소스 수집상태
 	private List<ContentDtlTblDTO> contentDtlList;	// 컨텐츠 등록목록 
 	
@@ -146,6 +148,12 @@ public class ContentSourceTblDTO  extends BaseDTO
 	}
 	public void setContentDtlList(List<ContentDtlTblDTO> contentDtlList) {
 		this.contentDtlList = contentDtlList;
+	}
+	public String getProcKind() {
+		return procKind;
+	}
+	public void setProcKind(String procKind) {
+		this.procKind = procKind;
 	}
 	
 }
