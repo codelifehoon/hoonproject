@@ -1,0 +1,15 @@
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ 
+<configuration>
+
+
+  <!-- mapping files -->
+  <mappers>
+		<mapper resource="com/zebra/process/crawler/dao/mapper/Crawler.xml" />
+		<mapper resource="com/zebra/common/dao/mapper/CommonPatten.xml" />
+		
+  </mappers>
+ 
+</configuration>
