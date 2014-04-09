@@ -1,0 +1,1299 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<!--<base href="http://omp.tmalldev.com"> -->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title> 컴포넌트 개발진행 리스트 </title>
+	<style type="text/css">
+	*{margin:0;padding:0;}
+	img{border:0}
+	h1{padding:20px 20px 20px 10px;font-weight:bold;font-size:16px;color:#0b2355;}
+	table{width:100%;border:1px solid #bcc3d3;border-left:0;font-size:12px;border-collapse:collapse;border-spacing:0}
+	table th{padding:10px;background:#d4dbe9;color:#27395e;font-weight:bold;border-left:1px solid #bcc3d3}
+	table td{padding:10px;font-weight:normal;text-align:center;border-left:1px solid #bcc3d3;border-top:1px solid #bcc3d3;color:#3b3b3b;overflow:auto;}
+	table td.tableimg img{width:150px;}
+	.title{margin-top:20px;padding:10px;border-top:1px solid #bcc3d3;border-bottom:1px solid #bcc3d3;background:#d4dbe9;color:#27395e;font-size:16px;}
+	.comp_wrap{margin-top:10px;padding:20px;border:1px solid #bcc3d3;height:300px;overflow-y:auto;}
+	</style>
+	<link rel="stylesheet" type="text/css" href="css/bp/standard/layout.css"/>
+	<link rel="stylesheet" type="text/css" href="css/bp/standard/component.css"/>
+</head>
+
+<body>
+<h1>컴포넌트 개발 진행 리스트</h1>
+<table>
+	<colgroup>
+		<col />
+		<col style="width:200px;" />
+		<col style="width:600px;" />
+		<col />
+		<col />
+		<col />
+		<col />
+		<col />
+	</colgroup>
+	<thead>
+		<tr>
+			<th scope="col">번호</th>
+				<th scope="col">컴포넌트 썸네일</th>
+				<th scope="col">컴포넌트 html</th>
+				<th scope="col">컴포넌트명<br />컴포넌트 영문명<br />Base CSS명</th>
+				<th scope="col">컴포넌트구분</th>
+				<th scope="col">구좌타입</th>
+				<th scope="col">구분</th>
+				<th scope="col">비고</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>1</td>
+				<td class="tableimg"><img src="/img/bp/standard/dummy/img_comp1.jpg" alt="" /></td>
+				<td>
+
+						<div class="cmp_billboard">
+								<ul class="cb_selector">
+										<li><a href="#">1</a></li>
+										<li class="selector"><a href="#">2</a></li>
+										<li><a href="#">3</a></li>
+								</ul>	
+							<div class="cb_wrap">
+									<a href="#"><img src="/img/bp/standard/dummy/img_mm1.jpg" alt="" /></a>
+									<a href="#" style="display:none;"><img src="/img/bp/standard/dummy/img_mm1.jpg" alt="" /></a>
+									<a href="#" style="display:none;"><img src="/img/bp/standard/dummy/img_mm1.jpg" alt="" /></a>
+							</div>
+						</div>
+						
+				</td>
+				<td>빌보드<br />cmp_billboard</td>
+				<td></td>
+				<td></td>
+				<td>화승시안</td>
+				<td></td>
+		</tr>
+		<tr>
+			<td>2</td>
+				<td class="tableimg"><img src="/img/bp/standard/dummy/img_comp2.jpg" alt="" /></td>
+				<td style="position:relative;">
+					
+						<div class="cmp_roll_prd">
+								<h3><img src="/img/bp/standard/component/title_mm2.gif" alt="" /></h3>
+								<ul>
+										<li>
+												<div class="crp_cts">
+														<div class="crp_img">
+																<img src="/img/bp/standard/dummy/img_mm2.gif" alt="" />
+																<span class="flag_sale">30%</span>
+														</div>
+														<div class="prd_title"><a href="#">클라이밍용 경량 자켓</a></div>
+														<div class="prd_price"><strong>29,600</strong>원</div>
+												</div>
+										</li>
+										<li>
+												<div class="crp_cts">
+														<div class="crp_img">
+																<img src="/img/bp/standard/dummy/img_mm2.gif" alt="" />
+																<span class="flag_sale">30%</span>
+														</div>
+														<div class="prd_title"><a href="#">클라이밍용 경량 자켓</a></div>
+														<div class="prd_price"><strong>29,600</strong>원</div>
+												</div>
+										</li>
+								</ul>
+								<span class="arrow_l"><a href="#"></a></span>
+								<span class="arrow_r"><a href="#"></a></span>
+						</div>
+						
+				</td>
+				<td>상품<br />comp_roll_prd</td>
+				<td></td>
+				<td></td>
+				<td>화승시안</td>
+				<td></td>
+		</tr>
+
+		<tr>
+			<td>3</td>
+				<td class="tableimg"><img src="/img/bp/standard/dummy/img_themashopping.jpg" alt="" /></td>
+				<td>
+					 <!--테마쇼핑 영역-->
+						<div class="cmp_tab_bnr_prd">
+								<h3 class="ctbp_title"><img src="/img/bp/standard/component/title_shopping.gif" alt="" /></h3>
+								<ul class="ctbp_list">
+										<li><a href="#">우리동네 Runnig Style</a></li>
+										<li><a href="#">장마철 대비 방수 아이템</a></li>
+								</ul>
+								
+								<div class="ctbp_cts">
+										<div class="ctbp_img"><img src="/img/bp/standard/dummy/img_shopping.jpg" alt="" /></div>
+										<div class="ctbp_ctslist">
+												<span class="ctbp_ctslist_img"><a href="#"><img src="/img/bp/standard/dummy/img_thumbnail.gif" alt="" /></a></span>
+												<dl>
+														<dt><a href="#">MERRELL</a></dt>
+														<dd><a href="#">초특가할인블루그린 고품격 바람막이</a></dd>
+														<dd class="price">320,000원</dd>
+												</dl>
+										</div>
+										<div class="ctbp_ctslist">
+												<span class="ctbp_ctslist_img"><a href="#"><img src="/img/bp/standard/dummy/img_thumbnail.gif" alt="" /></a></span>
+												<dl>
+														<dt><a href="#">MERRELL</a></dt>
+														<dd><a href="#">초특가할인블루그린 고품격 바람막이</a></dd>
+														<dd class="price">320,000원</dd>
+												</dl>
+										</div>
+										<div class="ctbp_ctslist">
+												<span class="ctbp_ctslist_img"><a href="#"><img src="/img/bp/standard/dummy/img_thumbnail.gif" alt="" /></a></span>
+												<dl>
+														<dt><a href="#">MERRELL</a></dt>
+														<dd><a href="#">초특가할인블루그린 고품격 바람막이</a></dd>
+														<dd class="price">320,000원</dd>
+												</dl>
+										</div>
+								</div>
+								
+								<div class="mm2_cts" style="display:none;">
+										<div class="mm2_img"><img src="/img/bp/standard/dummy/img_shopping.jpg" alt="" /></div>
+										<div class="mm2_ctslist">
+												<span class="mm2_ctslist_img"><a href="#"><img src="/img/bp/standard/dummy/img_thumbnail.gif" alt="" /></a></span>
+												<dl>
+														<dt><a href="#">MERRELL</a></dt>
+														<dd><a href="#">초특가할인블루그린  바람막이</a></dd>
+														<dd class="price">320,000원</dd>
+												</dl>
+										</div>
+										<div class="mm2_ctslist">
+												<span class="mm2_ctslist_img"><a href="#"><img src="/img/bp/standard/dummy/img_thumbnail.gif" alt="" /></a></span>
+												<dl>
+														<dt><a href="#">MERRELL</a></dt>
+														<dd><a href="#">초특가할인블루그린  바람막이</a></dd>
+														<dd class="price">320,000원</dd>
+												</dl>
+										</div>
+										<div class="mm2_ctslist">
+												<span class="mm2_ctslist_img"><a href="#"><img src="/img/bp/standard/dummy/img_thumbnail.gif" alt="" /></a></span>
+												<dl>
+														<dt><a href="#">MERRELL</a></dt>
+														<dd><a href="#">초특가할인블루그린  바람막이</a></dd>
+														<dd class="price">320,000원</dd>
+												</dl>
+										</div>
+								</div>
+						</div>
+						<!--테마쇼핑 영역-->
+				</td>
+				<td>tab+배너+상품<br />cmp_tab_bnr_prd</td>
+				<td></td>
+				<td></td>
+				<td>화승시안</td>
+				<td></td>
+		</tr>
+
+		<tr>
+			<td>4</td>
+				<td class="tableimg"><img src="/img/bp/standard/dummy/img_comp3.jpg" alt="" /></td>
+				<td>
+					<ul style="position:relative;">
+							<li>
+								<div class="comp_banner">
+										<a href="#"><img src="/img/bp/standard/dummy/img_mm3_2.jpg" alt="" /></a>
+								</div>
+								</li>
+						</ul>
+				</td>
+				<td>배너<br />cmp_bnr</td>
+				<td></td>
+				<td></td>
+				<td>화승시안</td>
+				<td></td>
+		</tr>
+		<tr>
+			<td>5</td>
+				<td class="tableimg"><img src="/img/bp/standard/dummy/img_comp4.jpg" alt="" /></td>
+				<td>
+					<ul>
+							<li>
+								<div class="cmp_bnr_prd">
+										<div class="cbp_t"><img src="/img/bp/standard/dummy/img_newa1.gif" alt="" /></div>
+										<div class="cbp_b">
+												<div class="cmp_bnr">	
+														<span class="cbp_img"><img src="/img/bp/standard/dummy/img_thumbnail.gif" alt="" /></span>
+														<dl>
+																<dt><a class="prdlink" href="#">르카프 트레이닝</a></dt>
+																<dd class="price">99,000원</dd>
+														</dl>
+												</div>
+												<div class="cmp_bnr">	
+														<span class="cbp_img"><img src="/img/bp/standard/dummy/img_thumbnail.gif" alt="" /></span>
+														<dl>
+																<dt><a class="prdlink" href="#">르카프 트레이닝</a></dt>
+																<dd class="price">99,000원</dd>
+														</dl>
+												</div>
+												<div class="cmp_bnr">	
+														<span class="cbp_img"><img src="/img/bp/standard/dummy/img_thumbnail.gif" alt="" /></span>
+														<dl>
+																<dt><a class="prdlink" href="#">르카프 트레이닝</a></dt>
+																<dd class="price">99,000원</dd>
+														</dl>
+												</div>
+												<div class="cmp_bnr">	
+														<span class="cbp_img"><img src="/img/bp/standard/dummy/img_thumbnail.gif" alt="" /></span>
+														<dl>
+																<dt><a class="prdlink" href="#">르카프 트레이닝</a></dt>
+																<dd class="price">99,000원</dd>
+														</dl>
+												</div>
+										</div>
+								</div>
+							</li>
+				</ul>            
+				</td>
+				<td>배너 + 상품<br />cmp_bnr_prd</td>
+				<td></td>
+				<td></td>
+				<td>화승시안</td>
+				<td></td>
+		</tr>
+		<tr>
+			<td>6</td>
+				<td class="tableimg"><img src="/img/bp/standard/dummy/img_comp5.jpg" alt="" /></td>
+				<td>
+					<ul>
+							<li>
+										<div class="cmp_bnr_txt">
+												<span class="cbt_img"><a href="#"><img src="/img/bp/standard/dummy/img_thumb2.gif" alt="" /></a></span>
+												<dl class="cbt_txt">
+														<dt><a class="bannerlink" href="#">르까프 매장에서는 쿠폰할인!</a></dt>
+														<dd class="txt">매장으로 쿠폰 가져오시면 신상품 5%  추가 할인을 해드립니다.</dd>
+														<dd class="bn1"><a class="n_bg btn_9" href="#">쿠폰인쇄</a></dd>
+												</dl>
+										</div>
+							</li>
+				</ul>
+				</td>
+				<td>텍스트 배너<br />cmp_bnr_txt</td>
+				<td></td>
+				<td></td>
+				<td>화승시안</td>
+				<td></td>
+		</tr>
+		<tr>
+			<td>7</td>
+				<td class="tableimg"><img src="/img/bp/standard/dummy/img_comp6.jpg" alt="" /></td>
+				<td>
+						<div class="cmp_prd_txt">
+								<h3 class="cpt_mtitle"><img src="/img/bp/standard/component/title_mm6.gif" alt="" /></h3>
+								<span class="i_bg ico_2">Best Review</span>
+								<span class="cpt_img"><img src="/img/bp/standard/dummy/img_mm6_bg.jpg" alt="" /></span>
+								<div  class="cpt_txt">
+										<a href="#">
+										<span class="cpt_txt_title">K-SWISS 더 클래식 리뷰</span>
+										<span class="cpt_txt_b">
+										우리 딸 어린이날 선물로 구매했어요~ 
+										배송도 빠르고 포장도 꼼꼼해서 참 좋았
+										습니다. 홀리는 노랑색이라 정말 귀엽고 
+										앙증맞아요. 그리고 앞코 부분에 고무소재를 
+										덧대서 앞코부분이 너무 귀엽구요~
+										</span> 
+										</a>
+										<div class="update"><span>kiara6943</span> 2012-05-17</div>
+								</div>
+						</div>
+				</td>
+				<td>텍스트 배너<br />cmp_prd_txt</td>
+				<td></td>
+				<td></td>
+				<td>화승시안</td>
+				<td></td>
+		</tr>
+
+
+		<tr>
+			<td>8</td>
+				<td class="tableimg"><img src="/img/bp/standard/dummy/img_nnn.jpg" alt="" /></td>
+				<td>
+					
+					<ul>
+							<li>
+										<div class="cmp_board">
+												<h3><img src="/img/bp/standard/component/title_newsnotice.gif" alt="" /></h3>
+												<div class="cbd_cts">
+														<span class="cbd_img"><img src="/img/bp/standard/dummy/img_mm7.gif" alt="" /></span>
+														<ul class="cbd_list">
+																<li><a href="#">화승 멤버십 회원정보 수정</a></li>
+																<li><a href="#">화승 멤버십 회원정보 수정</a></li>
+																<li><a href="#">화승 멤버십 회원정보 수정</a></li>
+																<li><a href="#">화승 멤버십 회원정보 수정</a></li>
+														</ul>
+												</div>
+										</div>
+								</li>
+						</ul>
+						
+				</td>
+				<td>텍스트 배너<br />cmp_board</td>
+				<td></td>
+				<td></td>
+				<td>화승시안</td>
+				<td></td>
+		</tr>
+		<tr>
+			<td>9</td>
+				<td class="tableimg"><img src="/img/bp/standard/dummy/img_comp8.jpg" alt="" /></td>
+				<td>
+					<ul>
+							<li>
+								<div class="cmp_html">
+										<h3><img src="/img/bp/standard/component/title_cscenter.gif" alt="" /></h3>
+										<div class="cbd_cts">
+												<span class="cbd_img"><img src="/img/bp/standard/dummy/img_mm7.gif" alt="" /></span>
+												<dl class="cbd_list">
+														<dt><img src="/img/bp/standard/dummy/txt_phonenum.gif" alt="02-3200-600 평일 09:00 ~ 18:00 (주일, 공휴일 휴무)" /></dt>
+														<dd class="mg_t5">
+																<a class="bg_btn" href="#">주문안내</a>
+																<a class="bg_btn" href="#">배송안내</a>
+														</dd>
+												</dl>
+										</div>
+								</div>
+							</li>
+					</ul>
+				</td>
+				<td>텍스트 배너<br />cmp_html</td>
+				<td></td>
+				<td></td>
+				<td>화승시안</td>
+				<td></td>
+		</tr>
+
+		<tr>
+			<td>10</td>
+				<td class="tableimg"><img src="/img/bp/standard/dummy/이매진_2.jpg" width="179" height="146" alt="" /></td>
+				<td>
+					<!-- lnb -->
+					<div class="cmp_lnb">
+						<h3 class="hidden_text">LNB</h3>
+						<ul>
+							<li><a href="#1" class="m_lnb1">태블릿액세서리 태블릿액세서리</a>
+								<!-- div class="subshadow"> 2012-04-27 : div 삭제 -->
+								<div class="subscroll" style="display:block;">
+									<ul>
+										<li><a href="#1">거치대</a></li>
+										<li><a href="#1">케이스</a></li>
+										<li><a href="#1">충전기</a></li>
+										<li><a href="#1">보호필름</a></li>
+										<li><a href="#1">기타</a></li>
+									</ul>
+								</div>
+								<!-- /div -->
+							</li>
+							<li><a href="#1" class="m_lnb2">애플</a>
+								<div class="subscroll">
+									<ul>
+										<li><a href="#1">MP3</a></li>
+										<li><a href="#1">아이패드</a></li>
+										<li><a href="#1">Mac</a></li>
+										<li><a href="#1">정품액세사리</a></li>
+										<li><a href="#1">MP3</a></li>
+										<li><a href="#1">아이패드</a></li>
+										<li><a href="#1">Mac</a></li>
+										<li><a href="#1">정품액세사리</a></li>
+										<li><a href="#1">정품액세사리</a></li>
+										<li><a href="#1">정품액세사리</a></li>
+									</ul>
+								</div>
+							</li>
+							<li><a href="#1" class="m_lnb3">뮤직</a>
+								<div class="subscroll">
+									<ul>
+										<li><a href="#1">오디오 / 음향기기</a></li>
+										<li><a href="#1">스피커</a></li>
+										<li><a href="#1">이어폰</a></li>
+										<li><a href="#1">헤드폰</a></li>
+										<li><a href="#1">음향 액세서리</a></li>
+										<li><a href="#1">스마트폰 이어셋 / 블루투스</a></li>
+										<li><a href="#1">마이크</a></li>
+									</ul>
+								</div>
+							</li>
+							<li><a href="#1" class="m_lnb4">PC</a>
+								<div class="subscroll">
+									<ul>
+										<li><a href="#1">노트북</a></li>
+										<li><a href="#1">프린터</a></li>
+										<li><a href="#1">PC 액세서리</a></li>
+										<li><a href="#1">모니터</a></li>
+										<li><a href="#1">문서세단기</a></li>
+										<li><a href="#1">데스크탑</a></li>
+									</ul>
+								</div>						
+							</li>
+							<li><a href="#1" class="m_lnb5">이미징</a>
+								<div class="subscroll">
+									<ul>
+										<li><a href="#1">DSLR</a></li>
+										<li><a href="#1">미러리스</a></li>
+										<li><a href="#1">컴팩트</a></li>
+										<li><a href="#1">캠코더</a></li>
+										<li><a href="#1">카메라액세서리</a></li>
+										<li><a href="#1">즉석/토이카메라</a></li>
+									</ul>
+								</div>
+							</li>
+							<li class="s2"><a href="#1" class="m_lnb6">폰액세서리</a><!-- 2012-05-18 : 클래스 추가(이하 동일) -->
+								<div class="subscroll">
+									<ul>
+										<li><a href="#1">케이스</a></li>
+										<li><a href="#1">보호필름</a></li>
+										<li><a href="#1">거치대</a></li>
+										<li><a href="#1">충전기</a></li>
+										<li><a href="#1">기타</a></li>
+									</ul>
+								</div>
+							</li>
+							<li class="s2"><a href="#1" class="m_lnb7">모바일</a>
+								<div class="subscroll">
+									<ul>
+										<li><a href="#1">유선</a></li>
+										<li><a href="#1">무선</a></li>
+									</ul>
+								</div>
+							</li>
+							<li class="s2"><a href="#1" class="m_lnb8">CAR PRODUCT</a>
+								<div class="subscroll">
+									<ul>
+										<li><a href="#1">네비게이션</a></li>
+										<li><a href="#1">블랙박스</a></li>
+										<li><a href="#1">HUD</a></li>
+									</ul>
+								</div>
+							</li>
+							<li class="s2"><a href="#1" class="m_lnb9">RARE ITEM</a>
+								<div class="subscroll">
+									<ul>
+										<li><a href="#1">Rare 게임</a></li>
+										<li><a href="#1">Rare 디바이스</a></li>
+										<li><a href="#1">Rare 액세서리</a></li>
+										<li><a href="#1">전시전용상품</a></li>
+									</ul>
+								</div>
+							</li>
+							<li class="s3"><a href="#1" class="m_lnb10">게임</a>
+								<div class="subscroll">
+									<ul>
+										<li><a href="#1">게임기 타이틀</a></li>
+										<li><a href="#1">게임기 액세서리</a></li>
+										<li><a href="#1">게임기 하드웨어</a></li>
+										<li><a href="#1">게임기 액세서리</a></li>
+										<li><a href="#1">게임기 하드웨어</a></li>
+									</ul>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<!-- //lnb -->
+						
+				</td>
+				<td>lnb<br />cmp_lnb</td>
+				<td></td>
+				<td></td>
+				<td>이매진</td>
+				<td></td>
+		</tr>
+
+		<tr>
+			<td>11</td>
+				<td class="tableimg"><img src="/img/bp/standard/dummy/이매진_4.jpg" alt="" /></td>
+				<td style="vertical-align:top; background:#fff;">
+					<!-- 베스트 100 -->
+					<div class="cmp_prd">
+						<div class="tabNavi">
+							<h3>베스트 100</h3><!-- 2012-04-05 : h2->h3로 수정 -->
+							<ul class="section">
+								<li><a href="#1">전체</a></li>
+								<li><a href="#1">컴퓨터/주변기기</a></li>
+							</ul>
+						</div>
+						
+						<!-- 리스트 -->
+						<div id="bestList1" class="productBoard"><!-- 탭_전체 내용 -->
+							<div class="column">
+								<ul>
+									<li>
+										<div class="row1">
+											<div class="photo"><a href="#1"><img src="/img/bp/imagine/shop/img_best.jpg" alt="" /></a></div>
+											<div class="tit"><a href="#1">[SKT신규가입] LTE 할인 24개월 SHG-W570</a></div>
+										</div>
+										<div class="row2"><!-- 2012-05-08 : 수정 -->
+											<div class="prod_price">
+												<p class="price1">500,000원</p>
+												<p class="icon_text06"><em>할인가</em></p>
+												<p class="price4">350,000원</p>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="row1">
+											<div class="photo"><a href="#1"><img src="/img/bp/imagine/shop/img_best.jpg" alt="" /></a></div>
+											<div class="tit"><a href="#1">[SKT신규가입] LTE 할인 24개월 SHG-W570</a></div>
+										</div>
+										<div class="row2">
+											<div class="prod_price">
+												<p class="price1">500,000원</p>
+												<p class="icon_text06"><em>할인가</em></p>
+												<p class="price4">350,000원</p>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="row1">
+											<div class="photo"><a href="#1"><img src="/img/bp/imagine/shop/img_best.jpg" alt="" /></a></div>
+											<div class="tit"><a href="#1">[SKT신규가입] LTE 할인 24개월 SHG-W570</a></div>
+										</div>
+										<div class="row2">
+											<div class="prod_price">
+												<p class="icon_text01">[할부결제]</p>
+												<p class="icon_text07"><em>요금제 약정 구입가</em></p>
+												<p class="price16">210,000원~350,500원</p>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="row1">
+											<div class="photo"><a href="#1"><img src="/img/bp/imagine/shop/img_best.jpg" alt="" /></a></div>
+											<div class="tit"><a href="#1">[SKT신규가입] LTE 할인 24개월 SHG-W570</a></div>
+										</div>
+										<div class="row2">
+											<div class="prod_price">
+												<p class="icon_text03">[즉시결제]</p>
+												<p class="icon_text07"><em>요금제 약정 구입가</em></p>
+												<p class="price16">0원</p>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="row1">
+											<div class="photo"><a href="#1"><img src="/img/bp/imagine/shop/img_best.jpg" alt="" /></a></div>
+											<div class="tit"><a href="#1">[SKT신규가입] LTE 할인 24개월 SHG-W570</a></div>
+										</div>
+										<div class="row2">
+											<div class="prod_price">
+												<p class="price">500,000원</p>
+												<p class="icon_text06"><em>할인가</em></p>
+												<p class="discount">350,000원</p>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="row1">
+											<div class="photo"><a href="#1"><img src="/img/bp/imagine/shop/img_best.jpg" alt="" /></a></div>
+											<div class="tit"><a href="#1">[SKT신규가입] LTE 할인 24개월 SHG-W570</a></div>
+										</div>
+										<div class="row2">
+											<div class="prod_price">
+												<p class="price">500,000원</p>
+												<p class="icon_text06"><em>할인가</em></p>
+												<p class="discount">350,000원</p>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+							<div class="button">
+								<a href="#1" class="btn_prev none">이전</a><!-- 2012-05-14 : 비활성 버튼 클래스명 : none 추가 -->
+								<a href="#1" class="btn_next none">다음</a><!-- 2012-05-14 : 비활성 버튼 클래스명 : none 추가 -->
+							</div>
+						</div>
+
+						<div id="bestList2" class="productBoard" style="display:none;"><!-- 탭_메타카테고리1 내용 -->
+							<div class="column">
+								<ul>
+									<li>
+										<div class="row1">
+											<div class="photo"><a href="#1"><img src="/img/bp/imagine/shop/img_best.jpg" alt="" /></a></div>
+											<div class="tit"><a href="#1">1[SKT신규가입] LTE 할인 24개월 SHG-W570</a></div>
+										</div>
+										<div class="row2"><!-- 2012-04-20 : 구조 변경 -->
+											<p class="price1">500,000원</p>
+											<p class="icon_text06"><em>할인가</em></p>
+											<p class="price4">350,000원</p>
+										</div>
+									</li>
+									<li>
+										<div class="row1">
+											<div class="photo"><a href="#1"><img src="/img/bp/imagine/shop/img_best.jpg" alt="" /></a></div>
+											<div class="tit"><a href="#1">[SKT신규가입] LTE 할인 24개월 SHG-W570</a></div>
+										</div>
+										<div class="row2">
+											<p class="price1">500,000원</p>
+											<p class="icon_text06"><em>할인가</em></p>
+											<p class="price4">350,000원</p>
+										</div>
+									</li>
+									<li>
+										<div class="row1">
+											<div class="photo"><a href="#1"><img src="/img/bp/imagine/shop/img_best.jpg" alt="" /></a></div>
+											<div class="tit"><a href="#1">[SKT신규가입] LTE 할인 24개월 SHG-W570</a></div>
+										</div>
+										<div class="row2">
+											<p class="icon_text01">[할부결제]</p>
+											<p class="icon_text07"><em>요금제 약정 구입가</em></p>
+											<p class="price16">210,000원~350,500원</p>
+										</div>
+									</li>
+									<li>
+										<div class="row1">
+											<div class="photo"><a href="#1"><img src="/img/bp/imagine/shop/img_best.jpg" alt="" /></a></div>
+											<div class="tit"><a href="#1">[SKT신규가입] LTE 할인 24개월 SHG-W570</a></div>
+										</div>
+										<div class="row2">
+											<p class="icon_text03">[즉시결제]</p>
+											<p class="icon_text07"><em>요금제 약정 구입가</em></p>
+											<p class="price16">0원</p>
+										</div>
+									</li>
+									<li>
+										<div class="row1">
+											<div class="photo"><a href="#1"><img src="/img/bp/imagine/shop/img_best.jpg" alt="" /></a></div>
+											<div class="tit"><a href="#1">[SKT신규가입] LTE 할인 24개월 SHG-W570</a></div>
+										</div>
+										<div class="row2">
+											<p class="price">500,000원</p>
+											<p class="icon_text06"><em>할인가</em></p>
+											<p class="discount">350,000원</p>
+										</div>
+									</li>
+									<li>
+										<div class="row1">
+											<div class="photo"><a href="#1"><img src="/img/bp/imagine/shop/img_best.jpg" alt="" /></a></div>
+											<div class="tit"><a href="#1">[SKT신규가입] LTE 할인 24개월 SHG-W570</a></div>
+										</div>
+										<div class="row2">
+											<p class="price">500,000원</p>
+											<p class="discount"><em>할인가</em><br />350,000원</p>
+										</div>
+									</li>
+								</ul>
+							</div>
+							<div class="button">
+								<a href="#1" class="btn_prev">이전</a>
+								<a href="#1" class="btn_next">다음</a>
+							</div>
+						</div>
+						<!-- //리스트 -->
+					</div>
+					<!-- //베스트 100 -->
+				</td>
+				<td>텍스트 + 상품 <br />cmp_prd</td>
+				<td></td>
+				<td></td>
+				<td>이매진</td>
+				<td></td>
+		</tr>
+
+		<tr>
+			<td>12</td>
+				<td class="tableimg"><img src="/img/bp/standard/dummy/이매진_14.jpg" alt="" /></td>
+				<td>
+						<div class="cmp_categroy">
+							<!-- 카테고리 목록 -->
+							<div class="categoryArea">
+									<div class="categoryList">
+											<div class="menu">
+													<ul>
+															<li><a href="#1">카테고리1<em>(1,000)</em></a>
+																	<ul>
+																			<li><a href="#1">카테고리1</a></li>
+																			<li><a href="#1">카테고리2</a></li>
+																			<li class="promotion"><a href="#1">프로모션카테고리1</a></li>
+																	</ul>
+															</li>
+															<li><a href="#1">카테고리2<em>(100)</em></a>
+																	<ul>
+																			<li><a href="#1">카테고리1</a></li>
+																			<li><a href="#1">카테고리2</a></li>
+																	</ul>
+															</li>
+															<li><a href="#1">카테고리3<em>(100)</em></a>
+																	<ul>
+																			<li><a href="#1">카테고리1</a></li>
+																			<li><a href="#1">카테고리2</a></li>
+																	</ul>
+															</li>
+															<li><a href="#1">카테고리4<em>(100)</em></a>
+																	<ul>
+																			<li><a href="#1">카테고리1</a></li>
+																			<li><a href="#1">카테고리2</a></li>
+																			<li><a href="#1">카테고리3</a></li>
+																	</ul>
+															</li>
+															<li><a href="#1">카테고리5<em>(100)</em></a>
+																	<ul>
+																			<li><a href="#1">카테고리1</a></li>
+																			<li><a href="#1">카테고리2</a></li>
+																	</ul>
+															</li>
+															<li><a href="#1">카테고리6<em>(100)</em></a>
+																	<ul>
+																			<li><a href="#1">카테고리1</a></li>
+																			<li><a href="#1">카테고리2</a></li>
+																	</ul>
+															</li>
+													</ul>
+													
+											</div>
+									</div>
+									<a href="#1" class="btn_showhide" style="display:block;">카테고리 펼쳐서 보기</a>
+									<!--a href="#1" class="btn_showhide active" style="display:block;">카테고리 펼쳐서 보기</a-->
+							</div>
+							<!-- //카테고리 목록 -->
+						</div>
+						
+				</td>
+				<td>SNB(카테고리 네비게이션)<br />cmp_category</td>
+				<td></td>
+				<td></td>
+				<td>이매진</td>
+				<td></td>
+		</tr>
+		<tr>
+			<td>13</td>
+				<td class="tableimg">
+					<img src="/img/bp/standard/dummy/이매진_35_01.jpg" alt="" />
+					<img src="/img/bp/standard/dummy/이매진_35_02.jpg" alt="" />
+					<img src="/img/bp/standard/dummy/이매진_36.jpg" alt="" />
+				</td>
+				<td style="background:#fff;">
+					<!-- 상품검색 -->
+					<div class="cmp_listing_search">
+						<div class="prodsearch_area">
+							<dl class="type1">
+								<dt class="sec1">상품</dt>
+								<dd class="sec1"><strong>2,000개</strong></dd>
+								<dt class="sec2">할인/혜택 선택</dt>
+								<dd class="sec2">
+									<input type="checkbox" id="c1" class="input_check" /><label for="c1" class="sub">할인</label>
+									<input type="checkbox" id="c2" class="input_check" /><label for="c2" class="sub">포인트</label>
+									<input type="checkbox" id="c3" class="input_check" /><label for="c3" class="sub">사은품</label>
+									<input type="checkbox" id="c4" class="input_check" /><label for="c4" class="sub">무료배송</label>
+								</dd>
+								<dt class="sec3">가격대 선택</dt>
+								<dd class="sec3">
+									<input type="text" class="input_text" /><span class="tx">원 ~ </span>
+									<input type="text" class="input_text" /><span class="tx">원</span>
+									<a href="#1" class="btn_search" onclick="show_layer('wonder_show1')">선택조건 검색</a>
+									<!-- 레이어 -->
+									<div class="layer_box depth1">
+										<div id="wonder_show1" class="comment_layer" onmouseover="show_layer('wonder_show1')" onmouseout="hide_layer('wonder_show1')">
+											<p class="tl_info">최소가격은 최대가격보다 작아야 합니다.</p>
+											<div class="btn"><a href="#1" class="btn_confirm">확인</a></div>
+										</div>
+									</div>
+									<!-- //레이어 -->
+								</dd>
+							</dl>
+						</div>
+						<!-- Tab_Menu -->
+						<div class="tabMenu_prod">
+							<ul>
+								<li class="active"><a href="#1">이미지랭킹순</a></li>
+								<li><a href="#1">판매많은순</a></li>
+								<li><a href="#1">최신등록순</a></li>
+								<li><a href="#1">리뷰많은순</a></li>
+								<li><a href="#1">높은가격순</a></li>
+								<li><a href="#1">낮은가격순</a></li>
+								<li><a href="#1">높은월납부금액</a></li>
+								<li><a href="#1">낮은월납부금액</a></li>
+							</ul>
+						</div>
+						<!-- //Tab_Menu -->
+						<!-- 선택보기 -->
+						<div class="viewOpt">
+							<div class="optLeft">
+								<a href="#1" class="btn_interest" onclick="show_layer('wonder_show2')">관심상품</a>
+								<a href="#1" class="btn_contrast" onclick="show_layer('wonder_show2')">비교하기</a>
+								<!-- 레이어 -->
+								<div class="layer_box depth1" style="top:25px;"><!-- 임시로 위치지정 -->
+									<div id="wonder_show2" class="comment_layer" onmouseover="show_layer('wonder_show2')" onmouseout="hide_layer('wonder_show2')">
+										<p class="tl_info">해당 서비스는 로그인 후 사용 가능합니다.</p>
+										<div class="btn"><a href="#1" class="btn_confirm">확인</a></div>
+									</div>
+								</div>
+								<!-- //레이어 -->
+							</div>
+							<div class="optRight">
+								<a href="#1" class="btn_typelist">리스트형</a>
+								<a href="#1" class="btn_typeimage active">이미지형</a>
+								<select>
+									<option>20개씩 보기</option>
+									<option>30개씩 보기</option>
+									<option>50개씩 보기</option>
+								</select>
+							</div>
+						</div>
+						<!-- //선택보기 -->
+						<!-- 상품목록 : 리스트형 -->
+						<div class="productList2">
+							<div class="productBoard">
+									<div class="column">
+											<div class="head">
+													<div class="row1"><div class="check"><input type="checkbox" id="chk" name="chk" /></div><span class="th_tit1">상품명</span></div>
+													<div class="row2"><span class="th_tit2">가격</span></div>
+													<div class="row3"><span class="th_tit3">배송비</span></div>
+											</div>
+											<ul>
+													<li>
+															<div class="row1">
+																	<div class="check"><input type="checkbox" id="chk" name="chk" /></div>
+																	<div class="photo"><a href="#1"><img src="/img/bp/imagine/dummy/img_product02.jpg" alt="" /></a></div>
+																	<div class="tit"><a href="#1">[SKT신규가입] LTE 할인 24개월 SHG-W570[SKT신규가입] LTE 할인 24개월 SHG-W570[SKT신규가입] LTE 할인 24개월 SHG-W570[SKT신규가입] LTE 할인 24개월 SHG-W570</a></div>
+																	<div class="viewer">
+																			<a href="#1" class="preview"><span>확대</span></a>
+																			<a href="#1" class="newpage"><span>새창</span></a>
+																			<a href="#1" class="recmtip"><span>추천팁</span></a>
+																			<a href="#1" class="favor"><span>전사 프로모션/혜택</span></a>
+																	</div>
+															</div>
+															<div class="row2">
+																	<div class="prod_price one">
+																			<p class="price1">500,000원</p>
+																	</div>
+															</div>
+															<div class="row3"><p>배송비 무료</p></div>
+													</li>
+													<li>
+															<div class="row1">
+																	<div class="check"><input type="checkbox" id="chk" name="chk" /></div>
+																	<div class="photo"><a href="#1"><img src="/img/bp/imagine/dummy/img_product02.jpg" alt="" /></a></div>
+																	<div class="tit"><a href="#1">[SKT신규가입] LTE 할인 24개월 SHG-W570</a></div>
+																	<div class="viewer">
+																			<a href="#1" class="preview"><span>확대</span></a>
+																			<a href="#1" class="newpage"><span>새창</span></a>
+																			<a href="#1" class="slcfaq"><span>SLC문의</span></a>
+																	</div>
+															</div>
+															<div class="row2">
+																	<div class="prod_price one">
+																			<p class="no_price">-</p>
+																	</div>
+															</div>
+															<div class="row3"><p>배송비 조건부 무료</p></div>
+													</li>
+													<li class="list_no">해당 카테고리에 상품이 없습니다.</li>
+											</ul>
+									</div>
+							</div>
+						</div>
+						<!-- //상품목록 : 리스트형 -->
+					</div>
+					<!-- //상품검색 -->
+				</td>
+				<td>
+					리스팅 조회 <br />cmp_listing_search
+				</td>
+				<td></td>
+				<td></td>
+				<td>이매진</td>
+				<td></td>
+		</tr>
+
+		<tr>
+			<td>14</td>
+				<td class="tableimg"><img src="/img/bp/standard/dummy/이매진_37.jpg" alt="" /></td>
+				<td style="background:#fff;">
+					<!-- 상품목록 : 이미지형 -->
+					<div class="cmp_gallery">
+						<div class="productList_Row5">
+							<div class="productBoard">
+								<div class="column">
+									<ul>
+										<li>
+											<div class="row1">
+												<div class="check"><input type="checkbox" id="chk" name="chk" /></div>
+												<div class="photo"><a href="#1"><img src="/img/bp/imagine/dummy/img_best01.jpg" alt="" /></a></div>
+												<div class="viewer">
+													<a href="#1" class="preview" onclick="show_layer('detail_view01');return false">확대</a>
+													<a href="#1" class="newpage">새창</a>
+													<a href="#1" class="slcfaq">SLC문의</a>
+												</div>
+												<div class="tit"><a href="#1">[SKT신규가입] LTE 할인 24개월 SHG-W570 [SKT신규가입] LTE 할인 24개월 SHG-W570</a></div>
+												
+												<!-- 레이어(일반상품) -->
+												<div class="layer_box depth100">
+													<div id="detail_view01" class="pop_layer01" style="width:786px">
+														<div class="popup_head">
+															<h1><img src="/img/bp/imagine/popup/popup_tit69.gif" alt="상품정보"></h1>
+															<a href="#1" class="popup_close" onclick="hide_layer('detail_view01');return false">close</a>
+														</div>
+														<div class="popup_content">
+															<h2 class="subject">[신제품] MP3 Player</h2>
+															<div class="text_type07">
+																<div class="cont_left style2">
+																	<div class="big"><img src="/img/bp/imagine/dummy/img_product06.jpg" alt="" /></div>
+																	<!-- 썸네일 -->
+																	<div class="galleryBoard">
+																		<div class="column">
+																			<ul>
+																				<li>
+																					<div class="row1">
+																						<div class="photo"><a href="#1" class="active"><img src="/img/bp/imagine/dummy/img_product05.jpg" alt="" /></a></div>
+																					</div>
+																				</li>
+																				<li>
+																					<div class="row1">
+																						<div class="photo"><a href="#1"><img src="/img/bp/imagine/dummy/img_product05.jpg" alt="" /></a></div>
+																					</div>
+																				</li>
+																				<li>
+																					<div class="row1">
+																						<div class="photo"><a href="#1"><img src="/img/bp/imagine/dummy/img_product05.jpg" alt="" /></a></div>
+																					</div>
+																				</li>
+																				<li>
+																					<div class="row1">
+																						<div class="photo"><a href="#1"><img src="/img/bp/imagine/dummy/img_product05.jpg" alt="" /></a></div>
+																					</div>
+																				</li>
+																			</ul>
+																		</div>
+																	</div>
+																	<!-- //썸네일 -->
+																</div>
+																<div class="cont_right style2">
+																	<dl class="inform2">
+																		<dt class="tit7"><span>판매가</span></dt>
+																		<dd><strong>80,000원</strong></dd>
+																	</dl>
+																	<dl class="inform2">
+																		<dt class="tit8"><span>할인가</span></dt>
+																		<dd><strong class="t_blue">600,000원</strong></dd>
+																	</dl>
+																	<dl class="inform3">
+																		<dt class="tit4"><span>제공멤버십포인트</span><a href="#1" class="btn_help" onclick="show_layer('product_layer3')">도움말</a></dt>
+																		<dd><span class="small">1,000P</span></dd>
+																	</dl>
+																	<dl class="inform2">
+																		<dt class="tit5"><span>사은품</span></dt>
+																		<dd>
+																			<strong class="small">기간: 2012.02.01 - 2012.02.28</strong><br />
+																			<em>최고급 해드폰 set (최대 30자 노출)</em>
+																		</dd>
+																	</dl>
+																	<dl class="inform2">
+																		<dt class="tit6"><span>배송비</span></dt>
+																		<dd><span class="small">2,400원(30,000원 이상 무료)</span><a href="#1" class="btn_inform" onmouseover="show_layer('wonder_show1')">정보</a>
+																			<!-- 레이어 -->
+																			<div class="layer_box depth4">
+																				<!-- 타입 1 -->
+																				<div id="wonder_show1" class="comment_layer" onmouseover="show_layer('wonder_show1')" onmouseout="hide_layer('wonder_show1')">
+																					<p class="tl_info">상품조건부 무료</p>
+																					<div>
+																						<p class="bg_dot">개별상품 100,000원 구매시</p>
+																						<p class="bg_no">배송비 2,500원 무료</p>
+																					</div>
+																				</div>
+																		</dd>
+																	</dl>
+																</div>
+															</div>
+
+															<div class="btn_right">
+																<a href="#1" class="btn_prodview">제품상세보기</a>
+															</div>
+														</div>
+													</div>
+												</div>
+												<!-- //레이어(일반상품) --> 
+
+
+											</div>
+											<div class="row2">
+												<div class="prod_price"><!-- 2012-04-25 : div 추가 -->
+													<p class="icon_text01">[할부결제]</p>
+													<p class="icon_text07"><em>요금제 약정 구입가</em></p>
+													<p class="price16">210,000원~350,500원</p>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="row1">
+												<div class="check"><input type="checkbox" id="chk" name="chk" /></div>
+												<div class="photo"><a href="#1"><img src="/img/bp/imagine/common/no_img/no_img130.gif" alt="" /></a></div><!-- 2012-04-19 : noImage 경로 수정 -->
+												<div class="viewer">
+													<a href="#1" class="preview">확대</a>
+													<a href="#1" class="newpage">새창</a>
+													<a href="#1" class="slcfaq">SLC문의</a>
+												</div>
+												<div class="tit"><a href="#1">[INCASE] CampusPack[FUSHIA/INSIGNIA]</a></div>
+
+											</div>
+											<div class="row2">
+												<div class="prod_text">
+													<p class="icon_text10">상담 후 결정</p>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="row1">
+												<div class="check"><input type="checkbox" id="chk" name="chk" /></div>
+												<div class="photo"><a href="#1"><img src="/img/bp/imagine/common/no_img/good19_130.gif" alt="" /></a></div>
+												<div class="viewer">
+													<a href="#1" class="preview">확대</a>
+													<a href="#1" class="newpage">새창</a>
+													<a href="#1" class="slcfaq">SLC문의</a>
+												</div>
+												<div class="tit"><a href="#1">[SKT신규가입] LTE 할인 24개월 SHG-W570</a></div>
+											</div>
+											<div class="row2">
+												<div class="prod_price">
+													<p class="no_price">-</p><!-- 2012-04-27 : 추가 -->
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="row1">
+												<div class="check"><input type="checkbox" id="chk" name="chk" /></div>
+												<div class="photo"><a href="#1"><img src="/img/bp/imagine/dummy/img_best01.jpg" alt="" /></a></div>
+												<div class="viewer">
+													<a href="#1" class="preview">확대</a>
+													<a href="#1" class="newpage">새창</a>
+													<a href="#1" class="slcfaq">SLC문의</a>
+												</div>
+												<div class="tit"><a href="#1">[SKT신규가입] LTE 할인 24개월 SHG-W570</a></div>
+											</div>
+											<div class="row2">
+												<div class="prod_price">
+													<p class="icon_text03">[즉시결제]</p>
+													<p class="icon_text07"><em>요금제 약정 구입가</em></p>
+													<p class="price16">0원</p>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="row1">
+												<div class="check"><input type="checkbox" id="chk" name="chk" /></div>
+												<div class="photo"><a href="#1"><img src="/img/bp/imagine/dummy/img_best01.jpg" alt="" /></a></div>
+												<div class="viewer">
+													<a href="#1" class="preview">확대</a>
+													<a href="#1" class="newpage">새창</a>
+													<a href="#1" class="slcfaq">SLC문의</a>
+												</div>
+												<div class="tit"><a href="#1">[SKT신규가입] LTE 할인 24개월 SHG-W570</a></div>
+											</div>
+											<div class="row2">
+												<div class="prod_price">
+													<p class="icon_text03">[즉시결제]</p>
+													<p class="icon_text07"><em>요금제 약정 구입가</em></p>
+													<p class="price16">0원</p>
+												</div>
+											</div>
+										</li>
+									</ul>
+									<ul>
+										<li>
+											<div class="row1">
+												<div class="check"><input type="checkbox" id="chk" name="chk" /></div>
+												<div class="photo"><a href="#1"><img src="/img/bp/imagine/dummy/img_best01.jpg" alt="" /></a></div>
+												<div class="viewer">
+													<a href="#1" class="preview">확대</a>
+													<a href="#1" class="newpage">새창</a>
+													<a href="#1" class="slcfaq">SLC문의</a>
+												</div>
+												<div class="tit"><a href="#1">[SKT신규가입] LTE 할인 24개월 SHG-W570</a></div>
+											</div>
+											<div class="row2">
+												<div class="prod_price">
+													<p class="icon_text03">[즉시결제]</p>
+													<p class="icon_text07"><em>요금제 약정 구입가</em></p>
+													<p class="price16">0원</p>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="row1">
+												<div class="check"><input type="checkbox" id="chk" name="chk" /></div>
+												<div class="photo"><a href="#1"><img src="/img/bp/imagine/dummy/img_best01.jpg" alt="" /></a></div>
+												<div class="viewer">
+													<a href="#1" class="preview">확대</a>
+													<a href="#1" class="newpage">새창</a>
+													<a href="#1" class="slcfaq">SLC문의</a>
+												</div>
+												<div class="tit"><a href="#1">[SKT신규가입] LTE 할인 24개월 SHG-W570</a></div>
+											</div>
+											<div class="row2">
+												<div class="prod_price">
+													<p class="icon_text03">[즉시결제]</p>
+													<p class="icon_text07"><em>요금제 약정 구입가</em></p>
+													<p class="price16">0원</p>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="row1">
+												<div class="check"><input type="checkbox" id="chk" name="chk" /></div>
+												<div class="photo"><a href="#1"><img src="/img/bp/imagine/dummy/img_best01.jpg" alt="" /></a></div>
+												<div class="viewer">
+													<a href="#1" class="preview">확대</a>
+													<a href="#1" class="newpage">새창</a>
+													<a href="#1" class="slcfaq">SLC문의</a>
+												</div>
+												<div class="tit"><a href="#1">[SKT신규가입] LTE 할인 24개월 SHG-W570</a></div>
+											</div>
+											<div class="row2">
+												<div class="prod_price">
+													<p class="icon_text03">[즉시결제]</p>
+													<p class="icon_text07"><em>요금제 약정 구입가</em></p>
+													<p class="price16">0원</p>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="row1">
+												<div class="check"><input type="checkbox" id="chk" name="chk" /></div>
+												<div class="photo"><a href="#1"><img src="/img/bp/imagine/dummy/img_best01.jpg" alt="" /></a></div>
+												<div class="viewer">
+													<a href="#1" class="preview">확대</a>
+													<a href="#1" class="newpage">새창</a>
+													<a href="#1" class="slcfaq">SLC문의</a>
+												</div>
+												<div class="tit"><a href="#1">[SKT신규가입] LTE 할인 24개월 SHG-W570</a></div>
+											</div>
+											<div class="row2">
+												<div class="prod_price">
+													<p class="icon_text03">[즉시결제]</p>
+													<p class="icon_text07"><em>요금제 약정 구입가</em></p>
+													<p class="price16">0원</p>
+												</div>
+											</div>
+										</li>
+									</ul>
+									<ul><!-- 상품이 없을 때 --><!-- 2012-04-06 : 추가 -->
+										<li class="list_no">해당 카테고리에 상품이 없습니다.</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- //상품목록 : 이미지형 -->
+				</td>
+				<td>상품목록 : 이미지형<br />cmp_gallery</td>
+				<td></td>
+				<td></td>
+				<td>이매진</td>
+				<td></td>
+		</tr>
+
+		<tr>
+			<td>15</td>
+				<td class="tableimg"><img src="/img/bp/standard/dummy/paging.jpg" alt="" /></td>
+				<td>
+					<!-- 페이징 -->
+						<div class="cmp_paging">
+							<div class="paging_area">
+									<a href="#1" class="prev"><em>prev</em></a>
+									<a href="#1" class="on">1</a> <a href="#1">2</a> <a href="#1">3</a> <a href="#1">4</a> <a href="#1">5</a> <a href="#1">6</a> <a href="#1">7</a> <a href="#1">8</a> <a href="#1">9</a> <a href="#1">10</a>
+									<a href="#1" class="next"><em>next</em></a>
+							</div>
+						</div>
+						<!-- //페이징 -->
+				</td>
+				<td>페이징<br />cmp_paging</td>
+				<td></td>
+				<td></td>
+				<td>이매진</td>
+				<td></td>
+		</tr>
+
+		<tr>
+			<td>16</td>
+				<td class="tableimg"><img src="/img/bp/standard/dummy/linemap.jpg" alt="" /></td>
+				<td style="height:130px; vertical-align:top">
+					<!-- 라인맵 -->
+						<ul class="cmp_linemap">
+							<li>CONCIERGE &gt;</li>
+							<li>
+								<a href="#">Audio기기</a> &gt;
+								<ul class="category01">
+									<li>
+										<a href="#">Video기기</a>
+									</li>
+									<li>
+										<a href="#">기타</a>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<a href="#">이어폰</a> &gt;
+								<ul class="category01">
+									<li>
+										<a href="#">헤드폰</a>
+										<a href="#">이어폰</a>
+										<a href="#">연결잭</a>
+									</li>
+									<li>
+										<a href="#">헤드셋</a>
+										<a href="#">블루투스</a>
+										<a href="#">기타</a>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<a href="#">BeatsbyDr.Dre</a>
+								<ul class="category01" style="display:block;">
+									<li>
+										<a href="#">Beat by Dr.Dre</a>
+										<a href="#">BOSE</a>
+										<a href="#">SONY</a>
+										<a href="#">DENON</a>
+										<a href="#">오디오테크니카</a>
+									</li>
+									<li>
+										<a href="#">젠하이저</a>
+										<a href="#">ELECOM</a>
+										<a href="#">elago</a>
+										<a href="#">기타</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					<!-- //라인맵 -->
+				</td>
+				<td>컨시어지 라인맵<br />cmp_linemap</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+		</tr>
+		<tr>
+			<td>17</td>
+				<td class="tableimg"><img src="/img/bp/standard/dummy/linemap2.jpg" alt="" /></td>
+				<td style="height:130px; vertical-align:top">
+					<!-- 라인맵 -->
+					<div class="cmp_imagine_linemap">
+						<div class="path">
+							홈 <span class="i_loc"></span> 이매진 샵 <span class="i_loc"></span>
+							<select>
+								<option>컴퓨터</option>
+							</select>
+							<span class="i_loc"></span>
+							<select>
+								<option>노트북</option>
+							</select>
+							<span class="i_loc"></span>
+							<select>
+								<option>센스</option>
+							</select>
+						</div>
+					</div>
+					<!-- //라인맵 -->
+				</td>
+				<td>이매진 라인맵<br />cmp_imagine_linemap</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+		</tr>
+	</tbody>
+</table>
+</body>
+</html>

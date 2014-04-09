@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+
+	<definition name="baseProperties">
+		<put-attribute name="title"		value="LITE OMP Page" />
+		<put-attribute name="description" value="LITE OMP PAGE입니다" />
+		<put-attribute name="keywords" value="LITE OMP Front"/>
+	</definition>
+
+	<definition name="ft1_layout" template="/layouts/template/ft1_layout.jsp">
+		<put-attribute name="header" type="template"  value="/page/getHeader.do" />
+		<put-attribute name="body" value="/jsp/template/body/body.jsp" />
+		<put-attribute name="footer" type="template" value="/page/getFooter.do" />
+	</definition>
+	
+	<definition name="/ft1/*" extends="ft1_layout">
+		<put-attribute name="body"   value="/jsp/template/{1}.jsp" />
+	</definition>
+	
+	<definition name="/ft1/*/*" extends="ft1_layout">
+		<put-attribute name="body"   value="/jsp/template/{1}/{2}.jsp" />
+	</definition>
+	
+	<definition name="/ft1/*/*/*" extends="ft1_layout">
+		<put-attribute name="body"   value="/jsp/template/{1}/{2}/{3}.jsp" />
+	</definition>
+	
+	<definition name="ft2_layout" template="/layouts/template/ft2_layout.jsp">
+        <put-attribute name="body" value="/jsp/template/body/body.jsp" />
+    </definition>
+	
+	<definition name="/ft2/*" extends="ft2_layout">
+        <put-attribute name="body"   value="/jsp/template/{1}.jsp" />
+    </definition>
+	
+	<definition name="/ft_body/*" template="/jsp/template/{1}.jsp"></definition>
+</tiles-definitions>

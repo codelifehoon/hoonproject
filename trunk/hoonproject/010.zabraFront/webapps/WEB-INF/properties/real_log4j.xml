@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration >
+
+<!-- ===================================================================== -->
+<!--                                                                       -->
+<!--  Log4j Configuration                                                  -->
+<!--                                                                       -->
+<!-- ===================================================================== -->
+
+<!-- $Id: log4j.xml,v 1.13.2.8 2003/09/23 14:16:27 slaboure Exp $ -->   
+
+<!--
+   | For more configuration infromation and examples see the Jakarta Log4j
+   | owebsite: http://jakarta.apache.org/log4j
+ -->
+  
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+   <appender name="console" class="org.apache.log4j.ConsoleAppender">
+     <param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%t:%X{OMP_CONSUMER_KEY}: %d{yyMMdd HH:mm:ss.SSS}|%-5p|%C{3}|%m%n" />
+		</layout>
+   </appender>
+   
+	<appender name="ASP_LOG" class="skt.tmall.common.log.TmallLogAppender">
+    	<param name="Directory" value="/log/app"/> 
+        <param name="Prefix" value="asp_frontlite_"/>
+        <param name="Suffix" value=".log"/>
+        <param name="DatePattern" value="yyyyMMdd"/> 
+        <param name="WasInstanceKey" value="weblogic.Name"/>
+        <param name="AspSiteKey" value="asp.site.Name"/>  
+        <param name="Threshold" value="DEBUG" />
+        	<layout class="org.apache.log4j.PatternLayout">
+            	<param name="ConversionPattern" value="[%d] %-5p %l %X{trx.id} - %m%n" />
+            </layout>
+	</appender>
+
+    <!-- SQLMAP-Query -->
+    <logger name="java.sql" additivity="false">
+        <level value="ERROR" />
+        <appender-ref ref="ASP_LOG" />
+    </logger>
+
+    <!-- SQLMAP -->
+    <logger name="com.ibatis" additivity="false">
+        <level value="ERROR" />
+        <appender-ref ref="ASP_LOG" />
+    </logger>
+
+	<!-- tiles2 Loggers -->
+	<logger name="org.apache.tiles">
+		<level value="ERROR" />
+		<appender-ref ref="ASP_LOG" />
+	</logger>
+
+	<!-- spring Loggers -->
+	<logger name="org.springframework">
+		<level value="ERROR" />
+		<appender-ref ref="ASP_LOG" />
+	</logger>
+
+	<!-- Application Loggers -->
+	<logger name="skt.tmall">
+		<level value="ERROR" />
+		<appender-ref ref="ASP_LOG" />
+	</logger>
+
+   <!-- ======================= -->
+   <!-- Setup the Root category -->
+   <!-- ======================= -->
+	<root>
+		<priority value="ERROR" />  
+		<appender-ref ref="ASP_LOG" />
+	</root>
+
+</log4j:configuration>
