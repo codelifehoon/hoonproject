@@ -6,11 +6,18 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
+
+import com.zebra.common.BaseFactory;
+import com.zebra.common.SpringBeanFactory;
 import com.zebra.common.dao.CommonDAO;
+import com.zebra.common.util.DateTime;
 import com.zebra.process.crawler.domain.CrawlerDataCombBO;
 import com.zebra.process.crawler.domain.WebPageInfoBO;
 
 
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.log4j.Logger ;
 
 @Repository
@@ -22,31 +29,33 @@ public class PageInfoDAOImpl  extends CommonDAO  implements PageInfoDAO{
 		/* (non-Javadoc)
 		 * @see com.zebra.process.crawler.dao.PageInfoDAO#insertPageInfo(java.util.List)
 		 */
+	
 		public void insertPageInfo(List<WebPageInfoBO>  webPageInfoBOlist )
 		{
 			log.error("#####insertPageInfo:"+ webPageInfoBOlist.size());
-		
-				for(WebPageInfoBO webPageInfoBO :webPageInfoBOlist )
+			
+			// batch 데이터 처리시 session 을 별도로 열어야 동작을 하네..ExecutorType.BATCH
+		    SqlSession session = sqlSessionBatch.getSqlSessionFactory().openSession();
+		    try
+		    {
+		    	for(WebPageInfoBO webPageInfoBO :webPageInfoBOlist )
 				{
-					sqlSessionBatch.insert("query.crawler.insertPageInfoList", webPageInfoBO);
+					session.insert("query.crawler.insertPageInfoList", webPageInfoBO);
 				}
-				
-			//List<BatchResult> results = sqlSessionBatch.flushStatements();
+		    }
+		    finally { session.close(); } 
 		}
 		
 		/* (non-Javadoc)
 		 * @see com.zebra.process.crawler.dao.PageInfoDAO#selectPageInfoListAll()
 		 */
-		public List<WebPageInfoBO>  selectPageInfoList(WebPageInfoBO webPageInfoBO)
+		public HashMap<String, WebPageInfoBO>  selectReNewPageInfoMap(WebPageInfoBO webPageInfoBO)
 		{
 
-			log.debug("sqlSession:" + sqlSession);
-			log.debug("sqlSession.getExecutorType():" + sqlSession.getExecutorType());
-			log.debug("sqlSessionBatch.getExecutorType():" + sqlSessionBatch.getExecutorType());
-			
-			List<WebPageInfoBO> list = sqlSession.selectList("query.crawler.selectPageInfoList", webPageInfoBO);
-			
-			return list;
+
+			Map<String, WebPageInfoBO>  result  = sqlSession.selectMap("query.crawler.selectReNewPageInfoMap", webPageInfoBO,"goodsUrl");
+			HashMap<String, WebPageInfoBO> map = new HashMap<String, WebPageInfoBO>(result) ;
+			return map;
 			
 		
 		}
@@ -55,31 +64,59 @@ public class PageInfoDAOImpl  extends CommonDAO  implements PageInfoDAO{
 		public HashMap<String, WebPageInfoBO>  selectPageInfoMap(WebPageInfoBO webPageInfoBO)
 		{
 
-			Map<String, WebPageInfoBO>  a = sqlSession.selectMap("query.crawler.selectPageInfoMap", webPageInfoBO, "goodsNo");
-			HashMap<String, WebPageInfoBO> h = new HashMap<String, WebPageInfoBO>(a) ;
+			Map<String, WebPageInfoBO>  result = sqlSession.selectMap("query.crawler.selectPageInfoMap", webPageInfoBO, "goodsUrl");
+			HashMap<String, WebPageInfoBO> map = new HashMap<String, WebPageInfoBO>(result) ;
 			
-			return  h;
+			return  map;
 			
 		
 		}
-		
-		
-		
+
 		/* (non-Javadoc)
 		 * @see com.zebra.process.crawler.dao.PageInfoDAO#selectPageInfoListAll()
 		 */
-		public void  updatePageInfoList(List<WebPageInfoBO> webPageInfoBOList )
+		public void  updateReNewPageInfoList(List<WebPageInfoBO> webPageInfoBOList )
 		{
-			log.error("##### updatePageInfoList");
-			for (WebPageInfoBO webPageInfoBO : webPageInfoBOList )
-			{
-				log.error("webPageInfoBO.getGoodsNo()" + webPageInfoBO.getGoodsNo());
-				log.error("webPageInfoBO.getGoodsImg()" + webPageInfoBO.getGoodsImg());
-				log.error("webPageInfoBO.getGoodsNm()" + webPageInfoBO.getGoodsNm());			
-				log.error("webPageInfoBO.getGoodsPrice()" + webPageInfoBO.getGoodsPrice());
-				log.error("webPageInfoBO.getGoodsUrl()" + webPageInfoBO.getGoodsUrl());
-			}
-				
+			
+			
+		  SqlSession session = sqlSessionBatch.getSqlSessionFactory().openSession();
+		   try
+		    {
+		    	for(WebPageInfoBO webPageInfoBO : webPageInfoBOList)
+				{
+
+		    		webPageInfoBO.setUpdateDt(DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
+		    		webPageInfoBO.setStatCd("02");
+	
+		    		if ("Y".equals(webPageInfoBO.getFailYn()))
+					{
+		    			log.debug("##### 수집실패");
+		    			// 실패건에 대해서는 실채cnt 와 updatedt만 올린다.
+		    			WebPageInfoBO tempBo = BaseFactory.create(WebPageInfoBO.class);
+		    			
+		    			tempBo.setPageInfoListSeq(webPageInfoBO.getPageInfoListSeq());
+		    			tempBo.setFailCnt(webPageInfoBO.getFailCnt()+1);
+		    			tempBo.setUpdateDt(webPageInfoBO.getUpdateDt());
+		    			tempBo.setStatCd(webPageInfoBO.getStatCd());
+		    			
+		    					
+		    			session.insert("query.crawler.insertPageInfoListHistCopy", tempBo);
+						session.update("query.crawler.updatePageInfoList", tempBo);
+					}
+		    		else 
+		    		{
+		    			webPageInfoBO.setFailCnt(0);
+		    			session.insert("query.crawler.insertPageInfoListHistCopy", webPageInfoBO);
+						session.update("query.crawler.updatePageInfoList", webPageInfoBO);
+						
+		    		}
+		    			
+					
+		    		
+				}
+		   }
+		  finally { session.close(); } 
+		    
 		}
 
 		

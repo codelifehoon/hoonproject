@@ -45,9 +45,9 @@ public class CrawlerDataCombBO {
 	public synchronized long addCrawWebPageinfo(WebPageInfoBO webPageInfoBO)
 	{
 		
-		if (webPageInfoBOMap.get(webPageInfoBO.getGoodsNo()) == null)
+		if (webPageInfoBOMap.get(webPageInfoBO.getGoodsUrl()) == null)
 		{
-			webPageInfoBOMap.put(webPageInfoBO.getGoodsNo(), webPageInfoBO);
+			webPageInfoBOMap.put(webPageInfoBO.getGoodsUrl(), webPageInfoBO);
 			webPageInfoBOlist.add(webPageInfoBO);
 		}
 		

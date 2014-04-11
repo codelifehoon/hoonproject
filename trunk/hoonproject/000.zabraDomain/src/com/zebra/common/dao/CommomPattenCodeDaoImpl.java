@@ -2,6 +2,7 @@ package com.zebra.common.dao;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import com.zebra.common.BaseFactory;
@@ -10,7 +11,7 @@ import com.zebra.process.parser.domain.ExpPattenBO;
 @Repository
 public class CommomPattenCodeDaoImpl extends CommonDAO implements CommomPattenCodeDao {
 	
-	
+	public Logger log = Logger.getLogger(this.getClass());
 	/* (non-Javadoc)
 	 * @see com.zebra.common.dao.CommomPattenCodeDao#getPattenCode(java.lang.String, java.lang.String)
 	 */
@@ -24,6 +25,7 @@ public class CommomPattenCodeDaoImpl extends CommonDAO implements CommomPattenCo
 		
 		expPattenBO = BaseFactory.create(ExpPattenBO.class);
 		
+		if ("".equals(siteConfigSeq) || siteConfigSeq == null || "".equals(pattenKind) || pattenKind == null ) throw new Exception ("패턴코드 조회오류.");
 		expPattenBO.setSiteConfigSeq(siteConfigSeq);
 		expPattenBO.setPattenKind(pattenKind);
 		
@@ -53,12 +55,14 @@ public class CommomPattenCodeDaoImpl extends CommonDAO implements CommomPattenCo
 		
 		expPattenBO.setSiteConfigSeq(siteConfigSeq);
 		expPattenBO.setPattenKind(pattenKind);
+		if ("".equals(siteConfigSeq) || siteConfigSeq == null || "".equals(pattenKind) || pattenKind == null ) throw new Exception ("패턴코드 조회오류.");
 		
 		
 		expPattenList =  sqlSession.selectList("query.commonPatten.selectCommonPatten", expPattenBO);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		

@@ -2,14 +2,16 @@ package com.zebra.common.dao;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-
+@Repository
 public class CommonDAO  {
 
-	@Autowired
+	@Autowired @Qualifier("sqlSession")
 	protected SqlSessionTemplate sqlSession;
-	@Autowired
+	
+	@Autowired @Qualifier("sqlSessionBatch")
 	protected SqlSessionTemplate sqlSessionBatch;
 	
 	public CommonDAO()
@@ -18,13 +20,5 @@ public class CommonDAO  {
 		org.apache.ibatis.logging.LogFactory.useLog4JLogging();
 	}
 
-	public void setSqlSession(SqlSessionTemplate sqlSession) {
-		this.sqlSession = sqlSession;
-	}
-	public void setSqlSessionBatch(SqlSessionTemplate sqlSessionBatch) {
-		this.sqlSessionBatch = sqlSessionBatch;
-	}
-
-	
 
 }

@@ -14,9 +14,9 @@ public interface PageInfoDAO {
 
 	public  void insertPageInfo(List<WebPageInfoBO> webPageInfoBOlist);
 
-	public List<WebPageInfoBO>  selectPageInfoList(WebPageInfoBO webPageInfoBO);
+	public HashMap<String, WebPageInfoBO>  selectReNewPageInfoMap(WebPageInfoBO webPageInfoBO);
 
-	public  void updatePageInfoList(List<WebPageInfoBO> webPageInfoBOList);
+	public  void updateReNewPageInfoList(List<WebPageInfoBO> webPageInfoBOList);
 
 	public  HashMap<String, WebPageInfoBO> selectPageInfoMap(WebPageInfoBO webPageInfoBO);
 

@@ -7,7 +7,7 @@ public class BaseBO  implements Serializable  {
 
 	private String retCode;
 	private String retMsg;
-	
+	private Integer	   rowCnt;
 	
 	public String getRetCode() {
 		return retCode;
@@ -20,6 +20,12 @@ public class BaseBO  implements Serializable  {
 	}
 	public void setRetMsg(String retMsg) {
 		this.retMsg = retMsg;
+	}
+	public Integer getRowCnt() {
+		return rowCnt;
+	}
+	public void setRowCnt(Integer rowCount) {
+		this.rowCnt = rowCount;
 	}
 	
 }
