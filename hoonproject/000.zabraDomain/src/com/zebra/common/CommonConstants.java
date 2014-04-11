@@ -4,11 +4,15 @@ import com.zebra.common.util.PattenUtil;
 import com.zebra.process.parser.domain.ExpPattenBO;
 
 public class CommonConstants {
-
+	
+		//고정값
+	
+		public static final String	CRAWL_STORAGE_FOLDER = "d:\\crawlStorage\\";
+		public static final String	CRAWL_AGENT = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.116 Safari/537.36";
+		
 		// 패턴 타입
 		public static final String	PT_REGEXP 	= 	"PT_01"; 	//	정규식 패턴
 		public static final String  PT_HTML_SEL	= 	"PT_02";	//  html select 값
-
 	
 		// 패턴종류
 		public static final String PK_VISIT_URL_PATTEN		= "PK_010";		// 방문URL 패턴

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zebra.common.BaseFactory;
+import com.zebra.common.CommonConstants;
 import com.zebra.common.util.ConverterUtil;
 import com.zebra.process.crawler.dao.CrawCofigDAO;
 import com.zebra.process.crawler.dao.PageInfoDAO;
@@ -41,8 +42,8 @@ public class CrawlerJobImpl implements CrawlerJob {
 	{
 		CommCrawlController commCrawlController = null;
 		CrawlConfig crawlConfig = new CrawlConfig();
-		crawlConfig.setCrawlStorageFolder("d:\\crawlStorage\\" + crawlerDataCombBO.getCrawConfigBO().getSiteNm());
-		//crawlConfig.setUserAgentString(userAgentString);
+		crawlConfig.setCrawlStorageFolder(CommonConstants.CRAWL_STORAGE_FOLDER + this.getClass().getName() + "\\" + crawlerDataCombBO.getCrawConfigBO().getSiteNm());
+		crawlConfig.setUserAgentString(CommonConstants.CRAWL_AGENT);
 		
 		PageFetcher 		pageFetcher = new PageFetcher(crawlConfig);
 		RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
@@ -59,7 +60,7 @@ public class CrawlerJobImpl implements CrawlerJob {
 		for (String seedURL : crawlerDataCombBO.getCrawConfigBO().getSeedURL()) 
 			{
 				log.debug("seedURL:" + seedURL);
-				commCrawlController.addSeed("http://www.11st.co.kr/product/SellerProductDetail.tmall?method=getSellerProductDetail&xfrom=search^prd&prdNo=313190628&trTypeCd=20&trCtgrNo=585021&lCtgrNo=502&mCtgrNo=940266");		
+				commCrawlController.addSeed(seedURL);		
 			}
 		
 		commCrawlController.start(URLCrawler.class, crawlerDataCombBO.getCrawConfigBO().getCrawlThreadCount());
@@ -88,7 +89,7 @@ public class CrawlerJobImpl implements CrawlerJob {
 			webPageInfoBOMap = pageInfoDAO.selectPageInfoMap(webPageInfoBO);
 			
 
-			bo.setCrawlThreadCount(4);
+			bo.setCrawlThreadCount(crawConfigBO.getCrawlThreadCount());
 			crawlerDataCombBO.setCrawConfigBO(bo);
 			crawlerDataCombBO.setWebPageInfoBOMap(webPageInfoBOMap);			// 기 수집된 내역은 제외 하기 위해서 set 
 			

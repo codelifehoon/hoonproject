@@ -2,14 +2,17 @@ package com.zebra.process.renew;
 
 import java.text.SimpleDateFormat;
 
+
 import java.util.Date;
 import java.util.List;
 
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.zebra.common.CommonConstants;
+import com.zebra.common.SpringBeanFactory;
 import com.zebra.common.dao.CommomPattenCodeDao;
 import com.zebra.common.util.PattenUtil;
 import com.zebra.process.crawler.CommCrawlController;
@@ -28,9 +31,11 @@ import edu.uci.ics.crawler4j.url.WebURL;
 public class PageCrawler extends WebCrawler {
 
 
-	protected static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(WebCrawler.class.getName());
-	@Autowired
-	private CommomPattenCodeDao commomPattenCodeDao;
+	protected  Logger log =  Logger.getLogger(this.getClass());
+	
+	 private CommomPattenCodeDao commomPattenCodeDao = SpringBeanFactory.getBean(CommomPattenCodeDao.class);
+	 private DomParser domParser = SpringBeanFactory.getBean(DomParser.class);
+	
     /**
      * You should implement this function to specify whether
      * the given url should be crawled or not (based on your
@@ -50,43 +55,35 @@ public class PageCrawler extends WebCrawler {
     public void visit(Page page) {
     	
     	
+    		String ordUrl = page.getWebURL().getURL();
             String url = page.getWebURL().getURL().toLowerCase();
             CrawlerDataCombBO crawlerDataCombBO = ((CommCrawlController)getMyController()).getCrawlerDataCombBO();
-            CrawConfigBO		crawConfigBO		= crawlerDataCombBO.getCrawConfigBO();
-            PageConfigBo pageConfigBo = crawlerDataCombBO.getPageConfigBo();
+            CrawConfigBO		crawConfigBO	= crawlerDataCombBO.getCrawConfigBO();
+           
 
-            logger.error("url:" + url);
-            
+            log.debug("url:" + url);
+ 
             if (page.getParseData() instanceof HtmlParseData) 
             {
-            	DomParser  domParser = new DomParserImpl();
             	
-            	String goodsNo = PattenUtil.pattenString(commomPattenCodeDao.selectPattenCodeArray(crawConfigBO.getSiteConfigSeq() , CommonConstants.PK_GOODS_NO_PATTEN)
-            											, url);
-            											
-            	
+ 
             	WebPageInfoBO webPageInfoBONew;
-                WebPageInfoBO webPageInfoBOOld = crawlerDataCombBO.getWebPageInfoBOMap().get(goodsNo);
+                WebPageInfoBO webPageInfoBOOld = crawlerDataCombBO.getWebPageInfoBOMap().get(ordUrl);
                 
                 if (webPageInfoBOOld == null)
                 {
-                	logger.error("visit webpage info is  null:" + goodsNo);
+                	log.error("visit webpage info is  null:" + ordUrl);
                 	return;
                 }
                 
                 HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
-                pageConfigBo.setHtmlString(htmlParseData.getHtml());
                 
-                webPageInfoBONew = domParser.doParsing(pageConfigBo, webPageInfoBOOld);
+                webPageInfoBONew = domParser.doParsing( htmlParseData.getHtml(), webPageInfoBOOld, null);
                 webPageInfoBONew.setGoodsUrl(webPageInfoBOOld.getGoodsUrl());
                 webPageInfoBONew.setGoodsNo(webPageInfoBOOld.getGoodsNo());
         		
+                crawlerDataCombBO.getWebPageInfoBOMap().put(ordUrl,webPageInfoBONew); 
                 
-
-                if (webPageInfoBONew.getReNewFlag().equals("Y")) 
-                {	
-                	crawlerDataCombBO.getWebPageInfoBOMap().put(goodsNo,webPageInfoBONew); 
-                }
             }
     }
 }

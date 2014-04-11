@@ -80,6 +80,7 @@ public class URLCrawler extends WebCrawler {
             		((CommCrawlController)getMyController()).addWebPageinfoList(webPageInfoBO);
             		log.debug("##### addWebPageinfoList : " + href );
             	}
+           
 
             return visitSiteflag && visitURLflag;
             

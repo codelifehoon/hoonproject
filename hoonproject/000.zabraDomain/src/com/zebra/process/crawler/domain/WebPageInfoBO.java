@@ -11,7 +11,6 @@ public class WebPageInfoBO extends BaseBO {
 	
 	private String  pageInfoListSeq;
 	private String 	siteConfigSeq = "";
-	private String 	webPageInfoSeq ="";
 	private String 	goodsNo 	="";
 	private String 	goodsNm 	="";
 	private String 	goodsPrice 	="";
@@ -24,12 +23,13 @@ public class WebPageInfoBO extends BaseBO {
 	private String cate3 ="";
 	
 	private String statCd="";
+	private Integer failCnt=0;
 	private String updateDt="";
 	private String updateNo="";
 	private String createDt="";
 	private String createNo="";
 
-	
+	private String failYn="";
 	
 	
 	public String getGoodsNo() {
@@ -61,12 +61,6 @@ public class WebPageInfoBO extends BaseBO {
 	}
 	public void setGoodsImg(String goodsImg) {
 		this.goodsImg = goodsImg;
-	}
-	public String getWebPageInfoSeq() {
-		return webPageInfoSeq;
-	}
-	public void setWebPageInfoSeq(String webPageInfoSeq) {
-		this.webPageInfoSeq = webPageInfoSeq;
 	}
 	public String getCate1() {
 		return cate1;
@@ -135,6 +129,19 @@ public class WebPageInfoBO extends BaseBO {
 	public void setPageInfoListSeq(String pageInfoListSeq) {
 		this.pageInfoListSeq = pageInfoListSeq;
 	}
+	public Integer getFailCnt() {
+		return failCnt;
+	}
+	public void setFailCnt(Integer failCnf) {
+		this.failCnt = failCnf;
+	}
+	public String getFailYn() {
+		return failYn;
+	}
+	public void setFailYn(String failYn) {
+		this.failYn = failYn;
+	}
+
 	
 
 }
