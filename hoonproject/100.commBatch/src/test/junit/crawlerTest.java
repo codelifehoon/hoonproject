@@ -145,7 +145,7 @@ public class crawlerTest {
 		Document doc;
 		String htmlString ="";
 		String URL = "http://www.11st.co.kr/product/SellerProductDetail.tmall?method=getSellerProductDetail&prdNo=521537407";
-		
+		String LowURL = URL.toLowerCase();
 		
 		try {
 			doc = Jsoup.connect(URL).userAgent(CommonConstants.CRAWL_AGENT).get();
@@ -163,10 +163,10 @@ public class crawlerTest {
 	
 		log.debug("#########################");
 		log.debug("INFO:" + DebugUtil.DebugBo(webPageInfoBONew));
-		log.debug("INFO PK_VISIT_SITE_PATTEN:" + PattenUtil.pattenMaches(pattenMap.get(CommonConstants.PK_VISIT_SITE_PATTEN), URL) );
-		log.debug("INFO PK_VISIT_URL_PATTEN:" + PattenUtil.pattenMaches(pattenMap.get(CommonConstants.PK_VISIT_URL_PATTEN), URL));
-		log.debug("INFO PK_GOODS_URL_PATTEN :" + PattenUtil.pattenMaches(pattenMap.get(CommonConstants.PK_GOODS_URL_PATTEN), URL));
-		log.debug("INFO PK_GOODS_NO_PATTEN:" + PattenUtil.pattenMaches(pattenMap.get(CommonConstants.PK_GOODS_NO_PATTEN), URL));
+		log.debug("INFO PK_VISIT_SITE_PATTEN:" + PattenUtil.pattenMaches(pattenMap.get(CommonConstants.PK_VISIT_SITE_PATTEN), LowURL) );
+		log.debug("INFO PK_VISIT_URL_PATTEN:" + PattenUtil.pattenMaches(pattenMap.get(CommonConstants.PK_VISIT_URL_PATTEN), LowURL));
+		log.debug("INFO PK_GOODS_URL_PATTEN :" + PattenUtil.pattenMaches(pattenMap.get(CommonConstants.PK_GOODS_URL_PATTEN), LowURL));
+		log.debug("INFO PK_GOODS_NO_PATTEN:" + PattenUtil.pattenString(pattenMap.get(CommonConstants.PK_GOODS_NO_PATTEN), LowURL));
 	
 		
 		}
@@ -320,7 +320,7 @@ public class crawlerTest {
 		pageConfigBo.setCate3Patten(cate3Patten);
 */		
 		
-		return pageConfigBo;
+		return pattenMap;
 	}
 	
 	
