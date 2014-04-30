@@ -12,9 +12,6 @@ public class ReplaceTempWithQuery {
 	{
 	    Enumeration<OrderBO> e =_orders.elements();
 	    double outstanding = 0.0;
-	    double tempVal = 123*123;
-	    
-	 
 	    // print banner
 	    System.out.println ("**************************");
 	    System.out.println ("***** Customer Owes ******");
@@ -22,13 +19,21 @@ public class ReplaceTempWithQuery {
 	 
 	    // calculate outstanding
 	    while (e.hasMoreElements()) {
-	    	OrderBO each = (OrderBO) e.nextElement();
-	        outstanding += each.getAmount() * tempVal;
+	    	OrderBO each = e.nextElement();
+	        outstanding += each.getAmount() * getTempVal();
 	    }
 	 
 	    //print details
 	    System.out.println ("name:" + _name);
 	    System.out.println ("amount" + outstanding);
+	}
+
+	/**
+	 * @return
+	 */
+	private double getTempVal() {
+		double tempVal = 123*123;
+		return tempVal;
 	}
 	
 }
