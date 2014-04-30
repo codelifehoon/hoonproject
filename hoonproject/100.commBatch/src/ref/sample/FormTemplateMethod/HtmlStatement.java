@@ -1,33 +1,40 @@
 package ref.sample.FormTemplateMethod;
 
-import java.util.Enumeration;
-import java.util.Vector;
 
-public class HtmlStatement {
+public class HtmlStatement extends Statement {
 	 
-	private Vector<Rental> vRentals;
-	
-    public String htmlStatement()
-    {
-        Enumeration<Rental> rentals = vRentals.elements();
- 
-        String result = "#####\n<H1>Rentals for <EM>" + getName() + "</EM></H1><P>\n";
-        while (rentals.hasMoreElements()) {
-            Rental each = (Rental) rentals.nextElement();
-            //show figures for each rental
-            result += each.getMovieTitle() + ": " +
-            String.valueOf(each.getCharge()) + "<BR>\n";
-        }
-        //add footer lines
-        result +=  "<P>You owe <EM>" + String.valueOf(getTotalCharge()) + "</EM><P>\n";
+	/**
+	 * @param result
+	 * @param each
+	 * @return
+	 */
+	@Override
+	protected String getBody(String result, Rental each) {
+		result += each.getMovieTitle() + ": " + String.valueOf(each.getCharge()) + "<BR>\n";
+		return result;
+	}
+
+	/**
+	 * @param result
+	 * @return
+	 */
+	@Override
+	protected String getFooter(String result) {
+		result +=  "<P>You owe <EM>" + String.valueOf(getTotalCharge()) + "</EM><P>\n";
         result += "On this rental you earned <EM>" +
             String.valueOf(getTotalFrequentRenterPoints()) +
             "</EM> frequent renter points<P>";
- 
- 
- 
-        return result;
-    }
+		return result;
+	}
+
+	/**
+	 * @return
+	 */
+	@Override
+	protected String getHeader() {
+		String result = "#####\n<H1>Rentals for <EM>" + getName() + "</EM></H1><P>\n";
+		return result;
+	}
 
     public String getName()
     {
@@ -43,8 +50,5 @@ public class HtmlStatement {
     {
     	return 999999;
     }
-    public void setvRentals(Vector<Rental> vRentals) {
-		this.vRentals = vRentals;
-	}
 	
 }
