@@ -16,13 +16,23 @@ public class ExtractMethod {
 	    // print banner
 	    printBanner();
 	 
-	    // calculate outstanding
+	    outstanding = getOutstanding(e, outstanding);
+	 
+	    printDetails(outstanding);
+	}
+
+	/**
+	 * @param e
+	 * @param outstanding
+	 * @return
+	 */
+	private double getOutstanding(Enumeration<OrderBO> e, double outstanding) {
+		// calculate outstanding
 	    while (e.hasMoreElements()) {
 	    	OrderBO each = (OrderBO) e.nextElement();
 	        outstanding += each.getAmount();
 	    }
-	 
-	    printDetails(outstanding);
+		return outstanding;
 	}
 
 	/**
