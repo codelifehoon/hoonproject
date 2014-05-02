@@ -8,13 +8,21 @@ public class IntroduceParameterObject {
 	private Vector<Integer> entries = new Vector();
     
 	
-	  public Integer getFlowBetween (Integer start, Integer end) {
+	  /**
+	 * @deprecated Use {@link #getFlowBetween(FlowBetweenParameter)} instead
+	 */
+	public Integer getFlowBetween (Integer start, Integer end) {
+		return getFlowBetween(new FlowBetweenParameter(start, end));
+	}
+
+
+	public Integer getFlowBetween (FlowBetweenParameter parameterObject) {
 		  Integer result = 0;
 	        Enumeration<Integer> e = entries.elements();
 	        
 	        while (e.hasMoreElements()) {
 	        	Integer each = (Integer) e.nextElement();
-	            if ( (each >= start && each <= end))
+	            if ( (each >= parameterObject.getStart() && each <= parameterObject.getEnd()))
 	            {
 	                result += each.intValue();
 	            }
