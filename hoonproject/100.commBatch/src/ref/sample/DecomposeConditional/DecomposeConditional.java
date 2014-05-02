@@ -6,22 +6,41 @@ public class DecomposeConditional {
 	{
 		int r= 0 ;
 		
-		if ( cond > a  || cond > b ) 
+		if ( condition1(cond, a, b) ) 
 		{
-			r = a*b/2;
+			r = calc(a, b)/2;
 		}
-		else if ( cond > b || cond > c)
+		else if ( condition1(cond, b, c))
 		{
-			r = a*b*2;
+			r = calc(a, b)*2;
 		}
 		else
 		{
-			r = a*b;
+			r = calc(a, b);
 		}
 		
 		
 		return r;
 		
+	}
+
+	/**
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	protected int calc(int a, int b) {
+		return a*b;
+	}
+
+	/**
+	 * @param cond
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	protected boolean condition1(int cond, int a, int b) {
+		return cond > a  || cond > b;
 	}
 	
 }
