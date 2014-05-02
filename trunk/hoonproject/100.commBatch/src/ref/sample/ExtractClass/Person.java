@@ -3,11 +3,10 @@ package ref.sample.ExtractClass;
 public class Person {
 
 	private String _name;
-    private String _officeAreaCode;
-    private String _officeNumber;
-    
-    
-    public void setName(String _name) {
+    private TelephoneNumber data = new TelephoneNumber();
+
+
+	public void setName(String _name) {
         this._name = _name;
     }
     
@@ -15,19 +14,19 @@ public class Person {
         return _name;
     }
     public String getTelephoneNumber() {
-        return ("(" + _officeAreaCode + ") " + _officeNumber);
+        return ("(" + data._officeAreaCode + ") " + data._officeNumber);
     }
     public String getOfficeAreaCode() {
-        return _officeAreaCode;
+        return data._officeAreaCode;
     }
     public void setOfficeAreaCode(String arg) {
-        _officeAreaCode = arg;
+        data._officeAreaCode = arg;
     }
     public String getOfficeNumber() {
-        return _officeNumber;
+        return data._officeNumber;
     }
     public void setOfficeNumber(String arg) {
-        _officeNumber = arg;
+        data._officeNumber = arg;
     }
 
     
