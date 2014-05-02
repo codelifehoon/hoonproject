@@ -1,11 +1,31 @@
 package ref.sample.FormTemplateMethod;
 
+import java.util.Enumeration;
 import java.util.Vector;
 
 public class TextStatement extends Statement {
 	 
    
-	 /**
+	 public String statement()
+     {
+           Enumeration rentals = vRentals.elements();
+ 
+           String result = getHeader();
+           while (rentals.hasMoreElements()) {
+            Rental each = (Rental) rentals.nextElement();
+            //show figures for this rental
+            result = getBody(result, each);
+        }
+ 
+        //add footer lines
+        result = getFooter(result);
+ 
+        return result;
+     }
+
+
+
+	/**
 	 * @param result
 	 * @param each
 	 * @return
