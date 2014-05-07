@@ -2,12 +2,9 @@ package ref.sample.MoveField;
 
 public class Account {
 
-	  private AccountType type;
-	  private double interestRate  = 10.0;
-	 
-	  
-	   public double interestForAmount_days (double amount, int days) {
-	       return interestRate * amount * days / 365;
+	  private AccountType type = new AccountType();
+	  public double InterestForAmountDays (double amount, int days) {
+	       return type.getInterestRate() * amount * days / 365;
 	   }
 	   
 }
