@@ -5,11 +5,14 @@ import java.util.Vector;
 
 import ref.sample.Extract_Method.OrderBO;
 
-public class ExtractInterfaceImpl {
+public class ExtractInterfaceImpl implements ExtractInterface {
 
 	private String _name  = "#name#";
 	
-	 public void printOwing(Vector<OrderBO>  _orders) 
+	 /* (non-Javadoc)
+	 * @see ref.sample.ExtractInterface.ExtractInterface#printOwing(java.util.Vector)
+	 */
+	public void printOwing(Vector<OrderBO>  _orders) 
 	{
 	    Enumeration<OrderBO> e =_orders.elements();
 	    double outstanding = 0.0;
