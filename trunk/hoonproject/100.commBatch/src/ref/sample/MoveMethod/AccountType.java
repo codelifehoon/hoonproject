@@ -16,4 +16,12 @@ public class AccountType {
 	{
 		return true;
 	}
+	public double overdraftCharge(Account account) {
+	   if (isPremium()) {
+	       double result = 10;
+	       if (account.daysOverdrawn > 7) result += (account.daysOverdrawn - 7) * 0.85;
+	       return result;
+	   }
+	   else return account.daysOverdrawn * 1.75;
+	}
 }
