@@ -13,17 +13,29 @@ public class ReplaceParameterWithMethod {
 
 	public double getPrice() {
 	      
-		int basePrice = quantity * itemPrice;
-	       int discountLevel;
+		   return discountedPrice ();
+	   }
+
+	/**
+	 * @return
+	 */
+	protected int getDiscountLevel() {
+		int discountLevel;
 	       if (quantity > 100) discountLevel = 2;
 	       else discountLevel = 1;
-	       double finalPrice = discountedPrice (basePrice, discountLevel);
-	       return finalPrice;
-	   }
+		return discountLevel;
+	}
+
+	/**
+	 * @return
+	 */
+	protected int getBasePrice() {
+		return quantity * itemPrice;
+	}
 	 
-	   private double discountedPrice (int basePrice, int discountLevel) {
-	       if (discountLevel == 2) return basePrice * 0.1;
-	       else return basePrice * 0.05;
+	   private double discountedPrice () {
+	       if (getDiscountLevel() == 2) return getBasePrice() * 0.1;
+	       else return getBasePrice() * 0.05;
 	   }
 	   
 }
