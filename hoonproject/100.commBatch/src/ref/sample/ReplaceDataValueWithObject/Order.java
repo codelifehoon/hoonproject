@@ -13,17 +13,17 @@ package ref.sample.ReplaceDataValueWithObject;
 
 public class Order {
 
-	private String customer;
-    
-	
-	 public Order (String customer) {
-	        customer = customer;
+	private OrderData data ;
+
+
+	public Order (String customer) {
+		data =  new OrderData(customer);
 	    }
 	    public String getCustomer() {
-	        return customer;
+	        return data.getCustomer();
 	    }
 	    public void setCustomer(String arg) {
-	        customer = arg;
+	        data.setCustomer(arg);
 	    } 
 	    
 }
