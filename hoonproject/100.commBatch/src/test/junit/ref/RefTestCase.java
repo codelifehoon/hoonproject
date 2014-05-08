@@ -1,5 +1,10 @@
 /**
- * 
+ * @FileName  : RefTestCase.java
+ * @Project     : code refactoring exam proj
+ * @Date         : 2014. 5. 8. 
+ * @작성자      : codelife
+ * @변경이력 :
+ * @프로그램 설명 :
  */
 package test.junit.ref;
 
@@ -26,6 +31,8 @@ import ref.sample.Extract_Method.ReplaceTempWithQuery;
 import ref.sample.PullUpMethod.Customer;
 import ref.sample.PullUpMethod.PreferredCustomer;
 import ref.sample.PullUpMethod.RegularCustomer;
+import ref.sample.ReplaceArrayWithObject.Performance;
+import ref.sample.ReplaceDataValueWithObject.Order;
 import ref.sample.ReplaceMethodWithMethodObject.Account;
 import ref.sample.ReplaceParameterWithMethod.ReplaceParameterWithMethod;
 import ref.sample.FormTemplateMethod.HtmlStatement;
@@ -38,10 +45,6 @@ import ref.sample.ExtractSubclass.CalPay;
 
 
 
-/**
- * @author codelife
- *
- */
 public class RefTestCase {
 
 	/**
@@ -237,8 +240,87 @@ public class RefTestCase {
 		
 		
 		System.out.println("######ReplaceParameterWithMethodTest:" +replaceParameterWithMethod.getPrice());
-		assertEquals((int)replaceParameterWithMethod.getPrice(),(int)5);
+		assertEquals((int)replaceParameterWithMethod.getPrice(),5);
 		
 	}
+
+	@Test
+	public void MoveFieldTest()
+	{
+		ref.sample.MoveField.Account account = new ref.sample.MoveField.Account();
+		
+		System.out.println("######MoveFieldTestTest:" +(int)account.InterestForAmountDays(20.0,3));
+		assertEquals((int)account.InterestForAmountDays(20.0,3),1);
+		
+	}
+	
+	@Test
+	public void MoveMethodTest()
+	{
+		ref.sample.MoveMethod.Account account = new ref.sample.MoveMethod.Account();
+		
+		System.out.println("######MoveMethodTest:" +(int)account.bankCharge());
+		assertEquals((int)account.bankCharge(),4);
+		
+		
+	}
+	
+	@Test
+	public void InlineClassTest()
+	{
+		 ref.sample.InlineClass.Person person = new ref.sample.InlineClass.Person();
+/*	
+		 // 리팩토링전
+		 person.getOfficeTelephone().setAreaCode("0000");
+		 person.getOfficeTelephone().setNumber("1111");
+		 assertEquals( person.getOfficeTelephone().getAreaCode(),"0000");
+		 assertEquals( person.getOfficeTelephone().getNumber(),"1111");
+*/		 
+		
+			
+		 // 리팩토링후
+		 person.setAreaCode("0000");
+		 person.setNumber("1111");
+		 assertEquals( person.getAreaCode(),"0000");
+		 assertEquals( person.getNumber(),"1111");
+		
+	}
+	
+	@Test
+	public void  ReplaceDataValueWithObject()
+	{
+
+		Order order = new Order("name");
+		assertEquals( order.getCustomer(),"name");
+	
+	}
+	
+	
+	@Test
+	public void ReplaceArrayWithObjectTest()
+	{
+		// 리팩토링전
+		String[] row = new String[3];
+		 
+	    row [0] = "Liverpool";
+	    row [1] = "15";
+	 
+	    String name = row[0];
+	    int wins = Integer.parseInt(row[1]);
+	    
+	    
+	 // 리팩토링후
+	    Performance performance = new Performance();
+	    
+	    performance.setName("Liverpool");
+	    performance.setWins("15");
+	    
+	    
+	    assertEquals( name,performance.getName());
+	    assertEquals( wins,Integer.parseInt(performance.getWins()));
+	    
+	    
+	}
+	
 	
 }
