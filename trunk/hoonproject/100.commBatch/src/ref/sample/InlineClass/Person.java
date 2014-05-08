@@ -4,17 +4,33 @@ public class Person {
 
     private String name;
     private TelephoneNumber officeTelephone = new TelephoneNumber();
+    private String number;
+    private String areaCode;
     
 	 public String getName() {
 	        return name;
 	    }
-    public String getTelephoneNumber(){
-        return officeTelephone.getTelephoneNumber();
-    }
+  
     public TelephoneNumber getOfficeTelephone() {
         return officeTelephone;
     }
-	 
+
+	public String getTelephoneNumber() {
+        return ("(" + areaCode + ") " + number);
+    }
+	public String getAreaCode() {
+        return areaCode;
+    }
+	public void setAreaCode(String arg) {
+        areaCode = arg;
+    }
+	public String getNumber() {
+        return number;
+    }
+	public void setNumber(String arg) {
+        number = arg;
+    }
+	
 
 	    
 }
