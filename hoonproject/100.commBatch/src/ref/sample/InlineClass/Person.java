@@ -10,14 +10,12 @@ public class Person {
 	 public String getName() {
 	        return name;
 	    }
-  
+
     public TelephoneNumber getOfficeTelephone() {
         return officeTelephone;
     }
+	 
 
-	public String getTelephoneNumber() {
-        return ("(" + areaCode + ") " + number);
-    }
 	public String getAreaCode() {
         return areaCode;
     }
