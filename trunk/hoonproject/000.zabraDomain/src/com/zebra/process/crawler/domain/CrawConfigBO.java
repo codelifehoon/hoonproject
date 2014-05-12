@@ -1,8 +1,13 @@
 package com.zebra.process.crawler.domain;
 
+import lombok.Data;
+
+import com.zebra.common.BaseConstants;
 import com.zebra.common.domain.BaseBO;
+import com.zebra.common.util.PattenUtil;
 import com.zebra.process.parser.domain.ExpPattenBO;
 
+@Data
 public class CrawConfigBO extends BaseBO 
 {
 	/**
@@ -15,48 +20,28 @@ public class CrawConfigBO extends BaseBO
 	private String[] seedURL;
 	private String useYn;
 	
-	private int	crawlThreadCount;
+	private int	crawlThreadCount=0;
+	private int crawlDepth = 0;
 	
-	
-	public String[] getSeedURL() {
-		return seedURL;
-	}
-	public void setSeedURL(String[] siteURL) {
-		this.seedURL = siteURL;
-	}
-	public String getSiteNm() {
-		return siteNm;
-	}
-	public void setSiteNm(String siteNm) {
-		this.siteNm = siteNm;
-	}
-	public int getCrawlThreadCount() {
-		return crawlThreadCount;
-	}
-	public void setCrawlThreadCount(int crawlThreadCount) {
-		this.crawlThreadCount = crawlThreadCount;
-	}
+	// 접근대상이 되는 사이트,페이지인지 판단 flag
+	private String 	visitSiteYn;			// 접근대상  사이트 여부
+	private String visitUrlYn;				// 접근대상 url 여부
+	private String goodsUrlYn;				//	접근가능 상품URL 여부
 
-	public String getUseYn() {
-		return useYn;
-	}
-	public void setUseYn(String useYn) {
-		this.useYn = useYn;
-	}
-	public String getSiteConfigSeq() {
-		return siteConfigSeq;
-	}
-	public void setSiteConfigSeq(String siteConfigSeq) {
-		this.siteConfigSeq = siteConfigSeq;
-	}
-	public String getSeedStrURL() {
-		return seedStrURL;
-	}
+	private String crawlAgent = "";				//	접속 브라우저 browser agent
+
+	
+
 	public void setSeedStrURL(String seedStrURL) {
 		
 		this.seedStrURL = seedStrURL;
 		this.seedURL = seedStrURL.split("@");
 	}
 	
+	public String getCrawlAgent()
+	{
+		if ("".equals(crawlAgent)) return BaseConstants.CRAWL_AGENT;
+		else return crawlAgent;
+	}
 	
 }

@@ -53,7 +53,7 @@ import org.apache.log4j.Logger;
 public class ImgProcUtil 
 {
 	
-	private static Logger	log	= Logger.getLogger(CookieUtil.class);
+	private static final Logger	log	= Logger.getLogger(CookieUtil.class);
 	/*
 	*//**
 	 * 

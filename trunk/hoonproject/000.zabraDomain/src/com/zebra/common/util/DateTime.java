@@ -758,7 +758,7 @@ public final class DateTime {
 	 * @return
 	 * @throws ParseException
 	 */
-	 public static Date StringToDate(String value, String pattern) throws ParseException
+	 public static Date stringToDate(String value, String pattern) throws ParseException
 	 {
 		DateFormat df = new SimpleDateFormat(pattern);
 		try {

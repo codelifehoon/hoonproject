@@ -1,21 +1,29 @@
 package com.zebra.process.crawler;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
 import com.zebra.common.BaseFactory;
-import com.zebra.common.CommonConstants;
+import com.zebra.common.BaseConstants;
 import com.zebra.common.util.ConverterUtil;
+import com.zebra.common.util.DebugUtil;
+import com.zebra.common.util.PattenUtil;
 import com.zebra.process.crawler.dao.CrawCofigDAO;
 import com.zebra.process.crawler.dao.PageInfoDAO;
 import com.zebra.process.crawler.domain.CrawConfigBO;
 import com.zebra.process.crawler.domain.CrawlerDataCombBO;
+import com.zebra.process.crawler.domain.PageConfigBO;
 import com.zebra.process.crawler.domain.WebPageInfoBO;
+import com.zebra.process.parser.DomParser;
 
 
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
@@ -26,27 +34,30 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 @Service
 public class CrawlerJobImpl implements CrawlerJob {
 
-	protected Logger log = Logger.getLogger(this.getClass());
+	protected static final Logger log = Logger.getLogger(CrawlerJob.class.getName());
 	
-	@Autowired
-	CrawCofigDAO	crawConfigDAO;
-	
-	@Autowired
-	PageInfoDAO		pageInfoDAO;
+	@Autowired	CrawCofigDAO	crawConfigDAO;
+	@Autowired	PageInfoDAO		pageInfoDAO;
+	@Autowired 	DomParser		domParser;
 	
 	
 	/* (non-Javadoc)
 	 * @see com.zebra.process.crawler.CrawlerJob#doCrawler(com.zebra.process.crawler.domain.CrawlerDataCombBO)
 	 */
-	public void doCrawler(CrawlerDataCombBO crawlerDataCombBO) throws Exception 
+	public CrawlerDataCombBO doCrawler(CrawlerDataCombBO crawlerDataCombBO) throws Exception 
 	{
+		log.debug("##### doCrawler crawlerDataCombBO::" + DebugUtil.debugBo(crawlerDataCombBO));
+		
 		CommCrawlController commCrawlController = null;
 		CrawlConfig crawlConfig = new CrawlConfig();
-		crawlConfig.setCrawlStorageFolder(CommonConstants.CRAWL_STORAGE_FOLDER + this.getClass().getName() + "\\" + crawlerDataCombBO.getCrawConfigBO().getSiteNm());
-		crawlConfig.setUserAgentString(CommonConstants.CRAWL_AGENT);
+		crawlConfig.setCrawlStorageFolder(BaseConstants.CRAWL_STORAGE_FOLDER + this.getClass().getName() + "\\" + crawlerDataCombBO.getCrawConfigBO().getSiteNm());
+		crawlConfig.setUserAgentString(crawlerDataCombBO.getCrawConfigBO().getCrawlAgent());
+		//crawlConfig.setResumableCrawling(false);
+		if (crawlerDataCombBO.getCrawConfigBO().getCrawlDepth() > 0) crawlConfig.setMaxPagesToFetch(crawlerDataCombBO.getCrawConfigBO().getCrawlDepth());
 		
 		PageFetcher 		pageFetcher = new PageFetcher(crawlConfig);
 		RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
+		robotstxtConfig.setEnabled(false);
 		RobotstxtServer robotstxtServer  = new RobotstxtServer(robotstxtConfig, pageFetcher);
 		
 		try {
@@ -56,15 +67,21 @@ public class CrawlerJobImpl implements CrawlerJob {
 			e.printStackTrace();
 		
 		}
+		
+		
 		commCrawlController.setCrawlerDataCombBO(crawlerDataCombBO);
+		//commCrawlController.startNonBlocking(_c, numberOfCrawlers)
 		for (String seedURL : crawlerDataCombBO.getCrawConfigBO().getSeedURL()) 
 			{
 				log.debug("seedURL:" + seedURL);
 				commCrawlController.addSeed(seedURL);		
 			}
 		
-		commCrawlController.start(URLCrawler.class, crawlerDataCombBO.getCrawConfigBO().getCrawlThreadCount());
+
 		
+		commCrawlController.start(URLCrawler.class, crawlerDataCombBO.getCrawConfigBO().getCrawlThreadCount());
+
+		return crawlerDataCombBO ;
 	}
 	
 
@@ -99,6 +116,56 @@ public class CrawlerJobImpl implements CrawlerJob {
 			log.info("##### siteCraw end #####");
 			
 		}
+		
+	}
+	
+	
+	@Override
+	public List<WebPageInfoBO> validCrawlerPrdInfo( CrawlerDataCombBO	crawlerDataCombBO) 
+	{
+
+		WebPageInfoBO		webPageInfoBO 		=  BaseFactory.create(WebPageInfoBO.class);
+		List<WebPageInfoBO>	retList			=  new ArrayList<WebPageInfoBO>();
+		
+		
+		Document doc;
+		String htmlString ="";
+		String[] URLs = crawlerDataCombBO.getCrawConfigBO().getSeedURL();
+		
+		for (String URL : URLs)
+		{
+			CrawlerDataCombBO cdcBo = BaseFactory.create(CrawlerDataCombBO.class);
+			
+			try {
+				doc = Jsoup.connect(URL).userAgent(crawlerDataCombBO.getCrawConfigBO().getCrawlAgent()).get();
+				htmlString = doc.toString();
+				log.debug("########### html:"+ crawlerDataCombBO.getCrawConfigBO().getCrawlAgent() + "###"+ htmlString);
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			
+			WebPageInfoBO webPageInfoBONew = domParser.doParsing(htmlString,webPageInfoBO, crawlerDataCombBO.getPattenMap());
+
+
+
+			
+			retList.add(webPageInfoBONew);
+		}
+		
+		return retList;
+	
+		
+		
+	}
+
+
+	@Override
+	public CrawlerDataCombBO validCrawlSeedURLInfo( CrawlerDataCombBO crawlerDataCombBO) throws Exception {
+		return doCrawler(crawlerDataCombBO);
+		
 		
 	}
 	

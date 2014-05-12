@@ -24,7 +24,7 @@ import org.apache.log4j.Logger ;
 public class PageInfoDAOImpl  extends CommonDAO  implements PageInfoDAO{
 
 	
-	protected Logger log = Logger.getLogger(this.getClass());
+	protected static final Logger log = Logger.getLogger(PageInfoDAOImpl.class.getName());
 	
 		/* (non-Javadoc)
 		 * @see com.zebra.process.crawler.dao.PageInfoDAO#insertPageInfo(java.util.List)

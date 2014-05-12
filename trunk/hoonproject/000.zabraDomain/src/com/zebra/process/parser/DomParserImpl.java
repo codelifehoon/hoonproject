@@ -12,17 +12,17 @@ import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.zebra.common.CommonConstants;
+import com.zebra.common.BaseConstants;
 import com.zebra.common.dao.CommomPattenCodeDao;
 import com.zebra.common.util.PattenUtil;
-import com.zebra.process.crawler.domain.PageConfigBo;
+import com.zebra.process.crawler.domain.PageConfigBO;
 import com.zebra.process.crawler.domain.WebPageInfoBO;
 import com.zebra.process.parser.domain.ExpPattenBO;
 
 @Service
 public class DomParserImpl implements DomParser 
 {
-	private Logger log = Logger.getLogger(this.getClass());
+	private static final Logger log = Logger.getLogger(DomParser.class.getName());
 	
 	@Autowired
 	private CommomPattenCodeDao commomPattenCodeDao;
@@ -50,12 +50,12 @@ public class DomParserImpl implements DomParser
 	/* (non-Javadoc)
 	 * @see com.zebra.process.parser.DomParser#doParsing(com.zebra.process.crawler.domain.PageConfigBo, com.zebra.process.crawler.domain.WebPageInfoBO)
 	 */
-	public WebPageInfoBO doParsing(String htmlString, WebPageInfoBO webPageInfoBO, HashMap<String, ExpPattenBO[]> pattenMap)
+	public WebPageInfoBO doParsing(String htmlString, WebPageInfoBO webPageInfoBO, HashMap<String, ExpPattenBO[]> pattenParamMap)
 	{
-		
 		
 		WebPageInfoBO webPageInfoBONew = null;
 		Document doc = Jsoup.parse(htmlString);
+		HashMap<String, ExpPattenBO[]> pattenMap;
 		
 		try {
 			webPageInfoBONew = (WebPageInfoBO)BeanUtils.cloneBean(webPageInfoBO);
@@ -64,15 +64,15 @@ public class DomParserImpl implements DomParser
 			e.printStackTrace();
 		}
 		
-		pattenMap = getPageInfoPatten(webPageInfoBO , pattenMap );
+		pattenMap = getPageInfoPatten(webPageInfoBO , pattenParamMap );
 		
-		webPageInfoBONew.setGoodsImg(selectPattenInfo(pattenMap.get(CommonConstants.PK_GOODS_IMG_PATTEN), doc));
-		webPageInfoBONew.setGoodsNm(selectPattenInfo(pattenMap.get(CommonConstants.PK_GOODS_NAME_PATTEN), doc));
-		webPageInfoBONew.setGoodsPrice(selectPattenInfo(pattenMap.get(CommonConstants.PK_GOODS_PRICE_PATTEN), doc));
-		webPageInfoBONew.setCate1(selectPattenInfo(pattenMap.get(CommonConstants.PK_CATE1_PATTEN), doc));
-		webPageInfoBONew.setCate2(selectPattenInfo(pattenMap.get(CommonConstants.PK_CATE2_PATTEN), doc));
-		webPageInfoBONew.setCate3(selectPattenInfo(pattenMap.get(CommonConstants.PK_CATE3_PATTEN), doc));
-		
+		webPageInfoBONew.setGoodsImg(selectPattenInfo(pattenMap.get(BaseConstants.PK_GOODS_IMG_PATTEN), doc));
+		webPageInfoBONew.setGoodsNm(selectPattenInfo(pattenMap.get(BaseConstants.PK_GOODS_NAME_PATTEN), doc));
+		webPageInfoBONew.setGoodsPrice(selectPattenInfo(pattenMap.get(BaseConstants.PK_GOODS_PRICE_PATTEN), doc));
+		webPageInfoBONew.setGoodsDisc(selectPattenInfo(pattenMap.get(BaseConstants.PK_GOODS_DISC_PATTEN), doc));
+		webPageInfoBONew.setCate1(selectPattenInfo(pattenMap.get(BaseConstants.PK_CATE1_PATTEN), doc));
+		webPageInfoBONew.setCate2(selectPattenInfo(pattenMap.get(BaseConstants.PK_CATE2_PATTEN), doc));
+		webPageInfoBONew.setCate3(selectPattenInfo(pattenMap.get(BaseConstants.PK_CATE3_PATTEN), doc));
 		
 		webPageInfoBONew.setReNewFlag(this.compareWebPageInfo(webPageInfoBO, webPageInfoBONew));
 		if (!"".equals(webPageInfoBONew.getGoodsNm()) 
@@ -81,7 +81,7 @@ public class DomParserImpl implements DomParser
 	
 		if ("Y".equals(webPageInfoBONew.getFailYn()))
 		{
-			log.info("##### 수집실패:" + com.zebra.common.util.DebugUtil.DebugBo(webPageInfoBONew) );
+			log.info("##### 수집실패:" + com.zebra.common.util.DebugUtil.debugBo(webPageInfoBONew) );
 		}
 		
 		return webPageInfoBONew;
@@ -94,17 +94,17 @@ public class DomParserImpl implements DomParser
 		if (pattenMap != null) return pattenMap;
 		
 		
-		pattenMap = new HashMap<String,ExpPattenBO[]>();
+		HashMap<String,ExpPattenBO[]> retPattenMap = new HashMap<String,ExpPattenBO[]>();
 		
-		pattenMap.put(CommonConstants.PK_GOODS_IMG_PATTEN, commomPattenCodeDao.selectPattenCodeArray(webPageInfoBO.getSiteConfigSeq() , CommonConstants.PK_GOODS_IMG_PATTEN));
-		pattenMap.put(CommonConstants.PK_GOODS_NAME_PATTEN, commomPattenCodeDao.selectPattenCodeArray(webPageInfoBO.getSiteConfigSeq() , CommonConstants.PK_GOODS_NAME_PATTEN));
-		pattenMap.put(CommonConstants.PK_GOODS_PRICE_PATTEN, commomPattenCodeDao.selectPattenCodeArray(webPageInfoBO.getSiteConfigSeq() , CommonConstants.PK_GOODS_PRICE_PATTEN));
-		pattenMap.put(CommonConstants.PK_CATE1_PATTEN, commomPattenCodeDao.selectPattenCodeArray(webPageInfoBO.getSiteConfigSeq() , CommonConstants.PK_CATE1_PATTEN));
-		pattenMap.put(CommonConstants.PK_CATE2_PATTEN, commomPattenCodeDao.selectPattenCodeArray(webPageInfoBO.getSiteConfigSeq() , CommonConstants.PK_CATE2_PATTEN));
-		pattenMap.put(CommonConstants.PK_CATE3_PATTEN, commomPattenCodeDao.selectPattenCodeArray(webPageInfoBO.getSiteConfigSeq() , CommonConstants.PK_CATE3_PATTEN));
+		retPattenMap.put(BaseConstants.PK_GOODS_IMG_PATTEN, commomPattenCodeDao.selectPattenCodeArray(webPageInfoBO.getSiteConfigSeq() , BaseConstants.PK_GOODS_IMG_PATTEN));
+		retPattenMap.put(BaseConstants.PK_GOODS_NAME_PATTEN, commomPattenCodeDao.selectPattenCodeArray(webPageInfoBO.getSiteConfigSeq() , BaseConstants.PK_GOODS_NAME_PATTEN));
+		retPattenMap.put(BaseConstants.PK_GOODS_PRICE_PATTEN, commomPattenCodeDao.selectPattenCodeArray(webPageInfoBO.getSiteConfigSeq() , BaseConstants.PK_GOODS_PRICE_PATTEN));
+		retPattenMap.put(BaseConstants.PK_CATE1_PATTEN, commomPattenCodeDao.selectPattenCodeArray(webPageInfoBO.getSiteConfigSeq() , BaseConstants.PK_CATE1_PATTEN));
+		retPattenMap.put(BaseConstants.PK_CATE2_PATTEN, commomPattenCodeDao.selectPattenCodeArray(webPageInfoBO.getSiteConfigSeq() , BaseConstants.PK_CATE2_PATTEN));
+		retPattenMap.put(BaseConstants.PK_CATE3_PATTEN, commomPattenCodeDao.selectPattenCodeArray(webPageInfoBO.getSiteConfigSeq() , BaseConstants.PK_CATE3_PATTEN));
 		
 		
-		return pattenMap;
+		return retPattenMap;
 		
 		
 	}
