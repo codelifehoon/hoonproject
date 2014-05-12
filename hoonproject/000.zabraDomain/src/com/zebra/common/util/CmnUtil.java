@@ -274,7 +274,9 @@ public class CmnUtil {
 	public String changeLine(String Data, int reqtColcmn)
 	{
 		String newStr = "";
-		int len = Data.length();
+		int len = 0;
+		if (Data != null ) len = Data.length();
+		
 		try
 		{
 			if (Data == null)
@@ -380,7 +382,9 @@ public class CmnUtil {
 	public String changeLineBr(String Data, int reqtColcmn)
 	{
 		String newStr = "";
-		int len = Data.length();
+		int len = 0;
+		if (Data != null ) len = Data.length();
+		
 		try
 		{
 			if (Data == null)
@@ -2881,7 +2885,7 @@ public class CmnUtil {
 		if (data.length() == 0)
 			return data;
 
-		if (data != "") {
+		if ( !"".equals(data)  ) {
 
 			if (data.length() == 11) {
 				data = replaceStringAll(data, "-", "");
@@ -6061,7 +6065,7 @@ public class CmnUtil {
 	/**
 	 File size에 대한  Message출력
 	 */
-	public String getFileSize_Mesg(long file_size) {
+	public String getFileSizeMesg(long file_size) {
 		String _file_size = "";
 		if (file_size < 0) {// cmnUtil.getFileSize() -> 파일이 없을때 or 에러
 			if (file_size == -990)
@@ -6937,7 +6941,9 @@ public class CmnUtil {
 		String[] bufArr;
 		int i;
 
-		if (str == null || str.equals("")) {
+		if (str == null || str.equals("")) 
+		{
+			return "".split("");
 		}
 		try {
 			st = new StringTokenizer(str, spliter);
@@ -7631,8 +7637,9 @@ public class CmnUtil {
 
 		try {
 			Object o = (Object) v.elementAt(index);
-			Class c = o.getClass();
-
+			Class c  =null;
+			
+			if (o != null) c = o.getClass();
 			if (o == null) {
 				value = "";
 			} else if (c.isArray()) {
@@ -7666,7 +7673,9 @@ public class CmnUtil {
 		Object value = null;
 		try {
 			Object o = (Object) box.get(key);
-			Class c = o.getClass();
+			Class c = null;
+			
+			if (o != null) c = o.getClass();
 			if (o == null)
 				value = new Object();
 			else if (c.isArray()) {
@@ -7863,7 +7872,7 @@ public class CmnUtil {
 
 	/*****************************************************
 	******************************************************/
-	public String DecimalPointint(int _count)	{
+	public String decimalPointint(int _count)	{
 		String count	= String.valueOf(_count);
 		int sum_len		= count.length();
 		int rem_len		= sum_len/3;
@@ -7884,7 +7893,7 @@ public class CmnUtil {
 	    return sum;
 	}
 
-	public String DecimalPointLong(long _count)	{
+	public String decimalPointLong(long _count)	{
 		String count	= Long.toString(_count);
 		int sum_len		= count.length();
 		int rem_len		= sum_len/3;
@@ -7905,7 +7914,7 @@ public class CmnUtil {
 	    return sum;
 	}
 
-	public String DecimalPointString(String  _count)	{
+	public String decimalPointString(String  _count)	{
 		String count	= _count;
 		int sum_len		= count.length();
 		int rem_len		= sum_len/3;
@@ -7932,7 +7941,7 @@ public class CmnUtil {
 	 * flag 1 -> 9999년 12월 12일 00시 00분
 	 * else -> 9999년 12월 12일 00시 00분 00초
 	******************************************************/
-	public String ConvertDateToString(String dateString, int flag) {
+	public String convertDateToString(String dateString, int flag) {
 		String yyyy = "";
 		String mm = "";
 		String dd = "";

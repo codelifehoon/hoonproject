@@ -38,11 +38,20 @@ public class CommCrawlController extends CrawlController {
 	
 	public synchronized void addWebPageinfoList(WebPageInfoBO webPageInfoBO)
 	{
-		if (crawlerDataCombBO.addCrawWebPageinfo(webPageInfoBO) >= 100)
+		
+		if ("Y".equals(crawlerDataCombBO.getPreViewYn()) )
 		{
-			pageInfoDao.insertPageInfo(crawlerDataCombBO.getWebPageInfoBOlist());
-			crawlerDataCombBO.getWebPageInfoBOlist().clear();
+			crawlerDataCombBO.addCrawWebPageinfo(webPageInfoBO);
 		}
+		else
+		{
+			if (crawlerDataCombBO.addCrawWebPageinfo(webPageInfoBO) >= 100)
+			{
+				pageInfoDao.insertPageInfo(crawlerDataCombBO.getWebPageInfoBOlist());
+				crawlerDataCombBO.getWebPageInfoBOlist().clear();
+			}
+		}
+		
 	}
 
 }

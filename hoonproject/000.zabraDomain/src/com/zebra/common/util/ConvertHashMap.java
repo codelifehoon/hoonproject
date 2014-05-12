@@ -172,7 +172,8 @@ public class ConvertHashMap extends HashMap
      * @return string 패턴화된 날짜 문자열
      */
     public String format(Date date, String pattern) {
-        return format(date, pattern);
+        //return format(date, pattern);
+    	return null;
     }
     
     /**

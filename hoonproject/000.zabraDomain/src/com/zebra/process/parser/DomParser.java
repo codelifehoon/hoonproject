@@ -2,7 +2,7 @@ package com.zebra.process.parser;
 
 import java.util.HashMap;
 
-import com.zebra.process.crawler.domain.PageConfigBo;
+import com.zebra.process.crawler.domain.PageConfigBO;
 import com.zebra.process.crawler.domain.WebPageInfoBO;
 import com.zebra.process.parser.domain.ExpPattenBO;
 

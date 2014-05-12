@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.zebra.common.BaseFactory;
-import com.zebra.common.CommonConstants;
+import com.zebra.common.BaseConstants;
 import com.zebra.common.SpringBeanFactory;
 import com.zebra.common.dao.CommomPattenCodeDao;
 import com.zebra.common.util.DateTime;
@@ -18,6 +18,7 @@ import com.zebra.common.util.PattenUtil;
 import com.zebra.process.crawler.dao.PageInfoDAO;
 import com.zebra.process.crawler.domain.CrawConfigBO;
 import com.zebra.process.crawler.domain.CrawlerDataCombBO;
+import com.zebra.process.crawler.domain.VisiteTargetBO;
 import com.zebra.process.crawler.domain.WebPageInfoBO;
 import com.zebra.process.parser.domain.ExpPattenBO;
 import edu.uci.ics.crawler4j.crawler.Page;
@@ -27,8 +28,8 @@ import edu.uci.ics.crawler4j.url.WebURL;
 
 public class URLCrawler extends WebCrawler {
 
+	protected static final Logger log = Logger.getLogger(URLCrawler.class.getName());
 
-	protected Logger log = Logger.getLogger(this.getClass());
 	
 	private CommomPattenCodeDao commomPattenCodeDao = SpringBeanFactory.getBean(CommomPattenCodeDao.class);
 	
@@ -51,18 +52,23 @@ public class URLCrawler extends WebCrawler {
     		CrawConfigBO		crawConfigBO		= crawlerDataCombBO.getCrawConfigBO();
     		
     	
-    		String domain = url.getDomain().toLowerCase();
-            String href = url.getURL().toLowerCase();
+    		String domain = url.getDomain();
+            String href = url.getURL();
 
-            
-            visitSiteflag = PattenUtil.pattenMaches(commomPattenCodeDao.selectPattenCodeArray(crawConfigBO.getSiteConfigSeq() , CommonConstants.PK_VISIT_SITE_PATTEN)
-            										, domain);
-            visitURLflag = PattenUtil.pattenMaches(commomPattenCodeDao.selectPattenCodeArray(crawConfigBO.getSiteConfigSeq() , CommonConstants.PK_VISIT_URL_PATTEN)
-            										, href);
-            visitGoodsflag = PattenUtil.pattenMaches(commomPattenCodeDao.selectPattenCodeArray(crawConfigBO.getSiteConfigSeq() , CommonConstants.PK_GOODS_URL_PATTEN)
-            										, href);
-            goodsNo = PattenUtil.pattenString(commomPattenCodeDao.selectPattenCodeArray(crawConfigBO.getSiteConfigSeq() , CommonConstants.PK_GOODS_NO_PATTEN)
-            										, href);
+            if (crawlerDataCombBO.getPattenMap() != null)
+            {
+            	visitSiteflag = PattenUtil.pattenMaches(crawlerDataCombBO.getPattenMap().get(BaseConstants.PK_VISIT_SITE_PATTEN), domain);
+				visitURLflag = PattenUtil.pattenMaches(crawlerDataCombBO.getPattenMap().get(BaseConstants.PK_VISIT_URL_PATTEN), href);
+				visitGoodsflag = PattenUtil.pattenMaches(crawlerDataCombBO.getPattenMap().get(BaseConstants.PK_GOODS_URL_PATTEN), href);
+				goodsNo = PattenUtil.pattenString(crawlerDataCombBO.getPattenMap().get(BaseConstants.PK_GOODS_NO_PATTEN), href);
+            }
+            else
+            {
+	            visitSiteflag = PattenUtil.pattenMaches(commomPattenCodeDao.selectPattenCodeArray(crawConfigBO.getSiteConfigSeq() , BaseConstants.PK_VISIT_SITE_PATTEN), domain);
+	            visitURLflag = PattenUtil.pattenMaches(commomPattenCodeDao.selectPattenCodeArray(crawConfigBO.getSiteConfigSeq() , BaseConstants.PK_VISIT_URL_PATTEN), href);
+	            visitGoodsflag = PattenUtil.pattenMaches(commomPattenCodeDao.selectPattenCodeArray(crawConfigBO.getSiteConfigSeq() , BaseConstants.PK_GOODS_URL_PATTEN), href);
+	            goodsNo = PattenUtil.pattenString(commomPattenCodeDao.selectPattenCodeArray(crawConfigBO.getSiteConfigSeq() , BaseConstants.PK_GOODS_NO_PATTEN), href);
+            }
             
             if ( visitSiteflag && visitURLflag && visitGoodsflag && !goodsNo.equals(""))
             	{
@@ -70,16 +76,24 @@ public class URLCrawler extends WebCrawler {
             		webPageInfoBO.setSiteConfigSeq(crawConfigBO.getSiteConfigSeq());
             		webPageInfoBO.setGoodsUrl(url.getURL());
             		webPageInfoBO.setGoodsNo(goodsNo);
-            		webPageInfoBO.setStatCd(CommonConstants.ST_FIRST);
+            		webPageInfoBO.setStatCd(BaseConstants.ST_FIRST);
             		webPageInfoBO.setUpdateNo("999");
             		webPageInfoBO.setUpdateDt(DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
             		webPageInfoBO.setCreateNo("999");
             		webPageInfoBO.setCreateDt(DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
             		
-        			
             		((CommCrawlController)getMyController()).addWebPageinfoList(webPageInfoBO);
             		log.debug("##### addWebPageinfoList : " + href );
             	}
+            if ( visitSiteflag && visitURLflag && "Y".equals(crawlerDataCombBO.getPreViewYn()))
+	            {
+            		//지금은 미리보기를 위해서만 사용하는데 차후에는 방문대상 URL도 별도로 저장할 필요는 있을듯 
+            		log.debug("#### 방문대상URL:" + url);
+            		VisiteTargetBO visiteTargetBO = BaseFactory.create(VisiteTargetBO.class);            		
+            		visiteTargetBO.setURL(url.getURL());
+
+            		crawlerDataCombBO.getVisiteTargetBOlist().add(visiteTargetBO);
+	            }
            
 
             return visitSiteflag && visitURLflag;

@@ -10,19 +10,19 @@ import java.util.Set;
 public class DebugUtil {
     
     
-    public  static String DebugBoList(List list) {
+    public  static String debugBoList(List list) {
         
         if (list==null ) return "null object\r\n";
         String buffer="";
          for (int i = 0; list != null && i < list.size(); i++) {
           Object o = list.get(i);
           buffer += "-------------------------------------------------------" + i + "\r\n" ;
-          buffer += DebugBo(o);
+          buffer += debugBo(o);
          }       
          return buffer; 
        }
 
-    public static String DebugBo(Object o) 
+    public static String debugBo(Object o) 
     {
          if (o == null) return "null object\r\n";
          
@@ -46,7 +46,7 @@ public class DebugUtil {
                      }
                  else if(className.indexOf("java.lang.String[]",0) > 0) 
                      { 
-                         buffer += m[i].getName() + DebugStringArray((String[])m[i].invoke(o, null)) + "\r\n" ;
+                         buffer += m[i].getName() + debugStringArray((String[])m[i].invoke(o, null)) + "\r\n" ;
                      }
                  else
                      {
@@ -66,7 +66,7 @@ public class DebugUtil {
          
     }
     
-    public static String DebugStringArray(String[] data)
+    public static String debugStringArray(String[] data)
     {
         if (data == null) return "null object\r\n";
         
@@ -84,7 +84,7 @@ public class DebugUtil {
         return buffer;
     }
     
-    public static String DebugStringList(List data)
+    public static String debugStringList(List data)
     {
         if (data == null) return "null object\r\n";
         
@@ -103,7 +103,7 @@ public class DebugUtil {
     }
     
     
-    public static String DebugHashMapBoList(HashMap map)
+    public static String debugHashMapBoList(HashMap map)
     {
         if (map == null) return "null object\r\n";
         String buffer = "";      
@@ -117,7 +117,7 @@ public class DebugUtil {
             {
                
                 buffer += "mapkey : " + key + "\r\n";
-                buffer += DebugBoList((List)map.get(key));
+                buffer += debugBoList((List)map.get(key));
                 
                //buffer += map.get(key).toString();
                 /*
@@ -133,7 +133,7 @@ public class DebugUtil {
         return buffer;        
     }
     
-    public static String DebugHashMapBo(HashMap map)
+    public static String debugHashMapBo(HashMap map)
     {
         if (map == null) return "null object\r\n";
         String buffer = "";      
@@ -147,7 +147,7 @@ public class DebugUtil {
             {
                
                 buffer += "mapkey : " + key + "\r\n";
-                buffer += DebugBo(map.get(key));
+                buffer += debugBo(map.get(key));
                 
             }
             catch(Exception e)
@@ -158,7 +158,7 @@ public class DebugUtil {
         return buffer;        
     }
     
-    public static String DebugHashMapString(HashMap map)
+    public static String debugHashMapString(HashMap map)
     {
         if (map == null) return "null object value\r\n";
         String buffer = "";      

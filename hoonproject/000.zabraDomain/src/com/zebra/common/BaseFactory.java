@@ -3,10 +3,16 @@ package com.zebra.common;
 import java.lang.reflect.Constructor;
 
 import java.lang.reflect.Modifier;
+
+import lombok.extern.log4j.Log4j;
+
+import org.apache.james.mime4j.message.BodyFactory;
 import org.apache.log4j.Logger;
 import com.sun.beans.finder.ClassFinder;
+import com.zebra.process.parser.domain.ExpPattenBO;
 
 
+@Log4j
 public abstract class BaseFactory {
 
     public static Logger logger = Logger.getLogger(BaseFactory.class);
@@ -79,6 +85,24 @@ public abstract class BaseFactory {
 
     }
 
+    public static ExpPattenBO[] createExpPattenBO(String val,String splitRegex , String pattenKind )
+	{
+		String vals[] = val.split(splitRegex);
+		int size = vals.length;
+		ExpPattenBO[] expBos = new ExpPattenBO[size];
+		
+		
+		for (int i=0;i<size;i++)
+		{
+			expBos[i] = BaseFactory.create(ExpPattenBO.class);
+			expBos[i].setPattenStr(vals[i]);
+			expBos[i].setPattenKind(pattenKind);
+		}
+
+		return expBos;
+	}
+    
+    
     /**
      * TODO 메소드 설명을 입력해주십시오. <P/> 상세한 메소드 설명.
      * 
@@ -210,4 +234,5 @@ public abstract class BaseFactory {
         
     }
 
+    
 }

@@ -11,7 +11,7 @@ import edu.uci.ics.crawler4j.crawler.WebCrawler;
 
 public class PattenUtil {
 
-	private static Logger log = Logger.getLogger(PattenUtil.class);
+	private static final Logger log = Logger.getLogger(PattenUtil.class.getName());
 	
 	
 	public static boolean pattenMaches(ExpPattenBO[] pattens,String inputStr)

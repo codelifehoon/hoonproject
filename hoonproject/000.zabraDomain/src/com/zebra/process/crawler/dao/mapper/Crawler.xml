@@ -69,11 +69,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<result column="siteNm" property="siteNm" />
 			<result column="seedURL" property="seedStrURL" />
 			<result column="useYn" property="useYn" />
-	 </resultMap>
+			<result column="crawlAgent" property="crawlAgent" />
+	</resultMap>
 	<!-- 페이지 리스트 -->
 	<select id="selectCrawConfigList" resultMap="selectCrawConfigResult" parameterType="com.zebra.process.crawler.domain.CrawConfigBO">
 	     	
-	     	SELECT /*crawler.selectCrawConfigList*/ siteConfigSeq, siteNm, seedURL, useYn, createNo, createDt, updateDt, updateNo 
+	     	SELECT /*crawler.selectCrawConfigList*/ siteConfigSeq, siteNm, seedURL, useYn, crawlAgent ,createNo, createDt, updateDt, updateNo  
 			FROM craw_config
 			where 1=1
 			and useYn = 'Y'

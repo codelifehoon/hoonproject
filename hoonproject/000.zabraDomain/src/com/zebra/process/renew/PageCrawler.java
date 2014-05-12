@@ -11,14 +11,14 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.zebra.common.CommonConstants;
+import com.zebra.common.BaseConstants;
 import com.zebra.common.SpringBeanFactory;
 import com.zebra.common.dao.CommomPattenCodeDao;
 import com.zebra.common.util.PattenUtil;
 import com.zebra.process.crawler.CommCrawlController;
 import com.zebra.process.crawler.domain.CrawConfigBO;
 import com.zebra.process.crawler.domain.CrawlerDataCombBO;
-import com.zebra.process.crawler.domain.PageConfigBo;
+import com.zebra.process.crawler.domain.PageConfigBO;
 import com.zebra.process.crawler.domain.WebPageInfoBO;
 import com.zebra.process.parser.DomParser;
 import com.zebra.process.parser.DomParserImpl;
@@ -31,7 +31,7 @@ import edu.uci.ics.crawler4j.url.WebURL;
 public class PageCrawler extends WebCrawler {
 
 
-	protected  Logger log =  Logger.getLogger(this.getClass());
+	protected  static final  Logger log =  Logger.getLogger(PageCrawler.class.getName());
 	
 	 private CommomPattenCodeDao commomPattenCodeDao = SpringBeanFactory.getBean(CommomPattenCodeDao.class);
 	 private DomParser domParser = SpringBeanFactory.getBean(DomParser.class);
@@ -56,7 +56,7 @@ public class PageCrawler extends WebCrawler {
     	
     	
     		String ordUrl = page.getWebURL().getURL();
-            String url = page.getWebURL().getURL().toLowerCase();
+            String url = page.getWebURL().getURL();
             CrawlerDataCombBO crawlerDataCombBO = ((CommCrawlController)getMyController()).getCrawlerDataCombBO();
             CrawConfigBO		crawConfigBO	= crawlerDataCombBO.getCrawConfigBO();
            
@@ -78,7 +78,7 @@ public class PageCrawler extends WebCrawler {
                 
                 HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
                 
-                webPageInfoBONew = domParser.doParsing( htmlParseData.getHtml(), webPageInfoBOOld, null);
+                webPageInfoBONew = domParser.doParsing( htmlParseData.getHtml(), webPageInfoBOOld,crawlerDataCombBO.getPattenMap() );
                 webPageInfoBONew.setGoodsUrl(webPageInfoBOOld.getGoodsUrl());
                 webPageInfoBONew.setGoodsNo(webPageInfoBOOld.getGoodsNo());
         		
