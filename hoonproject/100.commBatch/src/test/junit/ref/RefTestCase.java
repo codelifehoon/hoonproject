@@ -8,10 +8,8 @@
  */
 package test.junit.ref;
 
-import static org.junit.Assert.*;
-
-
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Vector;
 
@@ -24,52 +22,56 @@ import ref.sample.DecomposeConditional.DecomposeConditional;
 import ref.sample.ExtractClass.Person;
 import ref.sample.ExtractInterface.ExtractInterface;
 import ref.sample.ExtractInterface.ExtractInterfaceImpl;
+import ref.sample.ExtractSubclass.CalPay;
 import ref.sample.ExtractSubclass.CalcSpecDay;
 import ref.sample.Extract_Method.ExtractMethod;
 import ref.sample.Extract_Method.OrderBO;
 import ref.sample.Extract_Method.ReplaceTempWithQuery;
-import ref.sample.PullUpMethod.Customer;
+import ref.sample.FormTemplateMethod.HtmlStatement;
+import ref.sample.FormTemplateMethod.Rental;
+import ref.sample.FormTemplateMethod.TextStatement;
+import ref.sample.IntroduceParameterObject.FlowBetweenParameter;
+import ref.sample.IntroduceParameterObject.IntroduceParameterObject;
 import ref.sample.PullUpMethod.PreferredCustomer;
 import ref.sample.PullUpMethod.RegularCustomer;
 import ref.sample.ReplaceArrayWithObject.Performance;
 import ref.sample.ReplaceDataValueWithObject.Order;
 import ref.sample.ReplaceMethodWithMethodObject.Account;
 import ref.sample.ReplaceParameterWithMethod.ReplaceParameterWithMethod;
-import ref.sample.FormTemplateMethod.HtmlStatement;
-import ref.sample.FormTemplateMethod.Rental;
-import ref.sample.FormTemplateMethod.TextStatement;
-import ref.sample.IntroduceParameterObject.FlowBetweenParameter;
-import ref.sample.IntroduceParameterObject.IntroduceParameterObject;
-import ref.sample.ExtractSubclass.CalPay;
+import ref.sample.ReplaceTypeCodeWithClass.BloodGroup;
+import ref.sample.ReplaceTypeCodeWithSubclasses.Emp;
+import ref.sample.ReplaceTypeCodeWithSubclasses.EmpEngineer;
 
 
 
 
 public class RefTestCase {
 
+	
+	
 	/**
 	 * @throws java.lang.Exception
 	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	@BeforeClass	public static void 
+	setUpBeforeClass() throws Exception {
 	}
 
 	/**
 	 * @throws java.lang.Exception
 	 */
-	@Before
-	public void setUp() throws Exception {
+	@Before public void 
+	setUp() throws Exception {
 	}
 
 	/**
 	 * @throws java.lang.Exception
 	 */
-	@After
-	public void tearDown() throws Exception {
+	@After public void 
+	tearDown() throws Exception {
 	}
 
-	@Test
-	public void ExtractMethodTest() {
+	@Test public void 
+	ExtractMethodTest() {
 		ExtractMethod m = new ExtractMethod();
 		
 		Vector<OrderBO> v = new  Vector<OrderBO>(3);
@@ -83,8 +85,8 @@ public class RefTestCase {
 		
 	}
 	
-	@Test
-	public void ReplaceTempWithQueryTest() {
+	@Test public void 
+	ReplaceTempWithQueryTest() {
 		ReplaceTempWithQuery m = new ReplaceTempWithQuery();
 		
 		Vector<OrderBO> v = new  Vector<OrderBO>(3);
@@ -98,8 +100,8 @@ public class RefTestCase {
 		
 	}
 	
-	@Test
-	public void PullUpMethodTest() {
+	@Test public void 
+	PullUpMethodTest() {
 		PreferredCustomer 	m = new PreferredCustomer();
 		RegularCustomer 	m2 = new RegularCustomer();
 		
@@ -111,8 +113,8 @@ public class RefTestCase {
 		assertTrue(m2.createBill(2) == 10);
 	}
 	
-	@Test
-	public void FormTemplateMethodTest()
+	@Test public void 
+	FormTemplateMethodTest()
 	{
 		HtmlStatement h = new HtmlStatement();
 		TextStatement t = new TextStatement();
@@ -128,8 +130,8 @@ public class RefTestCase {
 		
 	}
 	
-	@Test
-	public void ExtractClassTest()
+	@Test public void 
+	ExtractClassTest()
 	{
 		Person person = new Person();
 		
@@ -145,8 +147,8 @@ public class RefTestCase {
 	}
 	
 	
-	@Test
-	public void IntroduceParameterObjectTest()
+	@Test public void 
+	IntroduceParameterObjectTest()
 	{
 		IntroduceParameterObject introduceParameterObject = new IntroduceParameterObject();
 		
@@ -168,8 +170,8 @@ public class RefTestCase {
 
 	
 
-	@Test
-	public void ReplaceMethodWithMethodObject()
+	@Test public void 
+	ReplaceMethodWithMethodObject()
 	{
 		Account account	= new Account();
 	
@@ -177,8 +179,8 @@ public class RefTestCase {
 
 	}
 	
-	@Test
-	public void DecomposeConditionalTest()
+	@Test public void 
+	DecomposeConditionalTest()
 	{
 		DecomposeConditional decomposeConditional = new DecomposeConditional();
 		
@@ -188,8 +190,8 @@ public class RefTestCase {
 	}
 	
 	
-	@Test
-	public void ExtractSubclassTest()
+	@Test public void 
+	ExtractSubclassTest()
 	{
 		CalcSpecDay calcSpecDay = new CalcSpecDay(10,10);
 		CalPay 		calPay 	= new CalPay(10,10);
@@ -203,8 +205,8 @@ public class RefTestCase {
 		
 	}
 	
-	@Test
-	public void ExtractInterfaceImplTest() {
+	@Test public void 
+	ExtractInterfaceImplTest() {
 /*
  		// 리팩토링 전
 		ExtractInterfaceImpl m = new ExtractInterfaceImpl();
@@ -233,8 +235,8 @@ public class RefTestCase {
 	}
 
 	
-	@Test
-	public void ReplaceParameterWithMethodTest()
+	@Test public void 
+	ReplaceParameterWithMethodTest()
 	{
 		ReplaceParameterWithMethod replaceParameterWithMethod = new ReplaceParameterWithMethod(10,10);
 		
@@ -244,8 +246,8 @@ public class RefTestCase {
 		
 	}
 
-	@Test
-	public void MoveFieldTest()
+	@Test public void 
+	MoveFieldTest()
 	{
 		ref.sample.MoveField.Account account = new ref.sample.MoveField.Account();
 		
@@ -254,8 +256,8 @@ public class RefTestCase {
 		
 	}
 	
-	@Test
-	public void MoveMethodTest()
+	@Test public void 
+	MoveMethodTest()
 	{
 		ref.sample.MoveMethod.Account account = new ref.sample.MoveMethod.Account();
 		
@@ -265,8 +267,8 @@ public class RefTestCase {
 		
 	}
 	
-	@Test
-	public void InlineClassTest()
+	@Test public void 
+	InlineClassTest()
 	{
 		 ref.sample.InlineClass.Person person = new ref.sample.InlineClass.Person();
 /*	
@@ -286,8 +288,8 @@ public class RefTestCase {
 		
 	}
 	
-	@Test
-	public void  ReplaceDataValueWithObject()
+	@Test public void 
+	 ReplaceDataValueWithObject()
 	{
 
 		Order order = new Order("name");
@@ -296,8 +298,8 @@ public class RefTestCase {
 	}
 	
 	
-	@Test
-	public void ReplaceArrayWithObjectTest()
+	@Test public void 
+	ReplaceArrayWithObjectTest()
 	{
 		// 리팩토링전
 		String[] row = new String[3];
@@ -317,10 +319,68 @@ public class RefTestCase {
 	    
 	    
 	    assertEquals( name,performance.getName());
-	    assertEquals( wins,Integer.parseInt(performance.getWins()));
-	    
-	    
+	    assertEquals( wins,Integer.parseInt(performance.getWins()));    
 	}
 	
+	@Test public void 
+	ReplaceTypeCodeWithClassTest()
+	{
+/*		
+		// 리팩토링전
+		ref.sample.ReplaceTypeCodeWithClass.Person p = new ref.sample.ReplaceTypeCodeWithClass.Person(ref.sample.ReplaceTypeCodeWithClass.Person.O);
+
+		p.getBloodGroup();
+		assertEquals(p.getBloodGroup() , ref.sample.ReplaceTypeCodeWithClass.Person.O); 
+		p.setBloodGroup(ref.sample.ReplaceTypeCodeWithClass.Person.AB);
+		assertEquals(p.getBloodGroup() , ref.sample.ReplaceTypeCodeWithClass.Person.AB); 
+*/		
+		
+		// 리팩토링후
+		ref.sample.ReplaceTypeCodeWithClass.Person p = new ref.sample.ReplaceTypeCodeWithClass.Person(BloodGroup.O);
+
+		p.getBloodGroup();
+		assertEquals(p.getBloodGroup() , BloodGroup.O); 
+		p.setBloodGroup(BloodGroup.AB);
+		assertEquals(p.getBloodGroup() , BloodGroup.AB); 
+				
+	}
+	
+	@Test public void 
+	ReplaceTypeCodeWithSubclassesTest()
+	{
+		/*리팩토링전*/
+		/*
+		Emp employee = new EmployeeEngineer(Emp.ENGINEER);
+		assertEquals(employee.getType() ,Emp.ENGINEER); 
+		*/
+		
+		/*리팩토링후*/
+		Emp employee = EmpEngineer.create(Emp.ENGINEER);
+		assertEquals(employee.getType() ,Emp.ENGINEER); 
+		
+	}
+	
+	@Test public void  
+	ReplaceTypeCodeWithStateStrategyTest()
+	{
+		// 리팩토링전
+/*		
+		ref.sample.ReplaceTypeCodeWithStateStrategy.Employee employee = 
+				new ref.sample.ReplaceTypeCodeWithStateStrategy.Employee(ref.sample.ReplaceTypeCodeWithStateStrategy.Employee.ENGINEER);
+		
+		employee.payAmount();
+		employee.setType(ref.sample.ReplaceTypeCodeWithStateStrategy.Employee.SALESMAN);
+		assertEquals(employee.payAmount() ,40); 
+*/
+		// 리팩토링후
+		ref.sample.ReplaceTypeCodeWithStateStrategy.Employee employee = 
+				new ref.sample.ReplaceTypeCodeWithStateStrategy.Employee(ref.sample.ReplaceTypeCodeWithStateStrategy.EmployeeType.ENGINEER);
+		
+		employee.payAmount();
+		employee.setType(ref.sample.ReplaceTypeCodeWithStateStrategy.EmployeeType.SALESMAN);
+		assertEquals(employee.payAmount() ,40);
+	}
+	
+
 	
 }
