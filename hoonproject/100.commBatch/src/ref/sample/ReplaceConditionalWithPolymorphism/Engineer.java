@@ -19,4 +19,13 @@ public class Engineer extends EmployeeType {
 		return  EmployeeType.ENGINEER;
 	}
 
+	@Override
+	public void Calc(Employee employee) {
+		employee.sum += employee._monthlySalary ;
+	}
+	
+
+    
+    
+
 }
