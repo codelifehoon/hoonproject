@@ -14,10 +14,10 @@ public class Employee {
     private EmployeeType _type;
 
     
-    private int _monthlySalary = 10;
-    private int _commission = 20;
-    private int _bonus = 30;
-    private int sum = 0;
+    public int _monthlySalary = 10;
+    public int _bonus = 30;
+    public int sum = 0;
+    public int _commission = 20;
     
     
  
@@ -35,18 +35,8 @@ public class Employee {
  
     public int payAmount() {
     	
-        switch (getType()) {
-            case EmployeeType.ENGINEER:
-            	sum += _monthlySalary;
-            	return sum;
-            case EmployeeType.SALESMAN:
-            	sum += _monthlySalary + _commission;
-            	return sum;
-            case EmployeeType.MANAGER:
-            	sum += _monthlySalary + _bonus;
-            	return sum;
-            default:
-               throw new RuntimeException("Incorrect Employee");
-        }
+    	_type.Calc(this);
+    	return  sum;
     }
+
 }

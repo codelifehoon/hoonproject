@@ -28,4 +28,5 @@ public abstract class EmployeeType {
     }
 
     abstract int getTypeCode();
+    public abstract void Calc(Employee employee);
   }
