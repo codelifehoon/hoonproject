@@ -13,6 +13,16 @@ public class Customer {
 	private String name;
 	private String age;
 	private String gender;
+	
+	
+	public boolean isNull() {
+        return false;
+    }
+	
+	public static Customer newNull() {
+        return new NullCustomer();
+    }
+	
 	public String getName() {
 		return name;
 	}
