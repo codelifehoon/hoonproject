@@ -10,10 +10,9 @@
 
 package ref.sample.ReplaceDelegationWithInheritance;
 
-public class Person {
+public class Person extends TelephoneNumber {
 
 	private String _name;
-    private TelephoneNumber data = new TelephoneNumber();
 
 
 	public void setName(String _name) {
@@ -24,19 +23,19 @@ public class Person {
         return _name;
     }
     public String getTelephoneNumber() {
-        return ("(" + data._officeAreaCode + ") " + data._officeNumber);
+        return ("(" + _officeAreaCode + ") " + _officeNumber);
     }
     public String getOfficeAreaCode() {
-        return data._officeAreaCode;
+        return _officeAreaCode;
     }
     public void setOfficeAreaCode(String arg) {
-        data._officeAreaCode = arg;
+        _officeAreaCode = arg;
     }
     public String getOfficeNumber() {
-        return data._officeNumber;
+        return _officeNumber;
     }
     public void setOfficeNumber(String arg) {
-        data._officeNumber = arg;
+        _officeNumber = arg;
     }
     
 
