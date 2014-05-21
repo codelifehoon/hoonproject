@@ -11,6 +11,8 @@ package ref.sample.ChangeBidirectionalAssociationToUnidirectional;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.util.Assert;
+
 public class Customer {
 
 	 private Set<Order> _orders = new HashSet<>();
@@ -33,4 +35,9 @@ public class Customer {
 		this.disCount = disCount;
 	}
 
+	public int getPriceFor(Order order) {
+        if (_orders.contains(order))   return order.getDiscountedPrice();
+        return 0;
+	}
+        
 }

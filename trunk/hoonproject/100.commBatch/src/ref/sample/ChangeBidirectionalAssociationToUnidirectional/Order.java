@@ -12,8 +12,8 @@ public class Order {
 
 	private String name;
 	private String tel;
-	
-		
+	  private Customer _customer;
+			
 	Customer getCustomer() {
         return _customer;
     }
@@ -22,11 +22,8 @@ public class Order {
         _customer = arg;
         if (_customer != null) _customer.friendOrders().add(this);
     }
-    private Customer _customer;
 
 
-    
-    
 	public String getName() {
 		return name;
 	}
