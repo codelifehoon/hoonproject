@@ -14,6 +14,7 @@ import java.util.Set;
 public class Customer {
 
 	 private Set<Order> _orders = new HashSet<>();
+	 private int disCount = 1;
 	 
 	 public void addOrder(Order arg) {
 	        arg.setCustomer(this);
@@ -23,5 +24,13 @@ public class Customer {
 	        /** should only be used by Order */
 	        return _orders;
 	    }
-	    
+
+	public int getDisCount() {
+		return disCount;
+	}
+
+	public void setDisCount(int disCount) {
+		this.disCount = disCount;
+	}
+
 }

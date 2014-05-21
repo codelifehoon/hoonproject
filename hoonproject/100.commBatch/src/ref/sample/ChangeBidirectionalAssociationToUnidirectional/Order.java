@@ -39,5 +39,11 @@ public class Order {
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
+	
+	public int getDiscountedPrice() {
+        return 1  * ( _customer.getDisCount() - 1 );
+    }
+	
+	
     
 }
