@@ -12,15 +12,10 @@ public class Order {
 
 	private String name;
 	private String tel;
-	  private Customer _customer;
+	 private Customer _customer;
 			
 	Customer getCustomer() {
-        return _customer;
-    }
-    void setCustomer (Customer arg) {
-        if (_customer != null) _customer.friendOrders().remove(this);
-        _customer = arg;
-        if (_customer != null) _customer.friendOrders().add(this);
+        return Customer.getOrderMap().get(this);
     }
 
 
@@ -38,7 +33,7 @@ public class Order {
 	}
 	
 	public int getDiscountedPrice() {
-        return 1  * ( _customer.getDisCount() - 1 );
+        return 1  * ( getCustomer().getDisCount() - 1 );
     }
 	
 	
