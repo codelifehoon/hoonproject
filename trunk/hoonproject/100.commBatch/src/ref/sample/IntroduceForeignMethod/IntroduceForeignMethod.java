@@ -14,8 +14,16 @@ public class IntroduceForeignMethod {
 
 	public Date newStart(Date previousEnd )
 	{
-		 Date newStart = new Date (previousEnd.getYear(),
-                 previousEnd.getMonth(), previousEnd.getDate() + 1);
+		 Date newStart = NextDay(previousEnd);
 		 return newStart;
+	}
+
+	/**
+	 * @param previousEnd
+	 * @return
+	 */
+	private static Date NextDay(Date previousEnd) {
+		return new Date (previousEnd.getYear(),
+                 previousEnd.getMonth(), previousEnd.getDate() + 1);
 	}
 }
