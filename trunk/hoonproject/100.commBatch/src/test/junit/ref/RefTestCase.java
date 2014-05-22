@@ -11,7 +11,9 @@ package test.junit.ref;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Iterator;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Vector;
 
 import org.junit.After;
@@ -31,6 +33,9 @@ import ref.sample.Extract_Method.ReplaceTempWithQuery;
 import ref.sample.FormTemplateMethod.HtmlStatement;
 import ref.sample.FormTemplateMethod.Rental;
 import ref.sample.FormTemplateMethod.TextStatement;
+import ref.sample.IntroduceAssertion.IntroduceAssertion;
+import ref.sample.IntroduceForeignMethod.IntroduceForeignMethod;
+import ref.sample.IntroduceLocalExtension.IntroduceLocalExtension;
 import ref.sample.IntroduceNullObject.Customer;
 import ref.sample.IntroduceParameterObject.FlowBetweenParameter;
 import ref.sample.IntroduceParameterObject.IntroduceParameterObject;
@@ -39,6 +44,7 @@ import ref.sample.PullUpMethod.RegularCustomer;
 import ref.sample.RemoveParameter.RemoveParam;
 import ref.sample.ReplaceArrayWithObject.Performance;
 import ref.sample.ReplaceDataValueWithObject.Order;
+import ref.sample.ReplaceInheritanceWithDelegation.MyStack;
 import ref.sample.ReplaceMethodWithMethodObject.Account;
 import ref.sample.ReplaceParameterWithMethod.ReplaceParameterWithMethod;
 import ref.sample.ReplaceTypeCodeWithClass.BloodGroup;
@@ -569,6 +575,7 @@ public class RefTestCase {
 		*/
 		
 		// 리팩토링후
+		/*
 		ref.sample.ChangeBidirectionalAssociationToUnidirectional.Order order1 = new ref.sample.ChangeBidirectionalAssociationToUnidirectional.Order ();
 		ref.sample.ChangeBidirectionalAssociationToUnidirectional.Order order2 = new ref.sample.ChangeBidirectionalAssociationToUnidirectional.Order ();
 		ref.sample.ChangeBidirectionalAssociationToUnidirectional.Order order3 = new ref.sample.ChangeBidirectionalAssociationToUnidirectional.Order ();
@@ -638,8 +645,128 @@ public class RefTestCase {
 		
 		System.out.println("2:" + temp);
 		assertEquals(temp.length(),36);
+		*/
+		
+	}
+	
+	@Test public void  
+	ReplaceInheritanceWithDelegationTest()
+	{
+		MyStack myStack = new MyStack();
+		
+		myStack.push("pushString");
+		String temp = myStack.pop();
+		
+		assertEquals(temp ,"pushString");
 		
 		
+	}
+	@Test public void  
+	IntroduceForeignMethodTest()
+	{
+		IntroduceForeignMethod introduceForeignMethod = new IntroduceForeignMethod();
+		java.text.SimpleDateFormat formatter =
+	            new java.text.SimpleDateFormat("yyyyMMdd", java.util.Locale.KOREA);
+		
+		
+		Date d =  new java.util.Date(2010-1900,0,1);
+		assertEquals(formatter.format(introduceForeignMethod.newStart(d)) ,"20100102");
+		
+		
+	}
+	@Test public void 
+	IntroduceLocalExtensionTest()
+	{
+		// 리팩토링전
+/*		
+		IntroduceLocalExtension introduceLocalExtension = new IntroduceLocalExtension();
+		java.text.SimpleDateFormat formatter =
+	            new java.text.SimpleDateFormat("yyyyMMdd", java.util.Locale.KOREA);
+		
+		
+		Date d =  new java.util.Date(2010-1900,0,1);
+		assertEquals(formatter.format(introduceLocalExtension.newStart(d)) ,"20100102");
+*/		
+		
+		
+		// 리팩토링후
+		
+		IntroduceLocalExtension introduceLocalExtension = new IntroduceLocalExtension(2010-1900,0,1);
+		java.text.SimpleDateFormat formatter =
+	            new java.text.SimpleDateFormat("yyyyMMdd", java.util.Locale.KOREA);
+		
+		assertEquals(formatter.format(introduceLocalExtension.newStart()) ,"20100102");
+		 
+	}
+	
+	@Test public void 
+	IntroduceAssertionTest()
+	{
+		IntroduceAssertion introduceAssertion = new IntroduceAssertion();
+		
+		
+		assertEquals(introduceAssertion.getCondition(),"conditionA");
+		
+		introduceAssertion.setConditionB("conditionB");
+		
+		assertEquals(introduceAssertion.getCondition(),"conditionB");
+		
+		//introduceAssertion.setConditionB(null);
+		//introduceAssertion.getCondition();
+		
+	}
+	
+	@Test public void 
+	EncapsulateCollectionTest()
+	{
+		
+		// 리팩토링전
+		/*
+		ref.sample.EncapsulateCollection.Person kent = new ref.sample.EncapsulateCollection.Person();
+	    Set s = new HashSet();
+	    s.add(new ref.sample.EncapsulateCollection.Course ("Smalltalk Programming", false));
+	    s.add(new ref.sample.EncapsulateCollection.Course ("Appreciating Single Malts", true));
+	    kent.setCourses(s);
+	    assertEquals(2, kent.getCourses().size());
+	    ref.sample.EncapsulateCollection.Course refact = new ref.sample.EncapsulateCollection.Course ("Refactoring", true);
+	    kent.getCourses().add(refact);
+	    kent.getCourses().add(new ref.sample.EncapsulateCollection.Course ("Brutal Sarcasm", false));
+	    assertEquals (4, kent.getCourses().size());
+	    kent.getCourses().remove(refact);
+	    assertEquals (3, kent.getCourses().size());
+		
+	    
+	    Iterator iter = kent.getCourses().iterator();
+	    int count = 0;
+	    while (iter.hasNext()) {
+	    	ref.sample.EncapsulateCollection.Course each = (ref.sample.EncapsulateCollection.Course) iter.next();
+	       if (each.isAdvanced()) count ++;
+	    }
+	    
+	    assertEquals (1, count);
+		*/
+		
+		// 리팩토링후
+		
+		ref.sample.EncapsulateCollection.Person kent = new ref.sample.EncapsulateCollection.Person();
+	    Set s = new HashSet();
+	    s.add(new ref.sample.EncapsulateCollection.Course ("Smalltalk Programming", false));
+	    s.add(new ref.sample.EncapsulateCollection.Course ("Appreciating Single Malts", true));
+	    kent.initializeCourses(s);
+	    assertEquals(2, kent.getCourses().size());
+	    ref.sample.EncapsulateCollection.Course refact = new ref.sample.EncapsulateCollection.Course ("Refactoring", true);
+	    kent.addCourse(refact);
+	    kent.addCourse(new ref.sample.EncapsulateCollection.Course ("Brutal Sarcasm", false));
+	    assertEquals (4, kent.getCourses().size());
+	    kent.removeCourse(refact);
+	    assertEquals (3, kent.getCourses().size());
+		
+	    
+	    int count = kent.numberOfAdvancedCourses();
+	    
+	    assertEquals (1, count);
+	    
+	    
 	}
 	
 }
