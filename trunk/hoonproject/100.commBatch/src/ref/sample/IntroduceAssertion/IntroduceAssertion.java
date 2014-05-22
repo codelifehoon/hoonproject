@@ -8,6 +8,8 @@
  */
 package ref.sample.IntroduceAssertion;
 
+import org.springframework.util.Assert;
+
 public class IntroduceAssertion {
 
 	private String conditionA = "conditionA";
@@ -30,6 +32,9 @@ public class IntroduceAssertion {
 
 	
 	public String getCondition() {
+			Assert.isTrue (conditionA != null || conditionB != null);
+		
+		
 	       // expense limit 또는  a primary project를 가지고 있어야함.
 	       return (getConditionA() != null) ? conditionA : conditionB.toString();
 	   }
