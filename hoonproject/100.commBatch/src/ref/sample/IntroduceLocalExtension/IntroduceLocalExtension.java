@@ -10,11 +10,16 @@ package ref.sample.IntroduceLocalExtension;
 
 import java.util.Date;
 
-public class IntroduceLocalExtension {
+public class IntroduceLocalExtension extends Date {
 
-	public Date newStart(Date previousEnd )
+	public IntroduceLocalExtension(int year, int month, int date) {
+		super(year, month, date);
+		// TODO Auto-generated constructor stub
+	}
+
+	public Date newStart( )
 	{
-		 Date newStart = NextDay(previousEnd);
+		 Date newStart = NextDay();
 		 return newStart;
 	}
 
@@ -22,8 +27,8 @@ public class IntroduceLocalExtension {
 	 * @param previousEnd
 	 * @return
 	 */
-	private static Date NextDay(Date previousEnd) {
-		return new Date (previousEnd.getYear(),
-                 previousEnd.getMonth(), previousEnd.getDate() + 1);
+	private  Date NextDay() {
+		return new Date (getYear(),
+                 getMonth(), getDate() + 1);
 	}
 }
