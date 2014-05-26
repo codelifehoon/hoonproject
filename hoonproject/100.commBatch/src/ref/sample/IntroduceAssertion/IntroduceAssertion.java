@@ -8,7 +8,7 @@
  */
 package ref.sample.IntroduceAssertion;
 
-import org.springframework.util.Assert;
+
 
 public class IntroduceAssertion {
 
@@ -32,7 +32,14 @@ public class IntroduceAssertion {
 
 	
 	public String getCondition() {
-			Assert.isTrue (conditionA != null || conditionB != null);
+			//Assert.isTrue (conditionA != null || conditionB != null);
+			if ( !(conditionA != null || conditionB != null) )
+				try {
+					throw new Exception("validate error.");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		
 		
 	       // expense limit 또는  a primary project를 가지고 있어야함.

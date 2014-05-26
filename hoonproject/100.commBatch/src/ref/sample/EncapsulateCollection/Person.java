@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.springframework.util.Assert;
+
 
 public class Person {
 
@@ -23,7 +23,15 @@ public class Person {
         return Collections.unmodifiableSet(_courses);
     }
     public void initializeCourses(Set arg) {
-    	 Assert.isTrue(_courses.isEmpty());
+    	 //Assert.isTrue(_courses.isEmpty());
+    	 if (!_courses.isEmpty())
+			try {
+				throw new Exception("validate error.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	    	
     	 _courses.addAll(arg);
     }
     

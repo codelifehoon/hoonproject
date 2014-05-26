@@ -13,8 +13,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.util.Assert;
-
 public class Customer {
 
 	 private Set<Order> _orders = new HashSet<>();
