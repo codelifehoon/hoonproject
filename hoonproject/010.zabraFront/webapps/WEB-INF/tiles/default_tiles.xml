@@ -4,26 +4,52 @@
        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 <tiles-definitions>
 	<definition name="baseProperties">
-		<put-attribute name="title"		value="LITE OMP Page" />
-		<put-attribute name="description" value="LITE OMP PAGE입니다" />
-		<put-attribute name="keywords" value="LITE OMP Front"/>
+		<put-attribute name="title"		value="title" />
+		<put-attribute name="description" value="description" />
+		<put-attribute name="keywords" value="keywords"/>
 	</definition>
 	
 	<definition name="default_layout" extends="baseProperties" template="/layouts/default/default_layout.jsp">
+	<put-attribute name="header" value="/jsp/common/header.jsp" />
+		<put-attribute name="body" value="/jsp/common/body.jsp" />
+		<put-attribute name="footer" value="/jsp/common/footer.jsp" />
+	</definition>
+	
+	<definition name="default_popup_layout" extends="baseProperties" template="/layouts/default/default_popup_layout.jsp">
 		<put-attribute name="body" value="/jsp/common/body.jsp" />
 	</definition>
+	
+	<definition name="/PopupPrefix/*/*/*" extends="default_popup_layout">
+		<put-attribute name="body" value="/jsp/{1}/{2}/{3}.jsp" />
+	</definition>
+	
+	<definition name="/PopupPrefix/*/*" extends="default_popup_layout">
+		<put-attribute name="body" value="/jsp/{1}/{2}.jsp" />
+	</definition>
+	
+	<definition name="/PopupPrefix/*" extends="default_popup_layout">
+		<put-attribute name="body" value="/jsp/{1}.jsp" />
+	</definition>
+	
+	
+	<definition name="*/*/*" extends="default_layout">
+		<put-attribute name="body" value="/jsp/{1}/{2}/{3}.jsp" />
+	</definition>
+	
+	<definition name="*/*" extends="default_layout">
+		<put-attribute name="body" value="/jsp/{1}/{2}.jsp" />
+	</definition>
+	
+	<definition name="*" extends="default_layout">
+		<put-attribute name="body" value="/jsp/{1}.jsp" />
+	</definition>
+	
+	
+	
 	
 	<!-- 오류페이지 -->
 	<definition name="/error" extends="baseProperties" template="/jsp/error.jsp" />
 	<definition name="/error/*" extends="baseProperties" template="/jsp/error/{1}.jsp" />
-	<definition name="/index" extends="baseProperties" template="/index.jsp" />
-	
-	<!--  TEST를 위한 layout 설정 -->
-	<definition name="/test/componentApiResult" template="/jsp/test/componentApiResult.jsp"></definition>
 
-	<definition name="/test/*" extends="default_layout">
-		<put-attribute name="body"   value="/jsp/test/{1}.jsp" />
-	</definition>
-	<!--  TEST를 위한 layout 설정 -->
 	
 </tiles-definitions>
