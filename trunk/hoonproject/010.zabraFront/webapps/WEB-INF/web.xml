@@ -2,17 +2,17 @@
 <web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 	<display-name>ZebraFrontProject</display-name>
 
-	<!-- ############################################# -->
-	<!-- Log4j -->
-	<!-- ############################################# -->
-	<context-param>
-		<param-name>log4jConfigLocation</param-name>
-		<param-value>/WEB-INF/properties/${server.type}_log4j.xml</param-value>
-	</context-param>   
-	<listener>
-		<listener-class>skt.tmall.common.listener.LogContextListener</listener-class>  
-	</listener>
-		
+
+           <context-param>
+                     <param-name>log4jConfigLocation</param-name>
+                     <param-value>/WEB-INF/properties/${server.type}_log4j.xml</param-value>
+           </context-param>
+           <listener>
+                     <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+           </listener>
+
+
+
 	<!-- ############################################# -->
 	<!-- Processes application requests -->
 	<!-- ############################################# -->
@@ -52,17 +52,6 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
-	<!-- ############################################# -->
-	<!-- uri Filter -->
-	<!-- ############################################# -->
-	<filter>
-		<filter-name>mobileFilter</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>mobileFilter</filter-name>
-		<url-pattern>*.do</url-pattern>
-	</filter-mapping>
 
 	<!-- ############################################# -->
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
@@ -82,18 +71,12 @@
 		</param-value>
 	</context-param>	
 	
-	<listener>
-		<listener-class>skt.tmall.common.properties.TmallServletContextListener</listener-class>
-	</listener>
-	
+
 	<context-param>
 		<param-name>PropertiesFileName</param-name>
 		<param-value>/WEB-INF/properties/[$server_type]_program.properties</param-value>
 	</context-param>
 	
-	<listener>
-		<listener-class>skt.tmall.common.listener.FrontWebInitializer</listener-class>
-	</listener>   
 
 	<error-page> 
 	   <error-code>404</error-code>

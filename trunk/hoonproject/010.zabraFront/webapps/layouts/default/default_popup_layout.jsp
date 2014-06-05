@@ -6,7 +6,7 @@
 	<head>
 	<title></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-
+	
 	<!-- <script src="/js/jquery-1.8.3.js"></script> -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="/js/jquery-ui-1.9.2.custom.js"></script>
@@ -16,7 +16,7 @@
 	<link rel="stylesheet" href="/css/ui-darkness/jquery-ui-1.9.2.custom.css">
 	<link rel="stylesheet" href="/css/main-grid.css">
 	<link rel="stylesheet" href="/css/layouts/marketing.css">
-	      
+	    
 	<style>
 	.centerfrm {
 		width: 1024px ;
@@ -28,17 +28,11 @@
 	</head>	
 <body>
 
-<!-- header start-->
-<tiles:insertAttribute name="header" />
-<!-- header end-->
 
 <!-- body start-->
 <tiles:insertAttribute name="body" />
 <!-- body end-->
 
-<!-- footer start-->
-<tiles:insertAttribute name="footer" />
-<!-- footer end-->
 
 
 </body>
