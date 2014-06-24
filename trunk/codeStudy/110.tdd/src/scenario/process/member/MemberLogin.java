@@ -15,6 +15,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import scenario.common.BasePage;
+import test.testng.patnerproc.common.TestBase;
 
 public class MemberLogin extends BasePage {
 
@@ -24,8 +25,8 @@ public class MemberLogin extends BasePage {
 	 * @param baseUrl
 	 * @param orderUrl
 	 */
-	public MemberLogin(WebDriver driver, String baseUrl, String orderUrl) {
-		super(driver, baseUrl, orderUrl);
+	public MemberLogin(WebDriver driver,TestBase base) {
+		super(driver, base);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -38,8 +39,9 @@ public class MemberLogin extends BasePage {
 		    driver.findElement(By.id("passWord")).sendKeys("ail733");
 		    driver.findElement(By.cssSelector("input[type=\"button\"]")).click();
 		    
+		   
 		    loginCheckPoint();
-
+		    saveImage("MemberLogin_login");
 		  }
 	
 	private void loginCheckPoint()

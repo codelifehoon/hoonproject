@@ -18,6 +18,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 import scenario.common.BasePage;
+import test.testng.patnerproc.common.TestBase;
 
 
 public class OrderSheet extends BasePage {
@@ -27,8 +28,8 @@ public class OrderSheet extends BasePage {
 	 * @param baseUrl
 	 * @param orderUrl
 	 */
-	public OrderSheet(WebDriver driver, String baseUrl, String orderUrl) {
-		super(driver, baseUrl, orderUrl);
+	public OrderSheet(WebDriver driver,TestBase base) {
+		super(driver, base);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -39,8 +40,9 @@ public class OrderSheet extends BasePage {
 	    new Select(driver.findElement(By.id("optionSel"))).selectByVisibleText("24");
 	    // ERROR: Caught exception [ERROR: Unsupported command [selectWindow | name=Parent_window | ]]
 	    driver.findElement(By.id("buynow")).click();
-	    
 	    goodsOrderSheetCheckPoint();
+	    saveImage("OrderSheet_goodsOrderSheet");
+	  
 	  }
 	
 	
@@ -68,6 +70,7 @@ public class OrderSheet extends BasePage {
 		    driver.findElement(By.id("chkReceiptIssueNo")).click();
 		    // ERROR: Caught exception [ERROR: Unsupported command [selectWindow | name=Parent_window | ]]
 		    driver.findElement(By.linkText("결제하기")).click();
+		    saveImage("OrderSheet_orderProc");
 		    
 	  }
 

@@ -18,12 +18,17 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
+
+import scenario.common.ScreenCaptureHtmlUnitDriver;
+
 public class TestBase {
 
 
 	protected String baseUrl;
 	protected String orderUrl;
 	protected String browser;
+	protected String screenShotYn;
 
 	/**
 	 * 
@@ -33,13 +38,15 @@ public class TestBase {
 	}
 
 	@BeforeMethod()
-	@Parameters({"browser","baseUrl","orderUrl"})
-	public void launchBrowser(String browser,String baseUrl,String orderUrl) {
+	@Parameters({"browser","baseUrl","orderUrl","screenShotYn"})
+	public void launchBrowser(String browser,String baseUrl,String orderUrl,String screenShotYn) {
 		  
 	
 	      this.browser = browser;
 	      this.baseUrl = baseUrl;
 	      this.orderUrl = orderUrl;
+	      this.screenShotYn = screenShotYn;
+	      
 	      
 	      System.out.println("#####launchBrowser#####");
 	      
@@ -67,7 +74,10 @@ public class TestBase {
 	      }
 	      else
 	      {
-	    	  driver = new HtmlUnitDriver();
+	    	  ScreenCaptureHtmlUnitDriver  htmlUnitDriver = new ScreenCaptureHtmlUnitDriver();
+	    	  htmlUnitDriver.setJavascriptEnabled(true);
+	    	  driver = htmlUnitDriver;
+	    	  
 	      }
 	      
 	      System.out.println("#####cretaeBrowser#####");
@@ -93,6 +103,10 @@ public class TestBase {
 
 	public String getBrowser() {
 		return browser;
+	}
+
+	public String getScreenShotYn() {
+		return screenShotYn;
 	}
 
 
