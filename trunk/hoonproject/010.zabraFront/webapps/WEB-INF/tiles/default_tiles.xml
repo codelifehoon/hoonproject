@@ -19,15 +19,15 @@
 		<put-attribute name="body" value="/jsp/common/body.jsp" />
 	</definition>
 	
-	<definition name="/PopupPrefix/*/*/*" extends="default_popup_layout">
+	<definition name="/popupprefix/*/*/*" extends="default_popup_layout">
 		<put-attribute name="body" value="/jsp/{1}/{2}/{3}.jsp" />
 	</definition>
 	
-	<definition name="/PopupPrefix/*/*" extends="default_popup_layout">
+	<definition name="/popupprefix/*/*" extends="default_popup_layout">
 		<put-attribute name="body" value="/jsp/{1}/{2}.jsp" />
 	</definition>
 	
-	<definition name="/PopupPrefix/*" extends="default_popup_layout">
+	<definition name="/popupprefix/*" extends="default_popup_layout">
 		<put-attribute name="body" value="/jsp/{1}.jsp" />
 	</definition>
 	
