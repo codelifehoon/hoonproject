@@ -1,12 +1,14 @@
 package test.junit;
 
 import static org.junit.Assert.assertEquals;
+
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
@@ -17,15 +19,18 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import static org.mockito.Mockito.*;
 
 import com.zebra.common.BaseFactory;
-import com.zebra.common.CommonConstants;
+import com.zebra.common.BaseConstants;
+import com.zebra.common.SampleInterface;
 import com.zebra.common.SpringBeanFactory;
-import com.zebra.common.dao.CommomPattenCodeDao;
+import com.zebra.common.dao.CommonPattenCodeDao;
 import com.zebra.common.util.CmnUtil;
 import com.zebra.common.util.DateTime;
 import com.zebra.common.util.DebugUtil;
@@ -33,10 +38,11 @@ import com.zebra.common.util.PattenUtil;
 import com.zebra.process.crawler.CommCrawlController;
 import com.zebra.process.crawler.CrawlerJob;
 import com.zebra.process.crawler.CrawlerJobImpl;
+import com.zebra.process.crawler.dao.CrawConfigDAO;
 import com.zebra.process.crawler.dao.PageInfoDAO;
 import com.zebra.process.crawler.domain.CrawConfigBO;
 import com.zebra.process.crawler.domain.CrawlerDataCombBO;
-import com.zebra.process.crawler.domain.PageConfigBo;
+import com.zebra.process.crawler.domain.PageConfigBO;
 import com.zebra.process.crawler.domain.WebPageInfoBO;
 import com.zebra.process.parser.DomParser;
 import com.zebra.process.parser.DomParserImpl;
@@ -48,16 +54,16 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 import com.zebra.process.renew.ReNewJob;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class )
 @ContextConfiguration(locations="classpath:com/zebra/batch/resource/spring-context-common.xml")
-public class crawlerTest {
+public class CrawlerTest {
 
-	protected Logger log = Logger.getLogger(crawlerTest.class.getName());
+	protected static final  Logger log = Logger.getLogger(CrawlerTest.class.getName());
 	@Autowired CrawlerJob 	crawlerJob ;
 	@Autowired DomParser	domParser;
 	@Autowired ReNewJob	reNewJob;
 	@Autowired PageInfoDAO	pageInfoDAO;
-
+	@Autowired(required=false) SampleInterface  sampleInterface;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -81,13 +87,20 @@ public class crawlerTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-
+ 
+	@Test
+	public void InterfaceTest()
+	{
+		
+		sampleInterface.doEtc("","");
+		
+	}
 	//@Test
 	public void CrawlerTest() 
 	{
 		 
 		SimpleDateFormat simpleDateFormat =  new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        System.out.println( simpleDateFormat.format(new Date(System.currentTimeMillis())));
+		log.debug( simpleDateFormat.format(new Date(System.currentTimeMillis())));
         
         CrawlerDataCombBO crawlerDataCombBO = new CrawlerDataCombBO();
 		CrawConfigBO crawConfigBO  = BaseFactory.create(CrawConfigBO.class);
@@ -96,12 +109,17 @@ public class crawlerTest {
 		crawConfigBO.setCrawlThreadCount(4);
 		crawConfigBO.setSiteConfigSeq("100000");
 		crawConfigBO.setSiteNm("11st");
+		crawConfigBO.setCrawlDepth(1);
 		crawConfigBO.setSeedURL(new String[]{"http://deal.11st.co.kr/product/SellerProductDetail.tmall?method=getSellerProductDetail&prdNo=1016796431&trTypeCd=34"});
 		
 		crawlerDataCombBO.setCrawConfigBO(crawConfigBO);
 		
 		try {
-			crawlerJob.doCrawler(crawlerDataCombBO);
+			CrawlerDataCombBO retVal = crawlerJob.doCrawler(crawlerDataCombBO);
+			
+			retVal.getVisiteTargetBOlist();
+			retVal.getWebPageInfoBOlist();
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -114,18 +132,18 @@ public class crawlerTest {
 	{
 		 
 		SimpleDateFormat simpleDateFormat =  new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        System.out.println( simpleDateFormat.format(new Date(System.currentTimeMillis())));
+		log.debug( simpleDateFormat.format(new Date(System.currentTimeMillis())));
         
 		CrawConfigBO crawConfigBO  = BaseFactory.create(CrawConfigBO.class);
 
 		
 		crawConfigBO.setCrawlThreadCount(5);
+		crawConfigBO.setCrawlDepth(1);
 		//crawConfigBO.setSiteConfigSeq("100000");
 		//crawConfigBO.setSiteNm("11st");
 		//crawConfigBO.setSeedURL(new String[]{"http://deal.11st.co.kr/product/SellerProductDetail.tmall?method=getSellerProductDetail&prdNo=1016796431&trTypeCd=34"});
 		
 
-		
 		try {
 			crawlerJob.initCrawler(crawConfigBO);
 		} catch (Exception e) {
@@ -145,10 +163,10 @@ public class crawlerTest {
 		Document doc;
 		String htmlString ="";
 		String URL = "http://www.11st.co.kr/product/SellerProductDetail.tmall?method=getSellerProductDetail&prdNo=521537407";
-		String LowURL = URL.toLowerCase();
+		String LowURL = URL;
 		
 		try {
-			doc = Jsoup.connect(URL).userAgent(CommonConstants.CRAWL_AGENT).get();
+			doc = Jsoup.connect(URL).userAgent(BaseConstants.CRAWL_AGENT).get();
 			htmlString = doc.toString();
 			
 		} catch (IOException e) {
@@ -162,26 +180,27 @@ public class crawlerTest {
 		
 	
 		log.debug("#########################");
-		log.debug("INFO:" + DebugUtil.DebugBo(webPageInfoBONew));
-		log.debug("INFO PK_VISIT_SITE_PATTEN:" + PattenUtil.pattenMaches(pattenMap.get(CommonConstants.PK_VISIT_SITE_PATTEN), LowURL) );
-		log.debug("INFO PK_VISIT_URL_PATTEN:" + PattenUtil.pattenMaches(pattenMap.get(CommonConstants.PK_VISIT_URL_PATTEN), LowURL));
-		log.debug("INFO PK_GOODS_URL_PATTEN :" + PattenUtil.pattenMaches(pattenMap.get(CommonConstants.PK_GOODS_URL_PATTEN), LowURL));
-		log.debug("INFO PK_GOODS_NO_PATTEN:" + PattenUtil.pattenString(pattenMap.get(CommonConstants.PK_GOODS_NO_PATTEN), LowURL));
+		log.debug("INFO:" + DebugUtil.debugBo(webPageInfoBONew));
+		log.debug("INFO PK_VISIT_SITE_PATTEN:" + PattenUtil.pattenMaches(pattenMap.get(BaseConstants.PK_VISIT_SITE_PATTEN), LowURL) );
+		log.debug("INFO PK_VISIT_URL_PATTEN:" + PattenUtil.pattenMaches(pattenMap.get(BaseConstants.PK_VISIT_URL_PATTEN), LowURL));
+		log.debug("INFO PK_GOODS_URL_PATTEN :" + PattenUtil.pattenMaches(pattenMap.get(BaseConstants.PK_GOODS_URL_PATTEN), LowURL));
+		log.debug("INFO PK_GOODS_NO_PATTEN:" + PattenUtil.pattenString(pattenMap.get(BaseConstants.PK_GOODS_NO_PATTEN), LowURL));
 	
 		
 		}
 
-	//@Test
+	@Test
 	public void dataCombTest() throws Exception 
 	{
 		CommCrawlController crawlControlle = null;
 		CrawlConfig crawlConfig = new CrawlConfig();
-		crawlConfig.setCrawlStorageFolder(CommonConstants.CRAWL_STORAGE_FOLDER + this.getClass().getName() );
-		crawlConfig.setUserAgentString(CommonConstants.CRAWL_AGENT);
+		crawlConfig.setCrawlStorageFolder(BaseConstants.CRAWL_STORAGE_FOLDER + this.getClass().getName() );
+		crawlConfig.setUserAgentString(BaseConstants.CRAWL_AGENT);
 		//crawlConfig.setUserAgentString(userAgentString);
 
 		PageFetcher 		pageFetcher = new PageFetcher(crawlConfig);
 		RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
+		robotstxtConfig.setEnabled(false);
 		RobotstxtServer robotstxtServer  = new RobotstxtServer(robotstxtConfig, pageFetcher);
 		
 		try {
@@ -203,10 +222,10 @@ public class crawlerTest {
 			crawlControlle.addWebPageinfoList(webPageInfoBO);
 		}
 		
-		System.out.println("dataCombTest 종료");
+		log.debug("dataCombTest 종료");
 	}
 
-	//@Test
+	@Test
 	public void ReNewTest() throws Exception 
 	{
 	
@@ -235,7 +254,7 @@ public class crawlerTest {
 	}
 		
 	
-	//@Test
+	@Test
 	public void initReNewTest() throws Exception 
 	{
 	
@@ -255,15 +274,67 @@ public class crawlerTest {
 		log.debug("##### initReNewTest end:" + DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
 	}
 		
+	@Test
+	public void validCrawlSeedURLInfoTest() 
+	{
+		 
+		CrawlerDataCombBO crawlerDataCombBO = BaseFactory.create(CrawlerDataCombBO.class);
+		crawlerDataCombBO.setCrawConfigBO((CrawConfigBO)BaseFactory.create(CrawConfigBO.class));
+		crawlerDataCombBO.setPageConfigBO((PageConfigBO)BaseFactory.create(PageConfigBO.class));
+		
+		crawlerDataCombBO.setPreViewYn("Y");
+		crawlerDataCombBO.getCrawConfigBO().setCrawlThreadCount(1);
+		crawlerDataCombBO.getCrawConfigBO().setSiteNm("11st");
+		crawlerDataCombBO.getCrawConfigBO().setSeedURL(new String[]{"http://m.11st.co.kr/MW/html/ranking/rankingMain.html"});
+		crawlerDataCombBO.getCrawConfigBO().setCrawlDepth(1);
+		crawlerDataCombBO.setPattenMap(getPagePatten());
+		
+		
+		try {
+			 crawlerJob.validCrawlSeedURLInfo(crawlerDataCombBO);
+			log.debug("########## getVisiteTargetBOlist");
+			log.debug(DebugUtil.debugBoList(crawlerDataCombBO.getVisiteTargetBOlist()));
+			log.debug("########## getWebPageInfoBOlist");
+			log.debug(DebugUtil.debugBoList(crawlerDataCombBO.getWebPageInfoBOlist()));
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+		
+	@Test
+	public void validCrawlerPrdInfoTest()
+	{
+		
+		
+		String URL = "http://deal.11st.co.kr/product/SellerProductDetail.tmall?method=getSellerProductDetail&prdNo=1029870614&trTypeCd=34";
+		CrawlerDataCombBO crawlerDataCombBO = BaseFactory.create(CrawlerDataCombBO.class);
+		crawlerDataCombBO.setCrawConfigBO((CrawConfigBO)BaseFactory.create(CrawConfigBO.class));
+		crawlerDataCombBO.setPageConfigBO((PageConfigBO)BaseFactory.create(PageConfigBO.class));
+		crawlerDataCombBO.setPreViewYn("Y");
+		crawlerDataCombBO.setPattenMap(getPagePatten());
+		crawlerDataCombBO.getCrawConfigBO().setSeedStrURL(URL);
+		
+	
+		List<WebPageInfoBO> retList = crawlerJob.validCrawlerPrdInfo(crawlerDataCombBO);
+
+		
+		log.debug("#########################");
+		log.debug("INFO PK_VISIT_SITE_PATTEN:" + PattenUtil.pattenMaches(crawlerDataCombBO.getPattenMap().get(BaseConstants.PK_VISIT_SITE_PATTEN), URL.toLowerCase()) );
+		log.debug("INFO PK_VISIT_URL_PATTEN:" + PattenUtil.pattenMaches(crawlerDataCombBO.getPattenMap().get(BaseConstants.PK_VISIT_URL_PATTEN), URL.toLowerCase()));
+		log.debug("INFO PK_GOODS_URL_PATTEN :" + PattenUtil.pattenMaches(crawlerDataCombBO.getPattenMap().get(BaseConstants.PK_GOODS_URL_PATTEN), URL.toLowerCase()));
+		log.debug("INFO PK_GOODS_NO_PATTEN:" + PattenUtil.pattenString(crawlerDataCombBO.getPattenMap().get(BaseConstants.PK_GOODS_NO_PATTEN), URL.toLowerCase()));
+		log.debug("INFO:" + DebugUtil.debugBoList(retList));
+	}
+	
 	
 
 	private HashMap<String, ExpPattenBO[]> getPagePatten()
 	{
 		HashMap<String, ExpPattenBO[]>  pattenMap = new HashMap<String, ExpPattenBO[]> ();
-
-
-
-	
 
 
 		ExpPattenBO[] visitSitePatten  	= new ExpPattenBO[1];
@@ -287,8 +358,8 @@ public class crawlerTest {
 		goodsImgPatten[0]		= new ExpPattenBO("","");
 		cate1Patten[0]				= new ExpPattenBO("div#location_boxid_1 button#headSel_1","");
 		cate2Patten[0]				= new ExpPattenBO("div#location_boxid_2 button#headSel_2","");
-		cate3Patten[0]				= new ExpPattenBO("div#location_boxid_3 button#headSel_3","");
 		
+		cate3Patten[0]				= new ExpPattenBO("div#location_boxid_3 button#headSel_3","");
 		visitUrlPatten[0]			= new ExpPattenBO(".*(\\.(html|tmall)).*","");
 		visitSitePatten[0]			= new ExpPattenBO(".*(11st.co.kr).*","");
 		goodsUrlPatten[0]			= new ExpPattenBO(".*(sellerproductdetail.tmall?).*","");
@@ -296,17 +367,17 @@ public class crawlerTest {
 	
 		
 		
-		pattenMap.put(CommonConstants.PK_GOODS_NAME_PATTEN, goodsNmPatten);
-		pattenMap.put(CommonConstants.PK_GOODS_PRICE_PATTEN, goodsPricePatten);
-		pattenMap.put(CommonConstants.PK_GOODS_IMG_PATTEN, goodsImgPatten);
-		pattenMap.put(CommonConstants.PK_CATE1_PATTEN, cate1Patten);
-		pattenMap.put(CommonConstants.PK_CATE2_PATTEN, cate2Patten);
-		pattenMap.put(CommonConstants.PK_CATE3_PATTEN, cate3Patten);
+		pattenMap.put(BaseConstants.PK_GOODS_NAME_PATTEN, goodsNmPatten);
+		pattenMap.put(BaseConstants.PK_GOODS_PRICE_PATTEN, goodsPricePatten);
+		pattenMap.put(BaseConstants.PK_GOODS_IMG_PATTEN, goodsImgPatten);
+		pattenMap.put(BaseConstants.PK_CATE1_PATTEN, cate1Patten);
+		pattenMap.put(BaseConstants.PK_CATE2_PATTEN, cate2Patten);
+		pattenMap.put(BaseConstants.PK_CATE3_PATTEN, cate3Patten);
 		
-		pattenMap.put(CommonConstants.PK_VISIT_URL_PATTEN, visitUrlPatten);
-		pattenMap.put(CommonConstants.PK_VISIT_SITE_PATTEN,visitSitePatten );
-		pattenMap.put(CommonConstants.PK_GOODS_URL_PATTEN, goodsUrlPatten);
-		pattenMap.put(CommonConstants.PK_GOODS_NO_PATTEN,goodsNoPatten );
+		pattenMap.put(BaseConstants.PK_VISIT_URL_PATTEN, visitUrlPatten);
+		pattenMap.put(BaseConstants.PK_VISIT_SITE_PATTEN,visitSitePatten );
+		pattenMap.put(BaseConstants.PK_GOODS_URL_PATTEN, goodsUrlPatten);
+		pattenMap.put(BaseConstants.PK_GOODS_NO_PATTEN,goodsNoPatten );
 		
 		
 		
@@ -323,7 +394,7 @@ public class crawlerTest {
 		return pattenMap;
 	}
 	
-	
+
 	
 	
 	}

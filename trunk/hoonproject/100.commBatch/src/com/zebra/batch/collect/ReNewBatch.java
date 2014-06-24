@@ -16,13 +16,13 @@ import com.zebra.process.crawler.CrawlerJob;
 import com.zebra.process.crawler.dao.PageInfoDAO;
 import com.zebra.process.crawler.domain.CrawConfigBO;
 import com.zebra.process.crawler.domain.CrawlerDataCombBO;
-import com.zebra.process.crawler.domain.PageConfigBo;
+import com.zebra.process.crawler.domain.PageConfigBO;
 import com.zebra.process.crawler.domain.WebPageInfoBO;
 import com.zebra.process.parser.domain.ExpPattenBO;
 import com.zebra.process.renew.ReNewJob;
 
 public class ReNewBatch extends BaseDaemon {
-	public Logger log = Logger.getLogger(this.getClass());
+	public static final Logger log = Logger.getLogger(ReNewBatch.class.getName());
 
 
 	
@@ -45,13 +45,19 @@ public class ReNewBatch extends BaseDaemon {
 
 	public void run(String[] args) throws Exception
 	{
-		batch_no = 1002;
+		batchNo = 1002;
     	batchID = "ReNewBatchDaemon";
     	batchName = "URL 정보갱신 배치";
     	
 
+    	
+    	/*TO-DO*/
+    	agent 를 table에서 가져오는 방식으로 변경이 필요함.
+    	 변경이후 작업할것
+    	 
+    	 
 		SimpleDateFormat simpleDateFormat =  new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        System.out.println( simpleDateFormat.format(new Date(System.currentTimeMillis())));
+		log.debug( simpleDateFormat.format(new Date(System.currentTimeMillis())));
         ReNewJob  reNewJob =  SpringBeanFactory.getBean(ReNewJob.class);
    
 		try {CrawConfigBO		crawConfigBO		= BaseFactory.create(CrawConfigBO.class);
