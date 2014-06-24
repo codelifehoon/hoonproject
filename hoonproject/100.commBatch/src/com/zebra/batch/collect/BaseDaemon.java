@@ -11,13 +11,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 
+import lombok.extern.log4j.Log4j;
+
 import org.apache.ibatis.io.Resources;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import socialUp.common.util.DBHandler;
-
+import com.zebra.common.BaseException;
 
 
 /**
@@ -25,7 +26,10 @@ import socialUp.common.util.DBHandler;
  * @author ZZ07237
  * @version 0.1
  */
+@Log4j
 public class BaseDaemon {
+	
+	
 	public static final String CR = "\r";
 	public static final String LF = "\n";
 	public static final String CRLF = "\r\n";
@@ -41,7 +45,7 @@ public class BaseDaemon {
 	private final String CONFIG_REAL 	= "com/zebra/config/batch-config.properties";
 
 	
-	public Logger log = Logger.getLogger(BaseDaemon.class);
+
 	protected Properties prop = null;
 	protected String dbDriver = null;
 	protected String dbUrl = null;
@@ -50,7 +54,7 @@ public class BaseDaemon {
 	protected String sqlMapConfigList = null;
 	protected String batchName = "";
 	protected String batchID = "";
-	protected long	batch_no = 0;
+	protected long	batchNo = 0;
 
 	protected ClassPathXmlApplicationContext	applicationContext;
 	
@@ -99,7 +103,7 @@ public class BaseDaemon {
         	
             
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			e.printStackTrace();
 		}
 	}
 

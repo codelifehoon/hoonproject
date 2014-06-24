@@ -1,5 +1,6 @@
 package com.zebra.batch.collect;
 
+
 import static org.junit.Assert.assertTrue;
 
 import java.text.SimpleDateFormat;
@@ -19,17 +20,20 @@ import com.zebra.process.crawler.CrawlerJobImpl;
 import com.zebra.process.crawler.dao.PageInfoDAO;
 import com.zebra.process.crawler.domain.CrawConfigBO;
 import com.zebra.process.crawler.domain.CrawlerDataCombBO;
-import com.zebra.process.crawler.domain.PageConfigBo;
+import com.zebra.process.crawler.domain.PageConfigBO;
 import com.zebra.process.crawler.domain.WebPageInfoBO;
 import com.zebra.process.parser.domain.ExpPattenBO;
 import com.zebra.process.renew.ReNewJob;
 import com.zebra.process.renew.ReNewJobImpl;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.apache.ibatis.mapping.DatabaseIdProvider;
+import com.mysql.jdbc.Driver;
 
 
 
 
 public class CrawBatch extends BaseDaemon {
-	public Logger log = Logger.getLogger(this.getClass());
+	protected static final Logger log    = Logger.getLogger(BaseDaemon.class.getName());
 
 
 	
@@ -52,13 +56,13 @@ public class CrawBatch extends BaseDaemon {
 
 	public void run(String[] args) throws Exception
 	{
-		batch_no = 1001;
+		batchNo = 1001;
     	batchID = "CrawBatchDaemon";
     	batchName = "신규 URL 수집 데몬";
     	
 
 		SimpleDateFormat simpleDateFormat =  new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        System.out.println( simpleDateFormat.format(new Date(System.currentTimeMillis())));
+        log.debug( simpleDateFormat.format(new Date(System.currentTimeMillis())));
         
    
 		CrawlerJob  crawlerJob =  SpringBeanFactory.getBean(CrawlerJob.class);
