@@ -2,7 +2,7 @@ package com.zebra.common.dao;
 
 import java.util.List;
 
-import com.zebra.process.parser.domain.ExpPattenBO;
+import com.zebra.business.craw.domain.ExpPattenBO;
 
 public interface CommonPattenCodeDao {
 

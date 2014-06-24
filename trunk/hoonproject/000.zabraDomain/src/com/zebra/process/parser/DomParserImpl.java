@@ -12,12 +12,12 @@ import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zebra.business.craw.domain.ExpPattenBO;
+import com.zebra.business.craw.domain.PageConfigBO;
+import com.zebra.business.craw.domain.WebPageInfoBO;
 import com.zebra.common.BaseConstants;
 import com.zebra.common.dao.CommonPattenCodeDao;
 import com.zebra.common.util.PattenUtil;
-import com.zebra.process.crawler.domain.PageConfigBO;
-import com.zebra.process.crawler.domain.WebPageInfoBO;
-import com.zebra.process.parser.domain.ExpPattenBO;
 
 @Service
 public class DomParserImpl implements DomParser 

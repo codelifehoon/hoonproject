@@ -9,8 +9,8 @@ import lombok.extern.log4j.Log4j;
 import org.apache.james.mime4j.message.BodyFactory;
 import org.apache.log4j.Logger;
 import com.sun.beans.finder.ClassFinder;
+import com.zebra.business.craw.domain.ExpPattenBO;
 import com.zebra.common.util.PattenUtil;
-import com.zebra.process.parser.domain.ExpPattenBO;
 
 
 @Log4j

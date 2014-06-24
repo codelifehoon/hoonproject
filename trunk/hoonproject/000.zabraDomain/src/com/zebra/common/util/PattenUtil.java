@@ -11,9 +11,9 @@ import lombok.extern.log4j.Log4j;
 
 import org.apache.log4j.Logger;
 
+import com.zebra.business.craw.domain.ExpPattenBO;
 import com.zebra.common.BaseConstants;
 import com.zebra.common.BaseFactory;
-import com.zebra.process.parser.domain.ExpPattenBO;
 
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
 
