@@ -3,7 +3,7 @@ package com.zebra.process.crawler;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.zebra.common.SpringBeanFactory;
-import com.zebra.common.dao.CommomPattenCodeDao;
+import com.zebra.common.dao.CommonPattenCodeDao;
 import com.zebra.process.crawler.dao.PageInfoDAO;
 
 import com.zebra.process.crawler.dao.PageInfoDAOImpl;

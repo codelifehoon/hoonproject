@@ -1,5 +1,7 @@
 package com.zebra.process.crawler.domain;
 
+import java.util.List;
+
 import lombok.Data;
 
 import com.zebra.common.BaseConstants;
@@ -29,13 +31,13 @@ public class CrawConfigBO extends BaseBO
 	private String goodsUrlYn;				//	접근가능 상품URL 여부
 
 	private String crawlAgent = "";				//	접속 브라우저 browser agent
-
+	private List<ExpPattenBO> expPattenBOList;		// 해당 craw정보에 속한patten 정보
 	
 
 	public void setSeedStrURL(String seedStrURL) {
 		
 		this.seedStrURL = seedStrURL;
-		this.seedURL = seedStrURL.split("@");
+		if (seedStrURL != null) this.seedURL = seedStrURL.split("@");
 	}
 	
 	public String getCrawlAgent()

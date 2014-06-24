@@ -17,7 +17,7 @@ import com.zebra.common.BaseConstants;
 import com.zebra.common.util.ConverterUtil;
 import com.zebra.common.util.DebugUtil;
 import com.zebra.common.util.PattenUtil;
-import com.zebra.process.crawler.dao.CrawCofigDAO;
+import com.zebra.process.crawler.dao.CrawConfigDAO;
 import com.zebra.process.crawler.dao.PageInfoDAO;
 import com.zebra.process.crawler.domain.CrawConfigBO;
 import com.zebra.process.crawler.domain.CrawlerDataCombBO;
@@ -36,7 +36,7 @@ public class CrawlerJobImpl implements CrawlerJob {
 
 	protected static final Logger log = Logger.getLogger(CrawlerJob.class.getName());
 	
-	@Autowired	CrawCofigDAO	crawConfigDAO;
+	@Autowired	CrawConfigDAO	crawConfigDAO;
 	@Autowired	PageInfoDAO		pageInfoDAO;
 	@Autowired 	DomParser		domParser;
 	

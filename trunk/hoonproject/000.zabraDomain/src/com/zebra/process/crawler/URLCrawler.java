@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.zebra.common.BaseFactory;
 import com.zebra.common.BaseConstants;
 import com.zebra.common.SpringBeanFactory;
-import com.zebra.common.dao.CommomPattenCodeDao;
+import com.zebra.common.dao.CommonPattenCodeDao;
 import com.zebra.common.util.DateTime;
 import com.zebra.common.util.PattenUtil;
 import com.zebra.process.crawler.dao.PageInfoDAO;
@@ -31,7 +31,7 @@ public class URLCrawler extends WebCrawler {
 	protected static final Logger log = Logger.getLogger(URLCrawler.class.getName());
 
 	
-	private CommomPattenCodeDao commomPattenCodeDao = SpringBeanFactory.getBean(CommomPattenCodeDao.class);
+	private CommonPattenCodeDao commomPattenCodeDao = SpringBeanFactory.getBean(CommonPattenCodeDao.class);
 	
     /**
      * You should implement this function to specify whether
