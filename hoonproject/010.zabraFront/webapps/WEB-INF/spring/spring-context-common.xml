@@ -143,5 +143,21 @@
 	</bean>
     
     
+   <!--
+	#############################################################
+	# JSR-303  validator bean 
+	#############################################################
+	-->
+       <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="webBindingInitializer">
+            <bean class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
+                <property name="validator" ref="validator"/>
+            </bean>
+        </property>
+    </bean>
+ 
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+ 
+ 
     
 </beans>
