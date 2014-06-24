@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zebra.common.BaseConstants;
-import com.zebra.common.dao.CommomPattenCodeDao;
+import com.zebra.common.dao.CommonPattenCodeDao;
 import com.zebra.common.util.PattenUtil;
 import com.zebra.process.crawler.domain.PageConfigBO;
 import com.zebra.process.crawler.domain.WebPageInfoBO;
@@ -25,7 +25,7 @@ public class DomParserImpl implements DomParser
 	private static final Logger log = Logger.getLogger(DomParser.class.getName());
 	
 	@Autowired
-	private CommomPattenCodeDao commomPattenCodeDao;
+	private CommonPattenCodeDao commomPattenCodeDao;
 	
 
 	/* (non-Javadoc)
@@ -118,6 +118,7 @@ public class DomParserImpl implements DomParser
 			{
 				if (expPattenBO.getPattenStr().equals("")) continue;
 				Element element = doc.select(expPattenBO.getPattenStr()).first();
+				
 				retVal = element.html().trim() ;	
 			}
 		} catch (Exception e)

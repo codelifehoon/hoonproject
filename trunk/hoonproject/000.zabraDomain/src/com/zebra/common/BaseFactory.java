@@ -9,6 +9,7 @@ import lombok.extern.log4j.Log4j;
 import org.apache.james.mime4j.message.BodyFactory;
 import org.apache.log4j.Logger;
 import com.sun.beans.finder.ClassFinder;
+import com.zebra.common.util.PattenUtil;
 import com.zebra.process.parser.domain.ExpPattenBO;
 
 
@@ -97,6 +98,8 @@ public abstract class BaseFactory {
 			expBos[i] = BaseFactory.create(ExpPattenBO.class);
 			expBos[i].setPattenStr(vals[i]);
 			expBos[i].setPattenKind(pattenKind);
+			expBos[i].setPattenType(PattenUtil.pattenCode2Type(vals[i]));
+			
 		}
 
 		return expBos;

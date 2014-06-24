@@ -33,5 +33,8 @@ public class BaseConstants {
 		public static final String ST_OK	="02"; 	//완료
 		public static final String ST_END   ="03";   //중지  
 		
+		
+		
+		
 }
 

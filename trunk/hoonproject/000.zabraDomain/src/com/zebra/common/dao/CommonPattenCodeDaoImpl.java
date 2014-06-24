@@ -12,7 +12,7 @@ import com.zebra.common.BaseFactory;
 import com.zebra.process.parser.domain.ExpPattenBO;
 
 @Repository @Log4j
-public class CommomPattenCodeDaoImpl extends CommonDAO implements CommomPattenCodeDao {
+public class CommonPattenCodeDaoImpl extends CommonDAO implements CommonPattenCodeDao {
 	
 		
 	/* (non-Javadoc)
@@ -28,7 +28,7 @@ public class CommomPattenCodeDaoImpl extends CommonDAO implements CommomPattenCo
 		
 		expPattenBO = BaseFactory.create(ExpPattenBO.class);
 		
-		if ("".equals(siteConfigSeq) || siteConfigSeq == null || "".equals(pattenKind) || pattenKind == null ) throw new BaseException ("패턴코드 조회오류.");
+		if ("".equals(siteConfigSeq) || siteConfigSeq == null  ) throw new BaseException ("패턴코드 조회오류.");
 		expPattenBO.setSiteConfigSeq(siteConfigSeq);
 		expPattenBO.setPattenKind(pattenKind);
 		
