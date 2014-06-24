@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.zebra.process.parser.domain.ExpPattenBO;
 
-public interface CommomPattenCodeDao {
+public interface CommonPattenCodeDao {
 
 	public List<ExpPattenBO> selectPattenCodeList(String siteConfigSeq, String pattenKind);
 
