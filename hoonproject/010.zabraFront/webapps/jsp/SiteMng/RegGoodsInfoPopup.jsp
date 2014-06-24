@@ -1,6 +1,6 @@
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.List"%>
-<%@page import="com.zebra.process.crawler.domain.WebPageInfoBO"%>
+<%@page import="com.zebra.business.craw.domain.WebPageInfoBO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/jsp/common/pageCommon.jsp" %>
 <%

@@ -1,22 +1,54 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@page import="java.util.List"%>
 <%@ include file="/jsp/common/pageCommon.jsp" %>
+<%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+	//List<CrawConfigBO> crawConfigList = (List<CrawConfigBO>)request.getAttribute("CrawConfigList");
 
+%>
 <script language='javascript'>
 
 //$(function() {});
- 
+  
+function hideEditBtn()
+{
+	$('#editCrawConfigBtn').hide();
+	$('#regCrawConfigBtn').hide();
+}
 
 function pattenValidBtnClick()
 {
-			   //button 클릭시
-			var Url = "/SiteMng/ajax/validCrawlSeedURL.json";
+			//button 클릭시
+			var Url = "/siteMng/ajax/validCrawlSeedURL.json";
 			var Data  =  $("#dataForm").serialize();
+			
 			$('#pattenValidBtn').attr('disabled', true);
+			hideEditBtn();
 			
 			//var Data = { 필드명1:"값1"
 			//			,필드명2:"값2"
 			//			};
 		
+			$.post( Url, Data).done(function( response ) 
+			{
+
+		    	var visiteTargetList = response.visiteTargetList;
+		     	var webPageInfoList = response.webPageInfoList;
+		     	var urlValidList = response.urlValidList;
+		     	
+		     	printURLInfo(visiteTargetList,webPageInfoList,urlValidList);
+		     	
+		     	
+		     	//JSON.parse(data);
+		     	$('#pattenValidBtn').attr('disabled', false);
+		    
+		 	}).fail(function() 
+		 	{
+		 		alert("연결실패.");
+		     	$('#pattenValidBtn').attr('disabled', false);
+			}) ;
+			
+			/*
 			jQuery.ajax({	
 		    type : "POST" 
 		    , url : Url 
@@ -27,7 +59,6 @@ function pattenValidBtnClick()
 		    , success:function(response, status, request) {
 		    	//alert("성공");
 	
-		     	  
 		    	//var obj = $.parseJSON(response);
 		     	
 		    	var visiteTargetList = response.visiteTargetList;
@@ -47,6 +78,7 @@ function pattenValidBtnClick()
 		     	$('#pattenValidBtn').attr('disabled', false);
 			}
 			});
+			*/
 			
 
 	}
@@ -56,15 +88,15 @@ function printURLInfo(visiteTargetList,webPageInfoList,urlValidList)
 {
 	var htmlStr  = "";
 	var cnt = 0;
+	var visitSiteYnFlag = false;
+	var visitUrlYnFlag = false;
 	
 	
-	console.log(visiteTargetList);
-	console.log(webPageInfoList);
-	console.log(urlValidList);
-
 	// URL 기본정보 검증
 	htmlStr += "<h4>방문대상URL</h4>";
 	htmlStr += "<p>";
+	
+	
 
 	
 	if (urlValidList != "")
@@ -77,6 +109,10 @@ function printURLInfo(visiteTargetList,webPageInfoList,urlValidList)
  			htmlStr += "대상URL여부:" + el.visitSiteYn + "<br>";
  			htmlStr += "대상도메인여부:" + el.visitUrlYn + "<br>";
  		
+ 			
+ 			if (el.visitSiteYn == "true" ) 	visitSiteYnFlag = true;
+ 			if (el.visitUrlYn == "true" ) 	visitUrlYnFlag = true;
+ 			
  		});
      }
 	htmlStr += "<p>";
@@ -98,6 +134,17 @@ function printURLInfo(visiteTargetList,webPageInfoList,urlValidList)
  		});
      }
 	
+	if ( visitSiteYnFlag && visitUrlYnFlag  && cnt > 0 ) 
+		{
+			
+			
+			
+			if ($("#crawlConfigList").val() != "")	$('#editCrawConfigBtn').show();		// 특정 사이트 정보를 선택 했을때 수정 버튼
+			else									$('#regCrawConfigBtn').show();		// 특정 사이트 정보를 선택 한것이 아니라면 등록버튼
+				
+			
+		}
+		
 	if (cnt >=10) htmlStr +="<h4>외 " + ($(visiteTargetList).length-10) + "건</h4>";
 	cnt = 0;
 	
@@ -129,7 +176,7 @@ function printURLInfo(visiteTargetList,webPageInfoList,urlValidList)
 function goodsDetailPopup(goodsUrl)
 {
 
-	var url = "/SiteMng/RegGoodsInfoPopup.do?";
+	var url = "/siteMng/regGoodsInfoPopup.do?";
 	
 	url += "goodsUrl=" + encodeURIComponent(goodsUrl);
 	url += "&" + $("#dataForm").serialize();
@@ -138,17 +185,109 @@ function goodsDetailPopup(goodsUrl)
 
 }
 
+
+function selectCrawConfigProc(elName)
+{
+	// alert($(elName).val());
+	// alert($(elName + " option:selected" ).text());
+	
+	var Url = "/siteMng/ajax/crawlConfigInfo.json";			// CrawlConfigInfo 상세정보 조회
+	var Data = { siteConfigSeq : $(elName).val() };
+	
+	// 사이트 정보를 선책하지 않았을때
+	if ($(elName).val() == "")	
+		{
+			clearForm();
+			return;
+		}
+		
+	$.post( Url, Data).done(function( response ) 
+			{
+				setcrawConfigInfo(response.crawConfigBO[0]);
+		 	}).fail(function() { alert("연결실패."); }) ;
+	
+	
+	
+
+}
+
+function clearForm()
+{
+	$('#dataForm').trigger("reset");
+	hideEditBtn();
+
+}
+function setcrawConfigInfo(crawConfigBO)
+{
+
+ 	var expPattenBOList = crawConfigBO.expPattenBOList;
+ 	
+ 	$("#siteNm").val(crawConfigBO.siteNm);
+ 	$("#seedURL").val(crawConfigBO.seedStrURL);
+ 	$("#crawlAgent").val(crawConfigBO.crawlAgent);
+ 	
+ 	$.each(expPattenBOList, function(i, el) 
+ 	 		{
+ 				$("#" + pattenKind2Name(el.pattenKind)).val(el.pattenStr);
+
+ 	 		});
+ }
+
+
+function pattenKind2Name(pattenKind)
+{
+	
+	if (pattenKind == "PK_010") return "visitUrlPatten";
+	else if (pattenKind == "PK_020") return "visitSitePatten";
+	else if (pattenKind == "PK_030") return "goodsUrlPatten";
+	else if (pattenKind == "PK_040") return "goodsNoPatten";
+	else if (pattenKind == "PK_050") return "goodsNamePatten";
+	else if (pattenKind == "PK_060") return "goodsPricePatten";
+	else if (pattenKind == "PK_070") return "goodsImgPatten";
+	else if (pattenKind == "PK_080") return "cate1Patten";
+	else if (pattenKind == "PK_090") return "cate2Patten";
+	else if (pattenKind == "PK_100") return "cate3Patten";
+	else if (pattenKind == "PK_110") return "goodsDisc";
+	else "";
+
+}
+function regCrawConfig()
+{
+	console.log("##### regCrawConfig");
+	$("#dataForm").attr("action","/siteMng/regCrawlInfo.do");
+	$("#dataForm").submit();
+	
+	
+}
+
+function editCrawConfig()
+{
+	console.log("##### editCrawConfig");
+	$("#dataForm").attr("action","/siteMng/editCrawlInfo.do");
+	$("#dataForm").submit();
+}
+
+
 </script>
 
 
 <div class="content">
         <h2 class="content-head is-center">미리보기</h2>
-
         <div class="pure-g">
             <div class="l-box-lrg pure-u-1 pure-u-med-2-5">
-                <form id='dataForm' class="pure-form pure-form-stacked" >
+                <form id='dataForm' class="pure-form pure-form-stacked"  >
                     <fieldset>
 					
+					<h3 class="content-subhead" id="yui_3_14_1_1_1397782431674_8">
+                    	<i class="fa fa-dot-circle-o"></i>기존  사이트 선택
+                    	<select id="crawlConfigList" name="crawlConfigList" onChange="javascript:selectCrawConfigProc('#crawlConfigList')">
+                    		<option value="" selected>선택</option>
+                    		<c:forEach var="crawConfig" items="${CrawConfigList}" varStatus="x">
+							  <option value="${crawConfig.siteConfigSeq}">${crawConfig.seedStrURL}</option>
+							</c:forEach>
+                    	</select>
+                	</h3>
+
 					<h3 class="content-subhead" id="yui_3_14_1_1_1397782431674_8">
                     	<i class="fa fa-dot-circle-o"></i>수집대상 정보 패턴
                 	</h3>
@@ -184,7 +323,8 @@ function goodsDetailPopup(goodsUrl)
 			            <label for="소분류경로">소분류경로</label>
 			            <input id="cate3Patten" name="cate3Patten" type="text" placeholder="소분류패턴" value="">
 			  			<input id="pattenValidBtn" type="button" onClick="javascript:pattenValidBtnClick();"  value="확인" class="pure-button">
-			  			
+			  			<input id="regCrawConfigBtn" type="button" onClick="javascript:regCrawConfig();"  value="등록" class="pure-button" style="display:none;">
+			  			<input id="editCrawConfigBtn" type="button" onClick="javascript:editCrawConfig();"  value="수정" class="pure-button" style="display:none;">
                     </fieldset>
                 </form>
             </div>
