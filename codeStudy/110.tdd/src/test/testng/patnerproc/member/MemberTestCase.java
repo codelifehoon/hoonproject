@@ -12,7 +12,7 @@ public class MemberTestCase extends TestBase {
 	public void loginTest() throws Exception {
 
 		WebDriver webDriver = cretaeBrowser();
-		MemberLogin memberLogin = new MemberLogin(webDriver,this.getBaseUrl(),this.getOrderUrl());
+		MemberLogin memberLogin = new MemberLogin(webDriver,this);
 		memberLogin.login();
 		afterMethod(webDriver);
 	}

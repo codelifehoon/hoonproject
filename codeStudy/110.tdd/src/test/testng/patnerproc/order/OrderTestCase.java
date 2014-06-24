@@ -31,8 +31,8 @@ public class OrderTestCase extends TestBase {
 		//webDriver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
 		//webDriver.manage().timeouts().setScriptTimeout(10, TimeUnit.SECONDS);
 			
-		MemberLogin memberLogin = new MemberLogin(webDriver,this.getBaseUrl(),this.getOrderUrl());
-		OrderSheet orderSheet 	= new OrderSheet(webDriver,this.getBaseUrl(),this.getOrderUrl());
+		MemberLogin memberLogin = new MemberLogin(webDriver,this);
+		OrderSheet orderSheet 	= new OrderSheet(webDriver,this);
 		memberLogin.login();
 		orderSheet.goodsOrderSheet();
 		afterMethod(webDriver);
@@ -43,8 +43,9 @@ public class OrderTestCase extends TestBase {
 	public void orderTest() throws Exception {
 
 		WebDriver webDriver = cretaeBrowser();
-		MemberLogin memberLogin = new MemberLogin(webDriver,this.getBaseUrl(),this.getOrderUrl());
-		OrderSheet orderSheet 	= new OrderSheet(webDriver,this.getBaseUrl(),this.getOrderUrl());
+		
+		MemberLogin memberLogin = new MemberLogin(webDriver,this);
+		OrderSheet orderSheet 	= new OrderSheet(webDriver,this);
 		
 		memberLogin.login();
 		orderSheet.goodsOrderSheet();
@@ -52,7 +53,4 @@ public class OrderTestCase extends TestBase {
 		afterMethod(webDriver);
 	}
 
-
-	
-	
 }
