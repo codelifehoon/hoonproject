@@ -7,9 +7,8 @@
 
   <!-- mapping files -->
   <mappers>
-		<mapper resource="com/zebra/process/crawler/dao/mapper/Crawler.xml" />
+		<mapper resource="com/zebra/business/craw/dao/mapper/Crawler.xml" />
 		<mapper resource="com/zebra/common/dao/mapper/CommonPatten.xml" />
-		
   </mappers>
  
 </configuration>

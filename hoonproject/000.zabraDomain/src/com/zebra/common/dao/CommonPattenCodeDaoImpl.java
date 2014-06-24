@@ -7,9 +7,9 @@ import lombok.extern.log4j.Log4j;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
+import com.zebra.business.craw.domain.ExpPattenBO;
 import com.zebra.common.BaseException;
 import com.zebra.common.BaseFactory;
-import com.zebra.process.parser.domain.ExpPattenBO;
 
 @Repository @Log4j
 public class CommonPattenCodeDaoImpl extends CommonDAO implements CommonPattenCodeDao {

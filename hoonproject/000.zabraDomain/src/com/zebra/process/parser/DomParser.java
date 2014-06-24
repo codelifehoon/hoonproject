@@ -2,9 +2,9 @@ package com.zebra.process.parser;
 
 import java.util.HashMap;
 
-import com.zebra.process.crawler.domain.PageConfigBO;
-import com.zebra.process.crawler.domain.WebPageInfoBO;
-import com.zebra.process.parser.domain.ExpPattenBO;
+import com.zebra.business.craw.domain.ExpPattenBO;
+import com.zebra.business.craw.domain.PageConfigBO;
+import com.zebra.business.craw.domain.WebPageInfoBO;
 
 public interface DomParser {
 

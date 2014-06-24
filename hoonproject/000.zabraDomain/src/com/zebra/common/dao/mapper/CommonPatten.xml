@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  <cache  eviction="LRU" size="10240" readOnly="true"/> 
 
 		
-	  <resultMap id="selectCommonPattenResult" type="com.zebra.process.parser.domain.ExpPattenBO" >
+	  <resultMap id="selectCommonPattenResult" type="com.zebra.business.craw.domain.ExpPattenBO" >
 	        <result column="pattenKind" property="pattenKind" />
 			<result column="pattenType" property="pattenType" />
 			<result column="pattenStr" property="pattenStr" />
@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<result column="updateNo" property="updateNo" />
 	 </resultMap>
 	<!-- 페이지 리스트 -->
-	<select id="selectCommonPatten" resultMap="selectCommonPattenResult" parameterType="com.zebra.process.parser.domain.ExpPattenBO">
+	<select id="selectCommonPatten" resultMap="selectCommonPattenResult" parameterType="com.zebra.business.craw.domain.ExpPattenBO">
 	     	SELECT /*crawler.selectCommonPattenResult*/ 
 	     		siteConfigSeq, pattenKind, pattenType, pattenStr, useYn, createNo, createDt, updateDt, updateNo 
 			FROM 

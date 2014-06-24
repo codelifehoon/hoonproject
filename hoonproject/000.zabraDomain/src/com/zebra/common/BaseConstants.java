@@ -1,7 +1,7 @@
 package com.zebra.common;
 
+import com.zebra.business.craw.domain.ExpPattenBO;
 import com.zebra.common.util.PattenUtil;
-import com.zebra.process.parser.domain.ExpPattenBO;
 
 public class BaseConstants {
 	

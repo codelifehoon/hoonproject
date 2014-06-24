@@ -2,8 +2,8 @@ package com.zebra.process.renew;
 
 import org.springframework.stereotype.Service;
 
-import com.zebra.process.crawler.domain.CrawConfigBO;
-import com.zebra.process.crawler.domain.CrawlerDataCombBO;
+import com.zebra.business.craw.domain.CrawConfigBO;
+import com.zebra.business.craw.domain.CrawlerDataCombBO;
 
 
 public interface ReNewJob {

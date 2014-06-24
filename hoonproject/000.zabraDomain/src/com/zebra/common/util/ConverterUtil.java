@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.zebra.process.crawler.domain.WebPageInfoBO;
+import com.zebra.business.craw.domain.WebPageInfoBO;
 
 public class ConverterUtil {
 
