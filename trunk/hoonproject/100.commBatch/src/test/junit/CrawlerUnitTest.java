@@ -10,9 +10,12 @@ package test.junit;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static org.junit.Assert.*;
+
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -20,30 +23,47 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.internal.matchers.Any;
 import org.mockito.invocation.InvocationOnMock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.zebra.business.craw.dao.CrawConfigDAO;
+import com.zebra.business.craw.dao.PageCodeListDAO;
+import com.zebra.business.craw.domain.CrawConfigBO;
+import com.zebra.business.craw.domain.CrawlerDataCombBO;
+import com.zebra.business.craw.domain.ExpPattenBO;
 import com.zebra.common.BaseFactory;
-import com.zebra.process.crawler.dao.CrawConfigDAO;
-import com.zebra.process.crawler.domain.CrawConfigBO;
+import com.zebra.process.crawregister.CrawMngService;
+import com.zebra.process.crawregister.CrawMngServiceImpl;
 
-@RunWith(SpringJUnit4ClassRunner.class )
-@ContextConfiguration(locations="classpath:com/zebra/batch/resource/spring-context-common.xml")
-
-//@RunWith(MockitoJUnitRunner.class )
+//@RunWith(SpringJUnit4ClassRunner.class )
+//@ContextConfiguration(locations="classpath:com/zebra/batch/resource/spring-context-common.xml")
+@RunWith(MockitoJUnitRunner.class )
 public class CrawlerUnitTest {
 
+	
 	@Mock @Autowired CrawConfigDAO crawConfigDAO;
+	@Mock @Autowired private CrawConfigDAO crawConfigDao;
+	@Mock @Autowired private PageCodeListDAO pageCodeListDao;
+	
+	@InjectMocks private CrawMngService crawMngService = new CrawMngServiceImpl();
 	
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		String log4jConfigPath = "D:/workspace/100.commBatch/src/com/zebra/batch/config/batch_log4j.xml";
+								  
+		if (new java.io.File(log4jConfigPath).exists() == false)
+		{
+			throw new java.io.FileNotFoundException("log4j config file is not found ["+log4jConfigPath+"]");
+		}
+		org.apache.log4j.xml.DOMConfigurator.configure(log4jConfigPath); 
 	}
 
 	/**
@@ -75,6 +95,29 @@ public class CrawlerUnitTest {
 					return crawConfigBOList;
 				}
 		});
+		
+		
+		when (crawConfigDao.addCrawConfig(null)).thenAnswer( new Answer()
+			{
+			@Override
+			public Long answer(InvocationOnMock invocation) throws Throwable 
+				{
+					return (long)111;
+				}
+			}
+			);
+		
+		when (pageCodeListDao.addPageCodeList(anyString(),any(HashMap.class))).thenAnswer( new Answer()
+		{
+		@Override
+		public Integer answer(InvocationOnMock invocation) throws Throwable 
+			{
+				System.out.println("##### addPageCodeList mokito");
+				return 888;
+			}
+		}
+		);
+	
 	}
 
 	@Test
@@ -90,10 +133,15 @@ public class CrawlerUnitTest {
 		assertThat("100000",is(crawConfigDAO.selectCrawConfigList(crawConfigBO).get(0).getSiteConfigSeq()));
 		
 	}
+	
+	@Test
+	public void mockitoCrawMngServiceTest()
+	{
+		CrawlerDataCombBO crawlerDataCombBO = BaseFactory.create(CrawlerDataCombBO.class);
+		crawMngService.addCrawInfo(crawlerDataCombBO);
+		
+	}
 
-	
-	
-	
 	
 	
 }
