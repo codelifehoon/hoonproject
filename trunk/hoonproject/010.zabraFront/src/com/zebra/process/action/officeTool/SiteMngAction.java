@@ -3,6 +3,7 @@ package com.zebra.process.action.officetool;
 import java.util.ArrayList;
 
 
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -24,8 +25,10 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
-import com.zebra.business.craw.CrawlerJob;
+import com.zebra.process.crawler.CrawlerJob;
+import com.zebra.process.crawregister.CrawMngService;
 import com.zebra.business.craw.dao.CrawConfigDAO;
 import com.zebra.business.craw.domain.CrawConfigBO;
 import com.zebra.business.craw.domain.CrawlerDataCombBO;
@@ -50,12 +53,14 @@ public class SiteMngAction extends AuthAction {
 	//private static final  Logger log =  Logger.getLogger(SiteMngAction.class.getName());
 	@Autowired private CrawlerJob crawlerJob;
 	@Autowired private CrawConfigDAO crawConfigDAO;
+	@Autowired private CrawMngService crawMngService;
 
 	
 	@RequestMapping("/siteMng/regCrawlInfo")
 	public ModelAndView regCrawlInfo(@RequestParam HashMap<String,Object> paramMap , HttpServletRequest request, HttpServletResponse response )
 	//public ModelAndView regCrawlInfo(@ModelAttribute CrawConfigBO CrawConfigBO , BindingResult result  )
 	{ 
+		
 		log.debug("##### regCrawlInfo");
 		ModelAndView mv = new ModelAndView();
 		
@@ -67,19 +72,28 @@ public class SiteMngAction extends AuthAction {
 	}
 	
 	@RequestMapping("/siteMng/regGoodsInfoPopup")
-	public ModelAndView regGoodsInfoPopup(@RequestParam HashMap<String,Object> paramMap , HttpServletRequest request, HttpServletResponse response )
+	public ModelAndView regGoodsInfoPopup(@RequestParam HashMap<String,Object> paramMap , HttpServletRequest request, HttpServletResponse response ) throws Exception
 	{
 		log.debug("##### regGoodsInfoPopup");
 		ModelAndView mv = new ModelAndView();
+		Date currentDt = new Date();
 		
 		
 		CrawlerDataCombBO crawlerDataCombBO = BaseFactory.create(CrawlerDataCombBO.class);
 		crawlerDataCombBO.setCrawConfigBO((CrawConfigBO)BaseFactory.create(CrawConfigBO.class));
 		crawlerDataCombBO.setPageConfigBO((PageConfigBO)BaseFactory.create(PageConfigBO.class));
+		
 		crawlerDataCombBO.setPreViewYn("Y");
-		crawlerDataCombBO.setPattenMap(PattenUtil.getPagePatten(paramMap));
 		crawlerDataCombBO.getCrawConfigBO().setSeedStrURL((String)paramMap.get("goodsUrl"));
 		crawlerDataCombBO.getCrawConfigBO().setCrawlAgent((String)paramMap.get("crawlAgent"));
+		
+		crawlerDataCombBO.getCrawConfigBO().setUseYn("Y");
+		crawlerDataCombBO.getCrawConfigBO().setCreateNo("999");
+		crawlerDataCombBO.getCrawConfigBO().setCreateDt(currentDt);
+
+
+		
+		crawlerDataCombBO.setPattenMap(PattenUtil.getPagePatten(paramMap, crawlerDataCombBO));
 		
 		List<WebPageInfoBO> webPageInfoList = crawlerJob.validCrawlerPrdInfo(crawlerDataCombBO);
 
@@ -100,13 +114,17 @@ public class SiteMngAction extends AuthAction {
 	}
 	
 	@RequestMapping("/siteMng/ajax/validCrawlSeedURL")
-	public ModelAndView  validCrawlSeedURL(@RequestParam HashMap<String,Object> paramMap , HttpServletRequest request, HttpServletResponse response )
+	public ModelAndView  validCrawlSeedURL(@RequestParam HashMap<String,Object> paramMap , HttpServletRequest request, HttpServletResponse response ) throws Exception
 	{
 		log.debug("##### validCrawlSeedURL");
 		log.debug(paramMap);
+		
+		
 		ModelAndView mv = new ModelAndView();
+		Date currentDt = new Date();
 		List<CrawConfigBO> urlValidList = new ArrayList<CrawConfigBO>();
 		
+		log.debug("#####" + (String)paramMap.get("cate1Patten"));
 
 		CrawlerDataCombBO crawlerDataCombBO = BaseFactory.create(CrawlerDataCombBO.class);
 		crawlerDataCombBO.setCrawConfigBO((CrawConfigBO)BaseFactory.create(CrawConfigBO.class));
@@ -124,7 +142,12 @@ public class SiteMngAction extends AuthAction {
 		crawlerDataCombBO.getCrawConfigBO().setSeedStrURL((String)paramMap.get("seedURL"));
 		crawlerDataCombBO.getCrawConfigBO().setCrawlDepth(1);
 		crawlerDataCombBO.getCrawConfigBO().setCrawlAgent((String)paramMap.get("crawlAgent"));
-		crawlerDataCombBO.setPattenMap(PattenUtil.getPagePatten(paramMap));
+		
+		crawlerDataCombBO.getCrawConfigBO().setUseYn("Y");
+		crawlerDataCombBO.getCrawConfigBO().setCreateNo("999");
+		crawlerDataCombBO.getCrawConfigBO().setCreateDt(currentDt);
+		
+		crawlerDataCombBO.setPattenMap(PattenUtil.getPagePatten(paramMap, crawlerDataCombBO));
 		
 		for (String url : crawlerDataCombBO.getCrawConfigBO().getSeedURL())
 		{
@@ -197,14 +220,14 @@ public class SiteMngAction extends AuthAction {
 	}
 	
 	@RequestMapping("/siteMng/addCrawlInfo")
-	public ModelAndView addCrawlInfo(@RequestParam HashMap<String,Object> paramMap , HttpServletRequest request, HttpServletResponse response )
+	public ModelAndView addCrawlInfo(@RequestParam HashMap<String,Object> paramMap , HttpServletRequest request, HttpServletResponse response ) throws Exception
 	//public ModelAndView regCrawlInfo(@ModelAttribute CrawConfigBO CrawConfigBO , BindingResult result  )
 	{ 
 		log.debug("##### addCrawlInfo");
 		log.debug(paramMap);
 		ModelAndView mv = new ModelAndView();
 		List<CrawConfigBO> urlValidList = new ArrayList<CrawConfigBO>();
-		String currentDt = DateTime.getFormatString("yyyy-MM-dd HH:mm:ss");
+		Date currentDt = new Date();
 		
 		
 
@@ -215,48 +238,27 @@ public class SiteMngAction extends AuthAction {
 		crawlerDataCombBO.getCrawConfigBO().setSeedStrURL((String)paramMap.get("seedURL"));
 		crawlerDataCombBO.getCrawConfigBO().setUseYn("Y");
 		crawlerDataCombBO.getCrawConfigBO().setCrawlAgent((String)paramMap.get("crawlAgent"));
-		crawlerDataCombBO.setPattenMap(PattenUtil.getPagePatten(paramMap));
+		
+		crawlerDataCombBO.getCrawConfigBO().setCreateNo("999");
+		crawlerDataCombBO.getCrawConfigBO().setCreateDt(currentDt);
+
+		crawlerDataCombBO.setPattenMap(PattenUtil.getPagePatten(paramMap, crawlerDataCombBO));
 		
 		
-		initPattenMap(paramMap, currentDt, crawlerDataCombBO);
-	
-		mv.setViewName("/sitemng/RegCrawlInfo");
-		return  mv;
+		crawMngService.addCrawInfo(crawlerDataCombBO);
+		
+		//initPattenMap(paramMap, currentDt, crawlerDataCombBO);
+		
+		
+		RedirectView rv = new RedirectView("/siteMng/regCrawlInfo.do");
+		rv.setExposeModelAttributes(false);
+		return  new ModelAndView(rv);
 	}
 
-	/**
-	 * @param paramMap
-	 * @param currentDt
-	 * @param crawlerDataCombBO
-	 */
-	private void initPattenMap(HashMap<String, Object> paramMap,
-			String currentDt, CrawlerDataCombBO crawlerDataCombBO) {
-		Iterator<String> itr = crawlerDataCombBO.getPattenMap().keySet().iterator();
-		while(itr.hasNext())
-	    {
-	        String pName = itr.next();
-	        ExpPattenBO[] pValue =  (ExpPattenBO[])paramMap.get(pName);
-	        
-	      
-	        // db insert init
-	        for(ExpPattenBO expPattenBO : pValue )
-	        {
-	        	expPattenBO.setSiteConfigSeq((String)paramMap.get("siteConfigSeq"));
-	        	expPattenBO.setUseYn("Y");
-	        	expPattenBO.setCreateNo("999");
-	        	expPattenBO.setCreateDt(currentDt);
-	        	expPattenBO.setUpdateNo("999");
-	        	expPattenBO.setUpdateDt(currentDt);
-	        }
-	        
-	    }
-	}
 	
 	@RequestMapping("/siteMng/editCrawConfig")
 	public ModelAndView  editCrawConfig(@RequestParam HashMap<String,Object> paramMap , HttpServletRequest request, HttpServletResponse response )
 	{  
-		
-	
 		
 		return null; 
 	}
