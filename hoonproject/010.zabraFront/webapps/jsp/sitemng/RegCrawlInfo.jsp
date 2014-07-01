@@ -254,7 +254,7 @@ function pattenKind2Name(pattenKind)
 function regCrawConfig()
 {
 	console.log("##### regCrawConfig");
-	$("#dataForm").attr("action","/siteMng/regCrawlInfo.do");
+	$("#dataForm").attr("action","/siteMng/addCrawlInfo.do");
 	$("#dataForm").submit();
 	
 	
