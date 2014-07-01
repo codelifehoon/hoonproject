@@ -2,15 +2,15 @@ package com.zebra.common.util;
 
 import java.util.HashMap;
 
+
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 import lombok.extern.log4j.Log4j;
 
-import org.apache.log4j.Logger;
 
+import com.zebra.business.craw.domain.CrawlerDataCombBO;
 import com.zebra.business.craw.domain.ExpPattenBO;
 import com.zebra.common.BaseConstants;
 import com.zebra.common.BaseFactory;
@@ -102,7 +102,7 @@ public class PattenUtil {
 	}
 
 	
-	public static HashMap<String, ExpPattenBO[]> getPagePatten(HashMap<String,Object> paramMap)
+	public static HashMap<String, ExpPattenBO[]> getPagePatten(HashMap<String,Object> paramMap, CrawlerDataCombBO crawlerDataCombBO) throws Exception
 	{
 		HashMap<String, ExpPattenBO[]>  pattenMap = new HashMap<String, ExpPattenBO[]> ();
 	
@@ -116,8 +116,30 @@ public class PattenUtil {
 	      
 	        if (!"".equals(PattenUtil.pattenName2Code(pName)))
 			  {
-		  		pattenMap.put( PattenUtil.pattenName2Code(pName)
-		  						,BaseFactory.createExpPattenBO(pValue,BaseConstants.SPLIT_REG,PattenUtil.pattenName2Code(pName)));
+
+	        	String vals[] = pValue.split(BaseConstants.SPLIT_REG);
+	    		int size = vals.length;
+	    		ExpPattenBO[] expBos = new ExpPattenBO[size];
+	    		
+	    		
+	    		for (int i=0;i<size;i++)
+	    		{
+	    			expBos[i] = BaseFactory.create(ExpPattenBO.class);
+	    			expBos[i].setPattenStr(vals[i]);
+	    			expBos[i].setPattenKind(PattenUtil.pattenName2Code(pName));
+	    			expBos[i].setPattenType(PattenUtil.pattenCode2Type(expBos[i].getPattenKind()));
+	    			expBos[i].setSiteConfigSeq(crawlerDataCombBO.getCrawConfigBO().getSiteConfigSeq());
+	    			expBos[i].setUseYn(crawlerDataCombBO.getCrawConfigBO().getUseYn());
+	    			expBos[i].setCreateNo(crawlerDataCombBO.getCrawConfigBO().getCreateNo());
+	    			expBos[i].setCreateDt(crawlerDataCombBO.getCrawConfigBO().getCreateDt());
+	    			expBos[i].setUpdateNo(crawlerDataCombBO.getCrawConfigBO().getCreateNo());
+	    			expBos[i].setUpdateDt(crawlerDataCombBO.getCrawConfigBO().getCreateDt());
+	    			
+	    		}
+	    
+	    		
+	    		pattenMap.put(PattenUtil.pattenName2Code(pName), expBos);
+	    		
 			  }
 	    }
 		

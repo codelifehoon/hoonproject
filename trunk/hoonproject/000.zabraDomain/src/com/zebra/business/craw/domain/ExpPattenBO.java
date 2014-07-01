@@ -1,7 +1,10 @@
 package com.zebra.business.craw.domain;
 
+import java.util.Date;
+
 import lombok.Data;
 import com.zebra.common.domain.BaseBO;
+import com.zebra.common.util.DateTime;
 
 @Data
 public class ExpPattenBO extends BaseBO {
@@ -17,8 +20,8 @@ public class ExpPattenBO extends BaseBO {
 	private String pattenStr;
 	private String useYn;
 	private String createNo;
-	private String createDt;
-	private String updateDt;
+	private Date createDt;
+	private Date updateDt;
 	private String updateNo;
 
 	public ExpPattenBO(String pattenStr,String pattenType )
@@ -31,8 +34,20 @@ public class ExpPattenBO extends BaseBO {
 			this.pattenStr 	= pattenStr;
 			this.pattenType	= "";
 	}
+	
 	public ExpPattenBO()
 	{
+	}
+	
+
+	public String getCreateDtStr()
+	{
+		return DateTime.format(getCreateDt(), "yyyy-MM-dd HH:mm:ss");
+	}
+
+	public String getUpdateDtStr()
+	{
+		return DateTime.format(getUpdateDt(), "yyyy-MM-dd HH:mm:ss");
 	}
 	
 }

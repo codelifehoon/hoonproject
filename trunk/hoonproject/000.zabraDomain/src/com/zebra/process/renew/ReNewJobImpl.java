@@ -1,6 +1,7 @@
 package com.zebra.process.renew;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 
 import java.util.List;
@@ -9,8 +10,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.zebra.business.craw.CommCrawlController;
-import com.zebra.business.craw.URLCrawler;
 import com.zebra.business.craw.dao.PageInfoDAO;
 import com.zebra.business.craw.dao.PageInfoDAOImpl;
 import com.zebra.business.craw.domain.CrawConfigBO;
@@ -20,6 +19,7 @@ import com.zebra.common.BaseFactory;
 import com.zebra.common.BaseConstants;
 import com.zebra.common.util.ConverterUtil;
 import com.zebra.common.util.DebugUtil;
+import com.zebra.process.crawler.CommCrawlController;
 
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.fetcher.PageFetcher;

@@ -3,6 +3,7 @@ package com.zebra.process.renew;
 import java.text.SimpleDateFormat;
 
 
+
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +12,6 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.zebra.business.craw.CommCrawlController;
 import com.zebra.business.craw.domain.CrawConfigBO;
 import com.zebra.business.craw.domain.CrawlerDataCombBO;
 import com.zebra.business.craw.domain.ExpPattenBO;
@@ -21,6 +21,7 @@ import com.zebra.common.BaseConstants;
 import com.zebra.common.SpringBeanFactory;
 import com.zebra.common.dao.CommonPattenCodeDao;
 import com.zebra.common.util.PattenUtil;
+import com.zebra.process.crawler.CommCrawlController;
 import com.zebra.process.parser.DomParser;
 import com.zebra.process.parser.DomParserImpl;
 import edu.uci.ics.crawler4j.crawler.Page;

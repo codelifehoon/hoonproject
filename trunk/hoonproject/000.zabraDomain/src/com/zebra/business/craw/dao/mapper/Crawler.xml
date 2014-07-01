@@ -25,8 +25,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 </resultMap>
 	<!-- 페이지 리스트 -->
 	<select id="selectReNewPageInfoMap" resultType="java.util.HashMap" resultMap="selectWebPageInfoListResult" parameterType="com.zebra.business.craw.domain.WebPageInfoBO">
-	     	SELECT /*crawler.selectreNewPageInfoMap*/  pageInfoListSeq, siteConfigSeq, goodsNo, goodsNm, goodsPrice, goodsUrl, goodsImg, statCd, failCnt,  createNo, createDt, updateDt, updateNo
-	     			,'Y' as failYn 
+	     	SELECT /*crawler.selectreNewPageInfoMap*/  pageInfoListSeq
+	     	, siteConfigSeq
+	     	, goodsNo
+	     	, goodsNm
+	     	, goodsPrice
+	     	, goodsUrl
+	     	, goodsImg
+	     	, statCd
+	     	, failCnt
+	     	, createNo
+	     	, createDt
+	     	, updateDt
+	     	, updateNo
+	     	,'Y' as failYn 
 			FROM 
 			page_info_list
 			where  statCd != '03'
@@ -84,7 +96,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			
 	</select>
 	
-
+	<insert id="inserCrawConfig"  parameterType="com.zebra.business.craw.domain.CrawConfigBO">
+	INSERT /*crawler.inserCrawConfig */ INTO craw_config
+			(
+				siteNm
+				,seedURL
+				,useYn
+				,crawlAgent
+				,createNo
+				,createDt
+				,updateDt
+				,updateNo
+			) 
+		VALUES (
+				#{siteNm}
+				,#{seedStrURL}
+				,#{useYn}
+				,#{crawlAgent}
+				,#{createNo}
+				,#{createDt}
+				,#{createDt}
+				,#{createNo}
+			)
+	<selectKey resultType="String" order="AFTER"  keyProperty="siteConfigSeq">
+        SELECT CONCAT(LAST_INSERT_ID()) as siteConfigSeq
+    </selectKey>
+    
+	</insert>
+	
 	<insert id="insertPageInfoList"  parameterType="com.zebra.business.craw.domain.PageInfoListBO">
 		
 		INSERT /*crawler.insertPageInfoList */ INTO page_info_list
@@ -95,10 +134,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			, goodsUrl
 			<if test="goodsImg != null and goodsImg != ''">, goodsImg</if>
 			<if test="statCd != null and statCd != ''">, statCd</if>
-			<if test="createNo != null and createNo != ''">, createNo</if>
-			<if test="createDt != null and createDt != ''">, createDt</if>
-			<if test="updateDt != null and updateDt != ''">, updateDt</if>
-			<if test="updateNo != null and updateNo != ''">, updateNo</if>
+			,createNo
+			,createDt
+			,updateDt
+			,updateNo
 			) 
 		VALUES (#{siteConfigSeq}
 			<if test="goodsNo != null and goodsNo != ''">, #{goodsNo}</if>
@@ -107,16 +146,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			, #{goodsUrl}
 			<if test="goodsImg != null and goodsImg != ''">, #{goodsImg}</if>
 			<if test="statCd != null and statCd != ''">, #{statCd}</if>
-			<if test="createNo != null and createNo != ''">, #{createNo}</if>
-			<if test="createDt != null and createDt != ''">, #{createDt}</if>
-			<if test="updateDt != null and updateDt != ''">, #{updateDt}</if>
-			<if test="updateNo != null and updateNo != ''">, #{updateNo}</if>		
+			,#{createNo}
+			,#{createDt}
+			,#{createDt}
+			,#{createNo}
 			)
 	</insert>
 	
 	
 	<update id="updatePageInfoList"  parameterType="com.zebra.business.craw.domain.PageInfoListBO">
-		UPDATE /* crawler.updatePageInfoList */ .page_info_list
+		UPDATE /* crawler.updatePageInfoList */ page_info_list
 				SET 
 					  createNo = createNo
 					<if test="goodsNm != null and goodsNm != ''">		,  goodsNm = #{goodsNm}</if>	
@@ -125,10 +164,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					<if test="goodsImg != null and goodsImg != ''">		, goodsImg = #{goodsImg}</if>	
 					<if test="statCd != null and statCd != ''">			, statCd = #{statCd}</if>	
 					<if test="failCnt != null and failCnt != ''">		, failCnt = #{failCnt}</if>	
-					<if test="updateDt != null and updateDt != ''">		, updateDt = #{updateDt}</if>	
+					<if test="updateDt != null and updateDt != ''">		, updateDt =  #{updateDt} </if>	
 					<if test="updateNo != null and updateNo != ''">		, updateNo = #{updateNo}</if>	
 			WHERE pageInfoListSeq = #{pageInfoListSeq}
 	</update>
+	
 	
 	
 	<insert id="insertPageInfoListHistCopy"  parameterType="com.zebra.business.craw.domain.PageInfoListBO">
@@ -140,6 +180,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from page_info_list where   pageInfoListSeq = #{pageInfoListSeq}
 	</insert>
 	
+	
+	
+	<insert id="insertCommonPatten" parameterType="com.zebra.business.craw.domain.ExpPattenBO">
+		INSERT INTO /* crawler.insertCommonPatten */ patten_code_list
+				(siteConfigSeq
+				, pattenKind
+				, pattenType
+				, pattenStr
+				, useYn
+				, createNo
+				, createDt
+				, updateNo
+				, updateDt
+				) 
+				VALUES (
+				#{siteConfigSeq}
+				, #{pattenKind}
+				, #{pattenType}
+				, #{pattenStr}
+				, #{useYn}
+				, #{createNo}
+				, #{createDt}
+				, #{createNo}
+				, #{createDt} 
+				)
+	</insert>
+	
+	<update id="updateCommonPatten" parameterType="com.zebra.business.craw.domain.ExpPattenBO">
+		update /* crawler.updateCommonPatten */ patten_code_list set updateNo = ${updateNo}
+									, updateDt = ${updateDt}
+									<if test=" pattenKind != null or pattenKind != ''" >, pattenKind = ${pattenKind} </if>
+									<if test=" pattenType != null or pattenType != ''" >, pattenType = ${pattenType} </if>
+									<if test=" useYn != null or useYn != ''" >, useYn = ${useYn}			  </if>
+		where siteConfigSeq = #{siteConfigSeq}
+		<if test =" pageInfoListSeq != null or pageInfoListSeq != ''" > and pageInfoListSeq = #{pageInfoListSeq} </if>
+	</update>
 	
 	  
 </mapper>
