@@ -1,6 +1,7 @@
 package com.zebra.process.crawler;
 
 import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.List;
 
@@ -9,18 +10,16 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.zebra.business.craw.domain.CrawConfigBO;
+import com.zebra.business.craw.domain.CrawlerDataCombBO;
+import com.zebra.business.craw.domain.VisiteTargetBO;
+import com.zebra.business.craw.domain.WebPageInfoBO;
 import com.zebra.common.BaseFactory;
 import com.zebra.common.BaseConstants;
 import com.zebra.common.SpringBeanFactory;
 import com.zebra.common.dao.CommonPattenCodeDao;
 import com.zebra.common.util.DateTime;
 import com.zebra.common.util.PattenUtil;
-import com.zebra.process.crawler.dao.PageInfoDAO;
-import com.zebra.process.crawler.domain.CrawConfigBO;
-import com.zebra.process.crawler.domain.CrawlerDataCombBO;
-import com.zebra.process.crawler.domain.VisiteTargetBO;
-import com.zebra.process.crawler.domain.WebPageInfoBO;
-import com.zebra.process.parser.domain.ExpPattenBO;
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
@@ -50,7 +49,7 @@ public class URLCrawler extends WebCrawler {
     		
     		CrawlerDataCombBO 	crawlerDataCombBO 	= ((CommCrawlController)getMyController()).getCrawlerDataCombBO();
     		CrawConfigBO		crawConfigBO		= crawlerDataCombBO.getCrawConfigBO();
-    		
+    		Date currentDt = new Date();
     	
     		String domain = url.getDomain();
             String href = url.getURL();
@@ -78,9 +77,9 @@ public class URLCrawler extends WebCrawler {
             		webPageInfoBO.setGoodsNo(goodsNo);
             		webPageInfoBO.setStatCd(BaseConstants.ST_FIRST);
             		webPageInfoBO.setUpdateNo("999");
-            		webPageInfoBO.setUpdateDt(DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
+            		webPageInfoBO.setUpdateDt(currentDt);
             		webPageInfoBO.setCreateNo("999");
-            		webPageInfoBO.setCreateDt(DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
+            		webPageInfoBO.setCreateDt(currentDt);
             		
             		((CommCrawlController)getMyController()).addWebPageinfoList(webPageInfoBO);
             		log.debug("##### addWebPageinfoList : " + href );

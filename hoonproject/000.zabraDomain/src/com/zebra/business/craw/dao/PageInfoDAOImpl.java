@@ -1,6 +1,7 @@
 package com.zebra.business.craw.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,7 +86,7 @@ public class PageInfoDAOImpl  extends CommonDAO  implements PageInfoDAO{
 		    	for(WebPageInfoBO webPageInfoBO : webPageInfoBOList)
 				{
 
-		    		webPageInfoBO.setUpdateDt(DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
+		    		webPageInfoBO.setUpdateDt(new Date());
 		    		webPageInfoBO.setStatCd("02");
 	
 		    		if ("Y".equals(webPageInfoBO.getFailYn()))

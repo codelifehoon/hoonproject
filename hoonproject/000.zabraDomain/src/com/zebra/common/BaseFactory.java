@@ -86,24 +86,6 @@ public abstract class BaseFactory {
 
     }
 
-    public static ExpPattenBO[] createExpPattenBO(String val,String splitRegex , String pattenKind )
-	{
-		String vals[] = val.split(splitRegex);
-		int size = vals.length;
-		ExpPattenBO[] expBos = new ExpPattenBO[size];
-		
-		
-		for (int i=0;i<size;i++)
-		{
-			expBos[i] = BaseFactory.create(ExpPattenBO.class);
-			expBos[i].setPattenStr(vals[i]);
-			expBos[i].setPattenKind(pattenKind);
-			expBos[i].setPattenType(PattenUtil.pattenCode2Type(vals[i]));
-			
-		}
-
-		return expBos;
-	}
     
     
     /**

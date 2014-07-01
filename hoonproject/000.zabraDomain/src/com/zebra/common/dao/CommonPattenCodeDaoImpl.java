@@ -22,11 +22,11 @@ public class CommonPattenCodeDaoImpl extends CommonDAO implements CommonPattenCo
 	{
 		
 	
-		ExpPattenBO expPattenBO= null;
+		
 		List<ExpPattenBO> expPattenList = null;
 		try {
 		
-		expPattenBO = BaseFactory.create(ExpPattenBO.class);
+		ExpPattenBO expPattenBO = BaseFactory.create(ExpPattenBO.class);
 		
 		if ("".equals(siteConfigSeq) || siteConfigSeq == null  ) throw new BaseException ("패턴코드 조회오류.");
 		expPattenBO.setSiteConfigSeq(siteConfigSeq);

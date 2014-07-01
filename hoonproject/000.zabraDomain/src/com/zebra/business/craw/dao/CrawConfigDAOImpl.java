@@ -34,4 +34,12 @@ public class CrawConfigDAOImpl  extends CommonDAO implements CrawConfigDAO {
 		return crawConfigBOList;
 		
 	}
+
+	/* (non-Javadoc)
+	 * @see com.zebra.business.craw.dao.CrawConfigDAO#addCrawConfig(com.zebra.business.craw.domain.CrawConfigBO)
+	 */
+	@Override
+	public long addCrawConfig(CrawConfigBO crawConfigBO) {
+		return sqlSession.insert("query.crawler.inserCrawConfig", crawConfigBO); 
+	}
 }

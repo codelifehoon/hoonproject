@@ -2,14 +2,12 @@ package com.zebra.process.crawler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+
+import com.zebra.business.craw.dao.PageInfoDAO;
+import com.zebra.business.craw.domain.CrawlerDataCombBO;
+import com.zebra.business.craw.domain.WebPageInfoBO;
 import com.zebra.common.SpringBeanFactory;
 import com.zebra.common.dao.CommonPattenCodeDao;
-import com.zebra.process.crawler.dao.PageInfoDAO;
-
-import com.zebra.process.crawler.dao.PageInfoDAOImpl;
-import com.zebra.process.crawler.domain.CrawlerDataCombBO;
-import com.zebra.process.crawler.domain.WebPageInfoBO;
-
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.CrawlController;
 import edu.uci.ics.crawler4j.fetcher.PageFetcher;

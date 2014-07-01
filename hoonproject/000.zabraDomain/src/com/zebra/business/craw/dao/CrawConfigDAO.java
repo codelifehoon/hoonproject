@@ -12,4 +12,10 @@ public interface CrawConfigDAO {
 
 	public List<CrawConfigBO> selectCrawConfigList(CrawConfigBO crawConfigBO);
 
+	/**
+	 * @param crawConfigBO
+	 * @return
+	 */
+	public long addCrawConfig(CrawConfigBO crawConfigBO);
+
 }
