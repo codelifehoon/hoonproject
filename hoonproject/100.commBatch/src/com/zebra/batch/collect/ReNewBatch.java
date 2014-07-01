@@ -2,23 +2,21 @@ package com.zebra.batch.collect;
 
 import static org.junit.Assert.assertTrue;
 
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 
+import com.zebra.business.craw.domain.CrawConfigBO;
+import com.zebra.business.craw.domain.ExpPattenBO;
 import com.zebra.common.BaseFactory;
 import com.zebra.common.SpringBeanFactory;
 import com.zebra.common.util.ConverterUtil;
 import com.zebra.common.util.DateTime;
 import com.zebra.process.crawler.CrawlerJob;
-import com.zebra.process.crawler.dao.PageInfoDAO;
-import com.zebra.process.crawler.domain.CrawConfigBO;
-import com.zebra.process.crawler.domain.CrawlerDataCombBO;
-import com.zebra.process.crawler.domain.PageConfigBO;
-import com.zebra.process.crawler.domain.WebPageInfoBO;
-import com.zebra.process.parser.domain.ExpPattenBO;
+
 import com.zebra.process.renew.ReNewJob;
 
 public class ReNewBatch extends BaseDaemon {
@@ -52,8 +50,8 @@ public class ReNewBatch extends BaseDaemon {
 
     	
     	/*TO-DO*/
-    	agent 를 table에서 가져오는 방식으로 변경이 필요함.
-    	 변경이후 작업할것
+    	//agent 를 table에서 가져오는 방식으로 변경이 필요함.
+    	// 변경이후 작업할것
     	 
     	 
 		SimpleDateFormat simpleDateFormat =  new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
