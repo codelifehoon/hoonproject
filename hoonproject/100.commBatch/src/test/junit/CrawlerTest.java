@@ -1,16 +1,17 @@
 package test.junit;
 
-import static org.junit.Assert.assertEquals;
-
-
-import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -20,15 +21,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.mockito.Mockito.*;
-
-import com.zebra.business.craw.dao.CrawConfigDAO;
 import com.zebra.business.craw.dao.PageInfoDAO;
 import com.zebra.business.craw.domain.CrawConfigBO;
 import com.zebra.business.craw.domain.CrawlerDataCombBO;
@@ -38,9 +34,6 @@ import com.zebra.business.craw.domain.WebPageInfoBO;
 import com.zebra.common.BaseFactory;
 import com.zebra.common.BaseConstants;
 import com.zebra.common.SampleInterface;
-import com.zebra.common.SpringBeanFactory;
-import com.zebra.common.dao.CommonPattenCodeDao;
-import com.zebra.common.util.CmnUtil;
 import com.zebra.common.util.DateTime;
 import com.zebra.common.util.DebugUtil;
 import com.zebra.common.util.PattenUtil;
@@ -48,13 +41,12 @@ import com.zebra.process.crawler.CommCrawlController;
 import com.zebra.process.crawler.CrawlerJob;
 import com.zebra.process.crawregister.CrawMngService;
 import com.zebra.process.parser.DomParser;
-import com.zebra.process.parser.DomParserImpl;
+import com.zebra.process.renew.ReNewJob;
 
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
-import com.zebra.process.renew.ReNewJob;
 
 @RunWith(SpringJUnit4ClassRunner.class )
 @ContextConfiguration(locations="classpath:com/zebra/batch/resource/spring-context-common.xml")
@@ -69,6 +61,16 @@ public class CrawlerTest {
 	@Autowired(required=false) SampleInterface  sampleInterface;
 	
 	
+ 
+	 @Test
+	public void InterfaceTest()
+	{
+		
+		log.debug("##### InterfaceTest");
+		
+	}
+	 
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		String log4jConfigPath = "D:/workspace/100.commBatch/src/com/zebra/batch/config/batch_log4j.xml";
@@ -91,15 +93,9 @@ public class CrawlerTest {
 	@After
 	public void tearDown() throws Exception {
 	}
- 
-	@Test
-	public void InterfaceTest()
-	{
 		
-		sampleInterface.doEtc("","");
 		
-	}
-	//@Test
+	////@Test
 	public void CrawlerTest() 
 	{
 		 
@@ -119,7 +115,7 @@ public class CrawlerTest {
 		crawlerDataCombBO.setCrawConfigBO(crawConfigBO);
 		
 		try {
-			CrawlerDataCombBO retVal = crawlerJob.doCrawler(crawlerDataCombBO);
+			CrawlerDataCombBO retVal = crawlerJob.startController(crawlerDataCombBO);
 			
 			retVal.getVisiteTargetBOlist();
 			retVal.getWebPageInfoBOlist();
@@ -131,7 +127,7 @@ public class CrawlerTest {
 	
 	}
 	
-	//@Test
+	////@Test
 	public void initCrawlerTest() 
 	{
 		 
@@ -159,8 +155,8 @@ public class CrawlerTest {
 	
 	
 	
-	 @Test
-	public void ParsingTest() {
+	 //@Test
+	public void ParsingTest() throws Exception {
 		
 		WebPageInfoBO		webPageInfoBO =  BaseFactory.create(WebPageInfoBO.class);
 		
@@ -179,7 +175,7 @@ public class CrawlerTest {
 		}
 
 		
-		HashMap<String, ExpPattenBO[]> pattenMap = DataInitClass.getDefaultPagePatten();
+		HashMap<String, ExpPattenBO[]> pattenMap = DataInitClass.getDefaultPagePatten("11st");
 		WebPageInfoBO webPageInfoBONew = domParser.doParsing(htmlString,webPageInfoBO, pattenMap);
 		
 	
@@ -193,7 +189,7 @@ public class CrawlerTest {
 		
 		}
 
-	@Test
+	//@Test
 	public void dataCombTest() throws Exception 
 	{
 		CommCrawlController crawlControlle = null;
@@ -229,11 +225,10 @@ public class CrawlerTest {
 		log.debug("dataCombTest 종료");
 	}
 
-	@Test
+	//@Test
 	public void ReNewTest() throws Exception 
 	{
 	
-		long reNewCnt=0;
 		WebPageInfoBO webPageInfoBO = BaseFactory.create(WebPageInfoBO.class);
 		
 		webPageInfoBO.setSiteConfigSeq("100000");
@@ -251,14 +246,14 @@ public class CrawlerTest {
 		crawlerDataCombBO.setWebPageInfoBOMap(webPageInfoBOMap);		// 데이터의 빠른 갱신을 위해서 조회를 map으로 처리한다.(key: prdNo)
 		crawlerDataCombBO.setCrawConfigBO(crawConfigBO);
 	
-		reNewCnt = reNewJob.doReNew(crawlerDataCombBO);
+		reNewJob.startController(crawlerDataCombBO);
 		reNewJob.applyReNewInfo(crawlerDataCombBO);
-		log.debug("##### renew cnt:" + reNewCnt);
+
 		
 	}
 		
 	
-	@Test
+	//@Test
 	public void initReNewTest() throws Exception 
 	{
 	
@@ -273,13 +268,13 @@ public class CrawlerTest {
 		
 		log.debug("##### initReNewTest start:" + DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
 	
-		reNewJob.initReNew(crawConfigBO);
+		reNewJob.initCrawler(crawConfigBO);
 		
 		log.debug("##### initReNewTest end:" + DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
 	}
 		
-	@Test
-	public void validCrawlSeedURLInfoTest() 
+	//@Test
+	public void validCrawlSeedURLInfoTest() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException 
 	{
 		 
 		CrawlerDataCombBO crawlerDataCombBO = BaseFactory.create(CrawlerDataCombBO.class);
@@ -287,11 +282,8 @@ public class CrawlerTest {
 		crawlerDataCombBO.setPageConfigBO((PageConfigBO)BaseFactory.create(PageConfigBO.class));
 		
 		crawlerDataCombBO.setPreViewYn("Y");
-		crawlerDataCombBO.getCrawConfigBO().setCrawlThreadCount(1);
-		crawlerDataCombBO.getCrawConfigBO().setSiteNm("11st");
-		crawlerDataCombBO.getCrawConfigBO().setSeedURL(new String[]{"http://m.11st.co.kr/MW/html/ranking/rankingMain.html"});
-		crawlerDataCombBO.getCrawConfigBO().setCrawlDepth(1);
-		crawlerDataCombBO.setPattenMap(DataInitClass.getDefaultPagePatten());
+		crawlerDataCombBO.setCrawConfigBO(DataInitClass.getAuctionCrawConfig());
+		crawlerDataCombBO.setPattenMap(DataInitClass.getDefaultPagePatten("Auction"));
 		
 		
 		try {
@@ -307,10 +299,11 @@ public class CrawlerTest {
 			e.printStackTrace();
 		}
 		
+		
 	}
 		
-	@Test
-	public void validCrawlerPrdInfoTest()
+	//@Test
+	public void validCrawlerPrdInfoTest() throws Exception
 	{
 		
 		
@@ -319,7 +312,7 @@ public class CrawlerTest {
 		crawlerDataCombBO.setCrawConfigBO((CrawConfigBO)BaseFactory.create(CrawConfigBO.class));
 		crawlerDataCombBO.setPageConfigBO((PageConfigBO)BaseFactory.create(PageConfigBO.class));
 		crawlerDataCombBO.setPreViewYn("Y");
-		crawlerDataCombBO.setPattenMap(DataInitClass.getDefaultPagePatten());
+		crawlerDataCombBO.setPattenMap(DataInitClass.getDefaultPagePatten("11st"));
 		crawlerDataCombBO.getCrawConfigBO().setSeedStrURL(URL);
 		
 		List<WebPageInfoBO> retList = crawlerJob.validCrawlerPrdInfo(crawlerDataCombBO);
@@ -332,21 +325,63 @@ public class CrawlerTest {
 		log.debug("INFO:" + DebugUtil.debugBoList(retList));
 	}
 	
-	@Test
-	public void addCrawConfigTest()
+	//@Test
+	public void addCrawConfigTest() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException
 	{
 		CrawlerDataCombBO crawlerDataCombBO = BaseFactory.create(CrawlerDataCombBO.class);
 		crawlerDataCombBO.setCrawConfigBO((CrawConfigBO)BaseFactory.create(CrawConfigBO.class));
 		
-		crawlerDataCombBO.setCrawConfigBO(DataInitClass.getDefaultCrawConfig());
-		crawlerDataCombBO.setPattenMap(DataInitClass.getDefaultPagePatten());
+		crawlerDataCombBO.setCrawConfigBO(DataInitClass.get11stCrawConfig());
+		crawlerDataCombBO.setPattenMap(DataInitClass.getDefaultPagePatten("11st"));
 		
 		crawMngService.addCrawInfo(crawlerDataCombBO);
 		
 		
 	}
 	
-	
+	 @Test
+	public void getHtmlTest() throws Exception {
+			
+			WebPageInfoBO		webPageInfoBO =  BaseFactory.create(WebPageInfoBO.class);
+			
+			Document doc;
+			String htmlString ="";
+			String url = "http://mobile.auction.co.kr/Item/ViewItem.aspx?ItemNo=A582441053";
+			String LowURL = url;
+			
+			try {
+				
+				//doc = Jsoup.connect(url).userAgent(BaseConstants.CRAWL_AGENT).get();
+				//htmlString = doc.toString();
+				
+				HttpClient 	httpClient = new HttpClient();
+				PostMethod	httpGet	= new PostMethod(url);
+				
+				
+				httpClient.executeMethod(httpGet);
+				htmlString = httpGet.getResponseBodyAsString();
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			
+			HashMap<String, ExpPattenBO[]> pattenMap = DataInitClass.getDefaultPagePatten("11st");
+			WebPageInfoBO webPageInfoBONew = domParser.doParsing(htmlString,webPageInfoBO, pattenMap);
+			
+		
+			log.debug("#########################");
+			log.debug("INFO:" + DebugUtil.debugBo(webPageInfoBONew));
+			log.debug("INFO PK_VISIT_SITE_PATTEN:" + PattenUtil.pattenMaches(pattenMap.get(BaseConstants.PK_VISIT_SITE_PATTEN), LowURL) );
+			log.debug("INFO PK_VISIT_URL_PATTEN:" + PattenUtil.pattenMaches(pattenMap.get(BaseConstants.PK_VISIT_URL_PATTEN), LowURL));
+			log.debug("INFO PK_GOODS_URL_PATTEN :" + PattenUtil.pattenMaches(pattenMap.get(BaseConstants.PK_GOODS_URL_PATTEN), LowURL));
+			log.debug("INFO PK_GOODS_NO_PATTEN:" + PattenUtil.pattenString(pattenMap.get(BaseConstants.PK_GOODS_NO_PATTEN), LowURL));
+			log.debug(htmlString);
+			
+			}
+		
+		
 	}
 
 

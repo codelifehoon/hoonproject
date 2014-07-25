@@ -18,7 +18,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.zebra.common.BaseException;
+
 
 
 /**
