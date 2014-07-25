@@ -1,85 +1,68 @@
 package com.zebra.process.action.officetool;
 
 import java.util.ArrayList;
-
-
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.NotNull;
-//import javax.validation.constraints.NotNull;
 
 import lombok.extern.log4j.Log4j;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.zebra.process.crawler.CrawlerJob;
-import com.zebra.process.crawregister.CrawMngService;
 import com.zebra.business.craw.dao.CrawConfigDAO;
 import com.zebra.business.craw.domain.CrawConfigBO;
 import com.zebra.business.craw.domain.CrawlerDataCombBO;
-import com.zebra.business.craw.domain.ExpPattenBO;
 import com.zebra.business.craw.domain.PageConfigBO;
 import com.zebra.business.craw.domain.WebPageInfoBO;
-import com.zebra.common.BaseFactory;
 import com.zebra.common.BaseConstants;
-import com.zebra.common.util.CmnUtil;
+import com.zebra.common.BaseFactory;
 import com.zebra.common.util.DateTime;
 import com.zebra.common.util.DebugUtil;
 import com.zebra.common.util.PattenUtil;
 import com.zebra.process.action.AuthAction;
-import com.zebra.process.action.BaseAction;
-
-
-import org.json.JSONObject;
+import com.zebra.process.crawler.CrawlerJob;
+import com.zebra.process.crawregister.CrawMngService;
 
 @Controller @Log4j
 public class SiteMngAction extends AuthAction {
 
 	//private static final  Logger log =  Logger.getLogger(SiteMngAction.class.getName());
-	@Autowired private CrawlerJob crawlerJob;
-	@Autowired private CrawConfigDAO crawConfigDAO;
-	@Autowired private CrawMngService crawMngService;
+	@Autowired private  CrawlerJob crawlerJob;
+	@Autowired private  CrawConfigDAO crawConfigDAO;
+	@Autowired private  CrawMngService crawMngService;
 
 	
 	@RequestMapping("/siteMng/regCrawlInfo")
-	public ModelAndView regCrawlInfo(@RequestParam HashMap<String,Object> paramMap , HttpServletRequest request, HttpServletResponse response )
+	public ModelAndView regCrawlInfo(@RequestParam final HashMap<String,Object> paramMap , final HttpServletRequest request ) throws Exception
 	//public ModelAndView regCrawlInfo(@ModelAttribute CrawConfigBO CrawConfigBO , BindingResult result  )
 	{ 
-		
 		log.debug("##### regCrawlInfo");
-		ModelAndView mv = new ModelAndView();
 		
-		JSONObject a = new JSONObject();
-		
-		mv.addObject("CrawConfigList",crawConfigDAO.selectCrawConfigList(null));
-		mv.setViewName("/sitemng/RegCrawlInfo");
-		return  mv;
+		final List<CrawConfigBO>  crawConfigBOList =  crawConfigDAO.selectCrawConfigList(null);
+
+		final ModelAndView mav = new ModelAndView();
+		mav.addObject("CrawConfigList",crawConfigBOList);
+		mav.setViewName("/sitemng/RegCrawlInfo");
+		return  mav;
 	}
 	
 	@RequestMapping("/siteMng/regGoodsInfoPopup")
-	public ModelAndView regGoodsInfoPopup(@RequestParam HashMap<String,Object> paramMap , HttpServletRequest request, HttpServletResponse response ) throws Exception
+	public ModelAndView regGoodsInfoPopup(@RequestParam HashMap<String,Object> paramMap , final HttpServletRequest request ) throws Exception
 	{
 		log.debug("##### regGoodsInfoPopup");
-		ModelAndView mv = new ModelAndView();
-		Date currentDt = new Date();
+
+		final Date currentDt = new Date();
 		
 		
-		CrawlerDataCombBO crawlerDataCombBO = BaseFactory.create(CrawlerDataCombBO.class);
+		final CrawlerDataCombBO crawlerDataCombBO = BaseFactory.create(CrawlerDataCombBO.class);
 		crawlerDataCombBO.setCrawConfigBO((CrawConfigBO)BaseFactory.create(CrawConfigBO.class));
 		crawlerDataCombBO.setPageConfigBO((PageConfigBO)BaseFactory.create(PageConfigBO.class));
 		
@@ -95,7 +78,7 @@ public class SiteMngAction extends AuthAction {
 		
 		crawlerDataCombBO.setPattenMap(PattenUtil.getPagePatten(paramMap, crawlerDataCombBO));
 		
-		List<WebPageInfoBO> webPageInfoList = crawlerJob.validCrawlerPrdInfo(crawlerDataCombBO);
+		final List<WebPageInfoBO> webPageInfoList = crawlerJob.validCrawlerPrdInfo(crawlerDataCombBO);
 
 		/*
 		log.debug("#########################");
@@ -107,26 +90,26 @@ public class SiteMngAction extends AuthAction {
 		log.debug("INFO:" + DebugUtil.debugBoList(webPageInfoList));
 		
 		
-		
-		mv.addObject("webPageInfoList", webPageInfoList);
-		mv.setViewName("/popupprefix/sitemng/RegGoodsInfoPopup");
-		return  mv;
+		final ModelAndView mav = new ModelAndView();
+		mav.addObject("webPageInfoList", webPageInfoList);
+		mav.setViewName("/popupprefix/sitemng/RegGoodsInfoPopup");
+		return  mav;
 	}
 	
 	@RequestMapping("/siteMng/ajax/validCrawlSeedURL")
-	public ModelAndView  validCrawlSeedURL(@RequestParam HashMap<String,Object> paramMap , HttpServletRequest request, HttpServletResponse response ) throws Exception
+	public ModelAndView  validCrawlSeedURL(@RequestParam HashMap<String,Object> paramMap , final HttpServletRequest request ) throws Exception
 	{
 		log.debug("##### validCrawlSeedURL");
 		log.debug(paramMap);
 		
 		
-		ModelAndView mv = new ModelAndView();
-		Date currentDt = new Date();
-		List<CrawConfigBO> urlValidList = new ArrayList<CrawConfigBO>();
+		
+		final Date currentDt = new Date();
+		final List<CrawConfigBO> urlValidList = new ArrayList<CrawConfigBO>();
 		
 		log.debug("#####" + (String)paramMap.get("cate1Patten"));
 
-		CrawlerDataCombBO crawlerDataCombBO = BaseFactory.create(CrawlerDataCombBO.class);
+		final CrawlerDataCombBO crawlerDataCombBO = BaseFactory.create(CrawlerDataCombBO.class);
 		crawlerDataCombBO.setCrawConfigBO((CrawConfigBO)BaseFactory.create(CrawConfigBO.class));
 		crawlerDataCombBO.setPageConfigBO((PageConfigBO)BaseFactory.create(PageConfigBO.class));
 		
@@ -149,89 +132,82 @@ public class SiteMngAction extends AuthAction {
 		
 		crawlerDataCombBO.setPattenMap(PattenUtil.getPagePatten(paramMap, crawlerDataCombBO));
 		
+		
 		for (String url : crawlerDataCombBO.getCrawConfigBO().getSeedURL())
 		{
 			log.debug("##### url:" + url);
 			log.debug("PK_VISIT_SITE_PATTEN:" + crawlerDataCombBO.getPattenMap().get(BaseConstants.PK_VISIT_SITE_PATTEN)[0] );
 			log.debug("PK_VISIT_URL_PATTEN:" + crawlerDataCombBO.getPattenMap().get(BaseConstants.PK_VISIT_URL_PATTEN)[0] );
 			
-			CrawConfigBO val = BaseFactory.create(CrawConfigBO.class); 
+			final CrawConfigBO val = BaseFactory.create(CrawConfigBO.class); 
 			val.setSeedStrURL(url);
-			val.setVisitSiteYn(String.valueOf(PattenUtil.pattenMaches(crawlerDataCombBO.getPattenMap().get(BaseConstants.PK_VISIT_SITE_PATTEN), url)));
-			val.setVisitUrlYn(String.valueOf(PattenUtil.pattenMaches(crawlerDataCombBO.getPattenMap().get(BaseConstants.PK_VISIT_URL_PATTEN), url)));
+			//val.setVisitSiteYn(String.valueOf(PattenUtil.pattenMaches(crawlerDataCombBO.getPattenMap().get(BaseConstants.PK_VISIT_SITE_PATTEN), url)));
+			//val.setVisitUrlYn(String.valueOf(PattenUtil.pattenMaches(crawlerDataCombBO.getPattenMap().get(BaseConstants.PK_VISIT_URL_PATTEN), url)));
 			
 			urlValidList.add(val);
 			
 		}
 		
-		try {
-			 crawlerJob.validCrawlSeedURLInfo(crawlerDataCombBO);
-			log.debug("########## getVisiteTargetBOlist");
-			log.debug(DebugUtil.debugBoList(crawlerDataCombBO.getVisiteTargetBOlist()));
-			log.debug("########## getWebPageInfoBOlist");
-			log.debug(DebugUtil.debugBoList(crawlerDataCombBO.getWebPageInfoBOlist()));
-			log.debug("########## urlValidList");
-			log.debug(DebugUtil.debugBoList(urlValidList));
+		
+		
+		 crawlerJob.validCrawlSeedURLInfo(crawlerDataCombBO);
+		log.debug("########## getVisiteTargetBOlist");
+		log.debug(DebugUtil.debugBoList(crawlerDataCombBO.getVisiteTargetBOlist()));
+		log.debug("########## getWebPageInfoBOlist");
+		log.debug(DebugUtil.debugBoList(crawlerDataCombBO.getWebPageInfoBOlist()));
+		log.debug("########## urlValidList");
+		log.debug(DebugUtil.debugBoList(urlValidList));
 			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		
 	
-		
-		mv.addObject("visiteTargetList", crawlerDataCombBO.getVisiteTargetBOlist());
-		mv.addObject("webPageInfoList", crawlerDataCombBO.getWebPageInfoBOlist());
-		mv.addObject("urlValidList",urlValidList);
+		final ModelAndView mav = new ModelAndView();
+		mav.addObject("visiteTargetList", crawlerDataCombBO.getVisiteTargetBOlist());
+		mav.addObject("webPageInfoList", crawlerDataCombBO.getWebPageInfoBOlist());
+		mav.addObject("urlValidList",urlValidList);
 		
 		//mav.setViewName("/SiteMng/RegCrawlInfo");
-		return  mv;
+		return  mav;
 	}
 	
 	
 	@RequestMapping("/siteMng/ajax/crawlConfigInfo")
-	public ModelAndView crawlConfigInfo(@RequestParam HashMap<String,Object> paramMap , HttpServletRequest request, HttpServletResponse response )
+	public ModelAndView crawlConfigInfo(@RequestParam HashMap<String,Object> paramMap , final HttpServletRequest request )
 	{
 		log.debug("##### CrawlConfigInfo");
-		ModelAndView mv = new ModelAndView();
-		CrawConfigBO crawConfigBO = BaseFactory.create(CrawConfigBO.class);
+		
+		final CrawConfigBO crawConfigBO = BaseFactory.create(CrawConfigBO.class);
 		
 		crawConfigBO.setSiteConfigSeq((String)paramMap.get("siteConfigSeq"));
 
-		mv.addObject("crawConfigBO",crawConfigDAO.selectCrawConfigList(crawConfigBO));
-
-		return  mv;
+		final ModelAndView mav = new ModelAndView();
+		mav.addObject("crawConfigBO",crawConfigDAO.selectCrawConfigList(crawConfigBO));
+		return  mav;
 	}
 	
 	@RequestMapping("/siteMng/ajax/regCrawConfig")
-	public ModelAndView regCrawConfig(@RequestParam HashMap<String,Object> paramMap , HttpServletRequest request, HttpServletResponse response )
+	public ModelAndView regCrawConfig(@RequestParam HashMap<String,Object> paramMap , final HttpServletRequest request )
 	{
 		log.debug("##### regCrawConfig");
-		ModelAndView mv = new ModelAndView();
-		CrawConfigBO crawConfigBO = BaseFactory.create(CrawConfigBO.class);
+		
+		final CrawConfigBO crawConfigBO = BaseFactory.create(CrawConfigBO.class);
 		
 		crawConfigBO.setSiteConfigSeq((String)paramMap.get("siteConfigSeq"));
 
 		
-		
-		mv.addObject("crawConfigBO",crawConfigDAO.selectCrawConfigList(crawConfigBO));
-
-		return  mv;
+		final ModelAndView mav = new ModelAndView();
+		mav.addObject("crawConfigBO",crawConfigDAO.selectCrawConfigList(crawConfigBO));
+		return  mav;
 	}
 	
 	@RequestMapping("/siteMng/addCrawlInfo")
-	public ModelAndView addCrawlInfo(@RequestParam HashMap<String,Object> paramMap , HttpServletRequest request, HttpServletResponse response ) throws Exception
+	public ModelAndView addCrawlInfo(@RequestParam HashMap<String,Object> paramMap , final HttpServletRequest request ) throws Exception
 	//public ModelAndView regCrawlInfo(@ModelAttribute CrawConfigBO CrawConfigBO , BindingResult result  )
 	{ 
 		log.debug("##### addCrawlInfo");
 		log.debug(paramMap);
-		ModelAndView mv = new ModelAndView();
-		List<CrawConfigBO> urlValidList = new ArrayList<CrawConfigBO>();
-		Date currentDt = new Date();
-		
-		
-
-		CrawlerDataCombBO crawlerDataCombBO = BaseFactory.create(CrawlerDataCombBO.class);
+		final Date currentDt = new Date();
+		final CrawlerDataCombBO crawlerDataCombBO = BaseFactory.create(CrawlerDataCombBO.class);
 		crawlerDataCombBO.setCrawConfigBO((CrawConfigBO)BaseFactory.create(CrawConfigBO.class));
 		
 		crawlerDataCombBO.getCrawConfigBO().setSiteNm((String)paramMap.get("siteNm"));
@@ -244,25 +220,50 @@ public class SiteMngAction extends AuthAction {
 
 		crawlerDataCombBO.setPattenMap(PattenUtil.getPagePatten(paramMap, crawlerDataCombBO));
 		
-		
+
 		crawMngService.addCrawInfo(crawlerDataCombBO);
 		
 		//initPattenMap(paramMap, currentDt, crawlerDataCombBO);
 		
 		
-		RedirectView rv = new RedirectView("/siteMng/regCrawlInfo.do");
-		rv.setExposeModelAttributes(false);
-		return  new ModelAndView(rv);
+		RedirectView rdv = new RedirectView("/siteMng/regCrawlInfo.do");
+		rdv.setExposeModelAttributes(false);
+		return  new ModelAndView(rdv);
 	}
 
 	
-	@RequestMapping("/siteMng/editCrawConfig")
-	public ModelAndView  editCrawConfig(@RequestParam HashMap<String,Object> paramMap , HttpServletRequest request, HttpServletResponse response )
-	{  
+	@RequestMapping("/siteMng/editCrawlInfo")
+	public ModelAndView  editCrawConfig(@RequestParam HashMap<String,Object> paramMap , final HttpServletRequest request ) throws Exception
+	{ 
+		log.debug("##### editCrawlInfo");
+		log.debug(paramMap);
+		final Date currentDt = new Date();
+		final CrawlerDataCombBO crawlerDataCombBO = BaseFactory.create(CrawlerDataCombBO.class);
 		
-		return null; 
+
+		crawlerDataCombBO.setCrawConfigBO((CrawConfigBO)BaseFactory.create(CrawConfigBO.class));
+		
+		crawlerDataCombBO.getCrawConfigBO().setSiteConfigSeq((String)paramMap.get("siteConfigSeq"));
+		crawlerDataCombBO.getCrawConfigBO().setSiteNm((String)paramMap.get("siteNm"));
+		crawlerDataCombBO.getCrawConfigBO().setSeedStrURL((String)paramMap.get("seedURL"));
+		crawlerDataCombBO.getCrawConfigBO().setUseYn("Y");
+		crawlerDataCombBO.getCrawConfigBO().setCrawlAgent((String)paramMap.get("crawlAgent"));
+		
+		crawlerDataCombBO.getCrawConfigBO().setCreateNo("999");
+		crawlerDataCombBO.getCrawConfigBO().setCreateDt(currentDt);
+
+		crawlerDataCombBO.setPattenMap(PattenUtil.getPagePatten(paramMap, crawlerDataCombBO));
+		
+
+		crawMngService.editCrawInfo(crawlerDataCombBO);
+		
+		//initPattenMap(paramMap, currentDt, crawlerDataCombBO);
+		
+		RedirectView rdv = new RedirectView("/siteMng/regCrawlInfo.do");
+		rdv.setExposeModelAttributes(false);
+		return  new ModelAndView(rdv);
 	}
 	
-	
+
 	
 }

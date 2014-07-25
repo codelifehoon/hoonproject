@@ -88,9 +88,7 @@ function printURLInfo(visiteTargetList,webPageInfoList,urlValidList)
 {
 	var htmlStr  = "";
 	var cnt = 0;
-	var visitSiteYnFlag = false;
-	var visitUrlYnFlag = false;
-	
+
 	
 	// URL 기본정보 검증
 	htmlStr += "<h4>방문대상URL</h4>";
@@ -103,16 +101,7 @@ function printURLInfo(visiteTargetList,webPageInfoList,urlValidList)
  	{
  		$.each(urlValidList, function(i, el) 
  		{ 
-
- 			
  			htmlStr += "최초방문경로:" + el.seedStrURL + "<br>";
- 			htmlStr += "대상URL여부:" + el.visitSiteYn + "<br>";
- 			htmlStr += "대상도메인여부:" + el.visitUrlYn + "<br>";
- 		
- 			
- 			if (el.visitSiteYn == "true" ) 	visitSiteYnFlag = true;
- 			if (el.visitUrlYn == "true" ) 	visitUrlYnFlag = true;
- 			
  		});
      }
 	htmlStr += "<p>";
@@ -134,12 +123,10 @@ function printURLInfo(visiteTargetList,webPageInfoList,urlValidList)
  		});
      }
 	
-	if ( visitSiteYnFlag && visitUrlYnFlag  && cnt > 0 ) 
+	if (  cnt > 0 ) 
 		{
 			
-			
-			
-			if ($("#crawlConfigList").val() != "")	$('#editCrawConfigBtn').show();		// 특정 사이트 정보를 선택 했을때 수정 버튼
+			if ($("#siteConfigSeq").val() != "")	$('#editCrawConfigBtn').show();		// 특정 사이트 정보를 선택 했을때 수정 버튼
 			else									$('#regCrawConfigBtn').show();		// 특정 사이트 정보를 선택 한것이 아니라면 등록버튼
 				
 			
@@ -226,10 +213,22 @@ function setcrawConfigInfo(crawConfigBO)
  	$("#seedURL").val(crawConfigBO.seedStrURL);
  	$("#crawlAgent").val(crawConfigBO.crawlAgent);
  	
+ 	// 수정될 내용에 대해서 데이터 초기화
  	$.each(expPattenBOList, function(i, el) 
  	 		{
- 				$("#" + pattenKind2Name(el.pattenKind)).val(el.pattenStr);
+ 				$("#" + pattenKind2Name(el.pattenKind)).val("");
 
+ 	 		});
+ 
+
+ 	// 변경된 내용을로 변경 (동일 종류의 selector가 여러건 존재할때 @ 구분 )
+ 	$.each(expPattenBOList, function(i, el) 
+ 	 		{
+ 				var pattenVal = $("#" + pattenKind2Name(el.pattenKind)).val();
+ 				if ( pattenVal != "")		
+ 						$("#" + pattenKind2Name(el.pattenKind)).val(pattenVal + "@" + el.pattenStr);
+ 				else 		
+ 						$("#" + pattenKind2Name(el.pattenKind)).val(el.pattenStr);
  	 		});
  }
 
@@ -248,12 +247,13 @@ function pattenKind2Name(pattenKind)
 	else if (pattenKind == "PK_090") return "cate2Patten";
 	else if (pattenKind == "PK_100") return "cate3Patten";
 	else if (pattenKind == "PK_110") return "goodsDisc";
+	else if (pattenKind == "PK_120") return "goodsIsbuyPatten";
 	else "";
 
 }
 function regCrawConfig()
 {
-	console.log("##### regCrawConfig");
+	console.log("##### addCrawlInfo");
 	$("#dataForm").attr("action","/siteMng/addCrawlInfo.do");
 	$("#dataForm").submit();
 	
@@ -262,7 +262,7 @@ function regCrawConfig()
 
 function editCrawConfig()
 {
-	console.log("##### editCrawConfig");
+	console.log("##### editCrawlInfo");
 	$("#dataForm").attr("action","/siteMng/editCrawlInfo.do");
 	$("#dataForm").submit();
 }
@@ -280,16 +280,16 @@ function editCrawConfig()
 					
 					<h3 class="content-subhead" id="yui_3_14_1_1_1397782431674_8">
                     	<i class="fa fa-dot-circle-o"></i>기존  사이트 선택
-                    	<select id="crawlConfigList" name="crawlConfigList" onChange="javascript:selectCrawConfigProc('#crawlConfigList')">
+                    	<select id="siteConfigSeq" name="siteConfigSeq" onChange="javascript:selectCrawConfigProc('#siteConfigSeq')">
                     		<option value="" selected>선택</option>
                     		<c:forEach var="crawConfig" items="${CrawConfigList}" varStatus="x">
-							  <option value="${crawConfig.siteConfigSeq}">${crawConfig.seedStrURL}</option>
+							  <option value="${crawConfig.siteConfigSeq}">${crawConfig.siteNm}</option>
 							</c:forEach>
                     	</select>
                 	</h3>
 
 					<h3 class="content-subhead" id="yui_3_14_1_1_1397782431674_8">
-                    	<i class="fa fa-dot-circle-o"></i>수집대상 정보 패턴
+                    	<i class="fa fa-dot-circle-o"></i>수집 URL 패턴
                 	</h3>
                 		<label for="브라우저종류">브라우저종류</label>
 		          		<input id="crawlAgent" name="crawlAgent" type="text" placeholder="브라우저종류" value="Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; LG-L160L Build/IML74K) AppleWebkit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30">
@@ -297,16 +297,16 @@ function editCrawConfig()
 		          		<input id="siteNm" name="siteNm" type="text" placeholder="사이트명" value='11st'>
 			            <label for="최초방문경로">최초방문경로</label>
 			            <input id="seedURL" name="seedURL"  type="text" placeholder="수집을 위한 최초 URL" value='http://m.11st.co.kr/MW/Product/productBasicInfo.tmall?prdNo=954321212'>
-			            <label for="대상URL ">대상URL</label>
-			            <input id="visitUrlPatten" name="visitUrlPatten" type="text" placeholder="수집대상이 되는 URL 패턴" value=".*(\.(html|tmall)).*">
-			            <label for="대상도메인">대상도메인</label>
-			            <input id="visitSitePatten" name="visitSitePatten" type="text" placeholder="수집대상이 되는  domain 패턴" value=".*(11st.co.kr).*">
-			            <label for="대상상품URL">대상상품URL(소문자)</label>
-			            <input id="goodsUrlPatten" name="goodsUrlPatten" type="text" placeholder="수집대상이 되는  상품URL 패턴" value=".*(productBasicInfo.tmall?).*">
-			            <label for="상품번호패턴">상품번호패턴</label>
-			            <input id="goodsNoPatten" name="goodsNoPatten" type="text" placeholder="수집된 URL에서 상품번호를 추출 하기 위한 패턴" value="prdNo=\d*">
+			            <label for="URL 확장자 정규식 ">URL확장자 정규식</label>
+			            <input id="visitUrlPatten" name="visitUrlPatten" type="text" placeholder="수집대상이 되는 URL의 확장자 정규식" value=".*(\.(html|tmall)).*">
+			            <label for="URL 도메인 정규식">URL 도메인 정규식</label>
+			            <input id="visitSitePatten" name="visitSitePatten" type="text" placeholder="수집대상이 되는  URL의 도메인 정규식" value=".*(11st.co.kr).*">
+			            <label for="상품 URL 정규식">상품 URL 정규식</label>
+			            <input id="goodsUrlPatten" name="goodsUrlPatten" type="text" placeholder="수집대상이 되는  상품 URL의 정규식" value=".*(productBasicInfo.tmall?).*">
+			            <label for="상품번호정규식">상품번호정규식</label>
+			            <input id="goodsNoPatten" name="goodsNoPatten" type="text" placeholder="수집된 URL에서 상품번호를 추출 하기 위한 정규식" value="prdNo=\d*">
 			        <h3 class="content-subhead" id="yui_3_14_1_1_1397782431674_8">
-                   		<i class="fa fa-dot-circle-o"></i>상품정보(element path) 패턴
+                   		<i class="fa fa-dot-circle-o"></i>상품상세 페이지  css selector 경로
                 	</h3>
 				        <label for="상품명경로">상품명경로</label>
 	          			<input id="goodsNamePatten" name="goodsNamePatten" type="text" placeholder="상품명패턴" value="#cts section.base div.dtl_heading">
@@ -322,6 +322,9 @@ function editCrawConfig()
 			            <input id="cate2Patten" name="cate2Patten" type="text" placeholder="중분류패턴" value="">
 			            <label for="소분류경로">소분류경로</label>
 			            <input id="cate3Patten" name="cate3Patten" type="text" placeholder="소분류패턴" value="">
+			            <label for="구매버튼">구매버튼경로</label>
+			            <input id="goodsIsbuyPatten" name="goodsIsbuyPatten" type="text" placeholder="구매버튼경로" value="">
+			            
 			  			<input id="pattenValidBtn" type="button" onClick="javascript:pattenValidBtnClick();"  value="확인" class="pure-button">
 			  			<input id="regCrawConfigBtn" type="button" onClick="javascript:regCrawConfig();"  value="등록" class="pure-button" style="display:none;">
 			  			<input id="editCrawConfigBtn" type="button" onClick="javascript:editCrawConfig();"  value="수정" class="pure-button" style="display:none;">
@@ -338,23 +341,22 @@ function editCrawConfig()
                 <p> 수집을 시작할 최초 URL
                    	<br>ex) http://www.auction.co.kr/category/category12.html
                 </p>
-                <h4>대상URL</h4>
+                <h4>URL확장자 정규식</h4>
                 <p> 방문대상이 되는 URL의 정규식 패턴을 표기 합니다. @ 구분자를 이용해서 여러개의 패턴 입력이 가능 합니다.
                 	아래의 패턴은  url의 마지막 문자가  html 또는 do 로 끝나는 URL은 방문 대상으로 지정 합니다.
                 	<br>ex) .*html@.*do
                 </p>
-                <h4>대상도메인</h4>
+                <h4>URL 도메인 정규식</h4>
                 <p> 방문대상이 되는 도메인의 정규식 패턴을 표기 합니다. @ 구분자를 이용해서 여러개의 패턴 입력이 가능 합니다.
                 	아래의 패턴은  도메인이  11st.co.kr 또는  12st.co.kr 일 경우 방문대상으로 지정 합니다.
                 	<br>ex) .*(11st.co.kr).*@.*(12st.co.kr).*
                 </p>
-                <h4>대상상품URL</h4>
+                <h4>상품 URL 정규식</h4>
                 <p> 상품정보를 가지고 있는 URL의 정규식 패턴을 표기 합니다. @ 구분자를 이용해서 여러개의 패턴 입력이 가능 합니다.
                 	아래의 패턴은  URL에 sellerproductdetail.tmall 또는  productdetail.tmall 일 경우 방문대상으로 지정 합니다.
                 	<br>ex) .*(sellerproductdetail.tmall?).*@.*(productdetail.tmall?).*
                 </p>
-                
-                <h4>상품번호패턴</h4>
+                <h4>상품번호정규식</h4>
                 <p> 대상상품URL를 대상으로 상품번호를 추출하기 위한 정규식 패턴을 표기 합니다. @ 구분자를 이용해서 여러개의 패턴 입력이 가능 합니다.
                 	아래의 패턴은  URL에  prdno=1234  또는 no=1234 일 경우  상품번호로 추출 합니다.
                 	<br>ex) prdno=\d*@no=\d*
@@ -377,6 +379,9 @@ function editCrawConfig()
                 </p>
                 <h4>소분류경로 </h4>
                 <p> 상품상세 html에  소분류경로를 추출하기 위한 xpath 설정을 합니다. (CSS Selector)
+                </p>
+                 <h4>구매버튼경로 </h4>
+                <p> 구매가능여부 확인을 위해서 구매버튼 추출하기 위한 xpath 설정을 합니다. (CSS Selector)
                 </p>
                
                 
