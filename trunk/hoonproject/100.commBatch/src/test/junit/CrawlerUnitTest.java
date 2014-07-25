@@ -9,6 +9,7 @@
 package test.junit;
 
 import static org.hamcrest.CoreMatchers.is;
+
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
@@ -107,7 +108,7 @@ public class CrawlerUnitTest {
 			}
 			);
 		
-		when (pageCodeListDao.addPageCodeList(anyString(),any(HashMap.class))).thenAnswer( new Answer()
+		when (pageCodeListDao.insertPageCodeList(anyString(),any(HashMap.class))).thenAnswer( new Answer()
 		{
 		@Override
 		public Integer answer(InvocationOnMock invocation) throws Throwable 
@@ -130,11 +131,12 @@ public class CrawlerUnitTest {
 		crawConfigBO.setSiteNm("11st");
 		crawConfigBO.setCrawlDepth(1);
 		
+		assertThat("siteconfig incorrent!!","100000",is(crawConfigDAO.selectCrawConfigList(crawConfigBO).get(0).getSiteConfigSeq()));
 		assertThat("100000",is(crawConfigDAO.selectCrawConfigList(crawConfigBO).get(0).getSiteConfigSeq()));
 		
 	}
 	
-	@Test
+	//@Test
 	public void mockitoCrawMngServiceTest()
 	{
 		CrawlerDataCombBO crawlerDataCombBO = BaseFactory.create(CrawlerDataCombBO.class);
@@ -142,6 +144,4 @@ public class CrawlerUnitTest {
 		
 	}
 
-	
-	
 }

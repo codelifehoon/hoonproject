@@ -6,9 +6,12 @@ import static org.junit.Assert.assertTrue;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.zebra.business.craw.dao.CrawConfigDAO;
 import com.zebra.business.craw.domain.CrawConfigBO;
 import com.zebra.business.craw.domain.ExpPattenBO;
 import com.zebra.common.BaseFactory;
@@ -20,9 +23,10 @@ import com.zebra.process.crawler.CrawlerJob;
 import com.zebra.process.renew.ReNewJob;
 
 public class ReNewBatch extends BaseDaemon {
-	public static final Logger log = Logger.getLogger(ReNewBatch.class.getName());
-
-
+	public static final 	Logger log 		= Logger.getLogger(ReNewBatch.class.getName());
+	private  ReNewJob  		reNewJob 		= SpringBeanFactory.getBean(ReNewJob.class);
+	private  CrawConfigDAO	crawConfigDAO	= SpringBeanFactory.getBean(CrawConfigDAO.class);
+	private final int		SLEEP_TIME = 1000*60; // 
 	
 /*
  * 메인 시작
@@ -56,20 +60,25 @@ public class ReNewBatch extends BaseDaemon {
     	 
 		SimpleDateFormat simpleDateFormat =  new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		log.debug( simpleDateFormat.format(new Date(System.currentTimeMillis())));
-        ReNewJob  reNewJob =  SpringBeanFactory.getBean(ReNewJob.class);
+       
    
-		try {CrawConfigBO		crawConfigBO		= BaseFactory.create(CrawConfigBO.class);
-		//crawConfigBO.setSiteConfigSeq("100000");
-		crawConfigBO.setSiteNm("reNew");
+		try {
+
+		CrawConfigBO		crawConfigBO	= BaseFactory.create(CrawConfigBO.class);
+		crawConfigBO.setSiteConfigSeq("100031");
+		crawConfigBO =  crawConfigDAO.selectCrawConfigList(crawConfigBO).get(0);
+		
 		crawConfigBO.setRowCnt(1000);
-		crawConfigBO.setCrawlThreadCount(2);
-		
-		log.debug("##### initReNewTest start:" + DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
+		crawConfigBO.setCrawlThreadCount(1);
+		//crawConfigBO.setCrawlDepth(1);
 	
-		reNewJob.initReNew(crawConfigBO);
-		
-		log.debug("##### initReNewTest end:" + DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
-	
+		//while (true)
+		{
+		log.error("##### initReNewTest start:" + DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
+		reNewJob.initCrawler(crawConfigBO);
+		log.error("##### initReNewTest end:" + DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
+		Thread.sleep(SLEEP_TIME);
+		}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
