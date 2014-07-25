@@ -14,7 +14,7 @@ public class WebPageInfoBO extends BaseBO {
 	 * 
 	 */
 	private static final long serialVersionUID = 1046937489186477694L;
-	
+
 	private String  pageInfoListSeq;
 	private String 	siteConfigSeq = "";
 	private String 	goodsNo 	="";
@@ -23,6 +23,7 @@ public class WebPageInfoBO extends BaseBO {
 	private String 	goodsUrl 	="";
 	private String  goodsImg 	="";
 	private String  goodsDisc	="";
+	private String  goodsIsbuyPatten	="";
 	
 	private String  reNewFlag="N";
 	

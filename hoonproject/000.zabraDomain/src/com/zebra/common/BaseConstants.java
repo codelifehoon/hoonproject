@@ -26,15 +26,12 @@ public class BaseConstants {
 		public static final String PK_CATE2_PATTEN  		= "PK_090";		// 파싱한 페이지 내의 중카 패턴
 		public static final String PK_CATE3_PATTEN  		= "PK_100"; 	// 파싱한 페이지 내의 소카 패턴
 		public static final String PK_GOODS_DISC_PATTEN  	= "PK_110"; 	// 할인율
-
+		public static final String PK_GOODS_ISBUY_PATTEN  	= "PK_120"; 	// 구매버튼 패턴(구매가능여부)
 		
 		//상태코드
 		public static final String ST_FIRST	="01";	//접수
 		public static final String ST_OK	="02"; 	//완료
 		public static final String ST_END   ="03";   //중지  
-		
-		
-		
 		
 }
 

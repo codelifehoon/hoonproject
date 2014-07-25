@@ -1,10 +1,13 @@
 package com.zebra.business.craw.dao;
 
 import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import lombok.extern.log4j.Log4j;
 
 import org.springframework.stereotype.Repository;
 
@@ -19,13 +22,12 @@ import com.zebra.common.util.DateTime;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.log4j.Logger ;
 
 @Repository
+@Log4j
 public class PageInfoDAOImpl  extends CommonDAO  implements PageInfoDAO{
 
-	
-	protected static final Logger log = Logger.getLogger(PageInfoDAOImpl.class.getName());
+
 	
 		/* (non-Javadoc)
 		 * @see com.zebra.process.crawler.dao.PageInfoDAO#insertPageInfo(java.util.List)
@@ -36,15 +38,16 @@ public class PageInfoDAOImpl  extends CommonDAO  implements PageInfoDAO{
 			log.error("#####insertPageInfo:"+ webPageInfoBOlist.size());
 			
 			// batch 데이터 처리시 session 을 별도로 열어야 동작을 하네..ExecutorType.BATCH
-		    SqlSession session = sqlSessionBatch.getSqlSessionFactory().openSession();
-		    try
+		    SqlSession session = sqlSessionBatch.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+		     try
 		    {
 		    	for(WebPageInfoBO webPageInfoBO :webPageInfoBOlist )
 				{
-					session.insert("query.crawler.insertPageInfoList", webPageInfoBO);
+		    		session.insert("query.crawler.insertPageInfoList", webPageInfoBO);
 				}
 		    }
-		    finally { session.close(); } 
+		     catch(Exception e) { e.printStackTrace();  }
+		     finally { session.flushStatements(); session.close(); } 
 		}
 		
 		/* (non-Javadoc)
@@ -80,8 +83,9 @@ public class PageInfoDAOImpl  extends CommonDAO  implements PageInfoDAO{
 		{
 			
 			
-		  SqlSession session = sqlSessionBatch.getSqlSessionFactory().openSession();
-		   try
+		   SqlSession session = sqlSessionBatch.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+		   
+		    try
 		    {
 		    	for(WebPageInfoBO webPageInfoBO : webPageInfoBOList)
 				{
@@ -102,23 +106,23 @@ public class PageInfoDAOImpl  extends CommonDAO  implements PageInfoDAO{
 		    			
 		    					
 		    			session.insert("query.crawler.insertPageInfoListHistCopy", tempBo);
-						session.update("query.crawler.updatePageInfoList", tempBo);
+		    			session.update("query.crawler.updatePageInfoList", tempBo);
 					}
 		    		else 
 		    		{
 		    			webPageInfoBO.setFailCnt(0);
 		    			session.insert("query.crawler.insertPageInfoListHistCopy", webPageInfoBO);
-						session.update("query.crawler.updatePageInfoList", webPageInfoBO);
+		    			session.update("query.crawler.updatePageInfoList", webPageInfoBO);
 						
 		    		}
-		    			
-					
-		    		
 				}
 		   }
-		  finally { session.close(); } 
+		  catch(Exception e) { e.printStackTrace();  }
+		  finally { session.flushStatements(); session.close();
+			  } 
+		  }
 		    
-		}
+		
 
 		
 }

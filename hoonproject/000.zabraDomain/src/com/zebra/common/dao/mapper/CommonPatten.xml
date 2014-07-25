@@ -38,6 +38,47 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	
+<!-- patten_code_list 관련  -->
+	<insert id="insertCommonPatten" parameterType="com.zebra.business.craw.domain.ExpPattenBO">
+		INSERT INTO /* commonPatten.insertCommonPatten */ patten_code_list
+				(siteConfigSeq
+				, pattenKind
+				, pattenType
+				, pattenStr
+				, useYn
+				, createNo
+				, createDt
+				, updateNo
+				, updateDt
+				) 
+				VALUES (
+				#{siteConfigSeq}
+				, #{pattenKind}
+				, #{pattenType}
+				, #{pattenStr}
+				, #{useYn}
+				, #{createNo}
+				, #{createDt}
+				, #{createNo}
+				, #{createDt} 
+				)
+	</insert>
+	
+
+	<update id="updateCommonPatten" parameterType="com.zebra.business.craw.domain.ExpPattenBO">
+	     	UPDATE  /* commonPatten.updateCommonPatten */ patten_code_list 
+			SET
+					   updateDt =  #{createDt}
+					 , updateNo =  #{createNo} 
+					 <if test="pattenKind != null and pattenKind != ''"> 	, pattenKind = #{pattenKind} </if>
+					 <if test="pattenType != null and pattenType != ''">	, pattenType = #{pattenType} </if>
+					 <if test="pattenStr != null and pattenStr != ''">		, pattenStr = #{pattenStr} </if>
+					 <if test="useYn != null and useYn != ''">				, useYn = #{useYn} </if>
+			WHERE siteConfigSeq= #{siteConfigSeq}
+			and useYn = 'Y'
+			<if test="pattenCodeListSeq != null and pattenCodeListSeq != ''"> and pattenCodeListSeq= #{pattenCodeListSeq}  </if>
+	</update>
+	
 	  
 </mapper>
 

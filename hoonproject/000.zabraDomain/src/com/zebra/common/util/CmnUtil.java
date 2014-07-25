@@ -8710,7 +8710,124 @@ public class CmnUtil {
     }
     
     
+    /**
+     * http url의 파일을 다운로드 한다.
+     * @param address
+     * @param localFileName
+     */
+    public static boolean httpFileDownload2(String address, String localFileName) { 
+        OutputStream out = null; 
+        URLConnection conn = null; 
+        InputStream  in = null;
+        boolean retVal = false;
+        try 
+        { 
+            URL url = new URL(address);
+            
+            out = new BufferedOutputStream( new FileOutputStream(localFileName)); 
+            conn = url.openConnection();
+            conn.setConnectTimeout(3000);	// connect timeout 3초 설정
+            
+            in = conn.getInputStream();
+            
+            byte[] buffer = new byte[1024*10]; 
+            int numRead; 
+            long numWritten = 0; 
+            while ((numRead = in.read(buffer)) != -1) 
+            { 
+                out.write(buffer, 0, numRead); 
+                numWritten += numRead; 
+            }
+            
+            retVal = true;
+            
+        } catch (Exception e) 
+        { 
+            e.printStackTrace(); 
+        } finally 
+        { 
+            try { 
+                if (in != null) { 
+                    in.close(); 
+                } 
+                if (out != null) { 
+                    out.close(); 
+                } 
+            } catch (IOException e)
+            { 
+            	e.printStackTrace(); 
+            } 
+        } 
+        
+        return retVal;
+    } 
     
+    /**
+     * http url의 파일을 다운로드 한다.
+     * @param address
+     * @param localFileName
+     */
+    public static boolean httpFileDownload3(String address, String localFileName) { 
+        OutputStream out = null; 
+        URLConnection conn = null; 
+        InputStream  in = null;
+        boolean retVal = false;
+        try 
+        { 
+            URL url = new URL(address);
+            
+            out = new BufferedOutputStream( new FileOutputStream(localFileName)); 
+            conn = url.openConnection();
+            conn.setConnectTimeout(3000);	// connect timeout 3초 설정
+            
+            in = conn.getInputStream();
+            
+            byte[] buffer = new byte[1024*10]; 
+            int numRead; 
+            long numWritten = 0; 
+            while ((numRead = in.read(buffer)) != -1) 
+            { 
+                out.write(buffer, 0, numRead); 
+                numWritten += numRead; 
+            }
+            
+            retVal = true;
+            
+        } catch (Exception e) 
+        { 
+            e.printStackTrace(); 
+        } finally 
+        { 
+            try { 
+                if (in != null) { 
+                    in.close(); 
+                } 
+                if (out != null) { 
+                    out.close(); 
+                } 
+            } catch (IOException e)
+            { 
+            	e.printStackTrace(); 
+            } 
+        } 
+        
+        return retVal;
+    } 
+    
+
+    public static String getOnlyNumberString(String str) {
+    	if (str == null)	return "";
+
+    	StringBuffer sb = new StringBuffer();
+    	int length = str.length();
+    	for (int i = 0; i < length; i++) {
+    		char curChar = str.charAt(i);
+    		if (Character.isDigit(curChar))
+    			sb.append(curChar);
+    	}
+    	return sb.toString();
+    }
+
     
 
 } // end of class

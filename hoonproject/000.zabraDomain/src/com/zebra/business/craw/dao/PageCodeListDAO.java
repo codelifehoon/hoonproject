@@ -19,7 +19,15 @@ public interface PageCodeListDAO {
 	 * @param pattenMap
 	 * @return TODO
 	 */
-	int addPageCodeList(String siteConfigSeq,
+	int insertPageCodeList(String siteConfigSeq,
 			HashMap<String, ExpPattenBO[]> pattenMap);
+
+	/**
+	 * @param pattenMap
+	 * @param expPattenBO TODO
+	 * @return
+	 */
+	int updatePageCodeList(HashMap<String, ExpPattenBO[]> pattenMap,
+			ExpPattenBO expPattenBO);
 
 }

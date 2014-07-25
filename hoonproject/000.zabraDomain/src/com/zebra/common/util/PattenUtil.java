@@ -1,6 +1,8 @@
 package com.zebra.common.util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 import java.util.Iterator;
@@ -62,6 +64,7 @@ public class PattenUtil {
 		if ("goodsUrlPatten".equals(name)) return  BaseConstants.PK_GOODS_URL_PATTEN ;
 		if ("goodsNoPatten".equals(name)) return  BaseConstants.PK_GOODS_NO_PATTEN ;
 		if ("goodsDisc".equals(name)) return  BaseConstants.PK_GOODS_DISC_PATTEN ;
+		if ("goodsIsbuyPatten".equals(name)) return  BaseConstants.PK_GOODS_ISBUY_PATTEN ;
 		
 		return "";
 	}
@@ -79,7 +82,7 @@ public class PattenUtil {
 		if (BaseConstants.PK_GOODS_URL_PATTEN.equals(code)) return  "goodsUrlPatten" ;
 		if (BaseConstants.PK_GOODS_NO_PATTEN.equals(code)) return   "goodsNoPatten";
 		if (BaseConstants.PK_GOODS_DISC_PATTEN .equals(code)) return "goodsDisc"  ;
-		
+		if (BaseConstants.PK_GOODS_ISBUY_PATTEN .equals(code)) return "goodsIsbuyPatten"  ;
 		return "";
 	}
 
@@ -97,6 +100,8 @@ public class PattenUtil {
 		if (BaseConstants.PK_GOODS_URL_PATTEN.equals(code)) return  "01" ;
 		if (BaseConstants.PK_GOODS_NO_PATTEN.equals(code)) return   "01";
 		if (BaseConstants.PK_GOODS_DISC_PATTEN .equals(code)) return "02"  ;
+		if (BaseConstants.PK_GOODS_ISBUY_PATTEN .equals(code)) return "02"  ;
+		
 	
 		return "";
 	}
@@ -137,6 +142,12 @@ public class PattenUtil {
 	    			
 	    		}
 	    
+	    	
+	    		if (log.isDebugEnabled())
+	    		{
+	    			log.debug("pName :" + PattenUtil.pattenName2Code(pName));
+	    			for (ExpPattenBO BO : expBos) log.debug("expBo :" + DebugUtil.debugBo(BO));
+	    		}
 	    		
 	    		pattenMap.put(PattenUtil.pattenName2Code(pName), expBos);
 	    		

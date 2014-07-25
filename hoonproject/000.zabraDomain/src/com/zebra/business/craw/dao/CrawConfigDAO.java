@@ -18,4 +18,10 @@ public interface CrawConfigDAO {
 	 */
 	public long addCrawConfig(CrawConfigBO crawConfigBO);
 
+	/**
+	 * @param crawConfigBO
+	 * @return TODO
+	 */
+	public int updateCrawConfig(CrawConfigBO crawConfigBO);
+
 }

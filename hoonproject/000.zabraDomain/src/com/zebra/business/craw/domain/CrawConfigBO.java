@@ -33,8 +33,8 @@ public class CrawConfigBO extends BaseBO
 	private String visitUrlYn;				// 접근대상 url 여부
 	private String goodsUrlYn;				//	접근가능 상품URL 여부
 	private String createNo;
-	private Date createDt;
 	private String updateNo;
+	private Date createDt;
 	private Date updateDt;
 	
 	
