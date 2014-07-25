@@ -14,13 +14,19 @@ import com.zebra.business.craw.domain.WebPageInfoBO;
 
 public interface CrawlerJob {
 
-	public CrawlerDataCombBO doCrawler(CrawlerDataCombBO crawlerDataCombBO) throws Exception;
-
 	public void initCrawler(CrawConfigBO crawConfigBO) throws Exception;
 
-	public abstract List<WebPageInfoBO> validCrawlerPrdInfo(CrawlerDataCombBO	crawlerDataCombBO);
+	public List<WebPageInfoBO> validCrawlerPrdInfo(CrawlerDataCombBO	crawlerDataCombBO) throws Exception;
 
 	public CrawlerDataCombBO validCrawlSeedURLInfo(CrawlerDataCombBO crawlerDataCombBO) throws Exception;
+
+	/**
+	 * @param crawlerDataCombBO
+	 * @return
+	 * @throws Exception
+	 */
+	public CrawlerDataCombBO startController(CrawlerDataCombBO crawlerDataCombBO)
+			throws Exception;
 
 
 }

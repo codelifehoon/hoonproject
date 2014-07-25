@@ -7,6 +7,8 @@ import java.util.List;
 
 import java.util.regex.Pattern;
 
+import lombok.extern.log4j.Log4j;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -25,9 +27,8 @@ import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
 
+@Log4j
 public class URLCrawler extends WebCrawler {
-
-	protected static final Logger log = Logger.getLogger(URLCrawler.class.getName());
 
 	
 	private CommonPattenCodeDao commomPattenCodeDao = SpringBeanFactory.getBean(CommonPattenCodeDao.class);
@@ -89,7 +90,7 @@ public class URLCrawler extends WebCrawler {
             		//지금은 미리보기를 위해서만 사용하는데 차후에는 방문대상 URL도 별도로 저장할 필요는 있을듯 
             		log.debug("#### 방문대상URL:" + url);
             		VisiteTargetBO visiteTargetBO = BaseFactory.create(VisiteTargetBO.class);            		
-            		visiteTargetBO.setURL(url.getURL());
+            		visiteTargetBO.setUrl(url.getURL());
 
             		crawlerDataCombBO.getVisiteTargetBOlist().add(visiteTargetBO);
 	            }

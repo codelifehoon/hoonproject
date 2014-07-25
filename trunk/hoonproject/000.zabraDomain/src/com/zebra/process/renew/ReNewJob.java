@@ -8,12 +8,11 @@ import com.zebra.business.craw.domain.CrawlerDataCombBO;
 
 public interface ReNewJob {
 
-	public long doReNew(CrawlerDataCombBO crawlerDataCombBO) throws Exception;
-	
 	public long applyReNewInfo(CrawlerDataCombBO crawlerDataCombBO) throws Exception;
 
-	public void initReNew(CrawConfigBO  crawConfigBO);
+	public void initCrawler(CrawConfigBO  crawConfigBO);
 
-	
+	public CrawlerDataCombBO startController(CrawlerDataCombBO crawlerDataCombBO)
+			throws Exception;
 	
 }

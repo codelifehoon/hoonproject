@@ -4,12 +4,14 @@ import java.text.SimpleDateFormat;
 
 
 
+
 import java.util.Date;
 import java.util.List;
 
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.zebra.business.craw.domain.CrawConfigBO;
@@ -29,11 +31,10 @@ import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
 
+@Log4j
 public class PageCrawler extends WebCrawler {
 
 
-	protected  static final  Logger log =  Logger.getLogger(PageCrawler.class.getName());
-	
 	 private CommonPattenCodeDao commomPattenCodeDao = SpringBeanFactory.getBean(CommonPattenCodeDao.class);
 	 private DomParser domParser = SpringBeanFactory.getBean(DomParser.class);
 	
@@ -59,10 +60,7 @@ public class PageCrawler extends WebCrawler {
     		String ordUrl = page.getWebURL().getURL();
             String url = page.getWebURL().getURL();
             CrawlerDataCombBO crawlerDataCombBO = ((CommCrawlController)getMyController()).getCrawlerDataCombBO();
-            CrawConfigBO		crawConfigBO	= crawlerDataCombBO.getCrawConfigBO();
-           
-
-            log.debug("url:" + url);
+            log.debug("##### url:" + url);
  
             if (page.getParseData() instanceof HtmlParseData) 
             {
@@ -79,7 +77,12 @@ public class PageCrawler extends WebCrawler {
                 
                 HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
                 
-                webPageInfoBONew = domParser.doParsing( htmlParseData.getHtml(), webPageInfoBOOld,crawlerDataCombBO.getPattenMap() );
+                try {
+					webPageInfoBONew = domParser.doParsing( htmlParseData.getHtml(), webPageInfoBOOld,crawlerDataCombBO.getPattenMap() );
+				} catch (Exception e) {
+					e.printStackTrace();
+					return;
+				}
                 webPageInfoBONew.setGoodsUrl(webPageInfoBOOld.getGoodsUrl());
                 webPageInfoBONew.setGoodsNo(webPageInfoBOOld.getGoodsNo());
         		

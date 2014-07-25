@@ -8,6 +8,8 @@ import com.zebra.business.craw.domain.CrawlerDataCombBO;
 import com.zebra.business.craw.domain.WebPageInfoBO;
 import com.zebra.common.SpringBeanFactory;
 import com.zebra.common.dao.CommonPattenCodeDao;
+import com.zebra.common.exception.BaseException;
+
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.CrawlController;
 import edu.uci.ics.crawler4j.fetcher.PageFetcher;
@@ -29,8 +31,8 @@ public class CommCrawlController extends CrawlController {
 		return crawlerDataCombBO;
 	}
 
-	public void setCrawlerDataCombBO(CrawlerDataCombBO crawlerDataCombBO) throws Exception {
-		if (this.crawlerDataCombBO != null) throw new Exception("crawlerDataCombBO is not null");
+	public void setCrawlerDataCombBO(CrawlerDataCombBO crawlerDataCombBO) throws BaseException {
+		if (this.crawlerDataCombBO != null) throw new BaseException("crawlerDataCombBO is not null");
 		this.crawlerDataCombBO = crawlerDataCombBO;
 	}
 	

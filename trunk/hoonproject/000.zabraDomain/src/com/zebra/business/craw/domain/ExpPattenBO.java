@@ -14,6 +14,7 @@ public class ExpPattenBO extends BaseBO {
 	 */
 	private static final long serialVersionUID = -4984631287652950803L;
 
+	private String pattenCodeListSeq;
 	private String siteConfigSeq;
 	private String pattenKind;
 	private String pattenType;						

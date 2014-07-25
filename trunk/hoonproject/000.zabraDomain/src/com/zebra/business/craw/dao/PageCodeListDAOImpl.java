@@ -9,6 +9,7 @@
 package com.zebra.business.craw.dao;
 
 import java.util.HashMap;
+
 import java.util.Iterator;
 
 import org.springframework.stereotype.Repository;
@@ -27,7 +28,7 @@ public class PageCodeListDAOImpl  extends CommonDAO  implements PageCodeListDAO 
 	 * @see com.zebra.business.craw.dao.PageCodeListDAO#addPageCodeList(long, java.util.HashMap)
 	 */
 	@Override
-	public int addPageCodeList(String siteConfigSeq,
+	public int insertPageCodeList(String siteConfigSeq,
 			HashMap<String, ExpPattenBO[]> pattenMap)
 	{
 		int rowCnt = 0;
@@ -41,12 +42,23 @@ public class PageCodeListDAOImpl  extends CommonDAO  implements PageCodeListDAO 
     		{
     			expPattenBO.setSiteConfigSeq(siteConfigSeq);
     			
-    			rowCnt += sqlSession.insert("query.crawler.insertCommonPatten", expPattenBO); 
+    			rowCnt += sqlSession.insert("query.commonPatten.insertCommonPatten", expPattenBO); 
     		} 
 	
 		 }
 		
 		return rowCnt;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.zebra.business.craw.dao.PageCodeListDAO#updatePageCodeList(java.lang.String, java.util.HashMap)
+	 */
+	@Override
+	public int updatePageCodeList(HashMap<String, ExpPattenBO[]> pattenMap,
+			ExpPattenBO expPattenBO) {
+	
+		sqlSession.update("query.commonPatten.updateCommonPatten", expPattenBO); 
+		return insertPageCodeList(expPattenBO.getSiteConfigSeq(), pattenMap);
 	}
 	
 		

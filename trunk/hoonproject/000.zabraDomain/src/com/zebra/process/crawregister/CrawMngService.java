@@ -8,13 +8,24 @@
  */
 package com.zebra.process.crawregister;
 
+import javax.validation.constraints.NotNull;
+
+import org.springframework.validation.annotation.Validated;
+
 import com.zebra.business.craw.domain.CrawlerDataCombBO;
 
+ 
+@Validated
 public interface CrawMngService {
 
 	/**
 	 * @param crawlerDataCombBO
 	 */
-	void addCrawInfo(CrawlerDataCombBO crawlerDataCombBO);
+	void addCrawInfo(@NotNull CrawlerDataCombBO crawlerDataCombBO);
+
+	/**
+	 * @param crawlerDataCombBO
+	 */
+	void editCrawInfo(@NotNull CrawlerDataCombBO crawlerDataCombBO);
 
 }

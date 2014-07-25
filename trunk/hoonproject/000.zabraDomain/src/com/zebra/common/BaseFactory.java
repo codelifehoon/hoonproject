@@ -7,16 +7,14 @@ import java.lang.reflect.Modifier;
 import lombok.extern.log4j.Log4j;
 
 import org.apache.james.mime4j.message.BodyFactory;
-import org.apache.log4j.Logger;
 import com.sun.beans.finder.ClassFinder;
 import com.zebra.business.craw.domain.ExpPattenBO;
+import com.zebra.common.exception.BaseException;
 import com.zebra.common.util.PattenUtil;
 
 
 @Log4j
-public abstract class BaseFactory {
-
-    public static Logger logger = Logger.getLogger(BaseFactory.class);
+public class BaseFactory {
     
     
     protected BaseFactory() {
@@ -66,7 +64,7 @@ public abstract class BaseFactory {
      * @param classArgValues
      * @return
      */
-    public static final Object create( String className, Object[] classArgValues ) throws Exception {
+    public static final Object create( String className, Object[] classArgValues ) throws BaseException {
         Object instance = null;
 
         try {
@@ -79,7 +77,7 @@ public abstract class BaseFactory {
             instance = constructor.newInstance(classArgValues);
         }
         catch (Exception e) {
-            throw new Exception("Factory 객체["+className+"]의 클래스를 찾을 수 없습니다.", e);
+            throw new BaseException("Factory 객체["+className+"]의 클래스를 찾을 수 없습니다.", e);
         }
 
         return instance;
@@ -101,8 +99,8 @@ public abstract class BaseFactory {
         }
         catch (SecurityException ex) {
 //            logger.debug("현재 Thread 의 ClassLoader 를 얻지 못했기 때문에 기본 시스템 Class Loader 를 사용합니다.", ex);
-            if( logger.isDebugEnabled() ) {
-                logger.debug("'"+clazz+"' 클래스의 보안 접근 제한(security restriction) 때문에 classloader 를 얻을 수 없습니다.", ex);
+            if( log.isDebugEnabled() ) {
+            	log.debug("'"+clazz+"' 클래스의 보안 접근 제한(security restriction) 때문에 classloader 를 얻을 수 없습니다.", ex);
             }
         }
 

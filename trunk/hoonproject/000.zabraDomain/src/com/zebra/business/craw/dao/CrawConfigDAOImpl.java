@@ -2,7 +2,6 @@ package com.zebra.business.craw.dao;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +11,7 @@ import com.zebra.common.dao.CommonPattenCodeDao;
 @Repository
 public class CrawConfigDAOImpl  extends CommonDAO implements CrawConfigDAO {
 
-	protected static final  Logger logger =  Logger.getLogger(CrawConfigDAOImpl.class.getName());
+	
 	@Autowired CommonPattenCodeDao commonPattenCodeDao;
 	
 	/* (non-Javadoc)
@@ -41,5 +40,14 @@ public class CrawConfigDAOImpl  extends CommonDAO implements CrawConfigDAO {
 	@Override
 	public long addCrawConfig(CrawConfigBO crawConfigBO) {
 		return sqlSession.insert("query.crawler.inserCrawConfig", crawConfigBO); 
+	}
+
+	/* (non-Javadoc)
+	 * @see com.zebra.business.craw.dao.CrawConfigDAO#updateCrawConfig(com.zebra.business.craw.domain.CrawConfigBO)
+	 */
+	@Override
+	public int updateCrawConfig(CrawConfigBO crawConfigBO) {
+		return sqlSession.update("query.crawler.updateCrawConfig", crawConfigBO); 
+		
 	}
 }
