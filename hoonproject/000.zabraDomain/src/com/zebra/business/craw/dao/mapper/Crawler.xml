@@ -14,13 +14,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	        <result column="siteConfigSeq" property="siteConfigSeq" />
 			<result column="siteNm" property="siteNm" />
 			<result column="seedURL" property="seedStrURL" />
+			<result column="logoURL" property="logoURL" />
 			<result column="useYn" property="useYn" />
 			<result column="crawlAgent" property="crawlAgent" />
 	</resultMap>
 	<!-- 페이지 리스트 -->
 	<select id="selectCrawConfigList" resultMap="selectCrawConfigResult" parameterType="com.zebra.business.craw.domain.CrawConfigBO">
 	     	
-	     	SELECT /*crawler.selectCrawConfigList*/ siteConfigSeq, siteNm, seedURL, useYn, crawlAgent ,createNo, createDt, updateDt, updateNo  
+	     	SELECT /*crawler.selectCrawConfigList*/ siteConfigSeq, siteNm, seedURL, logoURL , useYn, crawlAgent ,createNo, createDt, updateDt, updateNo  
 			FROM craw_config
 			where 1=1
 			and useYn = 'Y'
@@ -84,6 +85,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<result column="goodsImg" 			property="goodsImg" />
 			<result column="statCd" 			property="statCd" />
 			<result column="failCnt"			property="failCnt" />
+			<result column="cate1"				property="cate1" />
+			<result column="cate2"				property="cate2" />
+			<result column="cate3"				property="cate3" />
 			<result column="updateDt" 			property="updateDt" />
 			<result column="updateNo" 			property="updateNo" />
 			<result column="createDt"		 	property="createDt" />
@@ -101,6 +105,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	     	, goodsImg
 	     	, statCd
 	     	, failCnt
+	     	, cate1
+	     	, cate2
+	     	, cate3
 	     	, createNo
 	     	, createDt
 	     	, updateDt
@@ -126,7 +133,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 		<select id="selectPageInfoMap" resultType="java.util.HashMap" resultMap="selectWebPageInfoListResult" parameterType="com.zebra.business.craw.domain.WebPageInfoBO">
-	     	SELECT /*crawler.selectPageInfoMap*/  pageInfoListSeq, siteConfigSeq, goodsNo, goodsNm, goodsPrice, goodsUrl, goodsImg, statCd, failCnt,   createNo, createDt, updateDt, updateNo 
+	     	SELECT /*crawler.selectPageInfoMap*/  pageInfoListSeq, siteConfigSeq, goodsNo, goodsNm, goodsPrice, goodsUrl, goodsImg, statCd, failCnt,cate1,cate2,cate3,   createNo, createDt, updateDt, updateNo 
 					,'Y' as failYn
 			FROM 
 			page_info_list

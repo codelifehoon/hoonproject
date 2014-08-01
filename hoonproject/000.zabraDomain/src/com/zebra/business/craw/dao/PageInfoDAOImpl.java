@@ -50,9 +50,7 @@ public class PageInfoDAOImpl  extends CommonDAO  implements PageInfoDAO{
 		     finally { session.flushStatements(); session.close(); } 
 		}
 		
-		/* (non-Javadoc)
-		 * @see com.zebra.process.crawler.dao.PageInfoDAO#selectPageInfoListAll()
-		 */
+
 		public HashMap<String, WebPageInfoBO>  selectReNewPageInfoMap(WebPageInfoBO webPageInfoBO)
 		{
 
@@ -75,6 +73,9 @@ public class PageInfoDAOImpl  extends CommonDAO  implements PageInfoDAO{
 			
 		
 		}
+	
+		
+		
 
 		/* (non-Javadoc)
 		 * @see com.zebra.process.crawler.dao.PageInfoDAO#selectPageInfoListAll()
@@ -121,6 +122,17 @@ public class PageInfoDAOImpl  extends CommonDAO  implements PageInfoDAO{
 		  finally { session.flushStatements(); session.close();
 			  } 
 		  }
+
+		/* (non-Javadoc)
+		 * @see com.zebra.business.craw.dao.PageInfoDAO#selectPageInfo(com.zebra.business.craw.domain.WebPageInfoBO)
+		 */
+		@Override
+		public WebPageInfoBO selectPageInfo(WebPageInfoBO webPageInfoBO) {
+
+			WebPageInfoBO result = sqlSession.selectOne("query.crawler.selectPageInfoMap", webPageInfoBO);
+
+			return result;
+		}
 		    
 		
 

@@ -751,6 +751,21 @@ public final class DateTime {
         return str;
     }
 
+    /**
+     * java.util.Date 클래스를 yyyy-MM-dd 포맷의 String으로 변환한다. 데이타베이스 컬럼이 NULL인경우에는
+     * ""값을 리턴한다.(with SqlMap.xml)
+     *
+     * @param date
+     * @return
+     */
+    public static String defaultFormat(Date date) {
+        String str = format(date, "yyyy-MM-dd HH:mm:ss");
+        if (str.equals("0001/01/01")) {
+            str = "";
+        }
+        return str;
+    }
+    
 	/** 문자열을 날짜로
 	 *
 	 * @param value
@@ -767,4 +782,6 @@ public final class DateTime {
 			return null;
 		}
 	}
+
+	 
 }
