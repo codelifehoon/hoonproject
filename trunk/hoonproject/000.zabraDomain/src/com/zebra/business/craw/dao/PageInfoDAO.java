@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.zebra.business.analysis.domain.GoodsPriceChange;
 import com.zebra.business.craw.domain.CrawlerDataCombBO;
 import com.zebra.business.craw.domain.WebPageInfoBO;
 
@@ -19,5 +20,8 @@ public interface PageInfoDAO {
 	public  void updateReNewPageInfoList(List<WebPageInfoBO> webPageInfoBOList);
 
 	public  HashMap<String, WebPageInfoBO> selectPageInfoMap(WebPageInfoBO webPageInfoBO);
+	
+	public  WebPageInfoBO selectPageInfo(WebPageInfoBO webPageInfoBO);
+
 
 }

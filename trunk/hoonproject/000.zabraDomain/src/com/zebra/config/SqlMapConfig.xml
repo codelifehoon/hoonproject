@@ -8,7 +8,10 @@
   <!-- mapping files -->
   <mappers>
 		<mapper resource="com/zebra/business/craw/dao/mapper/Crawler.xml" />
+		<mapper resource="com/zebra/business/craw/dao/mapper/PageInfo.xml" />
+		<mapper resource="com/zebra/business/analysis/dao/mapper/analysis.xml" />
 		<mapper resource="com/zebra/common/dao/mapper/CommonPatten.xml" />
-  </mappers>
+		<mapper resource="com/zebra/common/dao/mapper/CommonCode.xml" />
+	</mappers>
  
 </configuration>

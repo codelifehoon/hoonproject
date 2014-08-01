@@ -27,7 +27,7 @@ import com.zebra.common.util.ConverterUtil;
 import com.zebra.common.util.DebugUtil;
 import com.zebra.common.util.PattenUtil;
 
-import com.zebra.process.parser.DomParser;
+import com.zebra.process.parser.DomParserService;
 
 
 
@@ -37,7 +37,7 @@ public class CrawlerJobImpl extends JobBase implements CrawlerJob {
 
 	@Autowired	CrawConfigDAO	crawConfigDAO;
 	@Autowired	PageInfoDAO		pageInfoDAO;
-	@Autowired 	DomParser		domParser;
+	@Autowired 	DomParserService		domParser;
 	
 	
 	/* (non-Javadoc)

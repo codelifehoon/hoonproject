@@ -19,7 +19,7 @@ public class WebPageInfoBO extends BaseBO {
 	private String 	siteConfigSeq = "";
 	private String 	goodsNo 	="";
 	private String 	goodsNm 	="";
-	private String 	goodsPrice 	="";
+	private String  goodsPrice	="";
 	private String 	goodsUrl 	="";
 	private String  goodsImg 	="";
 	private String  goodsDisc	="";
@@ -49,5 +49,6 @@ public class WebPageInfoBO extends BaseBO {
 	{
 		return DateTime.format(getUpdateDt(), "yyyy-MM-dd HH:mm:ss");
 	}
+
 
 }

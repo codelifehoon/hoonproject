@@ -24,7 +24,7 @@ import com.zebra.common.SpringBeanFactory;
 import com.zebra.common.dao.CommonPattenCodeDao;
 import com.zebra.common.util.PattenUtil;
 import com.zebra.process.crawler.CommCrawlController;
-import com.zebra.process.parser.DomParser;
+import com.zebra.process.parser.DomParserService;
 import com.zebra.process.parser.DomParserImpl;
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
@@ -36,7 +36,7 @@ public class PageCrawler extends WebCrawler {
 
 
 	 private CommonPattenCodeDao commomPattenCodeDao = SpringBeanFactory.getBean(CommonPattenCodeDao.class);
-	 private DomParser domParser = SpringBeanFactory.getBean(DomParser.class);
+	 private DomParserService domParser = SpringBeanFactory.getBean(DomParserService.class);
 	
     /**
      * You should implement this function to specify whether

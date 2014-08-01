@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="query.analysis">
+
+
+	
+	<select id="selectGoodsPriceTrendList"  resultType="com.zebra.business.analysis.domain.GoodsPriceTrend" parameterType="com.zebra.business.analysis.domain.GoodsPriceTrend">
+		select  /* query.analysis.selectGoodsPriceTrendList */
+			GPT.goodsPriceTrendSeq
+			, GPT.pageInfoListSeq
+			, GPT.pageInfoListHistSeq
+			, GPT.goodsPrice
+			, GPT.priceCode
+			, GILH.updateDt as createDt
+		from goods_price_trend GPT , page_info_list_hist GILH
+		where GPT.pageInfoListSeq = #{pageInfoListSeq}
+		and GPT.statCd = '02'
+		and GPT.pageInfoListHistSeq = GILH.pageInfoListHistSeq
+		order by GPT.statCd
+	</select>
+
+
+	<select id="selectGoodsPriceChangeList"  resultType="com.zebra.business.craw.domain.WebPageInfoBO" parameterType="com.zebra.business.analysis.domain.GoodsPriceChange">
+		
+	select   /* query.analysis.selectGoodsPriceChangeList */
+		  PILH.createDt
+		, PILH.goodsNm
+		, PILH.goodsPrice
+	from goods_price_change GPC , page_info_list_hist PILH 
+	where GPC.pageInfoListSeq  =  #{pageInfoListSeq}
+	and GPC.statCd = '02'
+	and GPC.pageInfoListHistSeq = PILH.pageInfoListHistSeq
+	order by GPC.pageInfoListHistSeq desc
+	limit 5
+		
+				     
+	</select>
+	
+	
+</mapper>
+

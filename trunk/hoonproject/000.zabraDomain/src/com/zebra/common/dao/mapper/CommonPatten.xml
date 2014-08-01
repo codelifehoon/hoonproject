@@ -79,6 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="pattenCodeListSeq != null and pattenCodeListSeq != ''"> and pattenCodeListSeq= #{pattenCodeListSeq}  </if>
 	</update>
 	
+<!-- 공통코드 관련조회 -->
 	  
 </mapper>
 
