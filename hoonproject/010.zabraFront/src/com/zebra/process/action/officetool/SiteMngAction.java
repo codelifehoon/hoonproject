@@ -50,7 +50,7 @@ public class SiteMngAction extends AuthAction {
 
 		final ModelAndView mav = new ModelAndView();
 		mav.addObject("CrawConfigList",crawConfigBOList);
-		mav.setViewName("/sitemng/RegCrawlInfo");
+		mav.setViewName("/sitemng/regCrawlInfo");
 		return  mav;
 	}
 	
@@ -92,7 +92,7 @@ public class SiteMngAction extends AuthAction {
 		
 		final ModelAndView mav = new ModelAndView();
 		mav.addObject("webPageInfoList", webPageInfoList);
-		mav.setViewName("/popupprefix/sitemng/RegGoodsInfoPopup");
+		mav.setViewName("/popupprefix/sitemng/regGoodsInfoPopup");
 		return  mav;
 	}
 	

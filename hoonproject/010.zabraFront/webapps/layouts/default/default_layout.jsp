@@ -16,14 +16,24 @@
 	<link rel="stylesheet" href="/css/ui-darkness/jquery-ui-1.9.2.custom.css">
 	<link rel="stylesheet" href="/css/main-grid.css">
 	<link rel="stylesheet" href="/css/layouts/marketing.css">
-	      
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	
+	
+    	      
 	<style>
 	.centerfrm {
 		width: 1024px ;
 		text-align: center; 
 		margin-left: auto ;
 		margin-right: auto ;
-	)	
+	}
+	
+	.maxWidth1024 {
+		margin-left: auto;
+		margin-right: auto;
+		max-width: 1024px;
+	}
+	
 	</style>
 	</head>	
 <body>

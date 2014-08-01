@@ -71,6 +71,15 @@ public class TaskActon extends AuthAction {
 		
 	}
 	
+	// 초,분,시
+	@Scheduled(cron="0 0 3 * * *")
+	public void Task_Analysis()
+	{
+		log.error("##### Task_Analysis start:" + DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
+		
+		 
+	}
+	
 
 	/**
 	 * @param crawConfigBO
