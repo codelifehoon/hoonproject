@@ -2,6 +2,7 @@ package test.junit;
 
 
 import java.io.IOException;
+
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -13,6 +14,7 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.log4j.Logger;
+import org.hamcrest.core.Is;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.After;
@@ -33,20 +35,28 @@ import com.zebra.business.craw.domain.PageConfigBO;
 import com.zebra.business.craw.domain.WebPageInfoBO;
 import com.zebra.common.BaseFactory;
 import com.zebra.common.BaseConstants;
+import com.zebra.common.CommonCodeHandler;
 import com.zebra.common.SampleInterface;
+import com.zebra.common.domain.CommonCodeBO;
 import com.zebra.common.util.DateTime;
 import com.zebra.common.util.DebugUtil;
 import com.zebra.common.util.PattenUtil;
+import com.zebra.process.common.CommonCodeService;
 import com.zebra.process.crawler.CommCrawlController;
 import com.zebra.process.crawler.CrawlerJob;
 import com.zebra.process.crawregister.CrawMngService;
-import com.zebra.process.parser.DomParser;
+import com.zebra.process.parser.DomParserService;
 import com.zebra.process.renew.ReNewJob;
 
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.*;
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+
 
 @RunWith(SpringJUnit4ClassRunner.class )
 @ContextConfiguration(locations="classpath:com/zebra/batch/resource/spring-context-common.xml")
@@ -54,11 +64,12 @@ public class CrawlerTest {
 
 	protected static final  Logger log = Logger.getLogger(CrawlerTest.class.getName());
 	@Autowired CrawlerJob 	crawlerJob ;
-	@Autowired DomParser	domParser;
+	@Autowired DomParserService	domParser;
 	@Autowired ReNewJob	reNewJob;
 	@Autowired PageInfoDAO	pageInfoDAO;
 	@Autowired CrawMngService crawMngService ;
 	@Autowired(required=false) SampleInterface  sampleInterface;
+	@Autowired CommonCodeService  commonCodeService;
 	
 	
  
@@ -346,7 +357,7 @@ public class CrawlerTest {
 			
 			Document doc;
 			String htmlString ="";
-			String url = "http://mobile.auction.co.kr/Item/ViewItem.aspx?ItemNo=A582441053";
+			String url = "http://mobile.auction.co.kr/Item/ViewItem.aspx?ItemNo=A929973707";
 			String LowURL = url;
 			
 			try {
@@ -381,6 +392,27 @@ public class CrawlerTest {
 			
 			}
 		
+	//@Test
+	public void CommonCodeSelTest()
+	{
+		
+		String cdMaster = "CD000";
+		String cdDetail = "PT_01";
+		CommonCodeBO codeBO = commonCodeService.selectCommonCode(cdMaster, cdDetail);
+		assertThat("getCdMaster value is",codeBO.getCdMaster(), is("CD000"));
+		assertThat("getCdDetail value is",codeBO.getCdDetail(), is("PT_01"));
+		assertThat("getCdVal1 value is",codeBO.getVal1(), is("정규식"));
+		
+		cdMaster = "CD001";
+		cdDetail = "PK_010";
+		codeBO = commonCodeService.selectCommonCode(cdMaster, cdDetail);
+		assertThat("getCdMaster value is",codeBO.getCdMaster(), is("CD001"));
+		assertThat("getCdDetail value is",codeBO.getCdDetail(), is("PK_010"));
+		assertThat("getCdVal1 value is",codeBO.getVal1(), is("방문URL"));
+		
+	}
+	
+
 		
 	}
 
