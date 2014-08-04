@@ -42,7 +42,6 @@
 	<classpathentry kind="lib" path="lib/json/jackson-core-asl-1.7.6.jar"/>
 	<classpathentry kind="lib" path="lib/json/jackson-mapper-asl-1.7.6.jar"/>
 	<classpathentry kind="lib" path="lib/json/json-lib-1.1-jdk13.jar"/>
-	<classpathentry kind="lib" path="lib/jsoup/jsoup-1.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/jta/atomikos-util.jar"/>
 	<classpathentry kind="lib" path="lib/jta/jta.jar"/>
 	<classpathentry kind="lib" path="lib/jta/transactions-api.jar"/>
@@ -98,5 +97,6 @@
 	<classpathentry kind="lib" path="lib/spring4/spring-websocket-4.0.5.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/validation/hibernate-validator-4.2.0.Final.jar"/>
 	<classpathentry kind="lib" path="lib/validation/validation-api-1.0.0.GA.jar"/>
+	<classpathentry kind="lib" path="lib/jsoup/jsoup-1.7.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

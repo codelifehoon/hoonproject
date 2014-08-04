@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import org.hamcrest.core.Is;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -37,6 +38,7 @@ import com.zebra.common.BaseFactory;
 import com.zebra.common.BaseConstants;
 import com.zebra.common.CommonCodeHandler;
 import com.zebra.common.SampleInterface;
+import com.zebra.common.SpringBeanFactory;
 import com.zebra.common.domain.CommonCodeBO;
 import com.zebra.common.util.DateTime;
 import com.zebra.common.util.DebugUtil;
@@ -64,7 +66,6 @@ public class CrawlerTest {
 
 	protected static final  Logger log = Logger.getLogger(CrawlerTest.class.getName());
 	@Autowired CrawlerJob 	crawlerJob ;
-	@Autowired DomParserService	domParser;
 	@Autowired ReNewJob	reNewJob;
 	@Autowired PageInfoDAO	pageInfoDAO;
 	@Autowired CrawMngService crawMngService ;
@@ -187,7 +188,7 @@ public class CrawlerTest {
 
 		
 		HashMap<String, ExpPattenBO[]> pattenMap = DataInitClass.getDefaultPagePatten("11st");
-		WebPageInfoBO webPageInfoBONew = domParser.doParsing(htmlString,webPageInfoBO, pattenMap);
+		WebPageInfoBO webPageInfoBONew = ((DomParserService)SpringBeanFactory.getDomParserBean("")).doParsing(htmlString,webPageInfoBO, pattenMap);
 		
 	
 		log.debug("#########################");
@@ -241,26 +242,22 @@ public class CrawlerTest {
 	{
 	
 		WebPageInfoBO webPageInfoBO = BaseFactory.create(WebPageInfoBO.class);
-		
-		webPageInfoBO.setSiteConfigSeq("100000");
+		webPageInfoBO.setSiteConfigSeq("100027");
 		webPageInfoBO.setRowCnt(10);
 		
 		CrawlerDataCombBO 	crawlerDataCombBO 	= BaseFactory.create(CrawlerDataCombBO.class);
-		CrawConfigBO		crawConfigBO		= BaseFactory.create(CrawConfigBO.class);
+
 		
 		HashMap<String, WebPageInfoBO> webPageInfoBOMap = pageInfoDAO.selectReNewPageInfoMap(webPageInfoBO);
 		
-		crawConfigBO.setSiteConfigSeq("100000");
-		crawConfigBO.setSiteNm("11st");
-		crawConfigBO.setCrawlThreadCount(2);
-		
+		crawlerDataCombBO.setCrawConfigBO(DataInitClass.get11stCrawConfig());
+		crawlerDataCombBO.setPattenMap(DataInitClass.getDefaultPagePatten("11st"));
 		crawlerDataCombBO.setWebPageInfoBOMap(webPageInfoBOMap);		// 데이터의 빠른 갱신을 위해서 조회를 map으로 처리한다.(key: prdNo)
-		crawlerDataCombBO.setCrawConfigBO(crawConfigBO);
+
 	
 		reNewJob.startController(crawlerDataCombBO);
 		reNewJob.applyReNewInfo(crawlerDataCombBO);
 
-		
 	}
 		
 	
@@ -328,12 +325,14 @@ public class CrawlerTest {
 		
 		List<WebPageInfoBO> retList = crawlerJob.validCrawlerPrdInfo(crawlerDataCombBO);
 
+		/*
 		log.debug("#########################");
 		log.debug("INFO PK_VISIT_SITE_PATTEN:" + PattenUtil.pattenMaches(crawlerDataCombBO.getPattenMap().get(BaseConstants.PK_VISIT_SITE_PATTEN), URL.toLowerCase()) );
 		log.debug("INFO PK_VISIT_URL_PATTEN:" + PattenUtil.pattenMaches(crawlerDataCombBO.getPattenMap().get(BaseConstants.PK_VISIT_URL_PATTEN), URL.toLowerCase()));
 		log.debug("INFO PK_GOODS_URL_PATTEN :" + PattenUtil.pattenMaches(crawlerDataCombBO.getPattenMap().get(BaseConstants.PK_GOODS_URL_PATTEN), URL.toLowerCase()));
 		log.debug("INFO PK_GOODS_NO_PATTEN:" + PattenUtil.pattenString(crawlerDataCombBO.getPattenMap().get(BaseConstants.PK_GOODS_NO_PATTEN), URL.toLowerCase()));
 		log.debug("INFO:" + DebugUtil.debugBoList(retList));
+		*/
 	}
 	
 	//@Test
@@ -350,14 +349,14 @@ public class CrawlerTest {
 		
 	}
 	
-	 @Test
+	@Test
 	public void getHtmlTest() throws Exception {
 			
 			WebPageInfoBO		webPageInfoBO =  BaseFactory.create(WebPageInfoBO.class);
 			
 			Document doc;
 			String htmlString ="";
-			String url = "http://mobile.auction.co.kr/Item/ViewItem.aspx?ItemNo=A929973707";
+			String url = "http://mitem.gmarket.co.kr/Item?goodscode=578633903";
 			String LowURL = url;
 			
 			try {
@@ -378,20 +377,55 @@ public class CrawlerTest {
 			}
 
 			
-			HashMap<String, ExpPattenBO[]> pattenMap = DataInitClass.getDefaultPagePatten("11st");
-			WebPageInfoBO webPageInfoBONew = domParser.doParsing(htmlString,webPageInfoBO, pattenMap);
+			HashMap<String, ExpPattenBO[]> pattenMap = DataInitClass.getDefaultPagePatten("Gmarket");
+			WebPageInfoBO webPageInfoBONew = ((DomParserService)SpringBeanFactory.getDomParserBean("DomParserService4MGmarketImpl")).doParsing(htmlString,webPageInfoBO, pattenMap);
 			
-		
-			log.debug("#########################");
+			log.debug("######################### getHtmlTest");
 			log.debug("INFO:" + DebugUtil.debugBo(webPageInfoBONew));
-			log.debug("INFO PK_VISIT_SITE_PATTEN:" + PattenUtil.pattenMaches(pattenMap.get(BaseConstants.PK_VISIT_SITE_PATTEN), LowURL) );
-			log.debug("INFO PK_VISIT_URL_PATTEN:" + PattenUtil.pattenMaches(pattenMap.get(BaseConstants.PK_VISIT_URL_PATTEN), LowURL));
-			log.debug("INFO PK_GOODS_URL_PATTEN :" + PattenUtil.pattenMaches(pattenMap.get(BaseConstants.PK_GOODS_URL_PATTEN), LowURL));
-			log.debug("INFO PK_GOODS_NO_PATTEN:" + PattenUtil.pattenString(pattenMap.get(BaseConstants.PK_GOODS_NO_PATTEN), LowURL));
-			log.debug(htmlString);
+
 			
 			}
 		
+	@Test
+	public void getJsoupParseTest() throws Exception {
+		 
+	 	Document doc;
+	 	Element element;
+		String htmlString ="";
+		String url = "http://m.11st.co.kr/MW/Product/productBasicInfo.tmall?prdNo=1094700089";
+		String query1 = ".swipe-view > img:eq(0)";
+		String query2 = ".b1";
+			 
+			
+			try {
+				
+				//doc = Jsoup.connect(url).userAgent(BaseConstants.CRAWL_AGENT).get();
+				//htmlString = doc.toString();
+				
+				HttpClient 	httpClient = new HttpClient();
+				PostMethod	httpGet	= new PostMethod(url);
+				
+				
+				httpClient.executeMethod(httpGet);
+				htmlString = httpGet.getResponseBodyAsString();
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 
+		 doc = Jsoup.parse(htmlString);
+		 element = doc.select(query1).first();
+		 log.debug("element html1:" + element.html());
+		 log.debug("element value1:" + element.attr("src"));
+		 
+		 doc = Jsoup.parse(htmlString);
+		 element = doc.select(query2).first();
+		 log.debug("element html2:" + element.html());
+		 log.debug("element value2:" + element.attr("value"));
+		 
+		 
+	 }
 	//@Test
 	public void CommonCodeSelTest()
 	{
@@ -411,6 +445,8 @@ public class CrawlerTest {
 		assertThat("getCdVal1 value is",codeBO.getVal1(), is("방문URL"));
 		
 	}
+	
+	
 	
 
 		
