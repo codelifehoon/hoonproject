@@ -23,6 +23,7 @@ import com.zebra.business.craw.domain.CrawConfigBO;
 import com.zebra.business.craw.domain.CrawlerDataCombBO;
 import com.zebra.business.craw.domain.WebPageInfoBO;
 import com.zebra.common.BaseFactory;
+import com.zebra.common.SpringBeanFactory;
 import com.zebra.common.util.ConverterUtil;
 import com.zebra.common.util.DebugUtil;
 import com.zebra.common.util.PattenUtil;
@@ -37,7 +38,7 @@ public class CrawlerJobImpl extends JobBase implements CrawlerJob {
 
 	@Autowired	CrawConfigDAO	crawConfigDAO;
 	@Autowired	PageInfoDAO		pageInfoDAO;
-	@Autowired 	DomParserService		domParser;
+
 	
 	
 	/* (non-Javadoc)
@@ -106,7 +107,7 @@ public class CrawlerJobImpl extends JobBase implements CrawlerJob {
 
 		WebPageInfoBO		webPageInfoBO 		=  BaseFactory.create(WebPageInfoBO.class);
 		List<WebPageInfoBO>	retList			=  new ArrayList<WebPageInfoBO>();
-		
+		DomParserService	domParser = SpringBeanFactory.getDomParserBean(crawlerDataCombBO.getCrawConfigBO());
 		
 		Document doc;
 		String htmlString ="";
@@ -133,6 +134,7 @@ public class CrawlerJobImpl extends JobBase implements CrawlerJob {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
 
 			
 			WebPageInfoBO webPageInfoBONew = domParser.doParsing(htmlString,webPageInfoBO, crawlerDataCombBO.getPattenMap());

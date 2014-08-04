@@ -47,7 +47,8 @@ public class PageInfoDAOImpl  extends CommonDAO  implements PageInfoDAO{
 				}
 		    }
 		     catch(Exception e) { e.printStackTrace();  }
-		     finally { session.flushStatements(); session.close(); } 
+		     finally { session.flushStatements(); //session.close(); 
+		     } 
 		}
 		
 
@@ -119,7 +120,7 @@ public class PageInfoDAOImpl  extends CommonDAO  implements PageInfoDAO{
 				}
 		   }
 		  catch(Exception e) { e.printStackTrace();  }
-		  finally { session.flushStatements(); session.close();
+		  finally { session.flushStatements(); //session.close();
 			  } 
 		  }
 

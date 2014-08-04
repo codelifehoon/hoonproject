@@ -25,10 +25,11 @@ public class ExpPattenBO extends BaseBO {
 	private Date updateDt;
 	private String updateNo;
 
-	public ExpPattenBO(String pattenStr,String pattenType )
+	public ExpPattenBO(String pattenStr,String pattenKind, String pattenType )
 	{
 			this.pattenStr 	= pattenStr;
-		this.pattenType	= pattenType;
+			this.pattenKind = pattenKind;
+			this.pattenType	= pattenType;
 	}
 	public ExpPattenBO(String pattenStr)
 	{

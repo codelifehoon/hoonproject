@@ -24,6 +24,7 @@ public class CrawConfigBO extends BaseBO
 	private String seedStrURL;
 	private String[] seedURL;
 	private String logoURL;
+	private String domParser;
 	private String useYn;
 	
 	private int	crawlThreadCount=0;
