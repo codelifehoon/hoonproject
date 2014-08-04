@@ -25,7 +25,7 @@ import com.zebra.common.dao.CommonPattenCodeDao;
 import com.zebra.common.util.PattenUtil;
 import com.zebra.process.crawler.CommCrawlController;
 import com.zebra.process.parser.DomParserService;
-import com.zebra.process.parser.DomParserImpl;
+import com.zebra.process.parser.DomParserServiceImpl;
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
@@ -36,8 +36,7 @@ public class PageCrawler extends WebCrawler {
 
 
 	 private CommonPattenCodeDao commomPattenCodeDao = SpringBeanFactory.getBean(CommonPattenCodeDao.class);
-	 private DomParserService domParser = SpringBeanFactory.getBean(DomParserService.class);
-	
+
     /**
      * You should implement this function to specify whether
      * the given url should be crawled or not (based on your
@@ -60,6 +59,8 @@ public class PageCrawler extends WebCrawler {
     		String ordUrl = page.getWebURL().getURL();
             String url = page.getWebURL().getURL();
             CrawlerDataCombBO crawlerDataCombBO = ((CommCrawlController)getMyController()).getCrawlerDataCombBO();
+            DomParserService domParser = SpringBeanFactory.getDomParserBean(crawlerDataCombBO.getCrawConfigBO());
+            
             log.debug("##### url:" + url);
  
             if (page.getParseData() instanceof HtmlParseData) 

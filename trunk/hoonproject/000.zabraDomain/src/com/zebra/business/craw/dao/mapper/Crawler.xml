@@ -17,11 +17,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<result column="logoURL" property="logoURL" />
 			<result column="useYn" property="useYn" />
 			<result column="crawlAgent" property="crawlAgent" />
+			<result column="domParser" property="domParser" />
 	</resultMap>
+	
 	<!-- 페이지 리스트 -->
 	<select id="selectCrawConfigList" resultMap="selectCrawConfigResult" parameterType="com.zebra.business.craw.domain.CrawConfigBO">
 	     	
-	     	SELECT /*crawler.selectCrawConfigList*/ siteConfigSeq, siteNm, seedURL, logoURL , useYn, crawlAgent ,createNo, createDt, updateDt, updateNo  
+	     	SELECT /*crawler.selectCrawConfigList*/ siteConfigSeq, siteNm, seedURL, logoURL , useYn, crawlAgent ,domParser ,createNo, createDt, updateDt, updateNo  
 			FROM craw_config
 			where 1=1
 			and useYn = 'Y'

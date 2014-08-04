@@ -12,6 +12,8 @@ import java.util.HashMap;
 
 import lombok.extern.log4j.Log4j;
 
+import org.apache.commons.beanutils.BeanUtils;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +26,7 @@ import com.zebra.common.dao.CommonPattenCodeDao;
 import com.zebra.common.util.CmnUtil;
 
 @Log4j
-@Service
-public class DomParser {
+public abstract class DomParser implements DomParserService{
 
 
 	@Autowired
@@ -75,6 +76,48 @@ public class DomParser {
 		
 	}
 
+	public WebPageInfoBO doParsing(String htmlString, WebPageInfoBO webPageInfoBO, HashMap<String, ExpPattenBO[]> pattenParamMap)
+			throws Exception {
+				
+				WebPageInfoBO webPageInfoBONew = null;
+				Document doc = Jsoup.parse(htmlString);
+				HashMap<String, ExpPattenBO[]> pattenMap;
+				
+				
+				try {
+					webPageInfoBONew = (WebPageInfoBO)BeanUtils.cloneBean(webPageInfoBO);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					throw e;
+				}
+				
+				
+				pattenMap = getPageInfoPatten(webPageInfoBO , pattenParamMap );
+				
+				webPageInfoBONew.setGoodsImg(selectPattenInfo(pattenMap.get(BaseConstants.PK_GOODS_IMG_PATTEN), doc));
+				webPageInfoBONew.setGoodsNm(selectPattenInfo(pattenMap.get(BaseConstants.PK_GOODS_NAME_PATTEN), doc));
+				webPageInfoBONew.setGoodsPrice(selectPattenInfo(pattenMap.get(BaseConstants.PK_GOODS_PRICE_PATTEN), doc));
+				webPageInfoBONew.setGoodsDisc(selectPattenInfo(pattenMap.get(BaseConstants.PK_GOODS_DISC_PATTEN), doc));
+				webPageInfoBONew.setCate1(selectPattenInfo(pattenMap.get(BaseConstants.PK_CATE1_PATTEN), doc));
+				webPageInfoBONew.setCate2(selectPattenInfo(pattenMap.get(BaseConstants.PK_CATE2_PATTEN), doc));
+				webPageInfoBONew.setCate3(selectPattenInfo(pattenMap.get(BaseConstants.PK_CATE3_PATTEN), doc));
+				webPageInfoBONew.setGoodsIsbuyPatten(selectPattenInfo(pattenMap.get(BaseConstants.PK_GOODS_ISBUY_PATTEN), doc));
+				
+				
+				webPageInfoBONew.setReNewFlag(this.compareWebPageInfo(webPageInfoBO, webPageInfoBONew));
+				if (!"".equals(webPageInfoBONew.getGoodsNm()) 
+						&& !"".equals(webPageInfoBONew.getGoodsPrice())  ) webPageInfoBONew.setFailYn("N");
+				
+			
+				if ("Y".equals(webPageInfoBONew.getFailYn()))
+				{
+					log.info("##### 수집실패:" + com.zebra.common.util.DebugUtil.debugBo(webPageInfoBONew) );
+				}
+				
+				return webPageInfoBONew;
+			}
+
 	protected String selectPattenInfo(ExpPattenBO[] expPattenBOs, Document doc) {
 		String retVal = "";
 	
@@ -88,17 +131,7 @@ public class DomParser {
 			
 				retVal =  element.html().trim();
 				
-				if (!BaseConstants.PK_GOODS_IMG_PATTEN.equals(expPattenBO.getPattenKind())
-						&&  !BaseConstants.PK_GOODS_ISBUY_PATTEN.equals(expPattenBO.getPattenKind()))
-				{
-					retVal = CmnUtil.removeFullHtmlTag(retVal);
-				}
-				
-				if (BaseConstants.PK_GOODS_PRICE_PATTEN.equals(expPattenBO.getPattenKind())
-						|| BaseConstants.PK_GOODS_DISC_PATTEN.equals(expPattenBO.getPattenKind()) ) 
-				{
-					retVal = CmnUtil.getOnlyNumberString(retVal);
-				}
+				retVal = getPattenData(retVal, expPattenBO);
 	
 				
 				log.debug("expPattenBO.getPattenKind():" + expPattenBO.getPattenKind());
@@ -109,9 +142,29 @@ public class DomParser {
 			}
 		} catch (Exception e)
 		{
+			log.debug("########## domParsing error");
 			e.toString();
 		}
 		return retVal;
 	}
 
+	/**
+	 * @param retVal
+	 * @param expPattenBO
+	 * @return
+	 */
+	protected String getPattenData(String retVal, ExpPattenBO expPattenBO) {
+		if (!BaseConstants.PK_GOODS_IMG_PATTEN.equals(expPattenBO.getPattenKind())
+				&&  !BaseConstants.PK_GOODS_ISBUY_PATTEN.equals(expPattenBO.getPattenKind()))
+		{
+			retVal = CmnUtil.removeFullHtmlTag(retVal);
+		}
+		
+		if (BaseConstants.PK_GOODS_PRICE_PATTEN.equals(expPattenBO.getPattenKind())
+				|| BaseConstants.PK_GOODS_DISC_PATTEN.equals(expPattenBO.getPattenKind()) ) 
+		{
+			retVal = CmnUtil.getOnlyNumberString(retVal);
+		}
+		return retVal;
+	}
 }
