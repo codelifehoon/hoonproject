@@ -38,6 +38,9 @@ public class DataInitClass {
 			ExpPattenBO[] cate1Patten  	= new ExpPattenBO[1];
 			ExpPattenBO[] cate2Patten  	= new ExpPattenBO[1];
 			ExpPattenBO[] cate3Patten  	= new ExpPattenBO[1];
+			ExpPattenBO[] goodsIsBuyPatten  	= new ExpPattenBO[1];
+			
+			
 			
 			
 
@@ -55,9 +58,9 @@ public class DataInitClass {
 			
 			Method method = DataInitClass.class.getMethod( "get" + initType + "Data",new Class[] {ExpPattenBO[].class,ExpPattenBO[].class,ExpPattenBO[].class,ExpPattenBO[].class,ExpPattenBO[].class
 																								,ExpPattenBO[].class,ExpPattenBO[].class,ExpPattenBO[].class,ExpPattenBO[].class,ExpPattenBO[].class
-																								,ExpPattenBO[].class});
+																								,ExpPattenBO[].class,ExpPattenBO[].class});
 			Object retobj = method.invoke(dataInitClass, new Object[] {visitSitePatten,visitUrlPatten,goodsUrlPatten,goodsNoPatten,goodsNmPatten
-																	,goodsPricePatten,goodsImgPatten,goodsDisc,cate1Patten,cate2Patten,cate3Patten} );
+																	,goodsPricePatten,goodsImgPatten,goodsDisc,cate1Patten,cate2Patten,cate3Patten,goodsIsBuyPatten} );
 			
 		
 			
@@ -75,6 +78,8 @@ public class DataInitClass {
 			pattenMap.put(BaseConstants.PK_VISIT_SITE_PATTEN,visitSitePatten );
 			pattenMap.put(BaseConstants.PK_GOODS_URL_PATTEN, goodsUrlPatten);
 			pattenMap.put(BaseConstants.PK_GOODS_NO_PATTEN,goodsNoPatten );
+			pattenMap.put(BaseConstants.PK_GOODS_ISBUY_PATTEN,goodsIsBuyPatten );
+			
 			
 			
 	/*
@@ -156,21 +161,23 @@ public class DataInitClass {
 			ExpPattenBO[] goodsNoPatten, ExpPattenBO[] goodsNmPatten,
 			ExpPattenBO[] goodsPricePatten, ExpPattenBO[] goodsImgPatten,
 			ExpPattenBO[] goodsDisc, ExpPattenBO[] cate1Patten,
-			ExpPattenBO[] cate2Patten, ExpPattenBO[] cate3Patten) 
+			ExpPattenBO[] cate2Patten, ExpPattenBO[] cate3Patten,ExpPattenBO[] goodsIsBuyPatten) 
 	{
 		System.out.println("#### call testMethod:get11stData");
 		
-		goodsNmPatten[0]		= new ExpPattenBO("#cts section.base div.dtl_heading","");
-		goodsPricePatten[0]		= new ExpPattenBO("#cts section.base form div.dtl_info div.total div.prc strong");
-		goodsImgPatten[0]		= new ExpPattenBO("#mwDev_imageWrap","");
-		goodsDisc[0]				= new ExpPattenBO("","");	
-		cate1Patten[0]				= new ExpPattenBO("","");
-		cate2Patten[0]				= new ExpPattenBO("","");
-		cate3Patten[0]				= new ExpPattenBO("","");
-		visitUrlPatten[0]			= new ExpPattenBO(".*(\\.(html|tmall)).*","");
-		visitSitePatten[0]			= new ExpPattenBO(".*(11st.co.kr).*","");
-		goodsUrlPatten[0]			= new ExpPattenBO(".*(productBasicInfo.tmall?).*","");
-		goodsNoPatten[0]			= new ExpPattenBO("prdno=\\d*","");
+		goodsNmPatten[0]		= new ExpPattenBO("#cts section.base div.dtl_heading",BaseConstants.PK_GOODS_NAME_PATTEN, "");
+		goodsPricePatten[0]		= new ExpPattenBO("#cts section.base form div.dtl_info div.total div.prc strong",BaseConstants.PK_GOODS_PRICE_PATTEN,"");
+		goodsImgPatten[0]		= new ExpPattenBO("#mwDev_imageWrap",BaseConstants.PK_GOODS_IMG_PATTEN, "");
+		goodsDisc[0]				= new ExpPattenBO("",BaseConstants.PK_GOODS_DISC_PATTEN, "");	
+		cate1Patten[0]				= new ExpPattenBO("",BaseConstants.PK_CATE1_PATTEN, "");
+		cate2Patten[0]				= new ExpPattenBO("",BaseConstants.PK_CATE2_PATTEN, "");
+		cate3Patten[0]				= new ExpPattenBO("",BaseConstants.PK_CATE3_PATTEN, "");
+		visitUrlPatten[0]			= new ExpPattenBO(".*(\\.(html|tmall)).*",BaseConstants.PK_VISIT_URL_PATTEN, "");
+		visitSitePatten[0]			= new ExpPattenBO(".*(11st.co.kr).*",BaseConstants.PK_VISIT_SITE_PATTEN, "");
+		goodsUrlPatten[0]			= new ExpPattenBO(".*(productBasicInfo.tmall?).*",BaseConstants.PK_GOODS_URL_PATTEN, "");
+		goodsNoPatten[0]			= new ExpPattenBO("prdno=\\d*",BaseConstants.PK_GOODS_NO_PATTEN, "");
+		goodsIsBuyPatten[0]			= new ExpPattenBO("#cts section.base form div.dtl_info div.btn_set",BaseConstants.PK_GOODS_ISBUY_PATTEN, "");
+		
 	}
 	
 	/**
@@ -191,20 +198,59 @@ public class DataInitClass {
 			ExpPattenBO[] goodsNoPatten, ExpPattenBO[] goodsNmPatten,
 			ExpPattenBO[] goodsPricePatten, ExpPattenBO[] goodsImgPatten,
 			ExpPattenBO[] goodsDisc, ExpPattenBO[] cate1Patten,
-			ExpPattenBO[] cate2Patten, ExpPattenBO[] cate3Patten) 
+			ExpPattenBO[] cate2Patten, ExpPattenBO[] cate3Patten,ExpPattenBO[] goodsIsBuyPatten) 
 	{
-		goodsNmPatten[0]		= new ExpPattenBO("#itemInfoForMain div.product-info_header","");
-		goodsPricePatten[0]		= new ExpPattenBO("#itemInfoForMain div.product-info_group--main div.product-info_block div.data-group.product-info_offer div.data-group_content strong.product-info_offer_price.mouse_active");
-		goodsImgPatten[0]		= new ExpPattenBO("#image_wrapper li.content-slider_item.active a","");
-		goodsDisc[0]				= new ExpPattenBO("#itemInfoForMain div.product-info_group--main div.product-info_block div.data-group.product-info_offer div.data-group_content ul.product-info_offer_highlight li.product-info_offer_highlight_item div.offer--discount","");
-		cate1Patten[0]				= new ExpPattenBO("","");
-		cate2Patten[0]				= new ExpPattenBO("","");
-		cate3Patten[0]				= new ExpPattenBO("div#location_boxid_3 button#headSel_3","");
-		visitUrlPatten[0]			= new ExpPattenBO(".*(\\.aspx).*","");
-		visitSitePatten[0]			= new ExpPattenBO(".*(auction.co.kr).*","");
-		goodsUrlPatten[0]			= new ExpPattenBO(".*(ViewItem.aspx?).*","");
-		goodsNoPatten[0]			= new ExpPattenBO("ItemNo=\\d*","");
+		goodsNmPatten[0]		= new ExpPattenBO("#itemInfoForMain div.product-info_header",BaseConstants.PK_GOODS_NAME_PATTEN, "");
+		goodsPricePatten[0]		= new ExpPattenBO("#itemInfoForMain div.product-info_group--main div.product-info_block div.data-group.product-info_offer div.data-group_content strong.product-info_offer_price",BaseConstants.PK_GOODS_PRICE_PATTEN ,"");
+		goodsImgPatten[0]		= new ExpPattenBO("#image_wrapper li.content-slider_item.active a",BaseConstants.PK_GOODS_IMG_PATTEN, "");
+		goodsDisc[0]				= new ExpPattenBO("#itemInfoForMain div.product-info_group--main div.product-info_block div.data-group.product-info_offer div.data-group_content ul.product-info_offer_highlight li.product-info_offer_highlight_item div.offer--discount",BaseConstants.PK_GOODS_DISC_PATTEN , "");
+		cate1Patten[0]				= new ExpPattenBO("",BaseConstants.PK_CATE1_PATTEN , "");
+		cate2Patten[0]				= new ExpPattenBO("",BaseConstants.PK_CATE2_PATTEN , "");
+		cate3Patten[0]				= new ExpPattenBO("",BaseConstants.PK_CATE3_PATTEN , "");
+		visitUrlPatten[0]			= new ExpPattenBO(".*(\\.aspx).*",BaseConstants.PK_VISIT_URL_PATTEN , "");
+		visitSitePatten[0]			= new ExpPattenBO(".*(auction.co.kr).*",BaseConstants.PK_VISIT_SITE_PATTEN , "");
+		goodsUrlPatten[0]			= new ExpPattenBO(".*(ViewItem.aspx?).*",BaseConstants.PK_GOODS_URL_PATTEN , "");
+		goodsNoPatten[0]			= new ExpPattenBO("ItemNo=\\d*",BaseConstants.PK_GOODS_NO_PATTEN , "");
+		goodsIsBuyPatten[0]			= new ExpPattenBO("#buy",BaseConstants.PK_GOODS_ISBUY_PATTEN, "");
 	}
 
+	
+	/**
+	 * @param visitSitePatten
+	 * @param visitUrlPatten
+	 * @param goodsUrlPatten
+	 * @param goodsNoPatten
+	 * @param goodsNmPatten
+	 * @param goodsPricePatten
+	 * @param goodsImgPatten
+	 * @param goodsDisc TODO
+	 * @param cate1Patten
+	 * @param cate2Patten
+	 * @param cate3Patten
+	 */
+	public static void getGmarketData(ExpPattenBO[] visitSitePatten,
+			ExpPattenBO[] visitUrlPatten, ExpPattenBO[] goodsUrlPatten,
+			ExpPattenBO[] goodsNoPatten, ExpPattenBO[] goodsNmPatten,
+			ExpPattenBO[] goodsPricePatten, ExpPattenBO[] goodsImgPatten,
+			ExpPattenBO[] goodsDisc, ExpPattenBO[] cate1Patten,
+			ExpPattenBO[] cate2Patten, ExpPattenBO[] cate3Patten,ExpPattenBO[] goodsIsBuyPatten) 
+	{
+		System.out.println("#### call testMethod:getGmarketData");
+		
+		goodsNmPatten[0]		= new ExpPattenBO(".prod_tit > h3:nth-child(2) > span:nth-child(1)",BaseConstants.PK_GOODS_NAME_PATTEN, "");
+		goodsPricePatten[0]		= new ExpPattenBO(".pri1",BaseConstants.PK_GOODS_PRICE_PATTEN,"");
+		goodsImgPatten[0]		= new ExpPattenBO("#content div.goods div.prod_img a",BaseConstants.PK_GOODS_IMG_PATTEN, "");
+		goodsDisc[0]				= new ExpPattenBO("#GoodsPrice ul.sub_tit_grp p.disct",BaseConstants.PK_GOODS_DISC_PATTEN, "");	
+		cate1Patten[0]				= new ExpPattenBO("div#ctgr_list>p:eq(0)>span:eq(1)>a:eq(0)",BaseConstants.PK_CATE1_PATTEN, "");
+		cate2Patten[0]				= new ExpPattenBO("div#ctgr_list>p:eq(0)>span:eq(2)>a:eq(0)",BaseConstants.PK_CATE2_PATTEN, "");
+		cate3Patten[0]				= new ExpPattenBO("div#ctgr_list>p:eq(0)>span:eq(3)>a:eq(0)",BaseConstants.PK_CATE3_PATTEN, "");
+		visitUrlPatten[0]			= new ExpPattenBO(".*(Item).*",BaseConstants.PK_VISIT_URL_PATTEN, "");
+		visitSitePatten[0]			= new ExpPattenBO(".*(gmarket.co.kr).*",BaseConstants.PK_VISIT_SITE_PATTEN, "");
+		goodsUrlPatten[0]			= new ExpPattenBO(".*(Item?).*",BaseConstants.PK_GOODS_URL_PATTEN, "");
+		goodsNoPatten[0]			= new ExpPattenBO("goodsCode=\\d*",BaseConstants.PK_GOODS_NO_PATTEN, "");
+		goodsIsBuyPatten[0]			= new ExpPattenBO(".immt",BaseConstants.PK_GOODS_ISBUY_PATTEN, "");
+		
+	}
+	
 	
 }
