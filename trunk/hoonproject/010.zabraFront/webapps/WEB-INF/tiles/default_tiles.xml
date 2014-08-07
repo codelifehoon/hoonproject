@@ -19,6 +19,12 @@
 		<put-attribute name="body" value="/jsp/common/body.jsp" />
 	</definition>
 	
+	<definition name="default_ajax_layout" extends="baseProperties" template="/layouts/default/default_ajax_layout.jsp">
+		<put-attribute name="body" value="/jsp/common/body.jsp" />
+	</definition>
+	
+	
+<!-- popup prefix -->
 	<definition name="/popupprefix/*/*/*" extends="default_popup_layout">
 		<put-attribute name="body" value="/jsp/{1}/{2}/{3}.jsp" />
 	</definition>
@@ -30,6 +36,20 @@
 	<definition name="/popupprefix/*" extends="default_popup_layout">
 		<put-attribute name="body" value="/jsp/{1}.jsp" />
 	</definition>
+
+<!-- ajax prefix -->
+	<definition name="/ajaxprefix/*/*/*"  extends="default_ajax_layout">
+		<put-attribute name="body" value="/jsp/{1}/{2}/{3}.jsp" />
+	</definition>
+	
+	<definition name="/ajaxprefix/*/*"  extends="default_ajax_layout">
+		<put-attribute name="body" value="/jsp/{1}/{2}.jsp" />
+	</definition>
+	
+	<definition name="/ajaxprefix/*" extends="default_ajax_layout">
+		<put-attribute name="body" value="/jsp/{1}.jsp" />
+	</definition>
+
 	
 	
 	<definition name="*/*/*" extends="default_layout">

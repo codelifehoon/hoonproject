@@ -45,8 +45,6 @@ public class GoodsAction extends BaseAction {
 		
 		BeanUtils.populate(webPageInfoBO, paramMap);
 
-		
-		
 		HashMap<String,Object> goodsDetailMap = goodsService.goodsDetail(webPageInfoBO);
 		
 		mav.addObject("goodsDetailMap", goodsDetailMap);

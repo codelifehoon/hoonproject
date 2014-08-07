@@ -4,7 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@page import="com.zebra.common.util.CmnUtil"%>
 <%@page import="com.zebra.common.util.DateTime"%>
-<%@page import="com.zebra.business.analysis.domain.GoodsPriceTrend"%>
+<%@page import="com.zebra.business.analysis.domain.GoodsPriceTrendBO"%>
 <%@page import="com.zebra.business.craw.domain.WebPageInfoBO"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.List"%>
@@ -20,10 +20,7 @@
 	WebPageInfoBO 			webPageInfoBO 		= (WebPageInfoBO)goodsDetailMap.get("webPageInfoBO");
 	CrawConfigBO			crawConfigBO		= (CrawConfigBO)goodsDetailMap.get("crawConfigBO");
 	List<WebPageInfoBO> 	priceChangeList 	= (List<WebPageInfoBO>)goodsDetailMap.get("priceChangeList");
-	List<GoodsPriceTrend> 	priceTrendList 		= (List<GoodsPriceTrend>)goodsDetailMap.get("priceTrendList");
-
-
-
+	List<GoodsPriceTrendBO> 	priceTrendList 		= (List<GoodsPriceTrendBO>)goodsDetailMap.get("priceTrendList");
 %>
 <script language='javascript'>
 
@@ -79,17 +76,19 @@
 	    <tbody>
 	    	<tr>
 	            <td>현재가</td>
-	            <td><%=cmnutil.setComma(webPageInfoBO.getGoodsPrice()) %></td>
+	            <td><%=cmnutil.setComma(webPageInfoBO.getGoodsPrice())%></td>
 	            <td><%=DateTime.format(webPageInfoBO.getUpdateDt())%></td>
 	        </tr>
-	    	<%for (GoodsPriceTrend goodsPriceTrend :priceTrendList) {
-	          
-	          if ("".equals(priceCode) && webPageInfoBO.getGoodsPrice().equals(goodsPriceTrend.getGoodsPrice()) )
-	          {
-	          	priceCode = goodsPriceTrend.getPriceCode(); 
-	          }
-	          
-	        if ( "02".equals(goodsPriceTrend.getPriceCode())) { %>
+	    	<%
+	    		for (GoodsPriceTrendBO goodsPriceTrend :priceTrendList) {
+	    		          
+	    		          if ("".equals(priceCode) && webPageInfoBO.getGoodsPrice().equals(goodsPriceTrend.getGoodsPrice()) )
+	    		          {
+	    		          	priceCode = goodsPriceTrend.getPriceCode(); 
+	    		          }
+	    		          
+	    		        if ( "02".equals(goodsPriceTrend.getPriceCode())) {
+	    	%>
 	           	<tr>
 		            <td>최저가</td>
 		            <td><%=	cmnutil.setComma(goodsPriceTrend.getGoodsPrice()) %></td>
@@ -147,7 +146,7 @@
 </div>
 
 <div class="pure-g" >
-    <div class="pure-u-1"><p>similar goods</p></div>
+    <div class="pure-u-1"><p>~detail good~scost flow~</p></div>
 
 </div>
 
