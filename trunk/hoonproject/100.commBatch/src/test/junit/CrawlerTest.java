@@ -1,20 +1,22 @@
 package test.junit;
 
 
-import java.io.IOException;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Logger;
-import org.hamcrest.core.Is;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -28,21 +30,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.zebra.business.analysis.domain.ProcedureParamBO;
+import com.zebra.business.analysis.domain.SearchCombBO;
 import com.zebra.business.craw.dao.PageInfoDAO;
 import com.zebra.business.craw.domain.CrawConfigBO;
 import com.zebra.business.craw.domain.CrawlerDataCombBO;
 import com.zebra.business.craw.domain.ExpPattenBO;
 import com.zebra.business.craw.domain.PageConfigBO;
 import com.zebra.business.craw.domain.WebPageInfoBO;
-import com.zebra.common.BaseFactory;
 import com.zebra.common.BaseConstants;
-import com.zebra.common.CommonCodeHandler;
+import com.zebra.common.BaseFactory;
 import com.zebra.common.SampleInterface;
 import com.zebra.common.SpringBeanFactory;
 import com.zebra.common.domain.CommonCodeBO;
 import com.zebra.common.util.DateTime;
 import com.zebra.common.util.DebugUtil;
 import com.zebra.common.util.PattenUtil;
+import com.zebra.process.analysis.AnalysisInfoService;
 import com.zebra.process.common.CommonCodeService;
 import com.zebra.process.crawler.CommCrawlController;
 import com.zebra.process.crawler.CrawlerJob;
@@ -54,10 +58,7 @@ import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.is;
+
 
 
 @RunWith(SpringJUnit4ClassRunner.class )
@@ -71,6 +72,7 @@ public class CrawlerTest {
 	@Autowired CrawMngService crawMngService ;
 	@Autowired(required=false) SampleInterface  sampleInterface;
 	@Autowired CommonCodeService  commonCodeService;
+	@Autowired AnalysisInfoService analysisInfoService;
 	
 	
  
@@ -349,7 +351,7 @@ public class CrawlerTest {
 		
 	}
 	
-	@Test
+	//@Test
 	public void getHtmlTest() throws Exception {
 			
 			WebPageInfoBO		webPageInfoBO =  BaseFactory.create(WebPageInfoBO.class);
@@ -386,7 +388,7 @@ public class CrawlerTest {
 			
 			}
 		
-	@Test
+	//@Test
 	public void getJsoupParseTest() throws Exception {
 		 
 	 	Document doc;
@@ -446,11 +448,83 @@ public class CrawlerTest {
 		
 	}
 	
-	
-	
+	//@Test
+	public void DateTest()
+	{
+		Date currentDt = new Date();
 
+		currentDt = DateUtils.truncate(currentDt, Calendar.DATE);
+		DateUtils.addDays(currentDt,1);
 		
+		log.debug("##### currentDt :" + currentDt);
+		log.debug("##### addDays :" + DateUtils.addDays(currentDt,1));
 	}
 
 
+	//@Test
+	public void PriceFlowAnalysisTest()
+	{	
+		ProcedureParamBO procedureParamBO = BaseFactory.create(ProcedureParamBO.class); 
+		Date currentDt = new Date();
 
+		currentDt = DateUtils.truncate(currentDt, Calendar.DATE);
+	
+		procedureParamBO.setStartDt(currentDt);
+		procedureParamBO.setEndDt(DateUtils.addDays(currentDt,1));
+		
+		analysisInfoService.priceFlowAnalysis(procedureParamBO);
+
+	}
+
+	///@Test
+		public void GenGoodsSequanceTest()
+		{	
+		log.error("##### Task_GenGoodsSequance start:" + DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
+		ProcedureParamBO procedureParamBO = BaseFactory.create(ProcedureParamBO.class); 
+		
+		analysisInfoService.majorMallGoodsSequanceGen(procedureParamBO);
+
+		}
+		
+	
+	//@Test
+	public void CleanGarbageDataTest()
+	{	
+	log.error("##### CleanGarbageData start:" + DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
+	ProcedureParamBO procedureParamBO = BaseFactory.create(ProcedureParamBO.class); 
+	
+	analysisInfoService.cleanGarbageData(procedureParamBO);
+
+	}
+	
+	
+	@Test
+	public void doGoodSearch_Test()
+	{
+	log.error("##### doGoodSearch_Test start:" + DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
+	
+	SearchCombBO SearchCombineBO = BaseFactory.create(SearchCombBO.class); 
+	
+	SearchCombineBO.setWebPageInfoBO((WebPageInfoBO) BaseFactory.create(WebPageInfoBO.class));
+	SearchCombineBO.setSearchWord("카테고리");
+	SearchCombineBO.setRowCnt(50);
+	SearchCombineBO.setStartSeq(0);
+	
+
+	List<SearchCombBO> resultList = analysisInfoService.doGoodsSearch(SearchCombineBO);
+	
+	assertThat("searching result is ", resultList, notNullValue());
+	
+	for ( SearchCombBO searchCombineBO : resultList)
+	{
+	
+		log.debug(searchCombineBO.toString());
+	}
+
+	}
+	
+
+
+
+	
+	}
