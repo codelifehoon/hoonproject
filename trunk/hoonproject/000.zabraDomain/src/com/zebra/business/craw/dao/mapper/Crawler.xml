@@ -118,7 +118,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			FROM 
 			page_info_list
 			where  statCd != '03'
-     		and failCnt &lt;= 3
+     		and failCnt &lt;= 2
 			and updateDt &lt; adddate(sysdate(),-1)
 			
 			
@@ -155,6 +155,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT /*crawler.insertPageInfoList */ INTO page_info_list
 			(siteConfigSeq
 			<if test="goodsNo != null and goodsNo != ''">, goodsNo</if>
+			<if test="goodsNo != null and goodsNo != ''">, goodsNoInt</if>
 			<if test="goodsNm != null and goodsNm != ''">, goodsNm</if>
 			<if test="goodsPrice != null and goodsPrice != ''">, goodsPrice</if>
 			, goodsUrl
@@ -167,6 +168,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			) 
 		VALUES (#{siteConfigSeq}
 			<if test="goodsNo != null and goodsNo != ''">, #{goodsNo}</if>
+			<if test="goodsNo != null and goodsNo != ''">, #{goodsNoInt}</if>
 			<if test="goodsNm != null and goodsNm != ''">, #{goodsNm}</if>
 			<if test="goodsPrice != null and goodsPrice != ''">,#{goodsPrice}</if>
 			, #{goodsUrl}

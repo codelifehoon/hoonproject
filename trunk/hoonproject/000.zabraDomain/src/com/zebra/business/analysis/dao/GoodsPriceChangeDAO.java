@@ -10,8 +10,9 @@ package com.zebra.business.analysis.dao;
 
 import java.util.List;
 
-import com.zebra.business.analysis.domain.GoodsPriceChange;
-import com.zebra.business.analysis.domain.GoodsPriceTrend;
+import com.zebra.business.analysis.domain.GoodsPriceChangeBO;
+import com.zebra.business.analysis.domain.GoodsPriceTrendBO;
+import com.zebra.business.analysis.domain.ProcedureParamBO;
 import com.zebra.business.craw.domain.WebPageInfoBO;
 
 public interface GoodsPriceChangeDAO {
@@ -21,6 +22,13 @@ public interface GoodsPriceChangeDAO {
 	 * @return
 	 */
 	List<WebPageInfoBO> selectGoodsPriceChangeList(
-			GoodsPriceChange goodsPriceChange);
+			GoodsPriceChangeBO goodsPriceChange);
+
+	/**
+	 * @param procedureParamBO
+	 * @return 
+	 */
+	ProcedureParamBO procGoodsPriceChangeCalc(ProcedureParamBO procedureParamBO);
+
 
 }

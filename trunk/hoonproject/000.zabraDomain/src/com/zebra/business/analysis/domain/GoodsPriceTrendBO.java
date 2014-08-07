@@ -1,5 +1,5 @@
 /**
- * @FileName  : GoodsPriceChange.java
+ * @FileName  : GoodsPriceTrend.java
  * @Project     : code refactoring exam proj
  * @Date         : 2014. 7. 29. 
  * @작성자      : codelife
@@ -15,15 +15,17 @@ import lombok.Data;
 import com.zebra.common.domain.BaseBO;
 
 @Data
-public class GoodsPriceChange extends BaseBO {
+public class GoodsPriceTrendBO extends BaseBO {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 8966919445998281014L;
-	private String goodsPriceChangeSeq; 
+	private static final long serialVersionUID = 2264011545711190593L;
+	private String goodsPriceTrendSeq;
+	private String pageInfoListHistSeq;
 	private String pageInfoListSeq; 
-	private String pageInfoListHistSeq; 
+	private String goodsPrice; 
+	private String priceCode; 
 	private String statCd; 
 	private String createNo; 
 	private Date createDt; 

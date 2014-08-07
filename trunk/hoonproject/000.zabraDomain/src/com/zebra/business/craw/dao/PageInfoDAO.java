@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.zebra.business.analysis.domain.GoodsPriceChange;
+import com.zebra.business.analysis.domain.GoodsPriceChangeBO;
 import com.zebra.business.craw.domain.CrawlerDataCombBO;
 import com.zebra.business.craw.domain.WebPageInfoBO;
 
