@@ -12,7 +12,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.zebra.business.analysis.domain.GoodsPriceTrend;
+import com.zebra.business.analysis.domain.GoodsPriceTrendBO;
+import com.zebra.business.analysis.domain.ProcedureParamBO;
 import com.zebra.common.dao.CommonDAO;
 
 @Repository
@@ -22,11 +23,21 @@ public class GoodsPriceTrendDAOImpl extends CommonDAO  implements GoodsPriceTren
 	 * @see com.zebra.business.analysis.dao.GoodsPriceTrendDAO#selectGoodsPriceTrend(com.zebra.business.analysis.domain.GoodsPriceTrend)
 	 */
 	@Override
-	public List<GoodsPriceTrend> selectGoodsPriceTrend(GoodsPriceTrend goodsPriceTrend) {
+	public List<GoodsPriceTrendBO> selectGoodsPriceTrend(GoodsPriceTrendBO goodsPriceTrend) {
 
-		List<GoodsPriceTrend> goodsPriceTrendList = sqlSession.selectList("query.analysis.selectGoodsPriceTrendList", goodsPriceTrend);
+		List<GoodsPriceTrendBO> goodsPriceTrendList = sqlSession.selectList("query.analysis.selectGoodsPriceTrendList", goodsPriceTrend);
 		
 		return goodsPriceTrendList;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.zebra.business.analysis.dao.GoodsPriceTrendDAO#procGoodsPriceTrendCalc(com.zebra.business.analysis.domain.ProcedureParamBO)
+	 */
+	@Override
+	public ProcedureParamBO procGoodsPriceTrendCalc(ProcedureParamBO procedureParamBO) {
+		ProcedureParamBO resultBO = sqlSession.selectOne("query.analysis.procGoodsPriceTrendCalc",procedureParamBO);
+		return resultBO;
+		
 	}
 
 }

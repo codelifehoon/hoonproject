@@ -7,9 +7,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="query.analysis">
 
+	<resultMap id="ProcedureParamBOResult" type="com.zebra.business.analysis.domain.ProcedureParamBO" >
+	        <result column="procResult1" 		property="procResult1" />
+	        <result column="procResult2" 		property="procResult2" />
+	        <result column="procResult3" 		property="procResult3" />
+	        <result column="procResult4" 		property="procResult4" />
+	        <result column="procResult5" 		property="procResult5" />
+	 </resultMap>
+	 
+	<resultMap id="doGoodsSearchResult" type="com.zebra.business.analysis.domain.SearchCombBO" >
+		<result column="pageInfoListSeq" 	property="webPageInfoBO.pageInfoListSeq" />
+		<result column="siteConfigSeq" 		property="webPageInfoBO.siteConfigSeq" />
+		<result column="goodsNo" 			property="webPageInfoBO.goodsNo" />
+		<result column="goodsNoInt" 		property="webPageInfoBO.goodsNoInt" />
+		<result column="goodsNm" 			property="webPageInfoBO.goodsNm" />
+		<result column="goodsPrice" 		property="webPageInfoBO.goodsPrice" />
+		<result column="goodsUrl" 			property="webPageInfoBO.goodsUrl" />
+		<result column="goodsImg" 			property="webPageInfoBO.goodsImg" />
+		<result column="goodsDisc" 			property="webPageInfoBO.goodsDisc" />
+		<result column="goodsIsbuyPatten" 	property="webPageInfoBO.goodsIsbuyPatten" />
+		<result column="cate1" 				property="webPageInfoBO.cate1" />
+		<result column="cate2" 				property="webPageInfoBO.cate2" />
+		<result column="cate3" 				property="webPageInfoBO.cate3" />
+		<result column="logoURL" 			property="crawConfigBO.logoURL" />
+		<result column="trend" 				property="goodsTrendStr" />  
+
+	 </resultMap>
+
+
+
 
 	
-	<select id="selectGoodsPriceTrendList"  resultType="com.zebra.business.analysis.domain.GoodsPriceTrend" parameterType="com.zebra.business.analysis.domain.GoodsPriceTrend">
+	<select id="selectGoodsPriceTrendList"  resultType="com.zebra.business.analysis.domain.GoodsPriceTrendBO" parameterType="com.zebra.business.analysis.domain.GoodsPriceTrendBO">
 		select  /* query.analysis.selectGoodsPriceTrendList */
 			GPT.goodsPriceTrendSeq
 			, GPT.pageInfoListSeq
@@ -25,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 
-	<select id="selectGoodsPriceChangeList"  resultType="com.zebra.business.craw.domain.WebPageInfoBO" parameterType="com.zebra.business.analysis.domain.GoodsPriceChange">
+	<select id="selectGoodsPriceChangeList"  resultType="com.zebra.business.craw.domain.WebPageInfoBO" parameterType="com.zebra.business.analysis.domain.GoodsPriceChangeBO">
 		
 	select   /* query.analysis.selectGoodsPriceChangeList */
 		  PILH.createDt
@@ -37,8 +66,63 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	and GPC.pageInfoListHistSeq = PILH.pageInfoListHistSeq
 	order by GPC.pageInfoListHistSeq desc
 	limit 5
+		     
+	</select>
+	
+	
+	<select id="majorMallGoodsSequanceGen"	statementType="CALLABLE" resultMap="ProcedureParamBOResult"  parameterType="com.zebra.business.analysis.domain.ProcedureParamBO">
+		{ call /* query.analysis.majorMallGoodsSequanceGen */ genGoodsNo_job() }
+	</select>
+	
+	<select id="cleanGarbageData"  statementType="CALLABLE" resultMap="ProcedureParamBOResult"  parameterType="com.zebra.business.analysis.domain.ProcedureParamBO">
+		{ call /* query.analysis.cleanGarbageData */ cleanTable_job() }
+	</select>
+	
+	<select id="procGoodsPriceChangeCalc"  statementType="CALLABLE" resultMap="ProcedureParamBOResult" parameterType="com.zebra.business.analysis.domain.ProcedureParamBO">
+		{ call /* query.analysis.procGoodsPriceChangeCalc */ goodsPriceChange_Job(#{startDt},#{endDt}) }
+	</select>
+	
+	<select id="procGoodsPriceTrendCalc"  statementType="CALLABLE" resultMap="ProcedureParamBOResult" parameterType="com.zebra.business.analysis.domain.ProcedureParamBO">
+		{ call /* query.analysis.procGoodsPriceTrendCalc */ goodsPriceTrend_Job(#{startDt},#{endDt}) }
+	</select>
+	
+
+	<select id="doGoodsSearch" resultMap="doGoodsSearchResult"  parameterType="com.zebra.business.analysis.domain.SearchCombBO">
 		
-				     
+			
+		select /* query.analysis.doGoodsSearch */   
+		A.*
+		,COALESCE((select 
+		  group_concat( concat(GPT.goodsPrice,'#',GPT.priceCode ) SEPARATOR ',') as trend
+		  from goods_price_trend GPT where GPT.pageInfoListSeq = A.pageInfoListSeq and GPT.statCd = '02'
+		 ),'') as trend
+
+		from 
+		( 
+		select  PIL.pageInfoListSeq
+		, PIL.siteConfigSeq
+		, PIL.goodsNo
+		, PIL.goodsNm
+		, PIL.goodsPrice
+		, PIL.goodsUrl
+		, PIL.goodsImg
+		, PIL.goodsDisc
+		, PIL.goodsIsbuyPatten
+		, PIL.cate1
+		, PIL.cate2
+		, PIL.cate3
+		, CC.logoURL
+		from page_info_list PIL , craw_config CC   where MATCH(PIL.goodsNm) AGAINST (#{searchWord})
+		and statCd = '02'
+		<if test="webPageInfoBO.cate1 != null and webPageInfoBO.cate1 != '' ">
+			and cate1 = #{webPageInfoBO.cate1}
+		</if>
+		and PIL.siteConfigSeq = CC.siteConfigSeq
+		and PIL.pageInfoListSeq &gt; #{startSeq}
+		order by PIL.pageInfoListSeq  desc
+		limit #{rowCnt}
+		) A
+		     
 	</select>
 	
 	

@@ -20,8 +20,8 @@ import org.springframework.stereotype.Service;
 
 import com.zebra.business.analysis.dao.GoodsPriceChangeDAO;
 import com.zebra.business.analysis.dao.GoodsPriceTrendDAO;
-import com.zebra.business.analysis.domain.GoodsPriceChange;
-import com.zebra.business.analysis.domain.GoodsPriceTrend;
+import com.zebra.business.analysis.domain.GoodsPriceChangeBO;
+import com.zebra.business.analysis.domain.GoodsPriceTrendBO;
 import com.zebra.business.craw.dao.CrawConfigDAO;
 import com.zebra.business.craw.dao.PageInfoDAO;
 import com.zebra.business.craw.domain.CrawConfigBO;
@@ -42,8 +42,8 @@ public class GoodsServiceImpl implements GoodsService {
 	public HashMap<String, Object> goodsDetail(WebPageInfoBO webPageInfoBO) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 		
 		
-		GoodsPriceChange	goodsPriceChange = BaseFactory.create(GoodsPriceChange.class);
-		GoodsPriceTrend		goodsPriceTrend = BaseFactory.create(GoodsPriceTrend.class);
+		GoodsPriceChangeBO	goodsPriceChange = BaseFactory.create(GoodsPriceChangeBO.class);
+		GoodsPriceTrendBO		goodsPriceTrend = BaseFactory.create(GoodsPriceTrendBO.class);
 		CrawConfigBO		crawConfigBO = BaseFactory.create(CrawConfigBO.class);
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		
@@ -56,7 +56,7 @@ public class GoodsServiceImpl implements GoodsService {
 		crawConfigBO.setSiteConfigSeq(webPageInfoBOResult.getSiteConfigSeq());
 		crawConfigBO = crawConfigDAO.selectCrawConfigList(crawConfigBO).get(0);
 		List<WebPageInfoBO> 	priceChangeList = goodsPriceChangeDAO.selectGoodsPriceChangeList(goodsPriceChange);
-		List<GoodsPriceTrend> 	priceTrendList = goodsPriceTrendDAO.selectGoodsPriceTrend (goodsPriceTrend);
+		List<GoodsPriceTrendBO> 	priceTrendList = goodsPriceTrendDAO.selectGoodsPriceTrend (goodsPriceTrend);
 
 
 		if (log.isDebugEnabled())
