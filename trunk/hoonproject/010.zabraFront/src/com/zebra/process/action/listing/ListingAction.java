@@ -27,6 +27,7 @@ import com.zebra.business.analysis.domain.SearchCombBO;
 import com.zebra.business.craw.domain.WebPageInfoBO;
 import com.zebra.common.BaseFactory;
 import com.zebra.common.util.DateTime;
+import com.zebra.common.util.NumUtil;
 import com.zebra.process.action.BaseAction;
 import com.zebra.process.analysis.AnalysisInfoService;
 
@@ -55,8 +56,11 @@ public class ListingAction extends BaseAction {
 		
 		SearchCombBO searchCombBO = BaseFactory.create(SearchCombBO.class); 
 		
+
 		BeanUtils.populate(searchCombBO, paramMap);
 		BeanUtils.populate(searchCombBO.getWebPageInfoBO(), paramMap);
+		
+	
 		
 		
 		List<SearchCombBO> searchResultList = analysisInfoService.doGoodsSearch(searchCombBO);
@@ -64,6 +68,7 @@ public class ListingAction extends BaseAction {
 		log.debug("searchResultList:" + searchResultList.size());
 		
 		mav.addObject("searchResultList", searchResultList);
+		mav.addObject("paramMap",paramMap); 
 		mav.setViewName("/ajaxprefix/listing/ajax/searchGoods"); 
 		
 		return mav;

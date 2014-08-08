@@ -31,16 +31,16 @@
 		        
 		</div>  
 	    <div class="l-box pure-u-3-5">
-	    	<input id="goodsNm" name='goodsNm' type='text' style='width:100%'>
+	    	<input id="searchWord" name='searchWord' type='text' style='width:100%'>
 		</div>
 	    <div class="l-box pure-u-1-5" align='left'>
-			<button type="button" class="pure-button pure-button-primary">Search</button>	
+			<button type="button" class="pure-button pure-button-primary" onClick='javascript:doSearch()'>Search</button>	
 		</div>
 	</div>
 	<div class="l-box"></div>
 	
-	<div class="pure-g" id="searchResult">
-		
+	<div class="pure-g" id="searchResulBox" >
+		<div id="searchResulEnd" ></div>
 	</div>
 
 </div>
@@ -51,18 +51,77 @@
 
 <script language='javascript'>
 
-function loadGoodsSearch(var divID,var startSeq,var RowCnt,var searchWord)
-{
-	var searchURL ="/listing/searchGoodsAjax.do?RowCnt=" + RowCnt
-						"&startSeq=" +startSeq
-						"&searchWord=" +searchWord
-						;
-	
 
-	jQuery(divID).load(searchURL).fadeIn(100).delay(500);
+var gIdx = 1;
+var gPage = 1;
+var gStartSeq = 0;
+var gNextFlag = true;
+jQuery(document).ready(function () 
+{
+	jQuery(window).scroll(function() 
+	{
+		if (jQuery(window).scrollTop() == jQuery(document).height() - jQuery(window).height()) 
+		{
+			if (!gNextFlag) return;
+			
+			setTimeout(function()
+			{
+				appendSearchList();
+			}, 1000);
+		}
+	});
+});
+
+
+function loadGoodsSearch(divID,localStartSeq,rowCnt,searchWord,page)
+{
+	var searchURL ="http://localhost/listing/ajax/searchGoods.do?rowCnt=" + rowCnt
+						+ "&startSeq=" +localStartSeq
+						+ "&searchWord=" +searchWord
+						+ "&page=" + page;
+
+	console.log(searchURL);
+	$(divID).load(searchURL).fadeIn(1000).delay(5000);
 }
 
-loadGoodsSearch("searchResult","0" ,"50","카테고리");
+function changeGlobalVar(localPage,localStartSeq,nextFlag)
+{
+	console.log("localPage:" + localPage + ",localStartSeq:" + localStartSeq);
+	gPage = localPage;
+	gStartSeq = localStartSeq;
+	gNextFlag  = nextFlag;
+}
+
+
+function doSearch()
+{
+	gIdx = 1;
+	gPage = 1;
+	gStartSeq = 0;
+	
+	$('#searchResulBox').html('<div id="searchResulEnd" ></div>');
+	appendSearchList();
+	
+	
+}
+
+function appendSearchList()
+{
+	var newDiv=document.createElement('div'); 
+	var morediv = 'searchResul'+gIdx;
+	var rowCnt = 50;
+	
+	newDiv.setAttribute('id',morediv); 
+	newDiv.innerHTML= '!!!!!!!!!!!!!!!!!!!!!로딩중입니다...';
+	
+	jQuery(newDiv).insertBefore('#searchResulEnd'); 
+	loadGoodsSearch('#' + morediv,gStartSeq ,rowCnt,$("#searchWord").val(),gPage);
+	
+	gIdx++;
+}
+
 </script>
+
+
 
 
