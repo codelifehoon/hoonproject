@@ -40,47 +40,69 @@ public class BatchTaskActon extends AuthAction {
 
 	
 
-	// @Scheduled(fixedDelay = DEALY_JOB)
+	/**
+	 * @param string
+	 */
+	private void endLog(String string) {
+		// TODO Auto-generated method stub
+		log.error("##### " +string+ " start:" + DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
+	}
+
+	/**
+	 * @param string
+	 */
+	private void startLog(String string) {
+		// TODO Auto-generated method stub
+		log.error("##### " +string+ " end:" + DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
+	}
+	
+	@Scheduled(fixedDelay = DEALY_JOB)
 	public void st11Update()
 	{
-		log.error("##### task_st11_Update start:" + DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
 		
+		startLog("st11Update");
 		CrawConfigBO		crawConfigBO	= BaseFactory.create(CrawConfigBO.class);
 		crawConfigBO.setSiteConfigSeq("100027");
 		
 		RunCrawUpdateTask(crawConfigBO);
-	
+		endLog("st11Update");
+		
 	}
 	
-	// @Scheduled(fixedDelay =DEALY_JOB)
+	
+
+	@Scheduled(fixedDelay =DEALY_JOB)
 	public void AUpdate()
 	{
-		log.error("##### task_A_Update start:" + DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
+		startLog("AUpdate");
 		
 		CrawConfigBO		crawConfigBO	= BaseFactory.create(CrawConfigBO.class);
 		crawConfigBO.setSiteConfigSeq("100028");
 		
 		RunCrawUpdateTask(crawConfigBO);
+		endLog("AUpdate");
 		
 	}
 	
-	// @Scheduled(fixedDelay =DEALY_JOB)
+	@Scheduled(fixedDelay =DEALY_JOB)
 	public void GUpdate()
 	{
-		log.error("##### task_G_Update start:" + DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
+		startLog("GUpdate");
 		
 		CrawConfigBO		crawConfigBO	= BaseFactory.create(CrawConfigBO.class);
 		crawConfigBO.setSiteConfigSeq("100031");
 		
 		RunCrawUpdateTask(crawConfigBO);
+		endLog("GUpdate");
 		
 	}
 	
 	// 초,분,시
-	//// @Scheduled(cron="0 0 3 * * *")
+	//@Scheduled(cron="0 0 1/24 * * *")
 	public void priceFlowAnalysis()
 	{	
-		log.error("##### task_PriceFlowAnalysis start:" + DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
+		startLog("priceFlowAnalysis");
+		
 		ProcedureParamBO procedureParamBO = BaseFactory.create(ProcedureParamBO.class); 
 		Date currentDt = new Date();
 
@@ -90,29 +112,34 @@ public class BatchTaskActon extends AuthAction {
 		procedureParamBO.setEndDt(DateUtils.addDays(currentDt,1));
 		
 		analysisInfoService.priceFlowAnalysis(procedureParamBO);
+		endLog("priceFlowAnalysis");
 		
 		 
 	}
 	
 	// 초,분,시
-	//// @Scheduled(cron="0 0 3 * * *")
+	//@Scheduled(cron="0 0 1/24 * * *")
 	public void majorMallGoodsSequanceGen()
 	{
-		log.error("##### task_GenGoodsSequance start:" + DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
+		startLog("majorMallGoodsSequanceGen");
+		
 		ProcedureParamBO procedureParamBO = BaseFactory.create(ProcedureParamBO.class); 
 		
 		analysisInfoService.majorMallGoodsSequanceGen(procedureParamBO);
+		endLog("majorMallGoodsSequanceGen");
 		 
 	}
 	
 	// 초,분,시
-	//// @Scheduled(cron="0 0 3 * * *")
+	//@Scheduled(cron="0 0 1/24 * * *")
 	public void cleanGarbageData()
 	{
-		log.error("##### CleanGarbageData start:" + DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
+		startLog("cleanGarbageData");
+		
 		ProcedureParamBO procedureParamBO = BaseFactory.create(ProcedureParamBO.class); 
 		
 		analysisInfoService.cleanGarbageData(procedureParamBO);
+		endLog("cleanGarbageData");
 
 	}
 		
@@ -129,7 +156,7 @@ public class BatchTaskActon extends AuthAction {
 		
 		crawConfigBO =  crawConfigDAO.selectCrawConfigList(crawConfigBO).get(0);
 		
-		crawConfigBO.setRowCnt(1000);
+		crawConfigBO.setRowCnt(5000);
 		crawConfigBO.setCrawlThreadCount(50);
 		//crawConfigBO.setCrawlDepth(1);
 	
