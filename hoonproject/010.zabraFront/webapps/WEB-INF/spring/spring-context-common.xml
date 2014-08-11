@@ -54,15 +54,25 @@
 
 	<!-- ##### datasource Configuration start ##### -->
 
+
+
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="driverClassName" value="net.sf.log4jdbc.DriverSpy" />
 		<property name="url"><value>${mysql.url}</value></property>
 		<property name="username"><value>${mysql.username}</value></property>
 		<property name="password"><value>${mysql.password}</value></property>
 	</bean>
 
-
+<!-- 
+	<bean id="dataSource"
+	  class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+	  	<property name="driverClass" value="net.sf.log4jdbc.DriverSpy" />
+	  	<property name="url"><value>${mysql.url}</value></property>
+		<property name="username"><value>${mysql.username}</value></property>
+		<property name="password"><value>${mysql.password}</value></property>
+	 </bean>
+ -->
 
 	<!-- <property name="poolPingQuery" value="select 1"/> <property name="poolPingEnabled" 
 		value="true"/> <property name="poolPingConnectionsNotUsedFor" value="5000"/> -->

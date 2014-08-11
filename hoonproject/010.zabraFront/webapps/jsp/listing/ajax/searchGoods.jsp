@@ -39,7 +39,7 @@
 				
 					<img src='<%=searchResult.getCrawConfigBO().getLogoURL() %>' style="width: 60px; height: auto; ">
 				
-				<a href='/goods/goodsDetail.do?pageInfoListSeq=<%=searchResult.getWebPageInfoBO().getGoodsNo()%>' target="_new"> <%=searchResult.getWebPageInfoBO().getGoodsNm() %></a>
+				<a href='/goods/goodsDetail.do?pageInfoListSeq=<%=searchResult.getWebPageInfoBO().getPageInfoListSeq()%>' target="_new"> <%=searchResult.getWebPageInfoBO().getGoodsNm() %></a>
 				<%= searchResult.getWebPageInfoBO().getGoodsUrl() %>
 			</div>
 			<div class="pure-u-2-24"><%=cmnutil.setComma(searchResult.getWebPageInfoBO().getGoodsPrice()) %></div>
@@ -55,7 +55,7 @@
 
 		<div id='list' class="pure-u-1">더이상 자료가 없습니다.</div>
 	<script language='javascript'>
-		changeGlobalVar(<%=pageNo%>,<%=maxSeq%>,false);
+		changeGlobalVar(<%=pageNo%>,<%=maxSeq%>,false,false);
 	</script>
 
 <%}%>
