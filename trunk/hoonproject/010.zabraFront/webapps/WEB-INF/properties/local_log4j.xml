@@ -26,12 +26,12 @@
         </layout>  
     </appender>  
     
+    <!-- 기본 sql log 설정 -->  <!-- 
 	<logger name="java.sql.Connection">
 		<level value="debug" />
 		<appender-ref ref="console" />
 		<appender-ref ref="dailyout" />
 	</logger>
-
 
 	<logger name="java.sql.Statement">
 		<level value="debug" />
@@ -51,6 +51,44 @@
 		<appender-ref ref="dailyout" />
 	</logger>
 
+  
+	<logger name="query">
+		<level value="TRACE" />
+		<appender-ref ref="console" />
+		<appender-ref ref="dailyout" />
+	</logger>
+	 -->
+
+	<logger name="jdbc.connection" additivity="false">
+        <level value="WARN"/>
+        <appender-ref ref="console"/>
+    </logger>
+ 
+    <logger name="jdbc.audit" additivity="false">
+        <level value="WARN"/>
+        <appender-ref ref="console"/>
+    </logger>
+ 
+    <logger name="jdbc.sqlonly" additivity="false">
+        <level value="WARN"/>
+        <appender-ref ref="console"/>
+    </logger>
+ 
+    <logger name="jdbc.sqltiming" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="console"/>
+    </logger>
+ 
+    <logger name="jdbc.resultset" additivity="false">
+        <level value="WARN"/>
+        <appender-ref ref="console"/>
+    </logger>
+     
+    <logger name="jdbc.resultsettable" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="console"/>
+    </logger>
+    
 
 	<logger name="org.apache.tiles">
 		<level value="debug" />
@@ -71,24 +109,21 @@
 		<appender-ref ref="dailyout" />
 	</logger>
 
-	<!-- spring Loggers -->
+	<!-- spring Loggers
 	<logger name="test">
 		<level value="debug" />
 		<appender-ref ref="console" />
 		<appender-ref ref="dailyout" />
 	</logger>
+	 -->
 
-
-	<!-- SQLMAP id 경로를 이용해서 log 출력 -->
-	<logger name="query">
-		<level value="TRACE" />
-		<appender-ref ref="console" />
-		<appender-ref ref="dailyout" />
-	</logger>
 
 
 	<!-- ======================= -->
 	<!-- Setup the Root category -->
 	<!-- ======================= -->
-	<!-- <root> <level value="debug" /> <appender-ref ref="console" /> </root> -->
+	 <root> <level value="error" /> <appender-ref ref="console" /> </root> 
+	
+
+	 
 </log4j:configuration>

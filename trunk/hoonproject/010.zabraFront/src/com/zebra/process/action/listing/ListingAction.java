@@ -61,7 +61,7 @@ public class ListingAction extends BaseAction {
 		BeanUtils.populate(searchCombBO.getWebPageInfoBO(), paramMap);
 		
 	
-		
+		if (log.isDebugEnabled()) log.debug("searchCombBO:" + searchCombBO.toString());
 		
 		List<SearchCombBO> searchResultList = analysisInfoService.doGoodsSearch(searchCombBO);
 		

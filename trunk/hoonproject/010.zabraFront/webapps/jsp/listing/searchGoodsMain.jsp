@@ -31,7 +31,7 @@
 		        
 		</div>  
 	    <div class="l-box pure-u-3-5">
-	    	<input id="searchWord" name='searchWord' type='text' style='width:100%'>
+	    	<input id="searchWord" name='searchWord' type='text' style='width:100%' onkeypress="if(event.keyCode==13) {doSearch(); return false;}">
 		</div>
 	    <div class="l-box pure-u-1-5" align='left'>
 			<button type="button" class="pure-button pure-button-primary" onClick='javascript:doSearch()'>Search</button>	
@@ -55,7 +55,10 @@
 var gIdx = 1;
 var gPage = 1;
 var gStartSeq = 0;
+var gLodingFlag = false;
 var gNextFlag = true;
+var prevKeyWord = "";
+
 jQuery(document).ready(function () 
 {
 	jQuery(window).scroll(function() 
@@ -75,6 +78,7 @@ jQuery(document).ready(function ()
 
 function loadGoodsSearch(divID,localStartSeq,rowCnt,searchWord,page)
 {
+	
 	var searchURL ="http://localhost/listing/ajax/searchGoods.do?rowCnt=" + rowCnt
 						+ "&startSeq=" +localStartSeq
 						+ "&searchWord=" +searchWord
@@ -82,14 +86,16 @@ function loadGoodsSearch(divID,localStartSeq,rowCnt,searchWord,page)
 
 	console.log(searchURL);
 	$(divID).load(searchURL).fadeIn(1000).delay(5000);
+	
 }
 
-function changeGlobalVar(localPage,localStartSeq,nextFlag)
+function changeGlobalVar(localPage,localStartSeq,nextFlag,localLodingFlag)
 {
 	console.log("localPage:" + localPage + ",localStartSeq:" + localStartSeq);
 	gPage = localPage;
 	gStartSeq = localStartSeq;
 	gNextFlag  = nextFlag;
+	gLodingFlag = localLodingFlag;
 }
 
 
@@ -99,25 +105,36 @@ function doSearch()
 	gPage = 1;
 	gStartSeq = 0;
 	
-	$('#searchResulBox').html('<div id="searchResulEnd" ></div>');
-	appendSearchList();
-	
+	if (prevKeyWord != $("#searchWord").val())
+	{
+		$('#searchResulBox').html('<div id="searchResulEnd" ></div>');
+		appendSearchList();
+		prevKeyWord = $("#searchWord").val();
+	}
+	else
+	{
+		console.log("중복 keyword.");
+	}
 	
 }
 
 function appendSearchList()
 {
-	var newDiv=document.createElement('div'); 
-	var morediv = 'searchResul'+gIdx;
-	var rowCnt = 50;
-	
-	newDiv.setAttribute('id',morediv); 
-	newDiv.innerHTML= '!!!!!!!!!!!!!!!!!!!!!로딩중입니다...';
-	
-	jQuery(newDiv).insertBefore('#searchResulEnd'); 
-	loadGoodsSearch('#' + morediv,gStartSeq ,rowCnt,$("#searchWord").val(),gPage);
-	
-	gIdx++;
+	if (!gLodingFlag)
+	{
+		var newDiv=document.createElement('div'); 
+		var morediv = 'searchResul'+gIdx;
+		var rowCnt = 50;
+		
+		newDiv.setAttribute('id',morediv); 
+		newDiv.innerHTML= '!!!!!!!!!!!!!!!!!!!!!로딩중입니다...';
+		
+		jQuery(newDiv).insertBefore('#searchResulEnd'); 
+		loadGoodsSearch('#' + morediv,gStartSeq ,rowCnt,encodeURIComponent($("#searchWord").val()),gPage);
+		
+		gIdx++;
+		gLodingFlag = true;
+	}
 }
 
 </script>

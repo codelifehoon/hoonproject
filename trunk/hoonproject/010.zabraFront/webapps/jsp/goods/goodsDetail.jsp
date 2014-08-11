@@ -40,11 +40,16 @@
  		<!-- ##쇼킹딜## 상품상태값 노출(매진임박>오늘마감>오늘오픈 ) 2013.12.19 이태강  --> 
 		<!-- // ##쇼킹딜## --> 
 		
-		 <img src="http://i.011st.com/ex_t/R/300x300/1/90/1/src/ae/7/0/3/3/5/5/1091703355_B.jpg" alt=""  style="width: auto; height: auto;"/>
+		 <img src="${goodsDetailMap.webPageInfoBO.goodsImg}" alt=""  style="width: auto; height: auto;"/>
 		 
 	</div>  
     <div class="l-box pure-u-2-5">
-		<div class="pure-1"><h3> ${goodsDetailMap.webPageInfoBO.cate1} <b>&gt;</b>  ${goodsDetailMap.webPageInfoBO.cate2} <b>&gt;</b> ${goodsDetailMap.webPageInfoBO.cate3} </h3> </div>
+		<div class="pure-1">
+		<c:if test="${goodsDetailMap.webPageInfoBO.cate1 != '' }">
+			<h3> ${goodsDetailMap.webPageInfoBO.cate1} <b>&gt;</b>  ${goodsDetailMap.webPageInfoBO.cate2} <b>&gt;</b> ${goodsDetailMap.webPageInfoBO.cate3} </h3> 
+		</c:if>
+		
+		</div>
 		<div class="pure-1">
 			<img class="pure-img" src="${goodsDetailMap.crawConfigBO.logoURL}" height="30"><b><span id='priceTrendValue'></span></b><br>
 			 <h3> ${goodsDetailMap.webPageInfoBO.goodsNm}</h3>
