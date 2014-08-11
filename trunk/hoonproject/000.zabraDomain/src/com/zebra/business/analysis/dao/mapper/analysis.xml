@@ -119,7 +119,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 		and PIL.siteConfigSeq = CC.siteConfigSeq
 		and PIL.pageInfoListSeq &gt; #{startSeq}
-		order by PIL.pageInfoListSeq  desc
 		limit #{rowCnt}
 		) A
 		     

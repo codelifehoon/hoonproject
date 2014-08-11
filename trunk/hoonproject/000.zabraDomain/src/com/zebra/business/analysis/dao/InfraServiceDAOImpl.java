@@ -61,15 +61,23 @@ public class InfraServiceDAOImpl extends CommonDAO implements InfraServiceDAO {
 
 			for (String priceDataStr : priceCodeArr)
 			{	
-				
 				GoodsPriceTrendBO goodsPriceTrendBO = BaseFactory.create(GoodsPriceTrendBO.class);
-				String[] datas = priceDataStr.split("#");
 				
-				goodsPriceTrendBO.setGoodsPrice(datas[0]);
-				goodsPriceTrendBO.setPriceCode(datas[1]);
+				if ("".equals(priceDataStr) || priceDataStr == null)
+				{
+					goodsPriceTrendBO.setGoodsPrice("0");
+					goodsPriceTrendBO.setPriceCode("0");
+				}
+				else
+				{
+					String[] datas = priceDataStr.split("#");
+					goodsPriceTrendBO.setGoodsPrice(datas[0]);
+					goodsPriceTrendBO.setPriceCode(datas[1]);
+				}
 				
 				searchBO.getGoodsPriceTrendBOList().add(goodsPriceTrendBO);
 			}
+				
 		}
 		
 		return searchCombineBOList;
