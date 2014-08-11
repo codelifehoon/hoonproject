@@ -117,16 +117,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	     	,'Y' as failYn 
 			FROM 
 			page_info_list
-			where  statCd != '03'
+			 /* where  statCd in('01','02') */
+			where  statCd in('99')
      		and failCnt &lt;= 2
-			and updateDt &lt; adddate(sysdate(),-1)
+			and updateDt &lt; DATE_FORMAT(sysdate(), '%Y-%m-%d')
 			
 			
 			<if test="siteConfigSeq != null and siteConfigSeq != ''">
 				and   siteConfigSeq =  #{siteConfigSeq} 
 			</if>
 			<if test="pageInfoListSeq != null and pageInfoListSeq != ''">
-				and   pageInfoListSeq = #pageInfoListSeq}
+				and   pageInfoListSeq = #{pageInfoListSeq}
 			</if>	
 			<if test="rowCnt != null and rowCnt != ''">
 				limit #{rowCnt}
