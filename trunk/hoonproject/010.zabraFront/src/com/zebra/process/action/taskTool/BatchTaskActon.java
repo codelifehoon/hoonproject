@@ -59,7 +59,7 @@ public class BatchTaskActon extends AuthAction {
 	@Scheduled(fixedDelay = DEALY_JOB)
 	public void st11Update()
 	{
-		
+
 		startLog("st11Update");
 		CrawConfigBO		crawConfigBO	= BaseFactory.create(CrawConfigBO.class);
 		crawConfigBO.setSiteConfigSeq("100027");
@@ -71,7 +71,7 @@ public class BatchTaskActon extends AuthAction {
 	
 	
 
-	@Scheduled(fixedDelay =DEALY_JOB)
+	//@Scheduled(fixedDelay =DEALY_JOB)
 	public void AUpdate()
 	{
 		startLog("AUpdate");
@@ -84,7 +84,7 @@ public class BatchTaskActon extends AuthAction {
 		
 	}
 	
-	@Scheduled(fixedDelay =DEALY_JOB)
+	//@Scheduled(fixedDelay =DEALY_JOB)
 	public void GUpdate()
 	{
 		startLog("GUpdate");
@@ -156,7 +156,7 @@ public class BatchTaskActon extends AuthAction {
 		
 		crawConfigBO =  crawConfigDAO.selectCrawConfigList(crawConfigBO).get(0);
 		
-		crawConfigBO.setRowCnt(10);
+		crawConfigBO.setRowCnt(50);
 		crawConfigBO.setCrawlThreadCount(2);
 		//crawConfigBO.setCrawlDepth(1);
 	
