@@ -3,6 +3,7 @@ package com.zebra.common.util;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import com.zebra.business.craw.domain.WebPageInfoBO;
 
@@ -29,5 +30,33 @@ public class ConverterUtil {
 
 		return webPageInfoBOlist;
 	}
+
+	/**
+	 * @param <T>
+	 * @param webPageInfoBOMap
+	 * @return
+	 */
+	public static String getMaxMapKey(
+			HashMap<String, WebPageInfoBO> map) {
+		
+
+		Entry<String,WebPageInfoBO> maxEntry = null;
+
+		for(Entry<String, WebPageInfoBO> entry : map.entrySet()) {
+		    if (maxEntry == null || NumUtil.toLong(entry.getValue().getPageInfoListSeq()) > NumUtil.toLong(maxEntry.getValue().getPageInfoListSeq())) 
+		    {
+		        maxEntry = entry;
+		    }
+		}
+		
+		if (maxEntry == null)
+		{
+			return "0";
+		}
+		
+		
+		return maxEntry.getValue().getPageInfoListSeq();
+	}
+
 	
 }

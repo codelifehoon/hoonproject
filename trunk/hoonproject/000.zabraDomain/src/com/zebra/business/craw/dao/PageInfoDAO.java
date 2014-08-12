@@ -22,6 +22,8 @@ public interface PageInfoDAO {
 	public  HashMap<String, WebPageInfoBO> selectPageInfoMap(WebPageInfoBO webPageInfoBO);
 	
 	public  WebPageInfoBO selectPageInfo(WebPageInfoBO webPageInfoBO);
+	
+	public  void asyncCall(String data);
 
 
 }

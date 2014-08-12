@@ -39,6 +39,7 @@ public class WebPageInfoBO extends BaseBO {
 	private String createNo="";
 
 	private String failYn="";
+	private String  maxPageInfoListSeq;
 	
 	public String getCreateDtStr()
 	{

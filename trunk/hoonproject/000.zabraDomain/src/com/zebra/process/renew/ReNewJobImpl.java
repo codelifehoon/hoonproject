@@ -22,6 +22,7 @@ import com.zebra.common.BaseFactory;
 import com.zebra.common.BaseConstants;
 import com.zebra.common.exception.BaseException;
 import com.zebra.common.util.ConverterUtil;
+import com.zebra.common.util.DateTime;
 import com.zebra.common.util.DebugUtil;
 import com.zebra.process.crawler.CommCrawlController;
 import com.zebra.process.crawler.JobBase;
@@ -63,8 +64,16 @@ public class ReNewJobImpl extends JobBase  implements ReNewJob {
 	public long applyReNewInfo(CrawlerDataCombBO crawlerDataCombBO)
 			throws Exception {
 		
+		
+		
+		
 		List<WebPageInfoBO> webPageInfoBOList =  ConverterUtil.webPageInfoMap2List(crawlerDataCombBO.getWebPageInfoBOMap()) ;
+		
+		log.error("applyReNewInfo: 시작" + DateTime.getShortTimeString() + ">>" + webPageInfoBOList.get(0).getPageInfoListSeq());
+			
 		pageInfoDAO.updateReNewPageInfoList(webPageInfoBOList);
+		
+		log.error("applyReNewInfo: 죵로" + DateTime.getShortTimeString() + ">>" + webPageInfoBOList.get(0).getPageInfoListSeq());
 		
 		return webPageInfoBOList.size();
 	}
@@ -73,34 +82,43 @@ public class ReNewJobImpl extends JobBase  implements ReNewJob {
 	public void initCrawler(CrawConfigBO  crawConfigBO)
 	{
 	
-		long reNewCnt=0 ;
-		WebPageInfoBO webPageInfoBO = BaseFactory.create(WebPageInfoBO.class);
+		boolean loopFlag = true;
+		long applyCnt = 0;
+		String maxPageInfoListSeqNext = "0";
 		
-		webPageInfoBO.setSiteConfigSeq(crawConfigBO.getSiteConfigSeq());
-		webPageInfoBO.setRowCnt(crawConfigBO.getRowCnt());
 		
-		HashMap<String, WebPageInfoBO> webPageInfoBOMap = pageInfoDAO.selectReNewPageInfoMap(webPageInfoBO);
-		reNewCnt = webPageInfoBOMap.size();
 		
-		while (reNewCnt > 0)
+		while (loopFlag)
 		{
-			CrawlerDataCombBO crawlerDataCombBO = BaseFactory.create(CrawlerDataCombBO.class);
-			
-			
-			
-			
-			crawlerDataCombBO.setWebPageInfoBOMap(webPageInfoBOMap);		// 데이터의 빠른 갱신을 위해서 조회를 map으로 처리한다.(key: prdNo)
-			crawlerDataCombBO.setCrawConfigBO(crawConfigBO);
-			
-			if (webPageInfoBOMap.size() > 0) 
 			{
 				try {
-					long applyCnt = 0;
-					startController(crawlerDataCombBO);
-					applyCnt = applyReNewInfo(crawlerDataCombBO);
-					log.error("##### renew cnt:" + applyCnt);
-					webPageInfoBOMap = pageInfoDAO.selectReNewPageInfoMap(webPageInfoBO);
-					reNewCnt = webPageInfoBOMap.size();
+					
+					WebPageInfoBO webPageInfoBO = BaseFactory.create(WebPageInfoBO.class);
+					CrawlerDataCombBO crawlerDataCombBO = BaseFactory.create(CrawlerDataCombBO.class);
+					
+					webPageInfoBO.setSiteConfigSeq(crawConfigBO.getSiteConfigSeq());
+					webPageInfoBO.setRowCnt(crawConfigBO.getRowCnt());
+					webPageInfoBO.setMaxPageInfoListSeq(maxPageInfoListSeqNext);
+					
+					
+					HashMap<String, WebPageInfoBO> webPageInfoBOMap = pageInfoDAO.selectReNewPageInfoMap(webPageInfoBO);
+					if ( webPageInfoBOMap.size() > 0)
+					{
+						maxPageInfoListSeqNext =  ConverterUtil.getMaxMapKey(webPageInfoBOMap);	// 다음조회시 최종 조회된 번호 이후로 조회하기 위해서 조건 추가
+						log.error("##### maxPageInfoListSeqNext:" + maxPageInfoListSeqNext); 
+						crawlerDataCombBO.setWebPageInfoBOMap(webPageInfoBOMap);		// 데이터의 빠른 갱신을 위해서 조회를 map으로 처리한다.(key: prdNo)
+						crawlerDataCombBO.setCrawConfigBO(crawConfigBO);
+						
+						
+						startController(crawlerDataCombBO);
+						applyCnt = applyReNewInfo(crawlerDataCombBO);
+						log.error("##### renew ##### cnt:" + applyCnt);
+					}
+					else 
+					{
+						loopFlag =false;
+					}
+					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
