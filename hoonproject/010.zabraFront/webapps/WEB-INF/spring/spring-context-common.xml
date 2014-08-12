@@ -41,7 +41,7 @@
 	<!--task  -->
 	<task:annotation-driven executor="taskExecutor" scheduler="taskScheduler"/>
 	<task:executor 	id="taskExecutor" pool-size="10"/>
-	<task:scheduler id="taskScheduler" pool-size="10"/>
+	<task:scheduler id="taskScheduler" pool-size="5"/>
 	
 	<!-- component -->
 	<context:component-scan base-package="com.zebra"/>
@@ -63,16 +63,6 @@
 		<property name="username"><value>${mysql.username}</value></property>
 		<property name="password"><value>${mysql.password}</value></property>
 	</bean>
-
-<!-- 
-	<bean id="dataSource"
-	  class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
-	  	<property name="driverClass" value="net.sf.log4jdbc.DriverSpy" />
-	  	<property name="url"><value>${mysql.url}</value></property>
-		<property name="username"><value>${mysql.username}</value></property>
-		<property name="password"><value>${mysql.password}</value></property>
-	 </bean>
- -->
 
 	<!-- <property name="poolPingQuery" value="select 1"/> <property name="poolPingEnabled" 
 		value="true"/> <property name="poolPingConnectionsNotUsedFor" value="5000"/> -->
@@ -99,8 +89,6 @@
 	</bean>
 
 	<!-- ##### ETC bean start ##### -->
-
-
 	<bean id="springBeanFactory" class="com.zebra.common.SpringBeanFactory"/>
 	<bean id="nativeJdbcExtractor" class="org.springframework.jdbc.support.nativejdbc.SimpleNativeJdbcExtractor" lazy-init="true" />
 
