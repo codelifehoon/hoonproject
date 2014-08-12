@@ -79,6 +79,7 @@
 	</logger>
 
 
+
 	<!-- SQLMAP id 경로를 이용해서 log 출력 
 	<logger name="query">
 		<level value="TRACE" />

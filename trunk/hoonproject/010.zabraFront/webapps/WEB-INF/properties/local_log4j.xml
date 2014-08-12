@@ -18,7 +18,8 @@
 
   	<appender name="dailyout" class="org.apache.log4j.DailyRollingFileAppender">  
         <!-- 이것은 날짜별로  로그를 남김. 파일명.확장자.DatePattern으로 정의 함-->  
-        <param name="file" value="/log/dailyout.log"/>  
+		<param name="Target" value="System.out" />
+        <param name="file" value="/log/dailyout.log"/> 
         <param name="Append" value="true"/>  
         <param name="DatePattern" value="'.'yyMMdd"/>  
         <layout class="org.apache.log4j.PatternLayout">  
@@ -26,7 +27,7 @@
         </layout>  
     </appender>  
     
-    <!-- 기본 sql log 설정 -->  <!-- 
+    <!-- 기본 sql log 설정 -->  <!--  -->
 	<logger name="java.sql.Connection">
 		<level value="debug" />
 		<appender-ref ref="console" />
@@ -57,7 +58,7 @@
 		<appender-ref ref="console" />
 		<appender-ref ref="dailyout" />
 	</logger>
-	 -->
+	
 
 	<logger name="jdbc.connection" additivity="false">
         <level value="WARN"/>
