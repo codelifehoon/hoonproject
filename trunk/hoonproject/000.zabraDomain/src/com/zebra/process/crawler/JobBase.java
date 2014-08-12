@@ -13,6 +13,7 @@ import com.zebra.business.craw.domain.CrawConfigBO;
 import com.zebra.business.craw.domain.CrawlerDataCombBO;
 import com.zebra.common.BaseConstants;
 import com.zebra.common.exception.BaseException;
+import com.zebra.common.util.DateTime;
 
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.fetcher.PageFetcher;
@@ -39,7 +40,7 @@ public abstract class JobBase {
 				
 				CommCrawlController crawlControlle = null;
 				CrawlConfig crawlConfig = new CrawlConfig();
-				crawlConfig.setCrawlStorageFolder(BaseConstants.CRAWL_STORAGE_FOLDER + this.getClass().getName() + "\\" + crawlerDataCombBO.getCrawConfigBO().getSiteNm());
+				crawlConfig.setCrawlStorageFolder(BaseConstants.CRAWL_STORAGE_FOLDER + this.getClass().getName() + "\\"+ DateTime.getFormatString("yyyyMMdd-HHmmss")  + crawlerDataCombBO.getCrawConfigBO().getSiteNm());
 				crawlConfig.setUserAgentString(crawlerDataCombBO.getCrawConfigBO().getCrawlAgent());
 				crawlConfig.setFollowRedirects(false);
 				crawlConfig.setConnectionTimeout(1500);

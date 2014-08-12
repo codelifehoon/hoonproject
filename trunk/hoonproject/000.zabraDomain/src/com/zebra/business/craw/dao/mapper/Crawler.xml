@@ -128,12 +128,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="pageInfoListSeq != null and pageInfoListSeq != ''">
 				and   pageInfoListSeq = #{pageInfoListSeq}
 			</if>
+			<!-- 
 			<if test="maxPageInfoListSeq != null and maxPageInfoListSeq != ''">
 				and   pageInfoListSeq >  #{maxPageInfoListSeq}
 			</if>
 			
 			order by  pageInfoListSeq 
-			    	
+			 -->   	
 			<if test="rowCnt != null and rowCnt != ''">
 				limit #{rowCnt}
 			</if>

@@ -87,7 +87,6 @@ public class ReNewJobImpl extends JobBase  implements ReNewJob {
 		String maxPageInfoListSeqNext = "0";
 		
 		
-		
 		while (loopFlag)
 		{
 			{
