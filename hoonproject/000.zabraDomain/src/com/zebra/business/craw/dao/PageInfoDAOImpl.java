@@ -84,7 +84,7 @@ public class PageInfoDAOImpl  extends CommonDAO  implements PageInfoDAO{
 		/* (non-Javadoc)
 		 * @see com.zebra.process.crawler.dao.PageInfoDAO#selectPageInfoListAll()
 		 */
-		@Async
+		//@Async
 		public void  updateReNewPageInfoList(List<WebPageInfoBO> webPageInfoBOList )
 		{
 			
