@@ -134,9 +134,9 @@ public abstract class DomParser implements DomParserService{
 				retVal = getPattenData(retVal, expPattenBO);
 	
 				
-				log.debug("expPattenBO.getPattenKind():" + expPattenBO.getPattenKind());
-				log.debug("retVal:" + retVal);
-				log.debug("element.html():" + element.html().trim());
+				//log.debug("expPattenBO.getPattenKind():" + expPattenBO.getPattenKind());
+				//log.debug("retVal:" + retVal);
+				//log.debug("element.html():" + element.html().trim());
 				
 				
 			}

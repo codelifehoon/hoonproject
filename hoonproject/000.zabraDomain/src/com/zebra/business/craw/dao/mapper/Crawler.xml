@@ -122,13 +122,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      		and failCnt &lt;= 2
 			and updateDt &lt; DATE_FORMAT(sysdate(), '%Y-%m-%d')
 			
-			
 			<if test="siteConfigSeq != null and siteConfigSeq != ''">
 				and   siteConfigSeq =  #{siteConfigSeq} 
 			</if>
 			<if test="pageInfoListSeq != null and pageInfoListSeq != ''">
 				and   pageInfoListSeq = #{pageInfoListSeq}
-			</if>	
+			</if>
+			<if test="maxPageInfoListSeq != null and maxPageInfoListSeq != ''">
+				and   pageInfoListSeq >  #{maxPageInfoListSeq}
+			</if>
+			
+			order by  pageInfoListSeq 
+			    	
 			<if test="rowCnt != null and rowCnt != ''">
 				limit #{rowCnt}
 			</if>

@@ -6,9 +6,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import lombok.extern.log4j.Log4j;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Repository;
 
 import com.zebra.business.craw.domain.CrawlerDataCombBO;
@@ -17,6 +19,7 @@ import com.zebra.common.BaseFactory;
 import com.zebra.common.SpringBeanFactory;
 import com.zebra.common.dao.CommonDAO;
 import com.zebra.common.util.DateTime;
+import com.zebra.common.util.NumUtil;
 
 
 import org.apache.ibatis.session.ExecutorType;
@@ -81,11 +84,12 @@ public class PageInfoDAOImpl  extends CommonDAO  implements PageInfoDAO{
 		/* (non-Javadoc)
 		 * @see com.zebra.process.crawler.dao.PageInfoDAO#selectPageInfoListAll()
 		 */
+		@Async
 		public void  updateReNewPageInfoList(List<WebPageInfoBO> webPageInfoBOList )
 		{
 			
 			
-		   SqlSession session = sqlSessionBatch.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+			SqlSession session = sqlSessionBatch.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 		   
 		    try
 		    {
@@ -122,7 +126,7 @@ public class PageInfoDAOImpl  extends CommonDAO  implements PageInfoDAO{
 		  catch(Exception e) { e.printStackTrace();  }
 		  finally { session.flushStatements(); //session.close();
 			  } 
-		  }
+		   }
 
 		/* (non-Javadoc)
 		 * @see com.zebra.business.craw.dao.PageInfoDAO#selectPageInfo(com.zebra.business.craw.domain.WebPageInfoBO)
@@ -133,6 +137,25 @@ public class PageInfoDAOImpl  extends CommonDAO  implements PageInfoDAO{
 			WebPageInfoBO result = sqlSession.selectOne("query.crawler.selectPageInfoMap", webPageInfoBO);
 
 			return result;
+		}
+
+
+		/* (non-Javadoc)
+		 * @see com.zebra.business.craw.dao.PageInfoDAO#asyncCall(java.lang.String)
+		 */
+		@Override
+		@Async
+		public void asyncCall(String data) {
+			// TODO Auto-generated method stub
+			log.debug("시작:" + data);
+			
+				for (int i=0;i<1000000;i++) 
+					{
+						double j = 3.23*1.1/i;
+					}
+			
+			log.debug("종료:" + data);
+			
 		}
 		    
 		
