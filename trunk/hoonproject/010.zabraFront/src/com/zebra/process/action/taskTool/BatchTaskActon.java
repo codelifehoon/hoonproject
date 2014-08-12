@@ -45,7 +45,7 @@ public class BatchTaskActon extends AuthAction {
 	 */
 	private void endLog(String string) {
 		// TODO Auto-generated method stub
-		log.error("##### " +string+ " start:" + DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
+		log.error("##### " +string+ " endLog:" + DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class BatchTaskActon extends AuthAction {
 	 */
 	private void startLog(String string) {
 		// TODO Auto-generated method stub
-		log.error("##### " +string+ " end:" + DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
+		log.error("##### " +string+ " startLog:" + DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
 	}
 	
 	@Scheduled(fixedDelay = DEALY_JOB)
@@ -156,8 +156,8 @@ public class BatchTaskActon extends AuthAction {
 		
 		crawConfigBO =  crawConfigDAO.selectCrawConfigList(crawConfigBO).get(0);
 		
-		crawConfigBO.setRowCnt(5000);
-		crawConfigBO.setCrawlThreadCount(50);
+		crawConfigBO.setRowCnt(10);
+		crawConfigBO.setCrawlThreadCount(2);
 		//crawConfigBO.setCrawlDepth(1);
 	
 		reNewJob.initCrawler(crawConfigBO);
