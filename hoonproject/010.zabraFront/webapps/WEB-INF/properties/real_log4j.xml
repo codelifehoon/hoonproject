@@ -90,5 +90,5 @@
 	<!-- ======================= -->
 	<!-- Setup the Root category -->
 	<!-- ======================= -->
-	<!-- <root> <level value="error" /> <appender-ref ref="console" /> </root> -->
+	<!-- <root> <level value="error" /> <appender-ref ref="console" /> <appender-ref ref="dailyout" /> </root> -->
 </log4j:configuration>
