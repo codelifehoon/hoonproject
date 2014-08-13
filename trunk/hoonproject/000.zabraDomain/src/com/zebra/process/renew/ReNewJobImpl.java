@@ -100,7 +100,7 @@ public class ReNewJobImpl extends JobBase  implements ReNewJob {
 					webPageInfoBO.setMaxPageInfoListSeq(maxPageInfoListSeqNext);
 					
 					
-					HashMap<String, WebPageInfoBO> webPageInfoBOMap = pageInfoDAO.selectReNewPageInfoMap(webPageInfoBO);
+					HashMap<String, WebPageInfoBO> webPageInfoBOMap = pageInfoDAO.selectBulkPageInfoMap(webPageInfoBO);
 					if ( webPageInfoBOMap.size() > 0)
 					{
 						maxPageInfoListSeqNext =  ConverterUtil.getMaxMapKey(webPageInfoBOMap);	// 다음조회시 최종 조회된 번호 이후로 조회하기 위해서 조건 추가

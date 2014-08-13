@@ -41,15 +41,8 @@ public abstract class DomParser implements DomParserService{
 
 	protected String compareWebPageInfo(WebPageInfoBO source, WebPageInfoBO  target) {
 		String reNewFlag = "Y";
-		if (source.getCate1().equals(target.getCate1())
-				&& source.getCate2().equals(target.getCate2())
-				&& source.getCate3().equals(target.getCate3())
-				&& source.getGoodsImg().equals(target.getGoodsImg())
-				&& source.getGoodsNm().equals(target.getGoodsNm())
-				&& source.getGoodsNo().equals(target.getGoodsNo())
-				&& source.getGoodsPrice().equals(target.getGoodsPrice())
-				&& source.getGoodsUrl().equals(target.getGoodsUrl())
-				) reNewFlag = "N";
+		if (  source.getGoodsPrice().equals(target.getGoodsPrice())
+			) reNewFlag = "N";
 		
 		return reNewFlag;
 	}

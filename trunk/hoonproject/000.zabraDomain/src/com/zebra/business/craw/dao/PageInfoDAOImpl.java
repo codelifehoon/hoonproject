@@ -66,6 +66,22 @@ public class PageInfoDAOImpl  extends CommonDAO  implements PageInfoDAO{
 		
 		}
 		
+
+		public HashMap<String, WebPageInfoBO>  selectBulkPageInfoMap(WebPageInfoBO webPageInfoBO)
+		{
+
+
+			Map<String, WebPageInfoBO>  result  = sqlSession.selectMap("query.crawler.selectBulkPageInfoMap", webPageInfoBO,"goodsUrl");
+			HashMap<String, WebPageInfoBO> map = new HashMap<String, WebPageInfoBO>(result) ;
+			return map;
+			
+		
+		}
+		
+		
+		
+		
+		
 	
 		public HashMap<String, WebPageInfoBO>  selectPageInfoMap(WebPageInfoBO webPageInfoBO)
 		{
@@ -111,13 +127,13 @@ public class PageInfoDAOImpl  extends CommonDAO  implements PageInfoDAO{
 		    			tempBo.setStatCd(webPageInfoBO.getStatCd());
 		    			
 		    					
-		    			session.insert("query.crawler.insertPageInfoListHistCopy", tempBo);
+		    			//session.insert("query.crawler.insertPageInfoListHistCopy", tempBo);
 		    			session.update("query.crawler.updatePageInfoList", tempBo);
 					}
 		    		else 
 		    		{
 		    			webPageInfoBO.setFailCnt(0);
-		    			session.insert("query.crawler.insertPageInfoListHistCopy", webPageInfoBO);
+		    			//session.insert("query.crawler.insertPageInfoListHistCopy", webPageInfoBO);
 		    			session.update("query.crawler.updatePageInfoList", webPageInfoBO);
 						
 		    		}
