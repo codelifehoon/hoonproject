@@ -40,7 +40,7 @@
 	
 	<!--task  -->
 	<task:annotation-driven executor="taskExecutor" scheduler="taskScheduler"/>
-	<task:executor 	id="taskExecutor" pool-size="3"/>
+	<task:executor 	id="taskExecutor" pool-size="10"/>
 	<task:scheduler id="taskScheduler" pool-size="10"/>
 	
 	<!-- component -->
@@ -58,7 +58,7 @@
 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="net.sf.log4jdbc.DriverSpy" />
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url"><value>${mysql.url}</value></property>
 		<property name="username"><value>${mysql.username}</value></property>
 		<property name="password"><value>${mysql.password}</value></property>

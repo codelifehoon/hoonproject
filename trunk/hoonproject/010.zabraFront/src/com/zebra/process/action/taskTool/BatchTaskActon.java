@@ -156,8 +156,8 @@ public class BatchTaskActon extends AuthAction {
 		
 		crawConfigBO =  crawConfigDAO.selectCrawConfigList(crawConfigBO).get(0);
 		
-		crawConfigBO.setRowCnt(5000);
-		crawConfigBO.setCrawlThreadCount(50);
+		crawConfigBO.setRowCnt(2500);
+		crawConfigBO.setCrawlThreadCount(25);
 		//crawConfigBO.setCrawlDepth(1);
 	
 		reNewJob.initCrawler(crawConfigBO);
