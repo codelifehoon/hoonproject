@@ -84,7 +84,7 @@ public class ReNewJobImpl extends JobBase  implements ReNewJob {
 	
 		boolean loopFlag = true;
 		long applyCnt = 0;
-		String maxPageInfoListSeqNext = "0";
+		//String maxPageInfoListSeqNext = "0";
 		
 		
 		while (loopFlag)
@@ -97,14 +97,14 @@ public class ReNewJobImpl extends JobBase  implements ReNewJob {
 					
 					webPageInfoBO.setSiteConfigSeq(crawConfigBO.getSiteConfigSeq());
 					webPageInfoBO.setRowCnt(crawConfigBO.getRowCnt());
-					webPageInfoBO.setMaxPageInfoListSeq(maxPageInfoListSeqNext);
+					//webPageInfoBO.setMaxPageInfoListSeq(maxPageInfoListSeqNext);
 					
 					
 					HashMap<String, WebPageInfoBO> webPageInfoBOMap = pageInfoDAO.selectBulkPageInfoMap(webPageInfoBO);
 					if ( webPageInfoBOMap.size() > 0)
 					{
-						maxPageInfoListSeqNext =  ConverterUtil.getMaxMapKey(webPageInfoBOMap);	// 다음조회시 최종 조회된 번호 이후로 조회하기 위해서 조건 추가
-						log.error("##### maxPageInfoListSeqNext:" + maxPageInfoListSeqNext); 
+						//maxPageInfoListSeqNext =  ConverterUtil.getMaxMapKey(webPageInfoBOMap);	// 다음조회시 최종 조회된 번호 이후로 조회하기 위해서 조건 추가
+						//log.error("##### maxPageInfoListSeqNext:" + maxPageInfoListSeqNext); 
 						crawlerDataCombBO.setWebPageInfoBOMap(webPageInfoBOMap);		// 데이터의 빠른 갱신을 위해서 조회를 map으로 처리한다.(key: prdNo)
 						crawlerDataCombBO.setCrawConfigBO(crawConfigBO);
 						
