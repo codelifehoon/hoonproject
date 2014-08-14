@@ -57,6 +57,7 @@ public class ReNewJobImpl extends JobBase  implements ReNewJob {
 		
 		crawlControlle.start(PageCrawler.class, crawlerDataCombBO.getCrawConfigBO().getCrawlThreadCount());
 			
+		crawlControlle.shutdown();
 		return crawlerDataCombBO;
 	}
 

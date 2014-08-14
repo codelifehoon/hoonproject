@@ -43,8 +43,8 @@ public abstract class JobBase {
 				crawlConfig.setCrawlStorageFolder(BaseConstants.CRAWL_STORAGE_FOLDER + this.getClass().getName() + "\\"+ DateTime.getFormatString("yyyyMMdd-HHmmss")  + crawlerDataCombBO.getCrawConfigBO().getSiteNm());
 				crawlConfig.setUserAgentString(crawlerDataCombBO.getCrawConfigBO().getCrawlAgent());
 				crawlConfig.setFollowRedirects(false);
-				crawlConfig.setConnectionTimeout(1500);
-				crawlConfig.setSocketTimeout(1000);
+				crawlConfig.setConnectionTimeout(4000);
+				crawlConfig.setSocketTimeout(3000);
 				crawlConfig.setPolitenessDelay(1);
 				
 				//crawlConfig.setResumableCrawling(false);
