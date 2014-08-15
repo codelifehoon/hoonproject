@@ -9,6 +9,7 @@
 package com.zebra.process.parser;
 
 import java.util.HashMap;
+import java.util.List;
 
 import lombok.extern.log4j.Log4j;
 
@@ -114,30 +115,33 @@ public abstract class DomParser implements DomParserService{
 	protected String selectPattenInfo(ExpPattenBO[] expPattenBOs, Document doc) {
 		String retVal = "";
 	
-		try
-		{
+		
 			if (expPattenBOs == null) return retVal;
 			for (ExpPattenBO expPattenBO : expPattenBOs )
-			{
+			{	
 				if ("".equals(expPattenBO.getPattenStr())) continue;
-				Element element = doc.select(expPattenBO.getPattenStr()).first();
-			
-				retVal =  element.html().trim();
-				
-				retVal = getPattenData(retVal, expPattenBO);
-	
-				
-				//log.debug("expPattenBO.getPattenKind():" + expPattenBO.getPattenKind());
-				//log.debug("retVal:" + retVal);
-				//log.debug("element.html():" + element.html().trim());
-				
-				
+				try
+				{
+					Element element = doc.select(expPattenBO.getPattenStr()).first();
+					if (element != null)
+					{
+						retVal =  element.html().trim();
+						retVal = getPattenData(retVal, expPattenBO);
+					}
+					else
+					{
+						log.debug("##### need  PattenStr check ##### ");
+						log.debug("expPattenBO:" +  expPattenBO.toString());
+					}
+					
+				} catch (Exception e)
+				{
+					log.debug("########## domParsing error");
+					log.debug("expPattenBO.getPattenStr():" + expPattenBO.getPattenStr());
+					e.printStackTrace();
+				}
 			}
-		} catch (Exception e)
-		{
-			log.debug("########## domParsing error");
-			e.toString();
-		}
+		
 		return retVal;
 	}
 
