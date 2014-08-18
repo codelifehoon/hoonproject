@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+ 
+   <!--	##### spring Configuration start  #####	-->	 
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    	<property name="ignoreUnresolvablePlaceholders" value="true" />
+	</bean>
+	
+	<bean class="org.springframework.web.context.support.ServletContextPropertyPlaceholderConfigurer">
+	    <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+	    <property name="searchContextAttributes" value="true" />
+	    <property name="contextOverride" value="true" />
+	    <property name="ignoreResourceNotFound" value="true" />
+	    <property name="locations">
+	        <list>
+					<value>classpath:com/zebra/batch/config/real_program.properties</value>
+					<value>classpath:com/zebra/config/zebra-sqlmap-${server.type}.properties</value>
+	        </list>
+	    </property>
+	</bean>		
+	
+	<!-- mvc -->
+	<mvc:annotation-driven/>
+	
+	<!--task  -->
+	<task:annotation-driven executor="taskExecutor" scheduler="taskScheduler"/>
+	<task:executor 	id="taskExecutor" pool-size="10"/>
+	<task:scheduler id="taskScheduler" pool-size="10"/>
+	
+	<!-- component -->
+	<context:component-scan base-package="com.zebra"/>
+	
+	<!-- 
+	<bean id="tmallPropertyLoader" class="com.zebra">
+		<constructor-arg  name="propertyFile" value="/resource/config/[$server_type]_program.properties" type="java.lang.String" />
+	</bean>
+	 -->
+
+	<!-- ##### datasource Configuration start ##### -->
+
+
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url"><value>${mysql.url}</value></property>
+		<property name="username"><value>${mysql.username}</value></property>
+		<property name="password"><value>${mysql.password}</value></property>
+	</bean>
+
+<!-- 
+	<bean id="dataSource"
+	  class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+	  	<property name="driverClass" value="net.sf.log4jdbc.DriverSpy" />
+	  	<property name="url"><value>${mysql.url}</value></property>
+		<property name="username"><value>${mysql.username}</value></property>
+		<property name="password"><value>${mysql.password}</value></property>
+	 </bean>
+ -->
+
+	<!-- <property name="poolPingQuery" value="select 1"/> <property name="poolPingEnabled" 
+		value="true"/> <property name="poolPingConnectionsNotUsedFor" value="5000"/> -->
+
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:com/zebra/config/SqlMapConfig.xml" />
+	</bean>
+
+
+
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="sqlSessionBatch" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+		<constructor-arg index="1" value="BATCH" />
+	</bean>
+
+	<!-- ##### ETC bean start ##### -->
+
+
+	<bean id="springBeanFactory" class="com.zebra.common.SpringBeanFactory"/>
+	<bean id="nativeJdbcExtractor" class="org.springframework.jdbc.support.nativejdbc.SimpleNativeJdbcExtractor" lazy-init="true" />
+
+
+   <!--
+	#############################################################
+	# JSR-303  validator bean 
+	#############################################################
+	-->
+	<!--  annotaion base bean validator -->
+     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="webBindingInitializer">
+            <bean class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
+                <property name="validator" ref="validator"/>
+            </bean>
+        </property>
+    </bean>
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+  
+ 	<!--  annotaion base method validator -->
+ 	<bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/>
+
+
+
+	<!--
+	#############################################################
+	# Rescives view tiles2
+	#############################################################
+	-->
+    <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+        <property name="definitions">
+            <list>
+                <value>/WEB-INF/tiles/**/*.xml</value>
+            </list>
+        </property>
+        <property name="preparerFactoryClass" value="org.springframework.web.servlet.view.tiles2.SpringBeanPreparerFactory" />
+    </bean>
+
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="mediaTypes">
+            <map>
+                <entry key="do" value="text/html"/>
+                <entry key="json" value="application/json"/>
+                <entry key="xml" value="application/xml"/>
+            </map>
+        </property>
+        <property name="viewResolvers">
+            <list>
+                <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
+                <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+                    <property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView" />
+                </bean>
+            </list> 
+        </property>
+        <property name="defaultViews">
+			<list>
+				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
+						<property name="prefixJson" value="false" />
+				</bean>
+			</list>
+		</property>
+              
+	</bean>
+    
+    
+
+</beans>
