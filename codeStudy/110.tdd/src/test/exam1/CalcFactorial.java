@@ -25,21 +25,16 @@ import example.business1.CalcSomeNum;
 public class CalcFactorial {
 
 	@Test
-	public void shouldReturnOneThenZeroIn() {
+	public void shouldReturnFactorialVal() {
 		CalcSomeNum a = new  CalcSomeNum();
-		assertThat("calc num", CalcSomeNum.Calc(0), is(1));
-	}
-	
-	@Test
-	public void shouldReturnOneThenOneIn() {
-		CalcSomeNum a = new  CalcSomeNum();
-		assertThat("calc num", CalcSomeNum.Calc(1), is(1));
-	}
-	
-	@Test
-	public void shouldReturnTowThenTwoIn() {
-		CalcSomeNum a = new  CalcSomeNum();
-		assertThat("calc num", CalcSomeNum.Calc(2), is(2));
+		int[][] values ={{0,1}, {1,1}, {2,2}, {3,6}, {4,24}, {10, 3628800}};
+		
+		for(int[] value: values) {
+			assertThat("calc num", CalcSomeNum.calcFactorial(2), is(2));
+	    }
+		
+		
 	}
 
+	
 }
