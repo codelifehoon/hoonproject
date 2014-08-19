@@ -14,17 +14,12 @@ public class CalcSomeNum {
 	 * @param i 
 	 * @return
 	 */
-	public static int Calc(int i) {
+	public static int calcFactorial(int i) {
 		
-		int retVal=0;
-		if (i <= 1) {
-			retVal =1;
-		}
-		else if(i==2)  {
-			retVal =2;
-		}
-		
-		return retVal;
+		if (i < 2) {
+		    return 1;
+		  }
+		    return CalcSomeNum.calcFactorial(i-1)*i;
 	}
 
 }
