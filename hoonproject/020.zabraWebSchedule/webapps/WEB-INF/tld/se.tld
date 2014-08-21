@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib
+ PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN"
+ "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+
+<!-- a tag library descriptor -->
+<taglib>
+	<tlibversion>1.0</tlibversion>
+	<jspversion>1.1</jspversion>
+	<shortname>se</shortname>
+	<uri></uri>
+	<info>Service Engine Custom Tag Library</info>
+
+	<!-- Template insert tag -->
+	<tag>
+		<name>insert</name>
+		<tagclass>com.skt.omp.serviceengine.taglib.InsertPageTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<info>Insert tag</info>
+		<attribute>
+			<name>parameter</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<!-- Template insert tag -->
+	<!-- Template webParam tag -->
+	<tag>
+		<name>webpageParam</name>
+		<tagclass>com.skt.omp.serviceengine.taglib.WebpageParamTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<info>Webpages parameter tag</info>
+		<attribute>
+			<name>key</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<!-- Template webParam tag -->
+
+	<!-- Action Token tag -->
+	<tag>
+		<name>token</name>
+		<tagclass>com.skt.omp.serviceengine.taglib.TokenTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<info>Action Token string writer tag</info>
+	</tag>
+	<!-- Action Token tag -->
+
+	<!-- Paging tag -->
+	<tag>
+		<name>Paging</name>
+		<tagclass>com.skt.omp.common.web.taglib.PageListTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<info>page list tag</info>
+		<attribute>
+			<name>totalCount</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>viewPage</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>rowPerPage</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>pageListCount</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>javaScript</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>viewPageColor</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>linkPageColor</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>first</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>prev</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>next</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>last</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<!-- Paging tag -->
+
+</taglib>
