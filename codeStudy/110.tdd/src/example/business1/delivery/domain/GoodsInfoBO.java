@@ -8,6 +8,8 @@
  */
 package example.business1.delivery.domain;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -17,5 +19,12 @@ public class GoodsInfoBO {
 	private String deliverySeq;
 	private Integer deliveryCost;
 	private String deliveryTyle;
+	private String dlvKind;
+	private Integer buyCnt;
+	private Integer goodsPrice;
+	private Integer deliveryCalcCost;
 	
+	private List<DlvCostBuyPriceSectBO> dlvCostBuyPriceSectList;
+	
+		
 }

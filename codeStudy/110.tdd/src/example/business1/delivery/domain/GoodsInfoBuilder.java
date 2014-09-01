@@ -8,9 +8,11 @@
  */
 package example.business1.delivery.domain;
 
+import java.util.List;
+
 public class GoodsInfoBuilder {
 	private GoodsInfoBO  goodsInfoBO = new GoodsInfoBO();
-	
+
 	
 
 	public GoodsInfoBuilder withGoodsNo(String goodsNo) {
@@ -33,6 +35,44 @@ public class GoodsInfoBuilder {
 	public GoodsInfoBO build()
 	{
 		return goodsInfoBO;
+	}
+	/**
+	 * @param dlvkindPergoods
+	 * @return
+	 */
+	public GoodsInfoBuilder withDlvKind(String dlvkindPergoods) {
+		goodsInfoBO.setDlvKind(dlvkindPergoods);
+		return this;
+	}
+	/**
+	 * @param i
+	 * @return
+	 */
+	public GoodsInfoBuilder withBuyCnt(Integer i) {
+		goodsInfoBO.setBuyCnt(i);
+		return this;
+	}
+	/**
+	 * @param i
+	 * @return
+	 */
+	public GoodsInfoBuilder withGoodsPrice(Integer i) {
+		goodsInfoBO.setGoodsPrice(i);
+		return this;
+	}
+	/**
+	 * @param build
+	 * @return
+	 */
+	public GoodsInfoBuilder withdlvCostBuyPriceSect(
+			List<DlvCostBuyPriceSectBO> dlvCostBuyPriceSectList) {
+		goodsInfoBO.setDlvCostBuyPriceSectList(dlvCostBuyPriceSectList);
+		return this;
+	}
+	
+	public GoodsInfoBuilder withDeliveryCalcCost(Integer deliveryCalcCost) {
+		goodsInfoBO.setDeliveryCalcCost(deliveryCalcCost);
+		return this;
 	}
 	
 	
