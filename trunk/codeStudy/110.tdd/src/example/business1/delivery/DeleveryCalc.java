@@ -20,6 +20,11 @@ public interface DeleveryCalc {
 	 * @param dlist
 	 * @return
 	 */
-	List<DeliveryInfoBO> calc(List<GoodsInfoBO> dlist);
+	List<DeliveryInfoBO> bindCostCalc(List<GoodsInfoBO> dlist);
+
+	/**
+	 * @param dlist
+	 */
+	void dlvCostCalc(List<GoodsInfoBO> dlist);
 
 }
