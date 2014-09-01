@@ -12,6 +12,9 @@ import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.any;
+import static org.hamcrest.Matchers.anyOf;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 
 
 import java.util.ArrayList;
@@ -29,6 +32,7 @@ import example.business1.delivery.DeleveryCalc;
 import example.business1.delivery.DeleveryCalcGoods;
 import example.business1.delivery.domain.DeliveryInfoBO;
 import example.business1.delivery.domain.GoodsInfoBO;
+import example.business1.delivery.domain.GoodsInfoBuilder;
 
 public class CaclDeliveryCost {
 
@@ -64,55 +68,18 @@ public class CaclDeliveryCost {
 	public void dlvCalc() {
 		
 		DeleveryCalc   deliveryCalc	   = new DeleveryCalcGoods();
-		GoodsInfoBO goodsInfoBO1 = new GoodsInfoBO();
-		GoodsInfoBO goodsInfoBO2 = new GoodsInfoBO();
-		GoodsInfoBO goodsInfoBO3 = new GoodsInfoBO();
-		GoodsInfoBO goodsInfoBO4 = new GoodsInfoBO();
-		GoodsInfoBO goodsInfoBO5 = new GoodsInfoBO();
-		GoodsInfoBO goodsInfoBO6 = new GoodsInfoBO();
 
-		
 		List<GoodsInfoBO> dlist = new ArrayList<GoodsInfoBO>();
 		
-		goodsInfoBO1.setGoodsNo("11111");
-		goodsInfoBO1.setDeliverySeq("001");
-		goodsInfoBO1.setDeliveryCost(2500);
-		goodsInfoBO1.setDeliveryTyle(ConstCode.DLVCOST_PREPAY);		// 01: 선결제  	02:후불
-		
-		goodsInfoBO2.setGoodsNo("2222");
-		goodsInfoBO2.setDeliverySeq("001");
-		goodsInfoBO2.setDeliveryCost(3000);
-		goodsInfoBO2.setDeliveryTyle(ConstCode.DLVCOST_PREPAY);		// 01: 선결제  	02:후불
-		
-		goodsInfoBO3.setGoodsNo("11111");
-		goodsInfoBO3.setDeliverySeq("002");
-		goodsInfoBO3.setDeliveryCost(0);
-		goodsInfoBO3.setDeliveryTyle(ConstCode.DLVCOST_PREPAY);		// 01: 선결제  	02:후불
-		
-		goodsInfoBO4.setGoodsNo("22222");
-		goodsInfoBO4.setDeliverySeq("002");
-		goodsInfoBO4.setDeliveryCost(2500);
-		goodsInfoBO4.setDeliveryTyle(ConstCode.DLVCOST_PREPAY);		// 01: 선결제  	02:후불
-		
-		
-		goodsInfoBO5.setGoodsNo("11111");
-		goodsInfoBO5.setDeliverySeq("003");
-		goodsInfoBO5.setDeliveryCost(1000);
-		goodsInfoBO5.setDeliveryTyle(ConstCode.DLVCOST_DEFPAY);		// 01: 선결제  	02:후불
-		
-		goodsInfoBO6.setGoodsNo("22222");
-		goodsInfoBO6.setDeliverySeq("003");
-		goodsInfoBO6.setDeliveryCost(2000);
-		goodsInfoBO6.setDeliveryTyle(ConstCode.DLVCOST_PREPAY);		// 01: 선결제  	02:후불
-		
-		
-		
-		dlist.add(goodsInfoBO1);
-		dlist.add(goodsInfoBO2);
-		dlist.add(goodsInfoBO3);
-		dlist.add(goodsInfoBO4);
-		dlist.add(goodsInfoBO5);
-		dlist.add(goodsInfoBO6);
+
+		dlist.add(new GoodsInfoBuilder().withGoodsNo("11111").withDeliverySeq("001").withDeliveryCost(2500).withDeliveryTyle(ConstCode.DLVCOST_PREPAY).build());
+		dlist.add(new GoodsInfoBuilder().withGoodsNo("2222").withDeliverySeq("001").withDeliveryCost(3000).withDeliveryTyle(ConstCode.DLVCOST_PREPAY).build());
+		dlist.add(new GoodsInfoBuilder().withGoodsNo("11111").withDeliverySeq("002").withDeliveryCost(0).withDeliveryTyle(ConstCode.DLVCOST_PREPAY).build());
+		dlist.add(new GoodsInfoBuilder().withGoodsNo("2222").withDeliverySeq("002").withDeliveryCost(2500).withDeliveryTyle(ConstCode.DLVCOST_PREPAY).build());
+		dlist.add(new GoodsInfoBuilder().withGoodsNo("11111").withDeliverySeq("003").withDeliveryCost(1000).withDeliveryTyle(ConstCode.DLVCOST_DEFPAY).build());
+		dlist.add(new GoodsInfoBuilder().withGoodsNo("2222").withDeliverySeq("003").withDeliveryCost(2000).withDeliveryTyle(ConstCode.DLVCOST_PREPAY).build());
+		dlist.add(new GoodsInfoBuilder().withGoodsNo("1111").withDeliverySeq("004").withDeliveryCost(2000).withDeliveryTyle(ConstCode.DLVCOST_PREPAY).build());
+		dlist.add(new GoodsInfoBuilder().withGoodsNo("1111").withDeliverySeq("005").withDeliveryCost(2000).withDeliveryTyle(ConstCode.DLVCOST_DEFPAY).build());
 		
 		
 		List<DeliveryInfoBO> deliveryInfoBOList =  deliveryCalc.calc(dlist);
@@ -121,27 +88,38 @@ public class CaclDeliveryCost {
 		List<String> typeList = new ArrayList<String>();
 		for (DeliveryInfoBO deliveryInfoBO : deliveryInfoBOList)
 		{
-			if ("001".equals(deliveryInfoBO.getDeliverySeq())) 
-				{
+			
+			
+			switch (deliveryInfoBO.getDeliverySeq()) {
+			   case "001" : 
 					assertThat("delivery cost", deliveryInfoBO.getDeliveryCost(), is(3000));
 					assertThat("delivery cost type", deliveryInfoBO.getDeliveryType(), is(ConstCode.DLVCOST_PREPAY));
-				}
-			if ("002".equals(deliveryInfoBO.getDeliverySeq())) 
-				{
-					assertThat("delivery cost", deliveryInfoBO.getDeliveryCost(), is(0));
+				   	break;
+			   case "002" : 
+				   	assertThat("delivery cost", deliveryInfoBO.getDeliveryCost(), is(0));
 					assertThat("delivery cost type", deliveryInfoBO.getDeliveryType(), is(ConstCode.DLVCOST_PREPAY));
-				}
-			if ("003".equals(deliveryInfoBO.getDeliverySeq())) 
-				{
-					assertThat("delivery cost", 0, is(deliveryInfoBO.getDeliveryCost()));
+					break;
+			   case "003" :
+				   	assertThat("delivery cost",deliveryInfoBO.getDeliveryCost(), is(0) );
 					assertThat("delivery cost type", deliveryInfoBO.getDeliveryType(), is(ConstCode.DLVCOST_DEFPAY));
-				}
+				   	break;
+			   case "004" :
+				   assertThat("delivery cost", deliveryInfoBO.getDeliveryCost(), is(2000));
+					assertThat("delivery cost type", deliveryInfoBO.getDeliveryType(), is(ConstCode.DLVCOST_PREPAY));
+				   	break;
+			   case "005" :
+				   assertThat("delivery cost", deliveryInfoBO.getDeliveryCost(),is(0));
+					assertThat("delivery cost type", deliveryInfoBO.getDeliveryType(), is(ConstCode.DLVCOST_DEFPAY));
+				   	break;
+				  
+			   default:  break;
+			}
 			
+		
 			typeList.add(deliveryInfoBO.getDeliverySeq());
 		}
 		
-		
-		assertThat( typeList, contains("001","002","003"));
+		assertThat( typeList, containsInAnyOrder("001","002","003","004","005"));
 		
 	
 	}
