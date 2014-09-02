@@ -1,20 +1,21 @@
-/**
- * @FileName  : Person.java
- * @Project     : code refactoring exam proj
- * @Date         : 2014. 5. 8. 
- * @작성자      : codelife
- * @변경이력 :
- * @프로그램 설명 :
- */
 package ref.sample.MoveMethod;
 
 public class Account {
 
-		public double bankCharge() {
+		public double overdraftCharge() {
+	       if (type.isPremium()) {
+	           double result = 10;
+	           if (daysOverdrawn > 7) result += (daysOverdrawn - 7) * 0.85;
+	           return result;
+	       }
+	       else return daysOverdrawn * 1.75;
+	   }
+	 
+	   public double bankCharge() {
 	       double result = 4.5;
-	       if (daysOverdrawn > 0) result += type.overdraftCharge(this);
+	       if (daysOverdrawn > 0) result += overdraftCharge();
 	       return result;
 	   }
-	   AccountType type;
-	   int daysOverdrawn;
+	   private AccountType type;
+	   private int daysOverdrawn;
 }

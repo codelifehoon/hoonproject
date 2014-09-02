@@ -1,12 +1,3 @@
-/**
- * @FileName  : Person.java
- * @Project     : code refactoring exam proj
- * @Date         : 2014. 5. 8. 
- * @작성자      : codelife
- * @변경이력 :
- * @프로그램 설명 :
- */
-
 package ref.sample.ExtractInterface;
 
 import java.util.Enumeration;
@@ -14,14 +5,11 @@ import java.util.Vector;
 
 import ref.sample.Extract_Method.OrderBO;
 
-public class ExtractInterfaceImpl implements ExtractInterface {
+public class ExtractInterfaceImpl {
 
 	private String _name  = "#name#";
 	
-	 /* (non-Javadoc)
-	 * @see ref.sample.ExtractInterface.ExtractInterface#printOwing(java.util.Vector)
-	 */
-	public void printOwing(Vector<OrderBO>  _orders) 
+	 public void printOwing(Vector<OrderBO>  _orders) 
 	{
 	    Enumeration<OrderBO> e =_orders.elements();
 	    double outstanding = 0.0;

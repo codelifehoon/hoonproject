@@ -10,17 +10,15 @@ package ref.sample.ReplaceInheritanceWithDelegation;
 
 import java.util.Vector;
 
-public class MyStack   {
+public class MyStack extends Vector<String>  {
 
-	private Vector<String> _vector = new Vector<String>();
-	
 	public void push(String element) {
-		_vector.insertElementAt(element,0);
+        insertElementAt(element,0);
     }
 
     public String pop() {
-    	String result = _vector.firstElement();
-    	_vector.removeElementAt(0);
+    	String result = firstElement();
+        removeElementAt(0);
         return result;
     }
     

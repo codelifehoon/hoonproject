@@ -1,11 +1,3 @@
-/**
- * @FileName  : Person.java
- * @Project     : code refactoring exam proj
- * @Date         : 2014. 5. 8. 
- * @작성자      : codelife
- * @변경이력 :
- * @프로그램 설명 :
- */
 package ref.sample.ReplaceMethodWithMethodObject;
 
 public class Account {
@@ -13,10 +5,17 @@ public class Account {
 
 	public int gamma (int inputVal, int quantity, int yearToDate) 
 	{
-		return new Gamma(this, inputVal, quantity, yearToDate).compute();
+	    int importantValue1 = (inputVal * quantity) + delta();
+	    int importantValue2 = (inputVal * yearToDate) + 100;
+	    if ((yearToDate - importantValue1) > 100)
+	        importantValue2 -= 20;
+	    int importantValue3 = importantValue2 * 7;
+	    
+	    // and so on...
+	    return importantValue3 - 2 * importantValue1;
 	}
 
-	public int delta()
+	private int delta()
 	{
 		return 13*5;
 	}

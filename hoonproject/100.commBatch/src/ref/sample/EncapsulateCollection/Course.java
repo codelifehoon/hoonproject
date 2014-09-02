@@ -2,9 +2,9 @@
  * @FileName  : Course.java
  * @Project     : code refactoring exam proj
  * @Date         : 2014. 5. 22. 
- * @작성자      : codelife
- * @변경이력 :
- * @프로그램 설명 :
+ * @�묒꽦��     : codelife
+ * @蹂�꼍�대젰 :
+ * @�꾨줈洹몃옩 �ㅻ챸 :
  */
 package ref.sample.EncapsulateCollection;
 

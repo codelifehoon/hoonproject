@@ -73,6 +73,8 @@ public class CrawlerTest {
 	@Autowired(required=false) SampleInterface  sampleInterface;
 	@Autowired CommonCodeService  commonCodeService;
 	@Autowired AnalysisInfoService analysisInfoService;
+	@Autowired NewServiceClass newServiceClass;
+	
 	
 	
  
@@ -498,7 +500,7 @@ public class CrawlerTest {
 	}
 	
 	
-	@Test
+	//@Test
 	public void doGoodSearch_Test()
 	{
 	log.error("##### doGoodSearch_Test start:" + DateTime.getFormatString("yyyy-MM-dd HH:mm:ss"));
@@ -523,7 +525,24 @@ public class CrawlerTest {
 
 	}
 	
+	
+	@Test
+	public void asyncCall_Test()
+	{
+		for ( Integer i=0;i<20;i++)
+	{
+			pageInfoDAO.asyncCall(i.toString());
+	}
 
+	}
+		
+
+	@Test
+	public void newTestCase()
+	{
+		newServiceClass.aMethod(10);
+		
+	}
 
 
 	

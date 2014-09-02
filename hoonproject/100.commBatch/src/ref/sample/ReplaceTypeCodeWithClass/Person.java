@@ -9,19 +9,22 @@
 package ref.sample.ReplaceTypeCodeWithClass;
 
 public class Person {
-
+	 	public static final int O = 0;
+	    public static final int A = 1;
+	    public static final int B = 2;
+	    public static final int AB = 3;
 	 
-	    private BloodGroup data;
-
-		public Person (BloodGroup data) {
-			this.data  = data;
+	    private int bloodGroup;
+	 
+	    public Person (int bloodGroup) {
+	        bloodGroup = bloodGroup;
 	    }
 	 
-	    public void setBloodGroup(BloodGroup data) {
-	    	this.data  = data;
+	    public void setBloodGroup(int arg) {
+	        bloodGroup = arg;
 	    }
 	 
-	    public BloodGroup getBloodGroup() {
-	        return this.data;
+	    public int getBloodGroup() {
+	        return bloodGroup;
 	    }
 }

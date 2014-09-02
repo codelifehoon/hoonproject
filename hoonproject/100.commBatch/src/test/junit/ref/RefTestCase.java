@@ -13,6 +13,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.Vector;
 
@@ -118,13 +119,28 @@ public class RefTestCase {
 		m.addWorkingHours(10);
 		m2.addWorkingHours(10);
 		
-		assertTrue(m.createBill(1) == 15);
-		assertTrue(m2.createBill(2) == 10);
+
+		assertTrue(m.createBill(1) == 5);
+		assertTrue(m2.createBill(2) == 30);
 	}
 	
 	@Test public void 
 	FormTemplateMethodTest()
 	{
+		// 리팩토링전
+		HtmlStatement h = new HtmlStatement();
+		TextStatement t = new TextStatement();
+		Vector<Rental> v = new  Vector<Rental>(1);
+		v.addElement( new Rental("리팩토링",10));
+		
+		h.setvRentals(v);
+		t.setvRentals(v);
+		
+		
+		System.out.println(h.htmlStatement());
+		System.out.println(t.statement());
+		/*
+		// 리팩토링 후
 		HtmlStatement h = new HtmlStatement();
 		TextStatement t = new TextStatement();
 		Vector<Rental> v = new  Vector<Rental>(1);
@@ -136,7 +152,7 @@ public class RefTestCase {
 		
 		System.out.println(h.statement());
 		System.out.println(t.statement());
-		
+		*/
 	}
 	
 	@Test public void 
@@ -159,6 +175,25 @@ public class RefTestCase {
 	@Test public void 
 	IntroduceParameterObjectTest()
 	{
+		// 리팩토링 전
+		IntroduceParameterObject introduceParameterObject = new IntroduceParameterObject();
+		
+		Vector<Integer> v = new Vector<Integer>();
+		
+		v.addElement(1);
+		v.addElement(3);
+		v.addElement(5);
+		v.addElement(7);
+		v.addElement(9);
+		
+		introduceParameterObject.setEntries(v);
+		
+		assertEquals(introduceParameterObject.getFlowBetween(3, 8), Integer.valueOf(15));
+		assertEquals(introduceParameterObject.getFlowBetween(2, 5), Integer.valueOf(8));
+		
+		
+		// 리팩토링후
+		/*
 		IntroduceParameterObject introduceParameterObject = new IntroduceParameterObject();
 		
 		Vector<Integer> v = new Vector<Integer>();
@@ -173,7 +208,7 @@ public class RefTestCase {
 		
 		assertEquals(introduceParameterObject.getFlowBetween(new FlowBetweenParameter(3, 8)), Integer.valueOf(15));
 		assertEquals(introduceParameterObject.getFlowBetween(new FlowBetweenParameter(2, 5)), Integer.valueOf(8));
-		
+		*/
 	}
 	
 
@@ -202,6 +237,13 @@ public class RefTestCase {
 	@Test public void 
 	ExtractSubclassTest()
 	{
+		// 리팩토링 전
+		CalPay 		calPay 	= new CalPay(10,10,true);
+		assertEquals( calPay.doCalc(),200);
+		
+		
+		/*
+		// 리팩토링 후
 		CalcSpecDay calcSpecDay = new CalcSpecDay(10,10);
 		CalPay 		calPay 	= new CalPay(10,10);
 		
@@ -210,13 +252,13 @@ public class RefTestCase {
 		
 		assertEquals( calcSpecDay.doCalc(),200);
 		assertEquals( calPay.doCalc(),100);
-		
+		*/
 		
 	}
 	
 	@Test public void 
 	ExtractInterfaceImplTest() {
-/*
+
  		// 리팩토링 전
 		ExtractInterfaceImpl m = new ExtractInterfaceImpl();
 		
@@ -227,9 +269,10 @@ public class RefTestCase {
 		v.addElement(new OrderBO(300));
 		
 		m.printOwing(v);
-*/		
+	
 		
 		// 리팩토링 후
+		/*
 		ExtractInterface m = new ExtractInterfaceImpl();
 		
 		Vector<OrderBO> v = new  Vector<OrderBO>(3);
@@ -239,7 +282,7 @@ public class RefTestCase {
 		v.addElement(new OrderBO(300));
 		
 		m.printOwing(v);
-
+*/	
 		
 	}
 
@@ -258,11 +301,20 @@ public class RefTestCase {
 	@Test public void 
 	MoveFieldTest()
 	{
+		// 리팩토링 전
+		ref.sample.MoveField.Account account = new ref.sample.MoveField.Account();
+		
+		System.out.println("######MoveFieldTestTest:" +(int)account.interestForAmount_days(20.0,3));
+		assertEquals((int)account.interestForAmount_days(20.0,3),1);
+		
+				
+		/*
+		// 리팩토링 후
 		ref.sample.MoveField.Account account = new ref.sample.MoveField.Account();
 		
 		System.out.println("######MoveFieldTestTest:" +(int)account.InterestForAmountDays(20.0,3));
 		assertEquals((int)account.InterestForAmountDays(20.0,3),1);
-		
+		*/
 	}
 	
 	@Test public void 
@@ -280,21 +332,22 @@ public class RefTestCase {
 	InlineClassTest()
 	{
 		 ref.sample.InlineClass.Person person = new ref.sample.InlineClass.Person();
-/*	
+
 		 // 리팩토링전
 		 person.getOfficeTelephone().setAreaCode("0000");
 		 person.getOfficeTelephone().setNumber("1111");
 		 assertEquals( person.getOfficeTelephone().getAreaCode(),"0000");
 		 assertEquals( person.getOfficeTelephone().getNumber(),"1111");
-*/		 
+
 		
 			
 		 // 리팩토링후
+		 /*	
 		 person.setAreaCode("0000");
 		 person.setNumber("1111");
 		 assertEquals( person.getAreaCode(),"0000");
 		 assertEquals( person.getNumber(),"1111");
-		
+		*/		 
 	}
 	
 	@Test public void 
@@ -334,7 +387,7 @@ public class RefTestCase {
 	@Test public void 
 	ReplaceTypeCodeWithClassTest()
 	{
-/*		
+	
 		// 리팩토링전
 		ref.sample.ReplaceTypeCodeWithClass.Person p = new ref.sample.ReplaceTypeCodeWithClass.Person(ref.sample.ReplaceTypeCodeWithClass.Person.O);
 
@@ -342,16 +395,17 @@ public class RefTestCase {
 		assertEquals(p.getBloodGroup() , ref.sample.ReplaceTypeCodeWithClass.Person.O); 
 		p.setBloodGroup(ref.sample.ReplaceTypeCodeWithClass.Person.AB);
 		assertEquals(p.getBloodGroup() , ref.sample.ReplaceTypeCodeWithClass.Person.AB); 
-*/		
+	
 		
 		// 리팩토링후
+		/*	
 		ref.sample.ReplaceTypeCodeWithClass.Person p = new ref.sample.ReplaceTypeCodeWithClass.Person(BloodGroup.O);
 
 		p.getBloodGroup();
 		assertEquals(p.getBloodGroup() , BloodGroup.O); 
 		p.setBloodGroup(BloodGroup.AB);
 		assertEquals(p.getBloodGroup() , BloodGroup.AB); 
-				
+			*/		
 	}
 	
 	@Test public void 
@@ -410,9 +464,10 @@ public class RefTestCase {
 		String str2 = "";
 		
 		// 리팩토링전
-		//ref.sample.IntroduceNullObject.Customer customer = null;
+		ref.sample.IntroduceNullObject.Customer customer = null;
 	
 		// 리팩토링후
+		/*
 		ref.sample.IntroduceNullObject.Customer customer = ref.sample.IntroduceNullObject.Customer.newNull();
 		
 		
@@ -427,7 +482,7 @@ public class RefTestCase {
 		 
 		assertEquals(str1,"nameagegender");
 		assertEquals(str2,"j1M");
-	
+		*/
 		
 		
 	}
@@ -467,13 +522,14 @@ public class RefTestCase {
 	RemoveParamTest()
 	{
 		// 리팩토링전
-/*		
+	
 		RemoveParam removeParam = new RemoveParam(0, 0);
 		removeParam.getPrice(1);
-*/
+	/*
+	 	// 리팩토링 후
 		RemoveParam removeParam = new RemoveParam(0, 0);
 		removeParam.getPrice();
-
+	 */
 	}
 	
 	@Test public void  
@@ -678,7 +734,7 @@ public class RefTestCase {
 	IntroduceLocalExtensionTest()
 	{
 		// 리팩토링전
-/*		
+
 		IntroduceLocalExtension introduceLocalExtension = new IntroduceLocalExtension();
 		java.text.SimpleDateFormat formatter =
 	            new java.text.SimpleDateFormat("yyyyMMdd", java.util.Locale.KOREA);
@@ -686,17 +742,17 @@ public class RefTestCase {
 		
 		Date d =  new java.util.Date(2010-1900,0,1);
 		assertEquals(formatter.format(introduceLocalExtension.newStart(d)) ,"20100102");
-*/		
+
 		
 		
 		// 리팩토링후
-		
+		/*
 		IntroduceLocalExtension introduceLocalExtension = new IntroduceLocalExtension(2010-1900,0,1);
 		java.text.SimpleDateFormat formatter =
 	            new java.text.SimpleDateFormat("yyyyMMdd", java.util.Locale.KOREA);
 		
 		assertEquals(formatter.format(introduceLocalExtension.newStart()) ,"20100102");
-		 
+		 */
 	}
 	
 	@Test public void 
@@ -721,7 +777,7 @@ public class RefTestCase {
 	{
 		
 		// 리팩토링전
-		/*
+		
 		ref.sample.EncapsulateCollection.Person kent = new ref.sample.EncapsulateCollection.Person();
 	    Set s = new HashSet();
 	    s.add(new ref.sample.EncapsulateCollection.Course ("Smalltalk Programming", false));
@@ -744,10 +800,10 @@ public class RefTestCase {
 	    }
 	    
 	    assertEquals (1, count);
-		*/
+		
 		
 		// 리팩토링후
-		
+	    /*
 		ref.sample.EncapsulateCollection.Person kent = new ref.sample.EncapsulateCollection.Person();
 	    Set s = new HashSet();
 	    s.add(new ref.sample.EncapsulateCollection.Course ("Smalltalk Programming", false));
@@ -765,7 +821,7 @@ public class RefTestCase {
 	    int count = kent.numberOfAdvancedCourses();
 	    
 	    assertEquals (1, count);
-	    
+	    */
 	    
 	}
 	
