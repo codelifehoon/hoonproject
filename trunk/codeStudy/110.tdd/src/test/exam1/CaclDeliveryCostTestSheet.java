@@ -28,8 +28,10 @@ import org.junit.Test;
 
 import test.example.common.ConstCode;
 
-import example.business1.delivery.DeleveryCalc;
-import example.business1.delivery.DeleveryBindCalcGoods;
+import example.business1.delivery.DeliveryBind;
+import example.business1.delivery.DeliveryBindCalc;
+import example.business1.delivery.DeliveryCost;
+import example.business1.delivery.DeliveryCostCalc;
 import example.business1.delivery.domain.DeliveryInfoBO;
 import example.business1.delivery.domain.DlvCostBuyPriceSectBuilder;
 import example.business1.delivery.domain.GoodsInfoBO;
@@ -68,7 +70,7 @@ public class CaclDeliveryCostTestSheet {
 	@Test
 	public void bindCostCalc() {
 		
-		DeleveryCalc   deliveryCalc	   = new DeleveryBindCalcGoods();
+		DeliveryBind   deliveryCalc	   = new DeliveryBindCalc();
 
 		List<GoodsInfoBO> dlist = new ArrayList<GoodsInfoBO>();
 		
@@ -128,8 +130,8 @@ public class CaclDeliveryCostTestSheet {
 	@Test
 	public void dlvCostCalc() {
 		
-		
-		DeleveryCalc   deliveryCalc	   = new DeleveryBindCalcGoods();
+		DeliveryCost	deliveryCost	= new DeliveryCostCalc();
+	
 		
 		
 		List<GoodsInfoBO> dlist = new ArrayList<GoodsInfoBO>();
@@ -164,7 +166,7 @@ public class CaclDeliveryCostTestSheet {
 				.withdlvCostBuyPriceSect(new DlvCostBuyPriceSectBuilder().withAddSec(0,1999,3000).withAddSec(2000,3999,3000).withAddSec(4000,-1,3000).build())
 				.withDlvKind(ConstCode.DLVKIND_BUYPRICESEC).build());
 				
-		deliveryCalc.dlvCostCalc(dlist);
+		deliveryCost.dlvCostCalc(dlist);
 		
 		
 		for (GoodsInfoBO goodsInfoBO : dlist)
@@ -189,7 +191,6 @@ public class CaclDeliveryCostTestSheet {
 			   default:  break;
 			}
 		}
-		
 	}
 
 }
