@@ -14,7 +14,7 @@ import java.util.List;
 import example.business1.delivery.domain.DeliveryInfoBO;
 import example.business1.delivery.domain.GoodsInfoBO;
 
-public interface DeleveryCalc {
+public interface DeliveryBind {
 
 	/**
 	 * @param dlist
@@ -22,9 +22,6 @@ public interface DeleveryCalc {
 	 */
 	List<DeliveryInfoBO> bindCostCalc(List<GoodsInfoBO> dlist);
 
-	/**
-	 * @param dlist
-	 */
-	void dlvCostCalc(List<GoodsInfoBO> dlist);
+
 
 }
