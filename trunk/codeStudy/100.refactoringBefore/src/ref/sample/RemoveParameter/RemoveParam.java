@@ -19,7 +19,7 @@ public class RemoveParam {
 		this.itemPrice = _itemPrice;
 	}
 
-	public double getPrice() {
+	public double getPrice(int level) {
 	      
 		   return discountedPrice ();
 	   }

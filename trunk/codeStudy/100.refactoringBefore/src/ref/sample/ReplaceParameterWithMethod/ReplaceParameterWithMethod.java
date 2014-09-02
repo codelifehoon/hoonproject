@@ -1,11 +1,3 @@
-/**
- * @FileName  : Person.java
- * @Project     : code refactoring exam proj
- * @Date         : 2014. 5. 8. 
- * @작성자      : codelife
- * @변경이력 :
- * @프로그램 설명 :
- */
 package ref.sample.ReplaceParameterWithMethod;
 
 public class ReplaceParameterWithMethod {
@@ -21,29 +13,17 @@ public class ReplaceParameterWithMethod {
 
 	public double getPrice() {
 	      
-		   return discountedPrice ();
-	   }
-
-	/**
-	 * @return
-	 */
-	protected int getDiscountLevel() {
-		int discountLevel;
+		int basePrice = quantity * itemPrice;
+	       int discountLevel;
 	       if (quantity > 100) discountLevel = 2;
 	       else discountLevel = 1;
-		return discountLevel;
-	}
-
-	/**
-	 * @return
-	 */
-	protected int getBasePrice() {
-		return quantity * itemPrice;
-	}
+	       double finalPrice = discountedPrice (basePrice, discountLevel);
+	       return finalPrice;
+	   }
 	 
-	   private double discountedPrice () {
-	       if (getDiscountLevel() == 2) return getBasePrice() * 0.1;
-	       else return getBasePrice() * 0.05;
+	   private double discountedPrice (int basePrice, int discountLevel) {
+	       if (discountLevel == 2) return basePrice * 0.1;
+	       else return basePrice * 0.05;
 	   }
 	   
 }

@@ -1,20 +1,20 @@
-/**
- * @FileName  : Person.java
- * @Project     : code refactoring exam proj
- * @Date         : 2014. 5. 8. 
- * @작성자      : codelife
- * @변경이력 :
- * @프로그램 설명 :
- */
 package ref.sample.PullUpMethod;
 
 public class PreferredCustomer extends Customer {
 
 	
-	@Override
-	protected double chargeFor(int weight)
+	public double createBill(int weight)
 	{
-		return weight * 1.5;
+			double bill =  this.workingHours * chargeFor(weight);
+			 System.out.println ("**************************");
+			 System.out.println (this.toString() + ":" +bill);
+			 System.out.println ("**************************");
+			return bill;
+	}
+	
+	private double chargeFor(int weight)
+	{
+		return weight * 0.5;
 	}
 		
 }
