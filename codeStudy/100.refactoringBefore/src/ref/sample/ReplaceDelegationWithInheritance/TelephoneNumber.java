@@ -9,7 +9,7 @@
 
 package ref.sample.ReplaceDelegationWithInheritance;
 
-public class TelephoneNumber  {
+public class TelephoneNumber {
 	public String _officeAreaCode;
 	public String _officeNumber;
 

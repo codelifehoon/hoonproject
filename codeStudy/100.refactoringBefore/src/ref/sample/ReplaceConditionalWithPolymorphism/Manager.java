@@ -19,9 +19,4 @@ public class Manager extends EmployeeType {
 		return EmployeeType.MANAGER;
 	}
 
-	@Override
-	public void Calc(Employee employee) {
-		employee.sum += employee._monthlySalary + employee._bonus;
-	}
-
 }

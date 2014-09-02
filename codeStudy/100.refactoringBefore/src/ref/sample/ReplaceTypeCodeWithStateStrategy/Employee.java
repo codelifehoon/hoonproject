@@ -11,8 +11,10 @@ package ref.sample.ReplaceTypeCodeWithStateStrategy;
 public class Employee {
 
 	 
-    private EmployeeType _type;
-
+    private int _type;
+    public static final int ENGINEER = 0;
+    public static final int SALESMAN = 1;
+    public static final int MANAGER = 2;
     
     private int _monthlySalary = 10;
     private int _commission = 20;
@@ -22,27 +24,27 @@ public class Employee {
     
  
     public Employee (int type) {
-        _type = _type.newType(type);
+        _type = type;
     }
  
     public int getType() {
-        return _type.getTypeCode();
+        return _type;
     }
  
     public void setType(int arg) {
-        _type = _type.newType(arg);
+        _type = arg;
     }
  
     public int payAmount() {
     	
-        switch (getType()) {
-            case EmployeeType.ENGINEER:
+        switch (_type) {
+            case ENGINEER:
             	sum += _monthlySalary;
             	return sum;
-            case EmployeeType.SALESMAN:
+            case SALESMAN:
             	sum += _monthlySalary + _commission;
             	return sum;
-            case EmployeeType.MANAGER:
+            case MANAGER:
             	sum += _monthlySalary + _bonus;
             	return sum;
             default:

@@ -19,9 +19,4 @@ public class Salesman extends EmployeeType {
 		return EmployeeType.SALESMAN;
 	}
 
-	@Override
-	public void Calc(Employee employee) {
-		employee.sum += employee._monthlySalary + employee._commission;
-	}
-
 }
