@@ -45,10 +45,17 @@
 			</list>
 		</property>
 	</bean>
-
-	 <mvc:annotation-driven/>
+	<!-- mvc -->
+	<mvc:annotation-driven/>
+	
+	<!--task  -->
+	<task:annotation-driven executor="taskExecutor" scheduler="taskScheduler"/>
+	<task:executor 	id="taskExecutor" pool-size="2"/>
+	<task:scheduler id="taskScheduler" pool-size="10"/>
+	
+	<!-- component -->
 	<context:component-scan base-package="com.zebra"/>
-
+	
 	<!-- 
 	<bean id="tmallPropertyLoader" class="com.zebra">
 		<constructor-arg  name="propertyFile" value="/resource/config/[$server_type]_program.properties" type="java.lang.String" />
@@ -64,8 +71,6 @@
 		<property name="username"><value>${mysql.username}</value></property>
 		<property name="password"><value>${mysql.password}</value></property>
 	</bean>
-
-
 
 	<!-- <property name="poolPingQuery" value="select 1"/> <property name="poolPingEnabled" 
 		value="true"/> <property name="poolPingConnectionsNotUsedFor" value="5000"/> -->
