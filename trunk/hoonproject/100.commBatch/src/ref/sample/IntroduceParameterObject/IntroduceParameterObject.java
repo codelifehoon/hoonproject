@@ -1,11 +1,3 @@
-/**
- * @FileName  : Person.java
- * @Project     : code refactoring exam proj
- * @Date         : 2014. 5. 8. 
- * @작성자      : codelife
- * @변경이력 :
- * @프로그램 설명 :
- */
 package ref.sample.IntroduceParameterObject;
 
 import java.util.Enumeration;
@@ -16,21 +8,13 @@ public class IntroduceParameterObject {
 	private Vector<Integer> entries = new Vector();
     
 	
-	  /**
-	 * @deprecated Use {@link #getFlowBetween(FlowBetweenParameter)} instead
-	 */
-	public Integer getFlowBetween (Integer start, Integer end) {
-		return getFlowBetween(new FlowBetweenParameter(start, end));
-	}
-
-
-	public Integer getFlowBetween (FlowBetweenParameter parameterObject) {
+	  public Integer getFlowBetween (Integer start, Integer end) {
 		  Integer result = 0;
 	        Enumeration<Integer> e = entries.elements();
 	        
 	        while (e.hasMoreElements()) {
 	        	Integer each = (Integer) e.nextElement();
-	            if ( (each >= parameterObject.getStart() && each <= parameterObject.getEnd()))
+	            if ( (each >= start && each <= end))
 	            {
 	                result += each.intValue();
 	            }

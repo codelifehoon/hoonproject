@@ -1,29 +1,32 @@
-/**
- * @FileName  : Person.java
- * @Project     : code refactoring exam proj
- * @Date         : 2014. 5. 8. 
- * @작성자      : codelife
- * @변경이력 :
- * @프로그램 설명 :
- */
 package ref.sample.ExtractSubclass;
 
 public class CalPay {
 
-	protected int pay;
-	protected int workingDay;
-
+	private int pay;
+    private int workingDay;
+    private boolean speicalIm;
     
-	public CalPay(int pay, int workingDay) {
+	public CalPay(int pay, int workingDay, boolean speicalIm) {
 		super();
 		this.pay = pay;
 		this.workingDay = workingDay;
+		this.speicalIm = speicalIm;
 	}
 	
 	public int doCalc()
 	{
+		int calcPay=0;
+		if (this.speicalIm)
+		{
+			calcPay = pay * workingDay * 2;
+		}
+		else
+		{
+			calcPay = pay * workingDay ;
+		}
 		
-		return	 pay * workingDay ;
+		return calcPay;
+		
 		
 	}
     

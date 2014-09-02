@@ -2,56 +2,24 @@
  * @FileName  : Person.java
  * @Project     : code refactoring exam proj
  * @Date         : 2014. 5. 22. 
- * @작성자      : codelife
- * @변경이력 :
- * @프로그램 설명 :
+ * @�묒꽦��     : codelife
+ * @蹂�꼍�대젰 :
+ * @�꾨줈洹몃옩 �ㅻ챸 :
  */
 package ref.sample.EncapsulateCollection;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
-
-
 
 public class Person {
 
-	private Set  _courses= new HashSet<>();
+	private Set  _courses;
  	
 	public Set getCourses() {
-        return Collections.unmodifiableSet(_courses);
+        return _courses;
     }
-    public void initializeCourses(Set arg) {
-    	 //Assert.isTrue(_courses.isEmpty());
-    	 if (!_courses.isEmpty())
-			try {
-				throw new Exception("validate error.");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    	    	
-    	 _courses.addAll(arg);
+    public void setCourses(Set arg) {
+        _courses = arg;
     }
     
-    public void addCourse (Course arg) {
-        _courses.add(arg);
-    }
-    public void removeCourse (Course arg) {
-        _courses.remove(arg);
-    }
-	/**
-	 * @return
-	 */
-	public int numberOfAdvancedCourses() {
-		Iterator iter = getCourses().iterator();
-	    int count = 0;
-	    while (iter.hasNext()) {
-	    	ref.sample.EncapsulateCollection.Course each = (ref.sample.EncapsulateCollection.Course) iter.next();
-	       if (each.isAdvanced()) count ++;
-	    }
-		return count;
-	}
     
 }
