@@ -26,7 +26,6 @@ public class CalcFactorial {
 
 	@Test
 	public void shouldReturnFactorialVal() {
-		CalcSomeNum a = new  CalcSomeNum();
 		int[][] values ={{0,1}, {1,1}, {2,2}, {3,6}, {4,24}, {10, 3628800}};
 		
 		for(int[] value: values) {
