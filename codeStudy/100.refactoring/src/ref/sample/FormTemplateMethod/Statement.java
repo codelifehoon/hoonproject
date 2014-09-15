@@ -8,6 +8,7 @@
  */
 package ref.sample.FormTemplateMethod;
 
+import java.util.Enumeration;
 import java.util.Vector;
 
 public abstract class Statement {
@@ -27,6 +28,22 @@ public abstract class Statement {
 	protected abstract String getFooter(String result);
 
 	protected abstract String getBody(String result, Rental each);
+
+	public String statement() {
+	       Enumeration rentals = vRentals.elements();
+	
+	       String result = getHeader();
+	       while (rentals.hasMoreElements()) {
+	        Rental each = (Rental) rentals.nextElement();
+	        //show figures for this rental
+	        result = getBody(result, each);
+	    }
+	
+	    //add footer lines
+	    result = getFooter(result);
+	
+	    return result;
+	 }
 
 
 
