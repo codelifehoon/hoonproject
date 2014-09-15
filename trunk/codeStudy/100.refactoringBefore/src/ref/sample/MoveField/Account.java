@@ -2,7 +2,7 @@ package ref.sample.MoveField;
 
 public class Account {
 
-	  private AccountType type;
+
 	  private double interestRate  = 10.0;
 	 
 	  

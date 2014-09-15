@@ -1,8 +1,11 @@
-package ref.sample.Extract_Method;
+package ref.sample.ReplaceTempWithQuery;
 
 import java.util.Enumeration;
+
 import java.util.List;
 import java.util.Vector;
+
+import ref.sample.Extract_Method.OrderBO;
 
 public class ReplaceTempWithQuery {
 
