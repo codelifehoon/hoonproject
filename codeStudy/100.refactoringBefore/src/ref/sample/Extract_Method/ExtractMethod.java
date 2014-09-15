@@ -14,43 +14,19 @@ public class ExtractMethod {
 	    double outstanding = 0.0;
 	 
 	    // print banner
-	    printBanner();
+	    System.out.println ("**************************");
+	    System.out.println ("***** Customer Owes ******");
+	    System.out.println ("**************************");
 	 
-	    outstanding = getOutstanding(e, outstanding);
-	 
-	    printDetails(outstanding);
-	}
-
-	/**
-	 * @param e
-	 * @param outstanding
-	 * @return
-	 */
-	private double getOutstanding(Enumeration<OrderBO> e, double outstanding) {
-		// calculate outstanding
+	    // calculate outstanding
 	    while (e.hasMoreElements()) {
 	    	OrderBO each = (OrderBO) e.nextElement();
 	        outstanding += each.getAmount();
 	    }
-		return outstanding;
-	}
-
-	/**
-	 * @param outstanding
-	 */
-	private void printDetails(double outstanding) {
-		//print details
+	 
+	    //print details
 	    System.out.println ("name:" + _name);
 	    System.out.println ("amount" + outstanding);
-	}
-
-	/**
-	 * 
-	 */
-	private void printBanner() {
-		System.out.println ("**************************");
-	    System.out.println ("***** Customer Owes ******");
-	    System.out.println ("**************************");
 	}
 	
 }
