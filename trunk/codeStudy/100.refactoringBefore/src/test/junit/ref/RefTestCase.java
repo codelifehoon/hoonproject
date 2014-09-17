@@ -9,6 +9,8 @@
 package test.junit.ref;
 
 import static org.junit.Assert.assertEquals;
+
+
 import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
@@ -24,13 +26,10 @@ import org.junit.Test;
 
 import ref.sample.DecomposeConditional.DecomposeConditional;
 import ref.sample.ExtractClass.Person;
-import ref.sample.ExtractInterface.ExtractInterface;
 import ref.sample.ExtractInterface.ExtractInterfaceImpl;
 import ref.sample.ExtractSubclass.CalPay;
-import ref.sample.ExtractSubclass.CalcSpecDay;
 import ref.sample.Extract_Method.ExtractMethod;
 import ref.sample.Extract_Method.OrderBO;
-import ref.sample.Extract_Method.ReplaceTempWithQuery;
 import ref.sample.FormTemplateMethod.HtmlStatement;
 import ref.sample.FormTemplateMethod.Rental;
 import ref.sample.FormTemplateMethod.TextStatement;
@@ -38,7 +37,7 @@ import ref.sample.IntroduceAssertion.IntroduceAssertion;
 import ref.sample.IntroduceForeignMethod.IntroduceForeignMethod;
 import ref.sample.IntroduceLocalExtension.IntroduceLocalExtension;
 import ref.sample.IntroduceNullObject.Customer;
-import ref.sample.IntroduceParameterObject.FlowBetweenParameter;
+
 import ref.sample.IntroduceParameterObject.IntroduceParameterObject;
 import ref.sample.PullUpMethod.PreferredCustomer;
 import ref.sample.PullUpMethod.RegularCustomer;
@@ -48,9 +47,9 @@ import ref.sample.ReplaceDataValueWithObject.Order;
 import ref.sample.ReplaceInheritanceWithDelegation.MyStack;
 import ref.sample.ReplaceMethodWithMethodObject.Account;
 import ref.sample.ReplaceParameterWithMethod.ReplaceParameterWithMethod;
-import ref.sample.ReplaceTypeCodeWithClass.BloodGroup;
+import ref.sample.ReplaceTempWithQuery.ReplaceTempWithQuery;
 import ref.sample.ReplaceTypeCodeWithSubclasses.Emp;
-import ref.sample.ReplaceTypeCodeWithSubclasses.EmpEngineer;
+
 
 
 
@@ -374,6 +373,7 @@ public class RefTestCase {
 	    
 	    
 	 // 리팩토링후
+	 /*
 	    Performance performance = new Performance();
 	    
 	    performance.setName("Liverpool");
@@ -382,6 +382,7 @@ public class RefTestCase {
 	    
 	    assertEquals( name,performance.getName());
 	    assertEquals( wins,Integer.parseInt(performance.getWins()));    
+	 */
 	}
 	
 	@Test public void 
@@ -412,36 +413,38 @@ public class RefTestCase {
 	ReplaceTypeCodeWithSubclassesTest()
 	{
 		/*리팩토링전*/
-		/*
-		Emp employee = new EmployeeEngineer(Emp.ENGINEER);
+
+		Emp employee = new Emp(Emp.ENGINEER);
 		assertEquals(employee.getType() ,Emp.ENGINEER); 
-		*/
+		
 		
 		/*리팩토링후*/
+		/*
 		Emp employee = EmpEngineer.create(Emp.ENGINEER);
 		assertEquals(employee.getType() ,Emp.ENGINEER); 
-		
+		*/
 	}
 	
 	@Test public void  
 	ReplaceTypeCodeWithStateStrategyTest()
 	{
 		// 리팩토링전
-/*		
 		ref.sample.ReplaceTypeCodeWithStateStrategy.Employee employee = 
 				new ref.sample.ReplaceTypeCodeWithStateStrategy.Employee(ref.sample.ReplaceTypeCodeWithStateStrategy.Employee.ENGINEER);
 		
 		employee.payAmount();
 		employee.setType(ref.sample.ReplaceTypeCodeWithStateStrategy.Employee.SALESMAN);
 		assertEquals(employee.payAmount() ,40); 
-*/
+
 		// 리팩토링후
+		/*
 		ref.sample.ReplaceTypeCodeWithStateStrategy.Employee employee = 
 				new ref.sample.ReplaceTypeCodeWithStateStrategy.Employee(ref.sample.ReplaceTypeCodeWithStateStrategy.EmployeeType.ENGINEER);
 		
 		employee.payAmount();
 		employee.setType(ref.sample.ReplaceTypeCodeWithStateStrategy.EmployeeType.SALESMAN);
 		assertEquals(employee.payAmount() ,40);
+	*/
 	}
 	
 	@Test public void  
@@ -557,7 +560,7 @@ public class RefTestCase {
 	ChangeBidirectionalAssociationToUnidirectionalTest() throws Exception
 	{
 		// 리팩토리전
-/*
+
 		ref.sample.ChangeBidirectionalAssociationToUnidirectional.Order order1 = new ref.sample.ChangeBidirectionalAssociationToUnidirectional.Order ();
 		ref.sample.ChangeBidirectionalAssociationToUnidirectional.Order order2 = new ref.sample.ChangeBidirectionalAssociationToUnidirectional.Order ();
 		ref.sample.ChangeBidirectionalAssociationToUnidirectional.Order order3 = new ref.sample.ChangeBidirectionalAssociationToUnidirectional.Order ();
@@ -612,8 +615,6 @@ public class RefTestCase {
 		customer1.addOrder(order3);
 		customer1.addOrder(order4);
 		
-		
-
 		for (ref.sample.ChangeBidirectionalAssociationToUnidirectional.Order o : customer1.friendOrders())
 		{
 			temp += o.getName();
@@ -628,7 +629,7 @@ public class RefTestCase {
 		
 		System.out.println("2:" + temp);
 		assertEquals(temp.length(),36);
-		*/
+	
 		
 		// 리팩토링후
 		/*
