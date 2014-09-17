@@ -1,65 +1,55 @@
 package ref.sample.FormTemplateMethod;
 
+import java.util.Enumeration;
+import java.util.Vector;
 
-public class TextStatement extends Statement {
+public class TextStatement {
 	 
    
-	/**
-	 * @param result
-	 * @return
-	 */
-	@Override
-	protected String getFooter(String result) {
-		result +=  "Amount owed is " + String.valueOf(getTotalCharge()) + "\n";
+	private Vector<Rental> vRentals;
+	
+	
+	 public String statement()
+     {
+           Enumeration rentals = vRentals.elements();
+ 
+            String result = "#####\nRental Record for " + getName() + "\n";
+           while (rentals.hasMoreElements()) {
+            Rental each = (Rental) rentals.nextElement();
+            //show figures for this rental
+            result += "\t" + each.getMovieTitle()+ "\t" +
+            String.valueOf(each.getCharge()) + "\n";
+        }
+ 
+        //add footer lines
+        result +=  "Amount owed is " + String.valueOf(getTotalCharge()) + "\n";
         result += "You earned " + String.valueOf(getTotalFrequentRenterPoints())
             + "frequent renter points";
-		return result;
-	}
-
-
-
-	/**
-	 * @param result
-	 * @param each
-	 * @return
-	 */
-	@Override
-	protected String getBody(String result, Rental each) {
-		result += "\t" + each.getMovieTitle()+ "\t" +
-		String.valueOf(each.getCharge()) + "\n";
-		return result;
-	}
-
-
-
-	/**
-	 * @return
-	 */
-	@Override
-	protected String getHeader() {
-		String result = "#####\nRental Record for " + getName() + "\n";
-		return result;
-	}
+ 
+        return result;
+     }
     
     
 
-    @Override
-	public String getName()
+    public String getName()
     {
     	return "movie list";
     }
     
-    @Override
-	public int getTotalCharge()
+    public int getTotalCharge()
     {
     	return 1000;
     }
     
-    @Override
-	public int getTotalFrequentRenterPoints()
+    public int getTotalFrequentRenterPoints()
     {
     	return 999999;
     }
+    
+    
+    public void setvRentals(Vector<Rental> vRentals) {
+		this.vRentals = vRentals;
+	}
 
 	
 	
