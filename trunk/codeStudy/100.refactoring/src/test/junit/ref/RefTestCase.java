@@ -29,9 +29,9 @@ import ref.sample.ExtractSubclass.CalPay;
 import ref.sample.ExtractSubclass.CalcSpecDay;
 import ref.sample.Extract_Method.ExtractMethod;
 import ref.sample.Extract_Method.OrderBO;
-import ref.sample.Extract_Method.ReplaceTempWithQuery;
 import ref.sample.FormTemplateMethod.HtmlStatement;
 import ref.sample.FormTemplateMethod.Rental;
+import ref.sample.FormTemplateMethod.Statement;
 import ref.sample.FormTemplateMethod.TextStatement;
 import ref.sample.IntroduceAssertion.IntroduceAssertion;
 import ref.sample.IntroduceForeignMethod.IntroduceForeignMethod;
@@ -47,6 +47,7 @@ import ref.sample.ReplaceDataValueWithObject.Order;
 import ref.sample.ReplaceInheritanceWithDelegation.MyStack;
 import ref.sample.ReplaceMethodWithMethodObject.Account;
 import ref.sample.ReplaceParameterWithMethod.ReplaceParameterWithMethod;
+import ref.sample.ReplaceTempWithQuery.ReplaceTempWithQuery;
 import ref.sample.ReplaceTypeCodeWithClass.BloodGroup;
 import ref.sample.ReplaceTypeCodeWithSubclasses.Emp;
 import ref.sample.ReplaceTypeCodeWithSubclasses.EmpEngineer;
@@ -125,6 +126,8 @@ public class RefTestCase {
 	@Test public void 
 	FormTemplateMethodTest()
 	{
+		// 리팩토링전
+		/*
 		HtmlStatement h = new HtmlStatement();
 		TextStatement t = new TextStatement();
 		Vector<Rental> v = new  Vector<Rental>(1);
@@ -136,6 +139,21 @@ public class RefTestCase {
 		
 		System.out.println(h.statement());
 		System.out.println(t.statement());
+		*/
+		
+		// 리팩토링 후
+		Statement h = new HtmlStatement();
+		Statement t = new TextStatement();
+		Vector<Rental> v = new  Vector<Rental>(1);
+		v.addElement( new Rental("리팩토링",10));
+		
+		h.setvRentals(v);
+		t.setvRentals(v);
+		
+		
+		System.out.println(h.statement());
+		System.out.println(t.statement());
+		
 		
 	}
 	
@@ -373,15 +391,16 @@ public class RefTestCase {
 	ReplaceTypeCodeWithStateStrategyTest()
 	{
 		// 리팩토링전
-/*		
+		/*	
 		ref.sample.ReplaceTypeCodeWithStateStrategy.Employee employee = 
 				new ref.sample.ReplaceTypeCodeWithStateStrategy.Employee(ref.sample.ReplaceTypeCodeWithStateStrategy.Employee.ENGINEER);
 		
 		employee.payAmount();
 		employee.setType(ref.sample.ReplaceTypeCodeWithStateStrategy.Employee.SALESMAN);
 		assertEquals(employee.payAmount() ,40); 
-*/
+		 	*/
 		// 리팩토링후
+		
 		ref.sample.ReplaceTypeCodeWithStateStrategy.Employee employee = 
 				new ref.sample.ReplaceTypeCodeWithStateStrategy.Employee(ref.sample.ReplaceTypeCodeWithStateStrategy.EmployeeType.ENGINEER);
 		
@@ -501,7 +520,7 @@ public class RefTestCase {
 	ChangeBidirectionalAssociationToUnidirectionalTest() throws Exception
 	{
 		// 리팩토리전
-/*
+		/*
 		ref.sample.ChangeBidirectionalAssociationToUnidirectional.Order order1 = new ref.sample.ChangeBidirectionalAssociationToUnidirectional.Order ();
 		ref.sample.ChangeBidirectionalAssociationToUnidirectional.Order order2 = new ref.sample.ChangeBidirectionalAssociationToUnidirectional.Order ();
 		ref.sample.ChangeBidirectionalAssociationToUnidirectional.Order order3 = new ref.sample.ChangeBidirectionalAssociationToUnidirectional.Order ();
