@@ -14,7 +14,7 @@ public class IntroduceForeignMethod {
 
 	public Date newStart(Date previousEnd )
 	{
-		 Date newStart = NextDay(previousEnd);
+		 Date newStart = IntroduceForeignMethod.NextDay(previousEnd);
 		 return newStart;
 	}
 

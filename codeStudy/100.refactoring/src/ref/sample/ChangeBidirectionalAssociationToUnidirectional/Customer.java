@@ -51,11 +51,6 @@ public class Customer {
         if (_orders.contains(order))   return order.getDiscountedPrice();
         return 0;
 	}
-	
-	public boolean containsOrder(Order order)
-	{
-		return _orders.contains(order);
-	}
 
 	public static HashMap<Order, Customer> getOrderMap() {
 		return orderMap;
