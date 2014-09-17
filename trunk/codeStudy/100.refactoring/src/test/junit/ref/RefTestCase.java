@@ -784,7 +784,7 @@ public class RefTestCase {
 	    int count = kent.numberOfAdvancedCourses();
 	    
 	    assertEquals (1, count);
-	    
+
 	    
 	}
 	
