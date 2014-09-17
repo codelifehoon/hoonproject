@@ -49,7 +49,7 @@
 	<classpathentry kind="lib" path="lib/jta/transactions-jdbc.jar"/>
 	<classpathentry kind="lib" path="lib/jta/transactions-jta.jar"/>
 	<classpathentry kind="lib" path="lib/jta/transactions.jar"/>
-	<classpathentry kind="lib" path="lib/junit/junit-4.8.2.jar"/>
+	<classpathentry kind="lib" path="lib/junit/junit-4.8.2.jar" sourcepath="C:/Users/codelife/.m2/repository/junit/junit/4.8.2/junit-4.8.2-sources.jar"/>
 	<classpathentry kind="lib" path="lib/log4j/log4j-1.2.14.jar"/>
 	<classpathentry kind="lib" path="lib/mockito/mockito-all-1.8.5.jar"/>
 	<classpathentry kind="lib" path="lib/schedule/quartz-all-1.8.3.jar"/>
