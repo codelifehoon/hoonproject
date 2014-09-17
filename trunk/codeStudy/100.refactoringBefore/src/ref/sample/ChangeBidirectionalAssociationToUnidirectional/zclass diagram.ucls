@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.6" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true">  
-  <class id="1" language="java" name="ref.sample.ChangeBidirectionalAssociationToUnidirectional.Order" 
-    project="100.commBatch" 
-    file="/100.commBatch/src/ref/sample/ChangeBidirectionalAssociationToUnidirectional/Order.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="160" y="456"/>    
+  <class id="1" language="java" name="ref.sample.ChangeBidirectionalAssociationToUnidirectional.Customer" 
+    project="100.refactoringBefore" 
+    file="/100.refactoringBefore/src/ref/sample/ChangeBidirectionalAssociationToUnidirectional/Customer.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="352" y="489"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="ref.sample.ChangeBidirectionalAssociationToUnidirectional.Customer" 
-    project="100.commBatch" 
-    file="/100.commBatch/src/ref/sample/ChangeBidirectionalAssociationToUnidirectional/Customer.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="166" y="154"/>    
+  <class id="2" language="java" name="ref.sample.ChangeBidirectionalAssociationToUnidirectional.Order" 
+    project="100.refactoringBefore" 
+    file="/100.refactoringBefore/src/ref/sample/ChangeBidirectionalAssociationToUnidirectional/Order.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="355" y="211"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -25,17 +25,17 @@
   </class>  
   <association id="3">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="4" name="_orders"/>      
-      <multiplicity id="5" minimum="0" maximum="2147483647"/>    
+      <attribute id="4" name="_customer"/>      
+      <multiplicity id="5" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="6">    
-    <bendpoint x="307" y="310"/>    
+    <bendpoint x="145" y="374"/>    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="7" name="_customer"/>      
-      <multiplicity id="8" minimum="0" maximum="1"/>    
+      <attribute id="7" name="_orders"/>      
+      <multiplicity id="8" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  

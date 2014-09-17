@@ -17,7 +17,7 @@ public class Person {
 	    private int bloodGroup;
 	 
 	    public Person (int bloodGroup) {
-	        bloodGroup = bloodGroup;
+	        this.bloodGroup = bloodGroup;
 	    }
 	 
 	    public void setBloodGroup(int arg) {
