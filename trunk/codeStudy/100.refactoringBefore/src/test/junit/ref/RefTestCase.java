@@ -23,6 +23,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.test.AssertThrows;
 
 import ref.sample.DecomposeConditional.DecomposeConditional;
 import ref.sample.ExtractClass.Person;
@@ -49,6 +50,7 @@ import ref.sample.ReplaceMethodWithMethodObject.Account;
 import ref.sample.ReplaceParameterWithMethod.ReplaceParameterWithMethod;
 import ref.sample.ReplaceTempWithQuery.ReplaceTempWithQuery;
 import ref.sample.ReplaceTypeCodeWithSubclasses.Emp;
+import ref.selfTest.Charge;
 
 
 
@@ -825,5 +827,29 @@ public class RefTestCase {
 	    */
 	    
 	}
+
+
+	@Test public void 
+	ChargeTest()
+	{
+		Charge charge = new Charge();
+		
+		assertEquals(charge.calculate(Charge.BUS, 10, 10),300);
+		assertEquals(charge.calculate(Charge.BUS, 20, 10),600);
+		assertEquals(charge.calculate(Charge.BUS, 70, 10),420);
+		
+		assertEquals(charge.calculate(Charge.SUBWAY, 10, 10),500);
+		assertEquals(charge.calculate(Charge.SUBWAY, 20, 10),1000);
+		assertEquals(charge.calculate(Charge.SUBWAY, 70, 10),700);
+		assertEquals(charge.calculate(Charge.SUBWAY, 10, 60),750);
+		assertEquals(charge.calculate(Charge.SUBWAY, 20, 60),1500);
+		assertEquals(charge.calculate(Charge.SUBWAY, 70, 60),300);
+		
+		assertEquals(charge.calculate(Charge.BUS, 10, 10),300);
+		assertEquals(charge.calculate(Charge.BUS, 20, 20),600);
+		assertEquals(charge.calculate(Charge.BUS, 70, 30),420);
+		
+		
+	}	
 	
 }
