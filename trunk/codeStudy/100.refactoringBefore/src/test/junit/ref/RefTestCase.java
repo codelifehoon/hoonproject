@@ -834,20 +834,20 @@ public class RefTestCase {
 	{
 		Charge charge = new Charge();
 		
-		assertEquals(charge.calculate(Charge.BUS, 10, 10),300);
-		assertEquals(charge.calculate(Charge.BUS, 20, 10),600);
-		assertEquals(charge.calculate(Charge.BUS, 70, 10),420);
+		assertEquals((int)charge.calculate(Charge.BUS, 10, 10),300);
+		assertEquals((int)charge.calculate(Charge.BUS, 20, 10),600);
+		assertEquals((int)charge.calculate(Charge.BUS, 70, 10),420);
 		
-		assertEquals(charge.calculate(Charge.SUBWAY, 10, 10),500);
-		assertEquals(charge.calculate(Charge.SUBWAY, 20, 10),1000);
-		assertEquals(charge.calculate(Charge.SUBWAY, 70, 10),700);
-		assertEquals(charge.calculate(Charge.SUBWAY, 10, 60),750);
-		assertEquals(charge.calculate(Charge.SUBWAY, 20, 60),1500);
-		assertEquals(charge.calculate(Charge.SUBWAY, 70, 60),300);
+		assertEquals((int)charge.calculate(Charge.SUBWAY, 10, 10),500);
+		assertEquals((int)charge.calculate(Charge.SUBWAY, 20, 10),1000);
+		assertEquals((int)charge.calculate(Charge.SUBWAY, 70, 10),700);
+		assertEquals((int)charge.calculate(Charge.SUBWAY, 10, 60),750);
+		assertEquals((int)charge.calculate(Charge.SUBWAY, 20, 60),1500);
+		assertEquals((int)charge.calculate(Charge.SUBWAY, 70, 60),1050);
 		
-		assertEquals(charge.calculate(Charge.BUS, 10, 10),300);
-		assertEquals(charge.calculate(Charge.BUS, 20, 20),600);
-		assertEquals(charge.calculate(Charge.BUS, 70, 30),420);
+		assertEquals((int)charge.calculate(Charge.BUS, 10, 10),300);
+		assertEquals((int)charge.calculate(Charge.BUS, 20, 20),600);
+		assertEquals((int)charge.calculate(Charge.BUS, 70, 30),420);
 		
 		
 	}	
