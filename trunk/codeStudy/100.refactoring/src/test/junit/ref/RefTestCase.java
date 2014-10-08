@@ -376,15 +376,16 @@ public class RefTestCase {
 	ReplaceTypeCodeWithSubclassesTest()
 	{
 		/*리팩토링전*/
-		/*
-		Emp employee = new EmployeeEngineer(Emp.ENGINEER);
+
+		Emp employee = new Emp(Emp.ENGINEER);
 		assertEquals(employee.getType() ,Emp.ENGINEER); 
-		*/
+		
 		
 		/*리팩토링후*/
+		/*
 		Emp employee = EmpEngineer.create(Emp.ENGINEER);
 		assertEquals(employee.getType() ,Emp.ENGINEER); 
-		
+		*/
 	}
 	
 	@Test public void  
