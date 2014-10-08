@@ -29,9 +29,11 @@ public class BloodGroup {
 		return code;
 	}
 
+	/*
 	private static BloodGroup code(int arg)
 	{
 		return values[arg];
 	}
+	*/
 
 }
