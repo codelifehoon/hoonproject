@@ -366,9 +366,11 @@ public class RefTestCase {
 		ref.sample.ReplaceTypeCodeWithClass.Person p = new ref.sample.ReplaceTypeCodeWithClass.Person(BloodGroup.O);
 
 		p.getBloodGroup();
-		assertEquals(p.getBloodGroup() , BloodGroup.O); 
+		
+		
+		assertEquals(p.getBloodGroup().getCode() , BloodGroup.O.getCode()); 
 		p.setBloodGroup(BloodGroup.AB);
-		assertEquals(p.getBloodGroup() , BloodGroup.AB); 
+		assertEquals(p.getBloodGroup().getCode() , BloodGroup.AB.getCode()); 
 				
 	}
 	
