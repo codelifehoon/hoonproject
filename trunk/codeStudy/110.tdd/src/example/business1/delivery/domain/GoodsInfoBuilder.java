@@ -39,9 +39,17 @@ public class GoodsInfoBuilder {
 	/**
 	 * @param dlvkindPergoods
 	 * @return
+	 * @deprecated Use {@link #withDlvCalcKind(String)} instead
 	 */
 	public GoodsInfoBuilder withDlvKind(String dlvkindPergoods) {
-		goodsInfoBO.setDlvKind(dlvkindPergoods);
+		return withDlvCalcKind(dlvkindPergoods);
+	}
+	/**
+	 * @param dlvkindPergoods
+	 * @return
+	 */
+	public GoodsInfoBuilder withDlvCalcKind(String dlvkindPergoods) {
+		goodsInfoBO.setDlvCalcKind(dlvkindPergoods);
 		return this;
 	}
 	/**

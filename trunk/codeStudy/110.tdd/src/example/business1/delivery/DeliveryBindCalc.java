@@ -9,11 +9,12 @@
 package example.business1.delivery;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import test.example.common.ConstCode;
+import  example.business1.delivery.ConstCode;
 
 import example.business1.delivery.domain.DeliveryInfoBO;
 import example.business1.delivery.domain.DlvCostBuyPriceSectBO;
