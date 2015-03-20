@@ -26,7 +26,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import test.example.common.ConstCode;
+import example.business1.delivery.ConstCode;
 
 import example.business1.delivery.DeliveryBind;
 import example.business1.delivery.DeliveryBindCalc;
@@ -139,32 +139,32 @@ public class CaclDeliveryCostTestSheet {
 		dlist.add(new GoodsInfoBuilder().withGoodsNo("10001")
 				.withDeliverySeq("001")
 				.withDeliveryCost(2500)
-				.withDlvKind(ConstCode.DLVKIND_PERGOODS).build());
+				.withDlvCalcKind(ConstCode.DLVKIND_BASIC).build());
 		
 		dlist.add(new GoodsInfoBuilder().withGoodsNo("10002")
 				.withDeliverySeq("001")
 				.withDeliveryCost(2500)
-				.withDlvKind(ConstCode.DLVKIND_PERGOODS).build());
+				.withDlvCalcKind(ConstCode.DLVKIND_BASIC).build());
 				
 		dlist.add(new GoodsInfoBuilder().withGoodsNo("10003")
 				.withDeliverySeq("002")
 				.withDeliveryCost(2500)
 				.withBuyCnt(2)
-				.withDlvKind(ConstCode.DLVKIND_CNTGOODS).build());
+				.withDlvCalcKind(ConstCode.DLVKIND_CNTGOODS).build());
 		
 		dlist.add(new GoodsInfoBuilder().withGoodsNo("10004")
 				.withDeliverySeq("003")
 				.withBuyCnt(2)
 				.withGoodsPrice(1000)
 				.withdlvCostBuyPriceSect(new DlvCostBuyPriceSectBuilder().withAddSec(0,1999,3000).withAddSec(2000,3999,3000).withAddSec(4000,-1,3000).build())
-				.withDlvKind(ConstCode.DLVKIND_BUYPRICESEC).build());
+				.withDlvCalcKind(ConstCode.DLVKIND_BUYPRICESEC).build());
 		
 		dlist.add(new GoodsInfoBuilder().withGoodsNo("10005")
 				.withDeliverySeq("003")
 				.withBuyCnt(1)
 				.withGoodsPrice(1000)
 				.withdlvCostBuyPriceSect(new DlvCostBuyPriceSectBuilder().withAddSec(0,1999,3000).withAddSec(2000,3999,3000).withAddSec(4000,-1,3000).build())
-				.withDlvKind(ConstCode.DLVKIND_BUYPRICESEC).build());
+				.withDlvCalcKind(ConstCode.DLVKIND_BUYPRICESEC).build());
 				
 		deliveryCost.dlvCostCalc(dlist);
 		

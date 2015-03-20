@@ -9,6 +9,7 @@
 package test.exam1;
 
 import static org.hamcrest.CoreMatchers.is;
+
 import static org.junit.Assert.*;
 import org.junit.Test;
 import example.business1.CalcSomeNum;
@@ -30,6 +31,7 @@ public class CalcFactorial {
 		
 		for(int[] value: values) {
 			assertThat("calc num", CalcSomeNum.calcFactorial(2), is(2));
+			
 	    }
 		
 		

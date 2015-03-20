@@ -12,8 +12,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import test.example.common.ConstCode;
-
+import example.business1.delivery.ConstCode;
 import example.business1.delivery.domain.DlvCostBuyPriceSectBO;
 import example.business1.delivery.domain.GoodsInfoBO;
 
@@ -42,15 +41,15 @@ public  class DeliveryCostCalc implements DeliveryCost   {
 				
 				GoodsInfoBO  goodsInfoBO = i.next();
 				
-				if (ConstCode.DLVKIND_PERGOODS.equals(goodsInfoBO.getDlvKind()))
+				if (ConstCode.DLVKIND_BASIC.equals(goodsInfoBO.getDlvCalcKind()))
 				{
 					goodsInfoBO.setDeliveryCalcCost(goodsInfoBO.getDeliveryCost());
 				}
-				else if (ConstCode.DLVKIND_CNTGOODS.equals(goodsInfoBO.getDlvKind()))
+				else if (ConstCode.DLVKIND_CNTGOODS.equals(goodsInfoBO.getDlvCalcKind()))
 				{
 					goodsInfoBO.setDeliveryCalcCost(goodsInfoBO.getDeliveryCost() * goodsInfoBO.getBuyCnt() );
 				}
-				else if (ConstCode.DLVKIND_BUYPRICESEC.equals(goodsInfoBO.getDlvKind()))
+				else if (ConstCode.DLVKIND_BUYPRICESEC.equals(goodsInfoBO.getDlvCalcKind()))
 				{
 					burPriceSecSum += goodsInfoBO.getGoodsPrice() * goodsInfoBO.getBuyCnt();
 					

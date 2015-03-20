@@ -19,12 +19,35 @@ public class GoodsInfoBO {
 	private String deliverySeq;
 	private Integer deliveryCost;
 	private String deliveryTyle;
-	private String dlvKind;
+	private String dlvCalcKind;
+	
+	
 	private Integer buyCnt;
 	private Integer goodsPrice;
 	private Integer deliveryCalcCost;
 	
 	private List<DlvCostBuyPriceSectBO> dlvCostBuyPriceSectList;
+	
+	
+	/**
+	 * @deprecated Use {@link #getDlvCalcKind()} instead
+	 */
+	public String getDlvKind()
+	{
+		return getDlvCalcKind();
+	}
+
+	
+	/**
+	 * @deprecated Use {@link #setDlvCalcKind(String)} instead
+	 */
+	public void setDlvKind(String dlvKind )
+	{
+		setDlvCalcKind(dlvKind);
+	}
+
+	
+	
 	
 		
 }
