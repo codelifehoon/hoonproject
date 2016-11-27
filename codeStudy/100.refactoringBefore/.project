@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>100.commBatch</name>
+	<name>100.refactoringBefore</name>
 	<comment></comment>
 	<projects>
 		<project>000.zabraDomain</project>

@@ -129,6 +129,7 @@ public class RefTestCase {
 	FormTemplateMethodTest()
 	{
 		// 리팩토링전
+		//~~
 		HtmlStatement h = new HtmlStatement();
 		TextStatement t = new TextStatement();
 		Vector<Rental> v = new  Vector<Rental>(1);
